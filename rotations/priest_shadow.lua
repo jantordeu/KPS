@@ -80,7 +80,6 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20 and target.isAttackable' , "target" },
     {{"macro"}, 'player.hasTalent(5,3) and mouseover.isAttackable', "/cast [@cursor] "..ShadowCrash },
     {spells.mindBlast, 'not player.isMoving and player.timeInCombat < 7' , env.damageTarget },
-    {spells.mindBlast, 'not player.isMoving and player.plateCount <= 4' , env.damageTarget },
     {spells.darkVoid, 'not player.isMoving and player.hasTalent(3,3) and not player.hasBuff(spells.voidform)' , env.damageTarget , "darkVoid" },
     {spells.darkVoid, 'not player.isMoving and player.hasTalent(3,3) and player.hasBuff(spells.voidform) and not target.hasMyDebuff(spells.shadowWordPain)' , env.damageTarget , "darkVoid" },
     
@@ -92,7 +91,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.vampiricTouch, 'not player.isMoving and focus.myDebuffDuration(spells.vampiricTouch) < kps.gcd and focus.isAttackable and not spells.vampiricTouch.isRecastAt("focus")' , 'focus' },
     {spells.shadowWordPain, 'focus.myDebuffDuration(spells.shadowWordPain) < kps.gcd and focus.isAttackable' , 'focus' },
     {{"nested"}, 'kps.multiTarget and mouseover.inCombat and mouseover.isAttackable',{
-        {spells.vampiricTouch, 'not player.isMoving mouseover.myDebuffDuration(spells.vampiricTouch) < kps.gcd and not spells.vampiricTouch.isRecastAt("mouseover")' , 'mouseover' },
+        {spells.vampiricTouch, 'not player.isMoving and mouseover.myDebuffDuration(spells.vampiricTouch) < kps.gcd and not spells.vampiricTouch.isRecastAt("mouseover")' , 'mouseover' },
         {spells.shadowWordPain, 'mouseover.myDebuffDuration(spells.shadowWordPain) < kps.gcd' , 'mouseover' },
     }},
 
