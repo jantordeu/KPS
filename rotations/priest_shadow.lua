@@ -85,7 +85,8 @@ kps.rotations.register("PRIEST","SHADOW",{
     
     {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < kps.gcd and target.isAttackable and not spells.vampiricTouch.isRecastAt("target")' , env.damageTarget },
     {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < kps.gcd and target.isAttackable' , env.damageTarget },
-    
+
+    {spells.voidEruption, 'spells.voidEruption.isUsable and not player.hasBuff(spells.voidform) and player.plateCount > 4' , "target" , "insanity_usable" },
     {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidform) and player.insanity > 50 and player.insanity < 90' , "target" , "darkAscension" },
 
     {spells.vampiricTouch, 'not player.isMoving and focus.myDebuffDuration(spells.vampiricTouch) < kps.gcd and focus.isAttackable and not spells.vampiricTouch.isRecastAt("focus")' , 'focus' },
@@ -96,16 +97,18 @@ kps.rotations.register("PRIEST","SHADOW",{
     }},
 
     {{"nested"}, 'player.hasBuff(spells.voidform)',{
+        {spells.mindbender, 'target.isAttackable and player.buffStacks(spells.voidform) > 5' , env.damageTarget },
         {{"macro"}, 'spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.voidBolt.cooldown < kps.latency' , "/stopcasting" },
         {spells.voidBolt , "target.isAttackable" , env.damageTarget },
-        {spells.mindbender, 'target.isAttackable and player.buffStacks(spells.voidform) > 5' , env.damageTarget },
-        {spells.mindSear, 'kps.multiTarget and player.plateCount > 4' , env.damageTarget }, 
+        {spells.mindSear, 'kps.multiTarget and player.plateCount > 4' , env.damageTarget },
+        {{"macro"}, 'not player.isMoving and spells.mindBlast.cooldown < kps.latency and spells.mindFlay.castTimeLeft("player") > kps.gcd' , "/stopcasting" },
         {spells.mindBlast, 'not player.isMoving and target.isAttackable' , env.damageTarget },
     }},
     {{"macro"}, 'not player.isMoving and not player.hasBuff(spells.voidform) and spells.voidEruption.isUsable and spells.mindFlay.castTimeLeft("player") > kps.gcd' , "/stopcasting" },
     {spells.voidEruption, 'spells.voidEruption.isUsable and not player.hasBuff(spells.voidform)' , "target" , "insanity_usable" },
 
-    {spells.mindSear, 'kps.multiTarget and player.plateCount > 4' , env.damageTarget },  
+    {spells.mindSear, 'kps.multiTarget and player.plateCount > 4' , env.damageTarget },
+    {{"macro"}, 'not player.isMoving and spells.mindBlast.cooldown < kps.latency and spells.mindFlay.castTimeLeft("player") > kps.gcd' , "/stopcasting" },
     {spells.mindBlast, 'not player.isMoving and target.isAttackable' , env.damageTarget },
     {spells.mindFlay, 'not player.isMoving' , env.damageTarget },
 
