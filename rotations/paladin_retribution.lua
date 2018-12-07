@@ -20,7 +20,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
     {spells.divineShield, 'player.hp < 0.30' , "player" },
-    {spells.divineShield, 'mouseover.isFriend and mouseover.isHealerInRaid and mouseover.hp < 0.30' ,"mouseover" },
+    {spells.divineShield, 'mouseover.isHealable and mouseover.isHealerInRaid and mouseover.hp < 0.30' ,"mouseover" },
     -- Def CD's
     {{"nested"}, 'kps.defensive', {
         -- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
@@ -50,7 +50,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- "Pierre de soins" 5512
     {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" },
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
-    {spells.blessingOfProtection, 'not player.isUnit("mouseover") and mouseover.hp < 0.40 and mouseover.isFriend' , "mouseover"},
+    {spells.blessingOfProtection, 'not player.isUnit("mouseover") and mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
     {spells.blessingOfProtection, 'player.hp < 0.55' , "player"},
 
     -- TRINKETS -- SLOT 0 /use 13

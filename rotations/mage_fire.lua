@@ -25,7 +25,7 @@ kps.rotations.register("MAGE","FIRE",
    {spells.arcaneIntellect, 'not player.hasBuff(spells.arcaneIntellect)' , "player" },
    {spells.blazingBarrier, 'player.incomingDamage > 0'},
    {spells.slowFall, 'player.isFallingFor(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
-   {spells.removeCurse, 'kps.mouseOver and mouseover.isFriend and mouseover.isDispellable("Curse")' , "mouseover" },
+   {spells.removeCurse, 'kps.mouseOver and mouseover.isHealable and mouseover.isDispellable("Curse")' , "mouseover" },
    {spells.spellsteal, 'target.isStealable' , "target" },
 
     {{"macro"}, 'player.hasTalent(7,3) and player.hasBuff(spells.runeOfPower) and target.distance <= 5', "/cast [@player] "..Meteor },

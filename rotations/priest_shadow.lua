@@ -75,7 +75,7 @@ kps.rotations.register("PRIEST","SHADOW",{
      -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
     {spells.shadowMend, 'not player.isMoving and not spells.shadowMend.lastCasted(4) and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace)' , "player" }, 
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not spells.shadowMend.isRecastAt("player")' , "player" },
-    --{spells.shadowMend, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.55 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
+    --{spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
 
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20 and target.isAttackable' , "target" },
     {{"macro"}, 'player.hasTalent(5,3) and mouseover.isAttackable', "/cast [@cursor] "..ShadowCrash },

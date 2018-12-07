@@ -13,7 +13,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.divineShield, 'spells.blessingOfSacrifice.lastCasted(4) and player.hp < 0.55' , "player" },
     {spells.divineShield, 'player.hp < 0.30' , "player" },
     {spells.divineShield, 'player.isTarget and target.isRaidBoss' , "player" },
-    {spells.divineShield, 'mouseover.isFriend and not mouseover.isTankInRaid and mouseover.hp < 0.65' ,"mouseover" },
+    {spells.divineShield, 'mouseover.isHealable and not mouseover.isTankInRaid and mouseover.hp < 0.65' ,"mouseover" },
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec. during that time the caster also cannot attack or use spells.
     {spells.divineProtection, 'spells.blessingOfSacrifice.lastCasted(4) and player.hp < 0.55 and not player.hasBuff(spells.divineShield)' , "player" },
     {spells.divineProtection, 'player.hp < 0.30 and not player.hasBuff(spells.divineShield)' , "player" },
@@ -40,11 +40,11 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection
     -- "Blessing of Protection" -- can be used to clear harmful physical damage debuffs and bleeds from the target.
     {spells.blessingOfProtection, 'keys.ctrl' , "mouseover" },
-    {spells.blessingOfProtection, 'mouseover.isFriend and mouseover.isDispellable("Magic")' , "mouseover" },
+    {spells.blessingOfProtection, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
     {spells.blessingOfProtection, 'player.hp < 0.30' , kps.heal.lowestUnitInRaid },
     {spells.blessingOfProtection, 'heal.lowestUnitInRaid.hp < 0.30' , kps.heal.lowestUnitInRaid },
 
-    {spells.cleanse, 'mouseover.isFriend and mouseover.isDispellable("Magic")' , "mouseover" },
+    {spells.cleanse, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
     {{"nested"},'kps.cooldowns', {
         {spells.cleanse, 'player.isDispellable("Magic")' , "player" },
         {spells.cleanse, 'heal.lowestTankInRaid.isDispellable("Magic")' , kps.heal.lowestTankInRaid},
@@ -104,8 +104,8 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and player.hp < 0.40' , "player"  }, 
     {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid  }, 
         
-    {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and mouseover.isFriend and mouseover.hp < 0.65' , "mouseover" , "holyLight_mouseover" }, 
-    {spells.flashOfLight, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.65' , "mouseover" , "flashOfLight_mouseover" },
+    {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" , "holyLight_mouseover" }, 
+    {spells.flashOfLight, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" , "flashOfLight_mouseover" },
     -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
     -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana.
     {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and player.hp < 0.65 and player.hp > heal.lowestTankInRaid.hp' , "player"  },

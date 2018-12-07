@@ -31,7 +31,7 @@ kps.rotations.register("MAGE","FROST",
     
     {spells.spellsteal, 'target.isStealable' , "target" },
    -- interrupts
-    {spells.removeCurse, 'kps.mouseOver and mouseover.isFriend and mouseover.isDispellable("Curse")' , "mouseover" },
+    {spells.removeCurse, 'kps.mouseOver and mouseover.isHealable and mouseover.isDispellable("Curse")' , "mouseover" },
     {{"nested"}, 'kps.interrupt',{
         {spells.counterspell, 'target.isInterruptable' , "target" },
         {spells.counterspell, 'focus.isInterruptable' , "focus" },

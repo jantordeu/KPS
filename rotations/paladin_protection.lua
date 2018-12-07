@@ -49,7 +49,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
     
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
-    {spells.blessingOfProtection, 'not player.isUnit("mouseover") and mouseover.hp < 0.40 and mouseover.isFriend' , "mouseover"},
+    {spells.blessingOfProtection, 'not player.isUnit("mouseover") and mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
     {spells.blessingOfProtection, 'player.hp < 0.55' , "player"},
 
     {{"pause"}, 'kps.pauseRotation', 2},

@@ -628,7 +628,9 @@ local importantUnitHasNotBuff = function (spell)
                 return player
             elseif player.guid == kps["env"].player.guid then
                 return player  
-            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.65 then
+            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.78 then
+                return player
+            elseif player.guid == kps["env"].targettarget.guid and player.hp < 0.55 then
                 return player
             end
         end
@@ -644,7 +646,9 @@ local importantUnitHasNotBuffCount = function (spell)
                 count = count + 1
             elseif player.guid == kps["env"].player.guid then
                 count = count + 1  
-            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.65 then
+            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.78 then
+                count = count + 1
+            elseif player.guid == kps["env"].targettarget.guid and player.hp < 0.55 then
                 count = count + 1
             end
         end
