@@ -60,18 +60,6 @@ function Unit.isElite(self)
 end
 
 --[[[
-@function `<UNIT>.isFriend` - returns true if the unit is a friend unit
-]]--
-
-function Unit.isFriend(self)
-    if not Unit.exists(self) then return false end
-    if Unit.inVehicle(self) then return false end
-    if not UnitCanAssist("player",self.unit) then return false end -- UnitCanAssist(unitToAssist, unitToBeAssisted) return 1 if the unitToAssist can assist the unitToBeAssisted, nil otherwise
-    if not UnitIsFriend("player", self.unit) then return false end -- UnitIsFriend("unit","otherunit") return 1 if otherunit is friendly to unit, nil otherwise.
-    return true
-end
-
---[[[
 @function `<UNIT>.isClassDistance` - returns true if the unit is a class distance
 ]]--
 

@@ -17,7 +17,7 @@ local RingOfFrost  = spells.ringOfFrost.name
 kps.rotations.register("MAGE","FROST",
 {
 
-    --{{"pause"}, 'kps.pauseRotation', 4},
+   {spells.arcaneIntellect, 'not player.hasBuff(spells.arcaneIntellect)' , "player" },
     
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },

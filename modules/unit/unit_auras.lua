@@ -524,15 +524,15 @@ end
 
 function Unit.hasBossDebuff(self)
     if not UnitCanAssist("player", self.unit) then return false end
-    local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
-    local i = 1
-    auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
-    while auraName do
-        if debuffType ~= nil and isBossDebuff then
-            return true
-        end
-        i = i + 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
+    for _,spell in pairs(kps.spells.bossDebuff) do
+        if self.hasDebuff(spell) then return true end
+    end
+    return false
+end
+
+function Unit.absorptionHeal(self)
+    for _,spell in pairs(kps.spells.absorptionHeal) do
+        if self.hasDebuff(spell) then return true end
     end
     return false
 end

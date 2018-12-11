@@ -139,6 +139,14 @@ kps.spells.absorptionHeal.embraceOfTheEclipse = kps.Spell.fromId(233263) -- Embr
 kps.spells.absorptionHeal.soulblight = kps.Spell.fromId(248396) -- Soulblight
 kps.spells.absorptionHeal.chilledBlood = kps.Spell.fromId(245586) -- Chilled Blood
 
+-- Boss Debuff (Uldir)
+kps.spells.bossDebuff = {}
+kps.spells.bossDebuff.deathwish = kps.Spell.fromId(274271) -- Magic
+--kps.spells.bossDebuff.pitOfDespair = kps.Spell.fromId(276031) -- Curse
+
+
+
+
 -- ignore Aura Buff
 kps.spells.ignoreAura = {}
 kps.spells.ignoreAura.divineShield = kps.Spell.fromId(642)

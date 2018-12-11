@@ -52,6 +52,13 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.blessingOfProtection, 'not player.isUnit("mouseover") and mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
     {spells.blessingOfProtection, 'player.hp < 0.55' , "player"},
 
+    {{"nested"}, 'kps.pauseRotation',{
+        {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
+        {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
+        {spells.judgment, 'target.isAttackable and target.distance < 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
+        {spells.consecration, 'not player.isMoving and not target.hasMyDebuff(spells.consecration) and target.distance <= 10' , "target" , "consecration_target" },
+        {spells.hammerOfTheRighteous, 'not player.hasTalent(1,3) and player.hasBuff(spells.consecration) and target.distance <= 10', "target" , "hammerOfTheRighteous" },
+    }},
     {{"pause"}, 'kps.pauseRotation', 2},
     -- "Hand of Reckoning" -- taunt
     {spells.handOfReckoning, 'kps.taunt and not player.isTarget' , "target" , "taunt" },
@@ -62,8 +69,8 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
     {spells.layOnHands, 'player.hp < 0.40' },
     -- "Main du protecteur" talent replace "Lumière du protecteur" -- rendre à une cible alliée 30% de ses points de vie manquants.
-    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.78' },
-    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.78' },
+    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
+    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
     {spells.ardentDefender, 'player.hp < 0.72 and player.incomingDamage > player.incomingHeal' },

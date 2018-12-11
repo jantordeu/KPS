@@ -471,6 +471,18 @@ kps.RaidStatus.prototype.hasAbsorptionHeal = kps.utils.cachedValue(function()
 end)
 
 --[[[
+@function `heal.hasBossDebuff` - Returns the raid unit with a Boss Debuff
+]]--
+
+kps.RaidStatus.prototype.hasBossDebuff = kps.utils.cachedValue(function()
+    local lowestUnit = false
+    for name, unit in pairs(raidStatus) do
+        if unit.isHealable and unit.hasBossDebuff then lowestUnit = unit end
+    end
+    return lowestUnit
+end)
+
+--[[[
 @function `heal.hasBuffStacks(<BUFF>)` - Returns the buff stacks for a specific Buff on raid e.g. heal.hasBuffStacks(spells.prayerOfMending) < 10
 ]]--
 
@@ -626,11 +638,9 @@ local importantUnitHasNotBuff = function (spell)
         if player.isHealable and player.myBuffDuration(spell) < 1 then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
                 return player
-            elseif player.guid == kps["env"].player.guid then
+            elseif player.guid == kps["env"].player.guid and player.hp < 1 then
                 return player  
-            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.78 then
-                return player
-            elseif player.guid == kps["env"].targettarget.guid and player.hp < 0.55 then
+            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.85 then
                 return player
             end
         end
@@ -644,11 +654,9 @@ local importantUnitHasNotBuffCount = function (spell)
         if player.isHealable and player.myBuffDuration(spell) < 1 then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
                 count = count + 1
-            elseif player.guid == kps["env"].player.guid then
+            elseif player.guid == kps["env"].player.guid and player.hp < 1 then
                 count = count + 1  
-            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.78 then
-                count = count + 1
-            elseif player.guid == kps["env"].targettarget.guid and player.hp < 0.55 then
+            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.85 then
                 count = count + 1
             end
         end
