@@ -253,6 +253,7 @@ kps.spells.priest.whispersOfTheDamned = kps.Spell.fromId(275722)
 kps.spells.priest.willOfTheConclave = kps.Spell.fromId(241148)
 kps.spells.priest.wordOfMending = kps.Spell.fromId(278645)
 kps.spells.priest.wordsOfHealing = kps.Spell.fromId(196430)
+kps.spells.priest.weakenedSoul = kps.Spell.fromId(6788)
 kps.spells.priest.fireBlood = kps.Spell.fromId(265221)
 
 

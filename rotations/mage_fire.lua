@@ -26,14 +26,13 @@ kps.rotations.register("MAGE","FIRE",
    {spells.blazingBarrier, 'player.incomingDamage > 0'},
    {spells.slowFall, 'player.isFallingFor(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
    {spells.removeCurse, 'kps.mouseOver and mouseover.isHealable and mouseover.isDispellable("Curse")' , "mouseover" },
+   {spells.removeCurse, 'player.isDispellable("Curse")' , "player" },
    {spells.spellsteal, 'target.isStealable' , "target" },
 
     {{"macro"}, 'player.hasTalent(7,3) and player.hasBuff(spells.runeOfPower) and target.distance <= 5', "/cast [@player] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and player.hasBuff(spells.combustion) and target.distance <= 5', "/cast [@player] "..Meteor },
     {{"macro"}, 'keys.shift and player.hasTalent(7,3) and player.hasBuff(spells.runeOfPower)', "/cast [@cursor] "..Meteor },
     {{"macro"}, 'keys.shift and player.hasTalent(7,3) and player.hasBuff(spells.combustion)', "/cast [@cursor] "..Meteor },
-    {{"macro"}, 'kps.meteor and player.hasTalent(7,3) and player.hasBuff(spells.runeOfPower) and mouseover.isAttackable' , "/cast [@cursor] "..Meteor },
-    {{"macro"}, 'kps.meteor and player.hasTalent(7,3) and player.hasBuff(spells.combustion) and mouseover.isAttackable', "/cast [@cursor] "..Meteor },
 
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
@@ -53,32 +52,34 @@ kps.rotations.register("MAGE","FIRE",
     -- TRINKETS -- SLOT 1 /use 14    
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
 
-    {spells.runeOfPower, 'player.hasTalent(3,3) and not player.hasBuff(spells.runeOfPowerBuff) and spells.runeOfPower.charges == 2' , "player" },    
-    {{"nested"}, 'kps.cooldowns',{
-        {{spells.runeOfPower,spells.combustion}, 'player.hasBuff(spells.hotStreak)' },
-        {spells.combustion, 'player.hasBuff(spells.hotStreak) and player.hasBuff(spells.runeOfPowerBuff)' },
-        {spells.runeOfPower, 'player.hasTalent(3,3) and not player.hasBuff(spells.runeOfPowerBuff) and spells.combustion.cooldown >= 40' , "player" },
+    {spells.runeOfPower, 'player.hasTalent(3,3) and not player.hasBuff(spells.runeOfPowerBuff) and spells.runeOfPower.charges == 2' , "player" },
+    {spells.runeOfPower, 'player.hasTalent(3,3) and not player.hasBuff(spells.runeOfPowerBuff) and spells.combustion.cooldown >= 40' , "player" }, 
+    {spells.combustion, 'player.hasBuff(spells.hotStreak) and player.hasBuff(spells.runeOfPowerBuff) and spells.fireBlast.charges > 0' },
+    {{spells.runeOfPower,spells.combustion}, 'player.hasBuff(spells.hotStreak) and spells.fireBlast.charges > 0' },
+        
+    {{"nested"}, 'player.hasBuff(spells.combustion)', {
+        {{spells.pyroblast,spells.fireBlast}, 'spells.fireBlast.charges > 0' , "target" },
+        {spells.dragonsBreath, 'player.plateCount > 2 and target.distance <= 5 ' , "target" },  
+        {{spells.pyroblast,spells.scorch}, 'true', "target" },
     }},
-
+     
     {spells.phoenixFlames, 'player.hasTalent(4,3) and spells.phoenixFlames.charges >= 2' , "target" },
-    {{"macro"}, 'player.plateCount > 2 and player.hasBuff(spells.hotStreak) and mouseover.isAttackable' , "/cast [@cursor] "..Flamestrike },
+    {{"macro"}, 'keys.ctrl and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
     {{"macro"}, 'player.plateCount > 2 and player.hasBuff(spells.hotStreak) and target.distance <= 5' , "/cast [@player] "..Flamestrike },
     
-    {spells.pyroblast, 'player.hasTalent(7,2) and player.hasBuff(spells.pyroclasm) and not player.hasBuff(spells.combustion)' , "target" },
-    {spells.pyroblast, 'player.hasTalent(7,2) and player.hasBuff(spells.pyroclasm) and player.myBuffDuration(spells.combustion) > 4.1' , "target" },
+    {spells.pyroblast, 'player.hasTalent(7,2) and player.hasBuff(spells.pyroclasm)' , "target" },
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
-    {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and player.hasBuff(spells.heatingUp)'},
-    {spells.livingBomb, 'player.hasTalent(6,3) and player.plateCount > 2 and target.timeToDie > 8' , "target" },
+    {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
+  
+    {spells.dragonsBreath, 'player.plateCount > 2 and target.distance <= 5 ' , "target" },  
+    {spells.livingBomb, 'player.hasTalent(6,3) and player.plateCount > 2' , "target" },
     
     {spells.blastWave, 'player.hasTalent(2,3) and not player.hasBuff(spells.combustion) and target.distance <= 5'},
     {spells.blastWave, 'player.hasTalent(2,3) and player.hasBuff(spells.combustion) and spells.fireBlast.charges == 0 and target.distance <= 5'},
-    {spells.dragonsBreath, 'player.plateCount > 2 and target.distance <= 5 and player.hasBuff(spells.combustion) and spells.fireBlast.charges == 0' , "target" },  
-    {spells.dragonsBreath, 'player.plateCount > 2 and target.distance <= 5 ' , "target" },
-    {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
-    {spells.scorch, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak)' , "target" },
-    {spells.scorch, 'not player.hasBuff(spells.hotStreak) and target.hp < 0.30' , "target" },
+
+    {spells.scorch, 'target.hp < 0.30' , "target" },
     {spells.scorch, 'player.isMoving' , "target" },
-    {spells.fireball, 'not player.isMoving' , "target" },
+    {spells.fireball, 'not player.isMoving' , "target" }, -- Fireball to generate Heating Up
 
 }
 ,"mage_fire.simc")

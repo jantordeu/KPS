@@ -635,7 +635,7 @@ end)
 
 local importantUnitHasNotBuff = function (spell)
     for name,player in pairs(raidStatus) do
-        if player.isHealable and player.myBuffDuration(spell) < 1 then
+        if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
                 return player
             elseif player.guid == kps["env"].player.guid and player.hp < 1 then
@@ -651,7 +651,7 @@ end
 local importantUnitHasNotBuffCount = function (spell)
     local count = 0
     for name,player in pairs(raidStatus) do
-        if player.isHealable and player.myBuffDuration(spell) < 1 then
+        if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
                 count = count + 1
             elseif player.guid == kps["env"].player.guid and player.hp < 1 then

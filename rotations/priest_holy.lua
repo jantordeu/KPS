@@ -119,7 +119,7 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.flashHeal, 'not player.isMoving and spells.prayerOfMending.lastCasted(4) and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid ,"FLASH_POM" },
     {spells.flashHeal, 'kps.mouseOver and mouseover.isHealable and not player.isMoving and mouseover.hp < 0.55' , "mouseover" ,"FLASH_mouseover" },
     {spells.bindingHeal, 'kps.mouseOver and mouseover.isHealable and not player.isMoving and player.hasTalent(5,2) and not mouseover.isUnit("player")' , "mouseover" ,"BINDING_mouseover" },
-
+    {{spells.renew,spells.prayerOfHealing}, 'kps.mouseOver and mouseover.isHealable and not player.isMoving and heal.countLossInRange(0.72) > 2' , "mouseover" ,"POH_mouseover" },
     -- TRINKETS
     -- SLOT 0 /use 13
     -- "Inoculating Extract" 160649 -- "Extrait d’inoculation" 160649
@@ -187,10 +187,10 @@ kps.rotations.register("PRIEST","HOLY",{
     }},
     -- "Soins" 2060
     {spells.heal, 'not player.isMoving and spells.holyWordSerenity.cooldown > 6' , kps.heal.lowestInRaid },
+    {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
     {spells.renew, 'player.hpIncoming < 0.90 and not player.hasBuff(spells.renew)' , "player", "RENEW_PLAYER" },
     {spells.renew, 'heal.countInRange <= 5 and heal.lowestUnitInRaid.hpIncoming < 0.90 and not heal.lowestUnitInRaid.hasBuff(spells.renew)' , kps.heal.lowestUnitInRaid, "RENEW_LOWEST" },
     {spells.heal, 'kps.mouseOver and mouseover.isHealable and not player.isMoving and mouseover.hpIncoming < 0.90' , "mouseover" },
-    {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.90' , kps.heal.lowestInRaid , "heal_lowest" },
     
     {spells.smite, 'not player.isMoving', env.damageTarget },

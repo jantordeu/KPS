@@ -88,6 +88,7 @@ kps.spells.paladin.divineTempest = kps.Spell.fromId(186773)
 kps.spells.paladin.divineVision = kps.Spell.fromId(199324)
 kps.spells.paladin.echoOfTheHighlord = kps.Spell.fromId(186788)
 kps.spells.paladin.embraceTheLight = kps.Spell.fromId(186934)
+kps.spells.paladin.empyreanPower = kps.Spell.fromId(286393) -- Your next Divine Storm is free and deals 0 additional damage.
 kps.spells.paladin.endlessResolve = kps.Spell.fromId(185086)
 kps.spells.paladin.executionSentence = kps.Spell.fromId(267798)
 kps.spells.paladin.expelTheDarkness = kps.Spell.fromId(200296)

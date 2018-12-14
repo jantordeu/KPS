@@ -69,8 +69,8 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
     {spells.layOnHands, 'player.hp < 0.40' },
     -- "Main du protecteur" talent replace "Lumière du protecteur" -- rendre à une cible alliée 30% de ses points de vie manquants.
-    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
-    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
+    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.82' },
+    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.82' },
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
     {spells.ardentDefender, 'player.hp < 0.72 and player.incomingDamage > player.incomingHeal' },
