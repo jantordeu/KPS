@@ -131,7 +131,7 @@ function kps.env.priest.countFriend()
 end
 
 local MindFlay = kps.spells.priest.mindFlay.name
-local VoidForm = kps.spells.priest.voidform.name
+local VoidForm = kps.spells.priest.voidForm.name
 local ShadowWordPain = kps.spells.priest.shadowWordPain.name
 local VampiricTouch = kps.spells.priest.vampiricTouch.name
 
@@ -148,9 +148,9 @@ function kps.env.priest.FocusMouseoverShadow()
             kps.runMacro("/focus mouseover")
         end
     elseif focus.exists and not UnitIsUnit("target","mouseover") and not UnitIsUnit("focus","mouseover") and focus.hasMyDebuff(kps.spells.priest.shadowWordPain) and focus.hasMyDebuff(kps.spells.priest.vampiricTouch) then
-        if not mouseover.hasMyDebuff(kps.spells.priest.shadowWordPain) then
+        if not mouseover.hasMyDebuff(kps.spells.priest.shadowWordPain) and mouseover.isAttackable and mouseover.inCombat then
             kps.runMacro("/focus mouseover")
-        elseif not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) then
+        elseif not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) and mouseover.isAttackable and mouseover.inCombat then
             kps.runMacro("/focus mouseover")
         end
     end

@@ -750,9 +750,11 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --    print("unitID",unitID,"name",name)
 --end
 
---local voidform = kps.spells.priest.voidform
---print("Count:",kps["env"].player.buffCount(voidform))
---print("Stacks:",kps["env"].player.buffStacks(voidform))
+--local mindSear =  kps.spells.priest.mindSear
+--print("left:",mindSear.castTimeLeft("player"),"cd:",mindSear.cooldown, "cdtotal:",mindSear.cooldownTotal)
+--local mindBlast =  kps.spells.priest.mindBlast
+--print("left:",mindBlast.castTimeLeft("player"),"cd:",mindBlast.cooldown, "cdtotal:",mindBlast.cooldownTotal)
+--print(GetSpellCooldown(61304))
 
 --print("|cffff8000averageHeal:|cffffffff", kps["env"].heal.averageHealthRaid)
 --print("|cffff8000incomingHeal:|cffffffff", kps["env"].heal.incomingHealthRaid)

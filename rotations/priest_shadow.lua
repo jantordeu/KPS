@@ -33,8 +33,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- "Don des naaru" 59544
     {spells.giftOfTheNaaru, 'player.hp < 0.72', "player" },
      -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
-    {spells.vampiricEmbrace, 'player.hasBuff(spells.voidform) and player.hp < 0.55' },
-    {spells.vampiricEmbrace, 'player.isInGroup and heal.lowestInRaid.hp < 0.55' },
+    {spells.vampiricEmbrace, 'heal.lowestInRaid.hp < 0.65' },
    
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
@@ -62,32 +61,40 @@ kps.rotations.register("PRIEST","SHADOW",{
     }},
 
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
-    {{"macro"}, 'player.useTrinket(0) and player.hasBuff(spells.voidform)' , "/use 13"},
-    {{"macro"}, 'player.useTrinket(1) and player.hasBuff(spells.voidform)' , "/use 14"},
+    {{"macro"}, 'player.useTrinket(0) and player.hasBuff(spells.voidForm)' , "/use 13"},
+    {{"macro"}, 'player.useTrinket(1) and player.hasBuff(spells.voidForm)' , "/use 14"},
 
     -- "Levitate" 1706
     {spells.levitate, 'player.isFallingFor(1.4) and not player.hasBuff(spells.levitate)' , "player" },
     {spells.levitate, 'player.isSwimming and not player.hasBuff(spells.levitate)' , "player" },
     -- "Power Word: Shield" 17 -- "Body and Soul"
-    {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingFor(1.2) and not player.hasBuff(spells.bodyAndSoul)' , "player" , "SCHIELD_MOVING" },
-    {spells.powerWordShield, 'player.hp < 0.65 and not player.hasBuff(spells.voidform) and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace)' , "player" , "SCHIELD_HEALTH" },
-    {spells.powerWordShield, 'player.hp < 0.40 and not player.hasBuff(spells.powerWordShield)' , "player" , "SCHIELD_HEALTH" },
+    {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingFor(1.2) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
+    {spells.powerWordShield, 'player.hp < 0.65 and not player.hasBuff(spells.voidForm) and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
+    {spells.powerWordShield, 'player.hp < 0.40 and not player.hasBuff(spells.powerWordShield) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
      -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
-    {spells.shadowMend, 'not player.isMoving and not spells.shadowMend.lastCasted(4) and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace)' , "player" }, 
+    {spells.shadowMend, 'not player.isMoving and not spells.shadowMend.lastCasted(4) and player.hp < 0.55' , "player" }, 
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not spells.shadowMend.isRecastAt("player")' , "player" },
     --{spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
-
-    {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20 and target.isAttackable' , "target" },
+    
     {{"macro"}, 'player.hasTalent(5,3) and mouseover.isAttackable', "/cast [@cursor] "..ShadowCrash },
-    {spells.mindBlast, 'not player.isMoving and player.timeInCombat < 7' , env.damageTarget },
-    {spells.darkVoid, 'not player.isMoving and player.hasTalent(3,3) and not player.hasBuff(spells.voidform)' , env.damageTarget , "darkVoid" },
-    {spells.darkVoid, 'not player.isMoving and player.hasTalent(3,3) and player.hasBuff(spells.voidform) and not target.hasMyDebuff(spells.shadowWordPain)' , env.damageTarget , "darkVoid" },
+    {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20 and target.isAttackable' , "target" },
+    {{"nested"}, 'not player.hasBuff(spells.voidForm) and not player.isMoving and not spells.voidEruption.isUsable',{
+    	{{"macro"}, 'spells.mindBlast.cooldown < kps.latency and spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.mindFlay.cooldownTotal == 0' , "/stopcasting" },
+    	{spells.mindBlast, 'true' , env.damageTarget },
+    	{spells.darkVoid, 'player.hasTalent(3,3)' , env.damageTarget , "darkVoid" },
+    }},
+
+    {spells.shadowfiend, 'target.isAttackable and player.buffStacks(spells.voidForm) > 5' , env.damageTarget },
+    {spells.mindbender, 'target.isAttackable and player.buffStacks(spells.voidForm) > 5' , env.damageTarget },    
+    {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.voidBolt.cooldown < kps.latency and spells.mindFlay.cooldownTotal == 0' , "/stopcasting" },
+    {spells.voidBolt , "player.hasBuff(spells.voidForm) and target.isAttackable" , env.damageTarget },
     
     {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < kps.gcd and target.isAttackable and not spells.vampiricTouch.isRecastAt("target")' , env.damageTarget },
     {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < kps.gcd and target.isAttackable' , env.damageTarget },
 
-    {spells.voidEruption, 'spells.voidEruption.isUsable and not player.hasBuff(spells.voidform) and player.plateCount > 4' , "target" , "insanity_usable" },
-    {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidform) and player.insanity > 50 and player.insanity < 90' , "target" , "darkAscension" },
+    {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity > 50 and player.insanity < 90' , "target" , "darkAscension" },
+    {{"macro"}, 'not player.isMoving and spells.voidEruption.isUsable and spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.mindFlay.cooldownTotal == 0' , "/stopcasting" },
+    {spells.voidEruption, 'spells.voidEruption.isUsable and not player.hasBuff(spells.voidForm)' , "target" , "insanity_usable" },
 
     {spells.vampiricTouch, 'not player.isMoving and focus.myDebuffDuration(spells.vampiricTouch) < kps.gcd and focus.isAttackable and not spells.vampiricTouch.isRecastAt("focus")' , 'focus' },
     {spells.shadowWordPain, 'focus.myDebuffDuration(spells.shadowWordPain) < kps.gcd and focus.isAttackable' , 'focus' },
@@ -96,21 +103,15 @@ kps.rotations.register("PRIEST","SHADOW",{
         {spells.shadowWordPain, 'mouseover.myDebuffDuration(spells.shadowWordPain) < kps.gcd' , 'mouseover' },
     }},
 
-    {{"nested"}, 'player.hasBuff(spells.voidform)',{
-        {spells.mindbender, 'target.isAttackable and player.buffStacks(spells.voidform) > 5' , env.damageTarget },
-        {{"macro"}, 'spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.voidBolt.cooldown < kps.latency' , "/stopcasting" },
-        {spells.voidBolt , "target.isAttackable" , env.damageTarget },
+    {{"nested"}, 'player.hasBuff(spells.voidForm)',{
         {spells.mindSear, 'kps.multiTarget and player.plateCount > 4' , env.damageTarget },
-        {{"macro"}, 'not player.isMoving and spells.mindBlast.cooldown < kps.latency and spells.mindFlay.castTimeLeft("player") > kps.gcd' , "/stopcasting" },
-        {spells.mindBlast, 'not player.isMoving and target.isAttackable' , env.damageTarget },
+        {{"macro"}, 'not player.isMoving and spells.mindBlast.cooldown < kps.latency and spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.mindFlay.cooldownTotal == 0' , "/stopcasting" },
+        {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
     }},
-    {{"macro"}, 'not player.isMoving and not player.hasBuff(spells.voidform) and spells.voidEruption.isUsable and spells.mindFlay.castTimeLeft("player") > kps.gcd' , "/stopcasting" },
-    {spells.voidEruption, 'spells.voidEruption.isUsable and not player.hasBuff(spells.voidform)' , "target" , "insanity_usable" },
 
-    {spells.mindSear, 'kps.multiTarget and player.plateCount > 4' , env.damageTarget },
-    {{"macro"}, 'not player.isMoving and spells.mindBlast.cooldown < kps.latency and spells.mindFlay.castTimeLeft("player") > kps.gcd' , "/stopcasting" },
-    {spells.mindBlast, 'not player.isMoving and target.isAttackable' , env.damageTarget },
-    {spells.mindFlay, 'not player.isMoving' , env.damageTarget },
+    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount > 4 ' , env.damageTarget },
+    {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
+    {spells.mindFlay, 'not player.isMoving ' , env.damageTarget },
 
 },"priest_shadow_bfa")
 

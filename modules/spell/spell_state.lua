@@ -91,6 +91,7 @@ end
 ]]--
 -- name, text, texture, startTimeMS, endTimeMS, isTradeSkill, castID, notInterruptible, spellId = UnitCastingInfo("unit")
 -- name, text, texture, startTimeMS, endTimeMS, isTradeSkill, notInterruptible = UnitChannelInfo("unit")
+
 local castTimeLeft = setmetatable({}, {
     __index = function(t, self)
         local val = function(unit)
@@ -100,8 +101,9 @@ local castTimeLeft = setmetatable({}, {
                 local name,_,_,_,endTime,_,_ = UnitChannelInfo(unit)
                 if endTime == nil then return 0 end
                 if tostring(self.name) == tostring(name) then return ((endTime - (GetTime() * 1000 ) )/1000) end
+            else
+            	if tostring(self.name) == tostring(name) then return ((endTime - (GetTime() * 1000 ) )/1000) end
             end
-            if tostring(self.name) == tostring(name) then return ((endTime - (GetTime() * 1000 ) )/1000) end
             return 0
         end
         t[self] = val
