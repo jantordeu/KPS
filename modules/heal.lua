@@ -638,7 +638,7 @@ local importantUnitHasNotBuff = function (spell)
         if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
                 return player
-            elseif player.guid == kps["env"].player.guid and player.hp < 1 then
+            elseif player.guid == kps["env"].player.guid and player.hp < 0.85 then
                 return player  
             elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.85 then
                 return player
@@ -654,7 +654,7 @@ local importantUnitHasNotBuffCount = function (spell)
         if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
                 count = count + 1
-            elseif player.guid == kps["env"].player.guid and player.hp < 1 then
+            elseif player.guid == kps["env"].player.guid and player.hp < 0.85 then
                 count = count + 1  
             elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.85 then
                 count = count + 1
@@ -755,6 +755,12 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --local mindBlast =  kps.spells.priest.mindBlast
 --print("left:",mindBlast.castTimeLeft("player"),"cd:",mindBlast.cooldown, "cdtotal:",mindBlast.cooldownTotal)
 --print(GetSpellCooldown(61304))
+
+--local voidEruption = kps.spells.priest.voidEruption
+--local voidBolt = kps.spells.priest.voidBolt
+--print("voidEruptionusable:", voidEruption.isUsable)
+--print("voidBoltusable:", voidBolt.isUsable)
+
 
 --print("|cffff8000averageHeal:|cffffffff", kps["env"].heal.averageHealthRaid)
 --print("|cffff8000incomingHeal:|cffffffff", kps["env"].heal.incomingHealthRaid)

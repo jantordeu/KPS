@@ -140,17 +140,13 @@ function kps.env.priest.FocusMouseoverShadow()
     local mouseover = kps.env.mouseover
     local focus = kps.env.focus
     if not focus.exists and not UnitIsUnit("target","mouseover") and mouseover.isAttackable and mouseover.inCombat then
-        if not mouseover.hasMyDebuff(kps.spells.priest.shadowWordPain) then
-            kps.runMacro("/focus mouseover")
-        elseif not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) then
+        if not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) then
             kps.runMacro("/focus mouseover")
         else
             kps.runMacro("/focus mouseover")
         end
     elseif focus.exists and not UnitIsUnit("target","mouseover") and not UnitIsUnit("focus","mouseover") and focus.hasMyDebuff(kps.spells.priest.shadowWordPain) and focus.hasMyDebuff(kps.spells.priest.vampiricTouch) then
-        if not mouseover.hasMyDebuff(kps.spells.priest.shadowWordPain) and mouseover.isAttackable and mouseover.inCombat then
-            kps.runMacro("/focus mouseover")
-        elseif not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) and mouseover.isAttackable and mouseover.inCombat then
+        if not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) and mouseover.isAttackable and mouseover.inCombat then
             kps.runMacro("/focus mouseover")
         end
     end
