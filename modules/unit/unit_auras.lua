@@ -132,7 +132,7 @@ __index = function(t, unit)
             i = i + 1
             auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
         end
-       return 0
+        return 0
     end
     t[unit] = val
     return val
@@ -161,7 +161,7 @@ __index = function(t, unit)
             i = i + 1
             auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
         end
-       return 0
+        return 0
     end
     t[unit] = val
     return val
@@ -555,3 +555,23 @@ function Unit.isStealable(self)
     end
     return false
 end
+
+--[[[
+@function `<UNIT>.isControlled` - return true if the ENEMY unit has a CC debuff
+]]--
+
+function Unit.isControlled(self)
+	local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+	local i = 1
+	auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
+	while auraName do
+		local crowdControl = kps.spells.crowdControl[spellId]
+		if crowdControl ~= nil then
+			if crowdControl == "CC" then return true end
+		end
+		i = i + 1
+		auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
+	end
+	return false
+end
+

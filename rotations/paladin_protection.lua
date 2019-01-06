@@ -84,7 +84,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
     -- "Avenger's Valor" --"Vaillance du vengeur" -- Buff Increases the effects of your next Shield of the Righteous by 20%.
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and player.hp < 0.95' , "target" , "shieldOfTheRighteous_incomingDamage"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor)' , "target" , "shieldOfTheRighteous_avengersValor"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and player.incomingDamage > player.incomingHeal' , "target" , "shieldOfTheRighteous_avengersValor"},
 
     -- "Bouclier du vengeur" -- "Avenger's Shield" -- Augmente de 20% les effets de votre prochain Bouclier du vertueux. -- dégâts du Sacré, avant de rebondir sur 2 ennemis proches supplémentaires.
     {spells.avengersShield, 'spells.avengersShield.isUsable and target.distance <= 10' , "target" , "avengersShield_isUsable" },

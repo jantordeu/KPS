@@ -638,9 +638,9 @@ local importantUnitHasNotBuff = function (spell)
         if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
                 return player
-            elseif player.guid == kps["env"].player.guid and player.hp < 0.85 then
+            elseif player.guid == kps["env"].player.guid and player.hp < 0.90 then
                 return player  
-            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.85 then
+            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.80 then
                 return player
             end
         end
@@ -654,9 +654,9 @@ local importantUnitHasNotBuffCount = function (spell)
         if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
                 count = count + 1
-            elseif player.guid == kps["env"].player.guid and player.hp < 0.85 then
+            elseif player.guid == kps["env"].player.guid and player.hp < 0.90 then
                 count = count + 1  
-            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.85 then
+            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.80 then
                 count = count + 1
             end
         end
@@ -738,11 +738,14 @@ print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"/",kps
 print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"/",kps["env"].heal.lowestUnitInRaid.hp)
 --print("|cffff8000CountLossDistance_85:|cffffffff", kps["env"].heal.countLossInDistance(0.85,10))
 print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90),"|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
-
 print("|cff1eff00HEAL:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
 print("|cFFFF0000DMG:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
-
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
+
+--local posX, posY  = C_Map.GetPlayerMapPosition(C_Map.GetBestMapForUnit("player"), "player"):GetXY()
+--print("|cffff8000isFacing:|cffffffff", posX, posY )
+
+
 --print("|cffff8000plateCountvampiricTouch:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 --print("|cffff8000plateCountshadowWordPain:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.shadowWordPain))
 --local plateTable = kps["env"].player.plateTable

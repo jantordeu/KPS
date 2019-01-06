@@ -117,7 +117,7 @@ function kps.env.priest.damageTarget()
     elseif UnitIsAttackable("focus") then return "focus"
     elseif UnitIsAttackable("focustarget") then return "focustarget"
     elseif UnitIsAttackable("mouseovertarget") then return "mouseovertarget"
-    else return "target"
+    else return kps.env.heal.enemyTarget
     end
 end
 
@@ -142,10 +142,8 @@ function kps.env.priest.FocusMouseoverShadow()
     if not focus.exists and not UnitIsUnit("target","mouseover") and mouseover.isAttackable and mouseover.inCombat then
         if not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) then
             kps.runMacro("/focus mouseover")
-        else
-            kps.runMacro("/focus mouseover")
         end
-    elseif focus.exists and not UnitIsUnit("target","mouseover") and not UnitIsUnit("focus","mouseover") and focus.hasMyDebuff(kps.spells.priest.shadowWordPain) and focus.hasMyDebuff(kps.spells.priest.vampiricTouch) then
+    elseif focus.exists and not UnitIsUnit("target","mouseover") and not UnitIsUnit("focus","mouseover") and focus.myDebuffDuration(kps.spells.priest.shadowWordPain) > 4.8 and focus.myDebuffDuration(kps.spells.priest.vampiricTouch) > 6.3 then
         if not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) and mouseover.isAttackable and mouseover.inCombat then
             kps.runMacro("/focus mouseover")
         end
