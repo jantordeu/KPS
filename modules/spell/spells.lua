@@ -145,8 +145,6 @@ kps.spells.bossDebuff.deathwish = kps.Spell.fromId(274271) -- Magic
 --kps.spells.bossDebuff.pitOfDespair = kps.Spell.fromId(276031) -- Curse
 
 
-
-
 -- ignore Aura Buff
 kps.spells.ignoreAura = {}
 kps.spells.ignoreAura.divineShield = kps.Spell.fromId(642)

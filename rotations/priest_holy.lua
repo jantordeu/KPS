@@ -144,7 +144,8 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.circleOfHealing, 'heal.lowestTankInRaid.hp < 0.80 and player.isMoving' , kps.heal.lowestTankInRaid },
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.80) > 4' , kps.heal.lowestInRaid },
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.80)*2 > heal.countInRange' , kps.heal.lowestInRaid },
-    {spells.divineStar, 'player.hasTalent(6,2) and targettarget.isHealable and targettarget.hp < 0.80 and target.isAttackable and target.distance <= 30' , "target" },
+    {spells.divineStar, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 4 and target.isAttackable and target.distance <= 30' , "target" },
+    {spells.divineStar, 'player.hasTalent(6,2) and heal.countLossInRange(0.80)*2 > heal.countInRange and target.isAttackable and target.distance <= 30' , "target" },
 
     -- "Holy Word: Sanctify" -- macro does not work for @target, @mouseover... ONLY @cursor and @player -- Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew
     {{"macro"}, 'player.hasTalent(5,3) and mouseover.isAttackable and mouseovertarget.isHealable and mouseovertarget.isTankInRaid', "/cast [@cursor] "..HolyWordSanctify },

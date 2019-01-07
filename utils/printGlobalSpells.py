@@ -101,6 +101,6 @@ spells.group("absorptionHeal","Absorption Heal")
 spells.absorptionHeal.add_all_spells([244093, 235933, 233263, 248396, 245586])
 
 spells.group("ignoreAura","ignore Aura")
-spells.immuneHeal.add_all_spells([642,47585,45438,216890,212295,31224,186265,48707,196555,213602])
+spells.ignoreAura.add_all_spells([642,47585,45438,216890,212295,31224,186265,48707,196555,213602])
 
 print(spells)

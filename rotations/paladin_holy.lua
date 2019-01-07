@@ -13,7 +13,6 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.divineShield, 'spells.blessingOfSacrifice.lastCasted(4) and player.hp < 0.55' , "player" },
     {spells.divineShield, 'player.hp < 0.30' , "player" },
     {spells.divineShield, 'player.isTarget and target.isRaidBoss' , "player" },
-    {spells.divineShield, 'mouseover.isHealable and not mouseover.isTankInRaid and mouseover.hp < 0.65' ,"mouseover" },
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec. during that time the caster also cannot attack or use spells.
     {spells.divineProtection, 'spells.blessingOfSacrifice.lastCasted(4) and player.hp < 0.55 and not player.hasBuff(spells.divineShield)' , "player" },
     {spells.divineProtection, 'player.hp < 0.30 and not player.hasBuff(spells.divineShield)' , "player" },
