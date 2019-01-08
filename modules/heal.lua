@@ -764,7 +764,6 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --print("voidEruptionusable:", voidEruption.isUsable)
 --print("voidBoltusable:", voidBolt.isUsable)
 
-
 --print("|cffff8000averageHeal:|cffffffff", kps["env"].heal.averageHealthRaid)
 --print("|cffff8000incomingHeal:|cffffffff", kps["env"].heal.incomingHealthRaid)
 --print("|cffff8000lossHealth:|cffffffff", kps["env"].heal.lossHealthRaid)
