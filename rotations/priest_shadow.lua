@@ -73,7 +73,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.powerWordShield, 'player.hp < 0.40 and not player.hasBuff(spells.powerWordShield) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
      -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },
-    --{spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
+    --{spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
     
     {{"macro"}, 'player.hasTalent(5,3) and mouseover.isAttackable', "/cast [@cursor] "..ShadowCrash },
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20 and target.isAttackable' , "target" },
@@ -85,8 +85,8 @@ kps.rotations.register("PRIEST","SHADOW",{
 
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.mindFlay.cooldownTotal == 0' , "/stopcasting" },
     {spells.voidBolt , "player.hasBuff(spells.voidForm)" , env.damageTarget },
-    {spells.shadowfiend, 'target.isAttackable and player.buffStacks(spells.voidForm) > 5' , env.damageTarget },
-    {spells.mindbender, 'target.isAttackable and player.buffStacks(spells.voidForm) > 5' , env.damageTarget }, 
+    {spells.shadowfiend, 'target.isAttackable and player.buffStacks(spells.voidForm) > 4' , env.damageTarget },
+    {spells.mindbender, 'target.isAttackable and player.buffStacks(spells.voidForm) > 4' , env.damageTarget }, 
 
     {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and target.isAttackable and not spells.vampiricTouch.isRecastAt("target")' , env.damageTarget },
     {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < 4.8 and target.isAttackable' , env.damageTarget },

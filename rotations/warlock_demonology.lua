@@ -15,6 +15,7 @@ local buildShard = {
     --actions.build_a_shard+=/shadow_bolt
     {spells.shadowBolt},
 }
+
 kps.rotations.register("WARLOCK","DEMONOLOGY",
 {
     -- Deactivate Burning Rush if not moving for 1 second

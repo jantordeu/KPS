@@ -22,22 +22,22 @@ kps.rotations.register("MONK","WINDWALKER",
 -- ERROR in 'strike_of_the_windlord,if=artifact.strike_of_the_windlord.enabled': Unknown expression 'artifact.strike_of_the_windlord.enabled'!
     {spells.whirlingDragonPunch}, -- whirling_dragon_punch
     {spells.fistsOfFury}, -- fists_of_fury
-    {{"nested"}, 'activeEnemies.count < 3', { -- call_action_list,name=st,if=active_enemies<3
-        {spells.risingSunKick}, -- rising_sun_kick
-        {spells.strikeOfTheWindlord}, -- strike_of_the_windlord
-        {spells.rushingJadeWind, 'player.chi > 1 and not spells.rushingJadeWind.isRecastAt("target")'}, -- rushing_jade_wind,if=chi>1&!prev_gcd.rushing_jade_wind
-        {spells.chiWave, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_wave,if=energy.time_to_max>2|buff.serenity.down
-        {spells.chiBurst, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_burst,if=energy.time_to_max>2|buff.serenity.down
+
+    {spells.risingSunKick}, -- rising_sun_kick
+    {spells.strikeOfTheWindlord}, -- strike_of_the_windlord
+    {spells.rushingJadeWind, 'player.chi > 1 and not spells.rushingJadeWind.isRecastAt("target")'}, -- rushing_jade_wind,if=chi>1&!prev_gcd.rushing_jade_wind
+    {spells.chiWave, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_wave,if=energy.time_to_max>2|buff.serenity.down
+    {spells.chiBurst, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_burst,if=energy.time_to_max>2|buff.serenity.down
 -- ERROR in 'blackout_kick,if=(chi>1|buff.bok_proc.up)&buff.serenity.down&!prev_gcd.blackout_kick': Spell 'kps.spells.monk.bokProc' unknown (in expression: 'buff.bok_proc.up')!
-        {spells.tigerPalm, '( not player.hasBuff(spells.serenity) and player.chi <= 2 ) and not spells.tigerPalm.isRecastAt("target")'}, -- tiger_palm,if=(buff.serenity.down&chi<=2)&!prev_gcd.tiger_palm
-    }},
-    {{"nested"}, 'activeEnemies.count >= 3', { -- call_action_list,name=aoe,if=active_enemies>=3
-        {spells.spinningCraneKick, 'not spells.spinningCraneKick.isRecastAt("target")'}, -- spinning_crane_kick,if=!prev_gcd.spinning_crane_kick
-        {spells.strikeOfTheWindlord}, -- strike_of_the_windlord
-        {spells.rushingJadeWind, 'player.chi >= 2 and not spells.rushingJadeWind.isRecastAt("target")'}, -- rushing_jade_wind,if=chi>=2&!prev_gcd.rushing_jade_wind
-        {spells.chiWave, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_wave,if=energy.time_to_max>2|buff.serenity.down
-        {spells.chiBurst, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_burst,if=energy.time_to_max>2|buff.serenity.down
-        {spells.tigerPalm, '( not player.hasBuff(spells.serenity) and player.chi <= 2 ) and not spells.tigerPalm.isRecastAt("target")'}, -- tiger_palm,if=(buff.serenity.down&chi<=2)&!prev_gcd.tiger_palm
-    }},
+    {spells.tigerPalm, '( not player.hasBuff(spells.serenity) and player.chi <= 2 ) and not spells.tigerPalm.isRecastAt("target")'}, -- tiger_palm,if=(buff.serenity.down&chi<=2)&!prev_gcd.tiger_palm
+
+
+    {spells.spinningCraneKick, 'not spells.spinningCraneKick.isRecastAt("target")'}, -- spinning_crane_kick,if=!prev_gcd.spinning_crane_kick
+    {spells.strikeOfTheWindlord}, -- strike_of_the_windlord
+    {spells.rushingJadeWind, 'player.chi >= 2 and not spells.rushingJadeWind.isRecastAt("target")'}, -- rushing_jade_wind,if=chi>=2&!prev_gcd.rushing_jade_wind
+    {spells.chiWave, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_wave,if=energy.time_to_max>2|buff.serenity.down
+    {spells.chiBurst, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_burst,if=energy.time_to_max>2|buff.serenity.down
+    {spells.tigerPalm, '( not player.hasBuff(spells.serenity) and player.chi <= 2 ) and not spells.tigerPalm.isRecastAt("target")'}, -- tiger_palm,if=(buff.serenity.down&chi<=2)&!prev_gcd.tiger_palm
+
 }
 ,"monk_windwalker.simc")

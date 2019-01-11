@@ -174,7 +174,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.powerWordShield, 'heal.hasNotBuffAtonementImportantUnit' , kps.heal.hasNotBuffAtonementImportantUnit , "hasNotBuffAtonementImportantUnit" },
 
     {spells.shadowWordPain, 'target.isAttackable and not target.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("target")' , "target" },
-    {spells.powerWordSolace, 'player.hasTalent(3,3)' , env.damageTarget },
+    {spells.powerWordSolace, 'player.hasTalent(3,3) and heal.hasBuffAtonement.hp < 1' , env.damageTarget },
     {spells.penance, 'heal.hasBuffAtonement.hp < 0.80' , env.damageTarget , "penance_offensive" },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.55' , env.damageTarget },
     {spells.shadowMend, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.55', kps.heal.lowestInRaid ,  "shadowMend_lowest" },

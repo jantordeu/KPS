@@ -49,7 +49,8 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
-    {spells.ardentDefender, 'player.hp < 0.55 and player.incomingDamage > player.incomingHeal' },    
+    {spells.ardentDefender, 'player.hp < 0.55 and player.incomingDamage > player.incomingHeal' },  
+    {spells.ardentDefender, 'target.isRaidBoss and target.isCasting and player.incomingDamage > player.incomingHeal' },   
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
     {spells.blessingOfProtection, 'mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
     {spells.blessingOfProtection, 'player.hp < 0.55 and not player.hasBuff(spells.ardentDefender)' , "player"},

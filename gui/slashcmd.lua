@@ -75,11 +75,11 @@ end
 -- 12110 argus heroic
 -- 11992 garothi mythic
 -- 12524 taloc mythic
+-- 12536 G'huun heroique
 
 function fakeAchievement(id)
     local _, name = GetAchievementInfo(id)
     local link = "\124cffffff00\124Hachievement:"..id..":"..string.gsub(UnitGUID("player"), '0x', '')..":1:12:14:18:4294967295:4294967295:4294967295:4294967295\124h["..name.."]\124h\124r"
-    --local link = "\124cffffff00\124Hachievement:12110:"..string.gsub(UnitGUID("player"), '0x', '')..":1:4:25:18:4294967295:4294967295:4294967295:4294967295\124h["..name.."]\124h\124r"
     ChatEdit_InsertLink(link)
 end
 

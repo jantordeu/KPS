@@ -64,9 +64,12 @@ kps.rotations.register("PALADIN","RETRIBUTION",
    
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower > 2 and player.myBuffDuration(spells.inquisition) <= 20 and target.isAttackable' , "target" , "inquisition" },
     {spells.wakeOfAshes, 'player.hasBuff(spells.avengingWrath) and target.isAttackable and target.distance <= 10' , "target" },
-    {spells.wakeOfAshes, 'player.holyPower <= 1 and spells.avengingWrath.cooldown > 45 and target.isAttackable and target.distance <= 10' , "target" , "wakeOfAshes_holyPower"},
+    {spells.wakeOfAshes, 'player.hasBuff(spells.crusade) and target.isAttackable and target.distance <= 10' , "target" },
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and not player.hasTalent(7,2) and spells.avengingWrath.cooldown > 45 and target.isAttackable and target.distance <= 10' , "target" , "wakeOfAshes_holyPower"},
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and player.hasTalent(7,2) and spells.crusade.cooldown > 45 and target.isAttackable and target.distance <= 10' , "target" , "wakeOfAshes_holyPower"},
     {spells.avengingWrath, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.isAttackable and target.distance <= 10' , "target" },
-    {spells.avengingWrath, 'not player.hasTalent(7,3)' },
+    {spells.avengingWrath, 'player.hasTalent(7,1)' },
+    {spells.crusade, 'player.hasTalent(7,2)' }, -- replace avengingWrath
 
     -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.
     -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
