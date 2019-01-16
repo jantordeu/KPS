@@ -637,9 +637,7 @@ local importantUnitHasNotBuff = function (spell)
     for name,player in pairs(raidStatus) do
         if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
-                return player
-            elseif player.guid == kps["env"].player.guid and player.hp < 0.90 then
-                return player  
+                return player 
             elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.80 then
                 return player
             end
@@ -654,8 +652,6 @@ local importantUnitHasNotBuffCount = function (spell)
         if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
                 count = count + 1
-            elseif player.guid == kps["env"].player.guid and player.hp < 0.90 then
-                count = count + 1  
             elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.80 then
                 count = count + 1
             end
@@ -745,6 +741,7 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --local posX, posY  = C_Map.GetPlayerMapPosition(C_Map.GetBestMapForUnit("player"), "player"):GetXY()
 --print("|cffff8000isFacing:|cffffffff", posX, posY )
 
+print("|cffff8000UnitCount:|cffffffff", kps["env"].heal.hasNotBuffAtonementImportantUnitCount) 
 
 --print("|cffff8000plateCountvampiricTouch:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 --print("|cffff8000plateCountshadowWordPain:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.shadowWordPain))

@@ -61,8 +61,8 @@ kps.rotations.register("PRIEST","SHADOW",{
     }},
 
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
-    {{"macro"}, 'player.useTrinket(0) and player.hasBuff(spells.voidForm)' , "/use 13"},
-    {{"macro"}, 'player.useTrinket(1) and player.hasBuff(spells.voidForm)' , "/use 14"},
+    {{"macro"}, 'player.useTrinket(0) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , "/use 13"},
+    {{"macro"}, 'player.useTrinket(1) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , "/use 14"},
 
     -- "Levitate" 1706
     {spells.levitate, 'player.isFallingFor(1.4) and not player.hasBuff(spells.levitate)' , "player" },
@@ -77,30 +77,28 @@ kps.rotations.register("PRIEST","SHADOW",{
     
     {{"macro"}, 'player.hasTalent(5,3) and mouseover.isAttackable', "/cast [@cursor] "..ShadowCrash },
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20 and target.isAttackable' , "target" },
-    {{"nested"}, 'not player.hasBuff(spells.voidForm) and not player.isMoving and not spells.voidEruption.isUsable',{
-        {spells.darkVoid, 'player.hasTalent(3,3)' , env.damageTarget , "darkVoid" },
-        {{"macro"}, 'spells.mindBlast.cooldown == 0 and spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.mindFlay.cooldownTotal == 0' , "/stopcasting" },
-        {spells.mindBlast, 'true' , env.damageTarget },
-    }},
-
-    {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.mindFlay.cooldownTotal == 0' , "/stopcasting" },
-    {spells.voidBolt , "player.hasBuff(spells.voidForm)" , env.damageTarget },
-    {spells.shadowfiend, 'target.isAttackable and player.buffStacks(spells.voidForm) > 4' , env.damageTarget },
-    {spells.mindbender, 'target.isAttackable and player.buffStacks(spells.voidForm) > 4' , env.damageTarget }, 
-
+    
+    {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
+    {spells.voidBolt , 'player.hasBuff(spells.voidForm)' , env.damageTarget },
+    {spells.shadowfiend, 'player.buffStacks(spells.voidForm) > 4' , env.damageTarget },
+    {spells.mindbender, 'player.buffStacks(spells.voidForm) > 4' , env.damageTarget },
+    
+    {spells.darkVoid, 'player.hasTalent(3,3) and not player.hasBuff(spells.voidForm) and not player.isMoving' , env.damageTarget , "darkVoid" },
+    {spells.mindBlast, 'not player.hasBuff(spells.voidForm) and not player.isMoving and not spells.voidEruption.isUsable' , env.damageTarget },
     {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and target.isAttackable and not spells.vampiricTouch.isRecastAt("target")' , env.damageTarget },
     {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < 4.8 and target.isAttackable' , env.damageTarget },
 
-    {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity > 50 and player.insanity < 90' , "target" , "darkAscension" },
+    {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity < 90' , "target" , "darkAscension" },
     {spells.voidEruption, 'spells.voidEruption.isUsable and not player.hasBuff(spells.voidForm)' , "target" , "insanity_usable" },
-
+    
     {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount > 4' , env.damageTarget },
+
     {spells.vampiricTouch, 'not player.isMoving and focus.myDebuffDuration(spells.vampiricTouch) < 6.3 and focus.isAttackable and not spells.vampiricTouch.isRecastAt("focus")' , 'focus' },
     {spells.shadowWordPain, 'focus.myDebuffDuration(spells.shadowWordPain) < 4.8 and focus.isAttackable' , 'focus' },
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("mouseover")' , 'mouseover' },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4.8' , 'mouseover' },
 
-    {{"macro"}, 'spells.mindBlast.cooldown == 0 and spells.mindFlay.castTimeLeft("player") > kps.gcd and spells.mindFlay.cooldownTotal == 0' , "/stopcasting" },
+    --{{"macro"}, 'spells.mindBlast.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
     {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
     {spells.mindFlay, 'not player.isMoving ' , env.damageTarget },
 
