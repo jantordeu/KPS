@@ -502,7 +502,7 @@ end
 @function `<UNIT>.immuneDamage` - returns true if the unit has an aura to avoid damaging
 ]]--
 function Unit.immuneDamage(self)
-    for _,spell in pairs(kps.spells.ignoreAura) do
+    for _,spell in pairs(kps.spells.immuneDamage) do
         if self.hasBuff(spell) then return true end
     end
     return false

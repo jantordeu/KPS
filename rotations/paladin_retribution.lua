@@ -63,8 +63,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.shieldOfVengeance, 'player.plateCount >= 3 and target.distance <= 10'},
    
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower > 2 and player.myBuffDuration(spells.inquisition) <= 20 and target.isAttackable' , "target" , "inquisition" },
-    {spells.wakeOfAshes, 'player.hasBuff(spells.avengingWrath) and target.isAttackable and target.distance <= 10' , "target" },
-    {spells.wakeOfAshes, 'player.hasBuff(spells.crusade) and target.isAttackable and target.distance <= 10' , "target" },
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and player.hasBuff(spells.avengingWrath) and target.isAttackable and target.distance <= 10' , "target" },
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and player.hasBuff(spells.crusade) and target.isAttackable and target.distance <= 10' , "target" },
     {spells.wakeOfAshes, 'player.holyPower <= 1 and not player.hasTalent(7,2) and spells.avengingWrath.cooldown > 45 and target.isAttackable and target.distance <= 10' , "target" , "wakeOfAshes_holyPower"},
     {spells.wakeOfAshes, 'player.holyPower <= 1 and player.hasTalent(7,2) and spells.crusade.cooldown > 45 and target.isAttackable and target.distance <= 10' , "target" , "wakeOfAshes_holyPower"},
     {spells.avengingWrath, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.isAttackable and target.distance <= 10' , "target" },
@@ -76,12 +76,9 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- Templar's Verdict or Divine Storm at 3-4 Holy Power if following spells/buffs are active: Divine Purpose, Avenging Wrath/Crusade, Execution Sentence.
     -- Righteous Verdict Talent(1,2) -- Templar's Verdict increases the damage of your next Templar's Verdict by 15% for 6 sec.
 
-    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm_holyPower5" },
-    {spells.divineStorm, 'player.hasBuff(spells.avengingWrath) and player.plateCount > 2 and target.isAttackable' , "divineStorm_avengingWrath" },
+    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower) and target.isAttackable' , "target" , "divineStorm_empyreanPower" },
-
-    {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict_holyPower5" },
-    {spells.templarsVerdict, 'player.hasBuff(spells.avengingWrath) and target.isAttackable' , "templarsVerdict_avengingWrath" },
+    {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
     {spells.templarsVerdict, 'player.hasTalent(1,2) and player.hasBuff(spells.righteousVerdict) and target.isAttackable' , "target" , "templarsVerdict_righteousVerdict" },
 
     {spells.judgment, 'target.isAttackable' , "target" }, -- 10 sec cd -- Generates 1 Holy Power

@@ -146,16 +146,21 @@ kps.spells.bossDebuff.deathwish = kps.Spell.fromId(274271) -- Magic
 
 
 -- ignore Aura Buff
-kps.spells.ignoreAura = {}
-kps.spells.ignoreAura.divineShield = kps.Spell.fromId(642)
-kps.spells.ignoreAura.dispersion = kps.Spell.fromId(47585)
-kps.spells.ignoreAura.iceBlock = kps.Spell.fromId(45438)
-kps.spells.ignoreAura.spellReflection = kps.Spell.fromId(216890)
-kps.spells.ignoreAura.netherWard = kps.Spell.fromId(212295)
-kps.spells.ignoreAura.cloakOfShadows = kps.Spell.fromId(31224)
-kps.spells.ignoreAura.aspectOfTheTurtle = kps.Spell.fromId(186265)
-kps.spells.ignoreAura.antiMagicShell = kps.Spell.fromId(48707)
-kps.spells.ignoreAura.netherwalk = kps.Spell.fromId(196555)
-kps.spells.ignoreAura.greaterFade = kps.Spell.fromId(213602)
+kps.spells.immuneDamage = {}
+kps.spells.immuneDamage.divineShield = kps.Spell.fromId(642)
+kps.spells.immuneDamage.dispersion = kps.Spell.fromId(47585)
+kps.spells.immuneDamage.iceBlock = kps.Spell.fromId(45438)
+kps.spells.immuneDamage.spellReflection = kps.Spell.fromId(216890)
+kps.spells.immuneDamage.netherWard = kps.Spell.fromId(212295)
+kps.spells.immuneDamage.cloakOfShadows = kps.Spell.fromId(31224)
+kps.spells.immuneDamage.aspectOfTheTurtle = kps.Spell.fromId(186265)
+kps.spells.immuneDamage.antiMagicShell = kps.Spell.fromId(48707)
+kps.spells.immuneDamage.netherwalk = kps.Spell.fromId(196555)
+kps.spells.immuneDamage.greaterFade = kps.Spell.fromId(213602)
+
+-- Spells outside gcd or clipping spell cast
+kps.spells.fillerSpell = {}
+kps.spells.fillerSpell.mindFlay = kps.Spell.fromId(15407)
+
 
 

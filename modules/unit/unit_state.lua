@@ -21,6 +21,7 @@ function Unit.isAttackable(self)
     if not UnitCanAttack("player", self.unit) then return false end -- UnitCanAttack(attacker, attacked) return 1 if the attacker can attack the attacked, nil otherwise.
     if UnitIsFriend("player", self.unit) then return false end
     if not Unit.lineOfSight(self) then return false end
+    if Unit.immuneDamage(self) then return false end
     if not kps.env.harmSpell.inRange(self.unit) then return false end
     return true
 end

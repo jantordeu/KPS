@@ -62,9 +62,9 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"nested"}, 'kps.pauseRotation',{
         {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
         {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
-        {spells.judgment, 'target.isAttackable and target.distance < 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
-        {spells.consecration, 'not player.isMoving and not target.hasMyDebuff(spells.consecration) and target.distance <= 10' , "target" , "consecration_target" },
-        {spells.hammerOfTheRighteous, 'not player.hasTalent(1,3) and player.hasBuff(spells.consecration) and target.distance <= 10', "target" , "hammerOfTheRighteous" },
+        {spells.judgment, 'target.isAttackable and target.distance < 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" , "judgment_pause" },
+        {spells.hammerOfTheRighteous, 'player.hasBuff(spells.consecration) and target.distance <= 10', "target" , "hammerOfTheRighteous_pause" },
+        {spells.consecration, 'not player.isMoving and not target.hasMyDebuff(spells.consecration) and target.distance <= 10' , "target" , "consecration_pause" },
     }},
     {{"pause"}, 'kps.pauseRotation', 2},
     -- "Hand of Reckoning" -- taunt

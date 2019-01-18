@@ -24,53 +24,36 @@ kps.rotations.register("WARLOCK","AFFLICTION",
 
     { {"macro"}, "player.useTrinket(0)" , "/use 13"},
     { {"macro"}, "player.useTrinket(1)" , "/use 14"},
+    -- "Pierre de soins" 5512
+    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" }, 
+    
+    {spells.summonDarkglare, 'not player.isMoving and target.hasMyDebuff(spells.corruption) and player.soulShards == 0 and spells.phantomSingularity.cooldown > 0'},
 
-    -- Maintain Agony (on up to 3 targets, including Soul Effigy) at all times.
-    {spells.agony, 'target.myDebuffDuration(spells.agony) <= 7.2'},
-    {spells.agony, 'focus.myDebuffDuration(spells.agony) <= 7.2', 'focus'},
-    {spells.agony, 'mouseover.myDebuffDuration(spells.agony) <= 7.2', 'mouseover'},
-    {{"nested"}, 'kps.multiBoss', {
-        {spells.agony, 'boss1.myDebuffDuration(spells.agony) <= 7.2', 'boss1'},
-        {spells.agony, 'boss2.myDebuffDuration(spells.agony) <= 7.2', 'boss2'},
-        {spells.agony, 'boss3.myDebuffDuration(spells.agony) <= 7.2', 'boss3'},
-        {spells.agony, 'boss4.myDebuffDuration(spells.agony) <= 7.2', 'boss4'},
-    }},
-
+-- Maintain Agony (on up to 3 targets, including Soul Effigy) at all times.
+    {spells.agony, 'target.myDebuffDuration(spells.agony) < 5.4'},
+    {spells.agony, 'focus.myDebuffDuration(spells.agony) < 5.4', 'focus'},
+    {spells.agony, 'mouseover.myDebuffDuration(spells.agony) < 5.4', 'mouseover'},
     -- Maintain Corruption (on up to 3 targets, including Soul Effigy) at all times and all bosses.
     {{"nested"}, 'player.hasTalent(2, 2)', {
         {spells.corruption, 'not target.hasMyDebuff(spells.corruption)'},
         {spells.corruption, 'not focus.hasMyDebuff(spells.corruption)', 'focus'},
         {spells.corruption, 'not mouseover.hasMyDebuff(spells.corruption)', 'mouseover'},
-        {{"nested"}, 'kps.multiBoss', {
-            {spells.corruption, 'boss1.hasMyDebuff(spells.corruption)', 'boss1'},
-            {spells.corruption, 'boss2.hasMyDebuff(spells.agony)', 'boss2'},
-            {spells.corruption, 'boss3.hasMyDebuff(spells.agony)', 'boss3'},
-            {spells.corruption, 'boss4.hasMyDebuff(spells.agony)', 'boss4'},
-        }},
     }},
     {{"nested"}, 'not player.hasTalent(2, 2)', {
-        {spells.corruption, 'target.myDebuffDuration(spells.corruption) <= 5.4'},
-        {spells.corruption, 'focus.myDebuffDuration(spells.corruption) <= 5.4', 'focus'},
-        {spells.corruption, 'mouseover.myDebuffDuration(spells.corruption) <= 5.4', 'mouseover'},
-        {{"nested"}, 'kps.multiBoss', {
-            {spells.corruption, 'boss1.myDebuffDuration(spells.corruption) <= 5.4', 'boss1'},
-            {spells.corruption, 'boss2.myDebuffDuration(spells.corruption) <= 5.4', 'boss2'},
-            {spells.corruption, 'boss3.myDebuffDuration(spells.corruption) <= 5.4', 'boss3'},
-            {spells.corruption, 'boss4.myDebuffDuration(spells.corruption) <= 5.4', 'boss4'},
-        }},
+        {spells.corruption, 'target.myDebuffDuration(spells.corruption) < 4.2'},
+        {spells.corruption, 'focus.myDebuffDuration(spells.corruption) < 4.2', 'focus'},
+        {spells.corruption, 'mouseover.myDebuffDuration(spells.corruption) < 4.2', 'mouseover'},
     }},
     -- Maintain Siphon Life
     {{"nested"}, 'player.hasTalent(2, 3)', {
-        {spells.siphonLife, 'target.myDebuffDuration(spells.siphonLife) <= 5.4'},
-        {spells.siphonLife, 'focus.myDebuffDuration(spells.siphonLife) <= 5.4', 'focus'},
-        {spells.siphonLife, 'mouseover.myDebuffDuration(spells.siphonLife) <= 5.4', 'mouseover'},
-        {{"nested"}, 'kps.multiBoss', {
-            {spells.siphonLife, 'boss1.myDebuffDuration(spells.siphonLife) <= 5.4', 'boss1'},
-            {spells.siphonLife, 'boss2.myDebuffDuration(spells.siphonLife) <= 5.4', 'boss2'},
-            {spells.siphonLife, 'boss3.myDebuffDuration(spells.siphonLife) <= 5.4', 'boss3'},
-            {spells.siphonLife, 'boss4.myDebuffDuration(spells.siphonLife) <= 5.4', 'boss4'},
-        }},
+        {spells.siphonLife, 'target.myDebuffDuration(spells.siphonLife) < 4.5'},
+        {spells.siphonLife, 'focus.myDebuffDuration(spells.siphonLife) < 4.5', 'focus'},
+        {spells.siphonLife, 'mouseover.myDebuffDuration(spells.siphonLife) < 4.5', 'mouseover'},
     }},
+
+    {spells.darkSoulMisery, 'player.soulShards >= 3'},   
+    {spells.healthFunnel, 'player.hp > 0.90 and pet.hp < 0.55' , "pet" },
+    {spells.seedOfCorruption, 'player.soulShards >= 3 and player.plateCount > 3'},  
     -- Cast Unstable Affliction if you reach 5 Soul Shards.
     {spells.unstableAffliction, 'player.soulShards >= 5'},
     -- Cast Haunt whenever available.
@@ -78,12 +61,13 @@ kps.rotations.register("WARLOCK","AFFLICTION",
     -- Cast Phantom Singularity whenever available
     {spells.phantomSingularity, 'player.hasTalent(4, 2)' },
     --  Apply one Unstable Affliction immediately before casting Deathbolt.
-    {spells.unstableAffliction, 'player.soulShards >= 1 and spells.deathbolt.cooldown <= 1.4 and spells.deathbolt.cooldown > 0'},
+    {{spells.unstableAffliction,spells.deathbolt}, 'player.soulShards >= 1'},
     -- Cast Deathbolt whenever available. Apply one Unstable Affliction immediately before casting Deathbolt.
     {spells.deathbolt},
     -- Maintain 1 Unstable Affliction as often as possible for the damage increase.
     {spells.unstableAffliction, 'player.soulShards >= 1 and target.myDebuffDuration(spells.unstableAffliction) <= 1.4'},
     -- Cast Drain Life/Drain Soul as a filler. (Spell names don't matter!)
+    {spells.drainLife, 'player.hp < 0.55' },
     {spells.shadowBolt},
 }
 ,"Icy Veins Raid", {3,-1,0,2,0,2,2})
@@ -99,90 +83,57 @@ kps.rotations.register("WARLOCK","AFFLICTION",
     {{"macro"}, 'not focus.isAttackable' , "/clearfocus" },
     -- Deactivate Burning Rush if not moving for 1 second
     env.deactivateBurningRushIfNotMoving(1),
+        
+    {spells.summonDarkglare, 'not player.isMoving and target.hasMyDebuff(spells.corruption) and player.soulShards == 0 and spells.phantomSingularity.cooldown > 0'},
 
     { {"macro"}, "player.useTrinket(0)" , "/use 13"},
     { {"macro"}, "player.useTrinket(1)" , "/use 14"},
-        
-    {spells.summonDarkglare, 'not player.isMoving and target.hasMyDebuff(spells.corruption) and target.hasMyDebuff(spells.corruption) and (target.myDebuffCount==5 or player.soulShards==0) and spells.phantomSingularity.cooldown > 0'},
-    {spells.phantomSingularity, 'player.timeInCombat > 40 and spells.summonDarkglare.cooldown >= 45'},
-    {spells.phantomSingularity, 'spells.summonDarkglare.cooldown < 8'},
+        -- "Pierre de soins" 5512
+    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" }, 
 
     -- Maintain Agony (on up to 3 targets, including Soul Effigy) at all times.
-    {spells.agony, 'target.myDebuffDuration(spells.agony) <= 7.2'},
-    {spells.agony, 'focus.myDebuffDuration(spells.agony) <= 7.2', 'focus'},
-    {spells.agony, 'mouseover.myDebuffDuration(spells.agony) <= 7.2', 'mouseover'},
-    {{"nested"}, 'kps.multiBoss', {
-        {spells.agony, 'boss1.myDebuffDuration(spells.agony) <= 7.2', 'boss1'},
-        {spells.agony, 'boss2.myDebuffDuration(spells.agony) <= 7.2', 'boss2'},
-        {spells.agony, 'boss3.myDebuffDuration(spells.agony) <= 7.2', 'boss3'},
-        {spells.agony, 'boss4.myDebuffDuration(spells.agony) <= 7.2', 'boss4'},
-    }},
-
+    {spells.agony, 'target.myDebuffDuration(spells.agony) < 5.4'},
+    {spells.agony, 'focus.myDebuffDuration(spells.agony) < 5.4', 'focus'},
+    {spells.agony, 'mouseover.myDebuffDuration(spells.agony) < 5.4', 'mouseover'},
     -- Maintain Corruption (on up to 3 targets, including Soul Effigy) at all times and all bosses.
     {{"nested"}, 'player.hasTalent(2, 2)', {
         {spells.corruption, 'not target.hasMyDebuff(spells.corruption)'},
         {spells.corruption, 'not focus.hasMyDebuff(spells.corruption)', 'focus'},
         {spells.corruption, 'not mouseover.hasMyDebuff(spells.corruption)', 'mouseover'},
-        {{"nested"}, 'kps.multiBoss', {
-            {spells.corruption, 'boss1.hasMyDebuff(spells.corruption)', 'boss1'},
-            {spells.corruption, 'boss2.hasMyDebuff(spells.agony)', 'boss2'},
-            {spells.corruption, 'boss3.hasMyDebuff(spells.agony)', 'boss3'},
-            {spells.corruption, 'boss4.hasMyDebuff(spells.agony)', 'boss4'},
-        }},
     }},
     {{"nested"}, 'not player.hasTalent(2, 2)', {
-        {spells.corruption, 'target.myDebuffDuration(spells.corruption) <= 5.4'},
-        {spells.corruption, 'focus.myDebuffDuration(spells.corruption) <= 5.4', 'focus'},
-        {spells.corruption, 'mouseover.myDebuffDuration(spells.corruption) <= 5.4', 'mouseover'},
-        {{"nested"}, 'kps.multiBoss', {
-            {spells.corruption, 'boss1.myDebuffDuration(spells.corruption) <= 5.4', 'boss1'},
-            {spells.corruption, 'boss2.myDebuffDuration(spells.corruption) <= 5.4', 'boss2'},
-            {spells.corruption, 'boss3.myDebuffDuration(spells.corruption) <= 5.4', 'boss3'},
-            {spells.corruption, 'boss4.myDebuffDuration(spells.corruption) <= 5.4', 'boss4'},
-        }},
+        {spells.corruption, 'target.myDebuffDuration(spells.corruption) < 4.2'},
+        {spells.corruption, 'focus.myDebuffDuration(spells.corruption) < 4.2', 'focus'},
+        {spells.corruption, 'mouseover.myDebuffDuration(spells.corruption) < 4.2', 'mouseover'},
     }},
     -- Maintain Siphon Life
     {{"nested"}, 'player.hasTalent(2, 3)', {
-        {spells.siphonLife, 'target.myDebuffDuration(spells.siphonLife) <= 5.4'},
-        {spells.siphonLife, 'focus.myDebuffDuration(spells.siphonLife) <= 5.4', 'focus'},
-        {spells.siphonLife, 'mouseover.myDebuffDuration(spells.siphonLife) <= 5.4', 'mouseover'},
-        {{"nested"}, 'kps.multiBoss', {
-            {spells.siphonLife, 'boss1.myDebuffDuration(spells.siphonLife) <= 5.4', 'boss1'},
-            {spells.siphonLife, 'boss2.myDebuffDuration(spells.siphonLife) <= 5.4', 'boss2'},
-            {spells.siphonLife, 'boss3.myDebuffDuration(spells.siphonLife) <= 5.4', 'boss3'},
-            {spells.siphonLife, 'boss4.myDebuffDuration(spells.siphonLife) <= 5.4', 'boss4'},
-        }},
+        {spells.siphonLife, 'target.myDebuffDuration(spells.siphonLife) < 4.5'},
+        {spells.siphonLife, 'focus.myDebuffDuration(spells.siphonLife) < 4.5', 'focus'},
+        {spells.siphonLife, 'mouseover.myDebuffDuration(spells.siphonLife) < 4.5', 'mouseover'},
     }},
-    
+ 
+    {spells.darkSoulMisery, 'player.soulShards >= 3'},   
     {spells.healthFunnel, 'player.hp > 0.90 and pet.hp < 0.55' , "pet" },
-    
-    {spells.seedOfCorruption, 'player.plateCount > 3'},
-    
+    {spells.seedOfCorruption, 'player.soulShards >= 3 and player.plateCount > 3'},    
     -- Cast Unstable Affliction if you reach 5 Soul Shards.
     {spells.unstableAffliction, 'player.soulShards >= 5'},
     -- Cast Haunt whenever available.
     {spells.haunt, 'player.hasTalent(6, 2)' },
-     -- Cast Phantom Singularity whenever available
+    -- Cast Phantom Singularity whenever available
     {spells.phantomSingularity, 'player.hasTalent(4, 2)' },
-    -- Apply one Unstable Affliction immediately before casting Deathbolt.
-    {spells.unstableAffliction, 'player.soulShards >= 1 and spells.deathbolt.cooldown <= 1.4 and spells.deathbolt.cooldown > 0'},
+    --  Apply one Unstable Affliction immediately before casting Deathbolt.
+    {{spells.unstableAffliction,spells.deathbolt}, 'player.soulShards >= 1'},
     -- Cast Deathbolt whenever available. Apply one Unstable Affliction immediately before casting Deathbolt.
-    {spells.deathbolt},
+    {spells.deathbolt, 'spells.summonDarkglare.cooldown >= (30+player.gcd) or spells.summonDarkglare.cooldown >= 140'},
     -- Maintain 1 Unstable Affliction as often as possible for the damage increase.
     {spells.unstableAffliction, 'player.soulShards >= 1 and target.myDebuffDuration(spells.unstableAffliction) <= 1.4'},
-    
-
     {spells.unstableAffliction, 'spells.summonDarkglare.cooldown <= player.soulShards*spells.unstableAffliction.castTime'},
     {spells.unstableAffliction, 'target.myDebuffDuration(spells.unstableAffliction) <= spells.unstableAffliction.castTime'},
     {spells.unstableAffliction, 'spells.deathbolt.cooldown > player.timeToShard and target.myDebuffDuration(spells.unstableAffliction) <= spells.unstableAffliction.castTime'},
     {spells.unstableAffliction, 'player.soulShards > 1 and target.myDebuffDuration(spells.unstableAffliction) <= spells.unstableAffliction.castTime'},
-
-    {spells.darkSoulMisery, 'kps.cooldowns'},
-
-    {spells.agony, 'target.myDebuffDuration(spells.agony) <= 18 and spells.summonDarkglare.cooldown >= (30+player.gcd) and spells.deathbolt.cooldown <= player.gcd and not spells.agony.isRecastAt("target")'},
-    {spells.deathbolt, 'spells.summonDarkglare.cooldown >= (30+player.gcd) or spells.summonDarkglare.cooldown >= 140'},
-    {spells.agony, 'player.isMoving and target.myDebuffDuration(spells.agony) < 18 and not spells.agony.isRecastAt("target")'},
-    {spells.corruption, 'player.isMoving and target.myDebuffDuration(spells.corruption) < 16 and not spells.corruption.isRecastAt("target")'},
+    -- Cast Drain Life/Drain Soul as a filler. (Spell names don't matter!)
+    {spells.drainLife, 'player.hp < 0.55' },
     {spells.shadowBolt},
 
 }

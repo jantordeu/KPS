@@ -527,7 +527,7 @@ local unitHasBuff = function(spell)
     local lowestHp = 2
     local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) > 1 and unit.hp < lowestHp then
+        if unit.isHealable and unit.myBuffDuration(spell) > 2 and unit.hp < lowestHp then
             lowestHp = unit.hp
             lowestUnit = unit
         end
@@ -547,7 +547,7 @@ local unitHasNotBuff = function(spell)
     local lowestHp = 2
     local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) < 1 and unit.hp < lowestHp then
+        if unit.isHealable and unit.myBuffDuration(spell) < 2 and unit.hp < lowestHp then
             lowestHp = unit.hp
             lowestUnit = unit
         end
@@ -584,7 +584,7 @@ local unitHasBuffHealth = function(health)
     local maxcount = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) > 1 and unit.hp < health then
+        if unit.isHealable and unit.myBuffDuration(spell) > 2 and unit.hp < health then
             maxcount = maxcount + 1
         end
     end
@@ -603,7 +603,7 @@ local unitHasNotBuffHealth = function(health)
     local maxcount = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) < 1 and unit.hp < health then
+        if unit.isHealable and unit.myBuffDuration(spell) < 2 and unit.hp < health then
             maxcount = maxcount + 1
         end
     end
@@ -621,7 +621,7 @@ kps.RaidStatus.prototype.atonementHealthRaid = kps.utils.cachedValue(function()
     local hpTotal = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) > 1 then
+        if unit.isHealable and unit.myBuffDuration(spell) > 2 then
             local hpLoss = unit.hpMax - unit.hpTotal
             hpTotal = hpTotal + hpLoss
         end
@@ -635,9 +635,9 @@ end)
 
 local importantUnitHasNotBuff = function (spell)
     for name,player in pairs(raidStatus) do
-        if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
+        if player.isHealable and player.myBuffDuration(spell) < 2 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
-                return player 
+                return player
             elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.80 then
                 return player
             end
@@ -649,9 +649,9 @@ end
 local importantUnitHasNotBuffCount = function (spell)
     local count = 0
     for name,player in pairs(raidStatus) do
-        if player.isHealable and player.myBuffDuration(spell) < 1 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
+        if player.isHealable and player.myBuffDuration(spell) < 2 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
             if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
-                count = count + 1
+                count = count + 1 
             elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.80 then
                 count = count + 1
             end
@@ -741,7 +741,8 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --local posX, posY  = C_Map.GetPlayerMapPosition(C_Map.GetBestMapForUnit("player"), "player"):GetXY()
 --print("|cffff8000isFacing:|cffffffff", posX, posY )
 
-print("|cffff8000UnitCount:|cffffffff", kps["env"].heal.hasNotBuffAtonementImportantUnitCount) 
+print("|cffff8000UnitCount:|cffffffff", kps["env"].heal.hasNotBuffAtonementImportantUnitCount)
+print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cffff8000isAttackable:|cffffffff",kps["env"].target.isAttackable)
 
 --print("|cffff8000plateCountvampiricTouch:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 --print("|cffff8000plateCountshadowWordPain:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.shadowWordPain))

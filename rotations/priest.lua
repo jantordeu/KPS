@@ -144,7 +144,6 @@ function kps.env.priest.FocusMouseoverShadow()
             kps.runMacro("/focus mouseover")
         elseif not mouseover.hasMyDebuff(kps.spells.priest.shadowWordPain) then
             kps.runMacro("/focus mouseover")
-        
         end
     elseif focus.exists and not UnitIsUnit("target","mouseover") and not UnitIsUnit("focus","mouseover") and focus.myDebuffDuration(kps.spells.priest.shadowWordPain) > 4.8 and focus.myDebuffDuration(kps.spells.priest.vampiricTouch) > 6.3 then
         if not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) and mouseover.isAttackable and mouseover.inCombat then
