@@ -20,7 +20,7 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     env.FocusMouseover,
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
-    {{"macro"}, 'not focus.isAttackable' , "/clearfocus" },
+    {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
    {spells.arcaneIntellect, 'not player.hasBuff(spells.arcaneIntellect)' , "player" },
    {spells.blazingBarrier, 'player.incomingDamage > 0'},

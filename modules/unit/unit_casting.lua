@@ -28,25 +28,25 @@ end
 --[[[
 @function `<UNIT>.isCasting` - returns true if the unit is casting (or channeling) a spell
 ]]--
-local function isFillerSpell(spellname)
-    for _,spell in pairs(kps.spells.fillerSpell) do
+local function isClippingSpell(spellname)
+    for _,spell in pairs(kps.spells.clippingSpell) do
         if spell.name == spellname then return true end
     end
     return false
 end
-function Unit.isCastingFiller(self)
+function Unit.isCastingClipping(self)
     local name,_,_,_,endTime,_,_,_,_= UnitCastingInfo(self.unit)
     if endTime == nil then 
         local name,_,_,_,endTime,_,_ = UnitChannelInfo(self.unit)
         if endTime == nil then return false end
-        if isFillerSpell(name) then return true end
+        if isClippingSpell(name) then return true end
     end
-    if isFillerSpell(name) then return true end
+    if isClippingSpell(name) then return true end
     return false
 end
 
 function Unit.isCasting(self)
-    --if Unit.isCastingFiller(self) then return false end
+    if Unit.isCastingClipping(self) then return false end
     if Unit.castTimeLeft(self) > kps.latency or Unit.channelTimeLeft(self) > kps.latency then return true end
     return false
 end

@@ -159,8 +159,8 @@ kps.spells.immuneDamage.netherwalk = kps.Spell.fromId(196555)
 kps.spells.immuneDamage.greaterFade = kps.Spell.fromId(213602)
 
 -- Spells outside gcd or clipping spell cast
-kps.spells.fillerSpell = {}
-kps.spells.fillerSpell.mindFlay = kps.Spell.fromId(15407)
+kps.spells.clippingSpell = {}
+kps.spells.clippingSpell.mindFlay = kps.Spell.fromId(15407)
 
 
 

@@ -23,7 +23,7 @@ kps.rotations.register("MAGE","FROST",
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     env.FocusMouseover,
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
-    {{"macro"}, 'not focus.isAttackable' , "/clearfocus" },
+    {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
     {spells.iceBlock, 'player.hp <= 0.20' },
     {spells.iceBarrier, 'not player.hasBuff(spells.iceBarrier)' },
@@ -50,28 +50,26 @@ kps.rotations.register("MAGE","FROST",
     {spells.runeOfPower, 'player.hasTalent(3,3)' },
     {spells.icyVeins },
     
-    {spells.frostNova, 'target.isAttackable and target.distanceMax <= 10' , "target" },
-    {spells.frostNova, 'focus.isAttackable and focus.distanceMax <= 10' , "focus" },
+    {spells.frostNova, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova) and not spells.frostNova.isRecastAt("target")' , "target" },
+    {spells.frostNova, 'focus.isAttackable and focus.distanceMax <= 10 and not target.hasDebuff(spells.frostNova) and not spells.frostNova.isRecastAt("focus")' , "focus" },
     {spells.coneOfCold, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova)' , "target" },
     {spells.coneOfCold, 'focus.isAttackable and focus.distanceMax <= 10 and not focus.hasDebuff(spells.frostNova)' , "focus" },
     {{"nested"}, 'kps.multiTarget and target.distance <= 10 and target.isAttackable', {
         {spells.frozenOrb },
-        -- Blizzard, with the Freezing Rain buff active
-        {spells.blizzard, 'player.hasBuff(spells.freezingRain)' },
         {spells.cometStorm, 'player.hasTalent(6,3)' },
         {spells.iceNova, 'player.hasTalent(1,3)' },
         {{"macro"}, 'not player.isMoving and target.distanceMax <= 10 and focus.exists and focus.distanceMax <= 10', "/cast [@player] "..Blizzard },
     }},
 
-    -- if you have have 5 Mastery: Icicles then  you cast Glacial Spike, followed by the Flurry -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
+    -- if you have have 5 Mastery: Icicles then you cast Glacial Spike, followed by the Flurry -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
     {{spells.ebonbolt,spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and spells.glacialSpike.isUsable and not player.hasBuff(spells.brainFreeze)' , "target" , "ebonbolt_glacialSpike_flurry_iceLance" },
     -- Cast Flurry If you have 5 stacks of Mastery: Icicles after casting Glacial Spike
     {{spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and spells.glacialSpike.isUsable' , "target" , "glacialSpike_flurry_iceLance" },
 
     -- vous avez un proc Gel mental et 4 stacks de Glaçons ou plus
-    {{spells.frostbolt,spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.buffStacks(spells.icicles) == 4 and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_glacialSpike_flurry_iceLance" },
+    {{spells.frostbolt,spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.buffStacks(spells.icicles) >= 4 and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_glacialSpike_flurry_iceLance" },
     -- vous avez un proc Gel mental et moins de 4 stacks de Glaçons -- if you do not have Glacial Spike talented
-    {{spells.frostbolt,spells.flurry,spells.iceLance}, 'not player.isMoving and not spells.glacialSpike.isUsable and player.buffStacks(spells.icicles) < 4 and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_flurry_iceLance" },
+    {{spells.frostbolt,spells.flurry,spells.iceLance}, 'not player.isMoving and not player.hasTalent(7,3) and player.buffStacks(spells.icicles) < 4 and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_flurry_iceLance" },
     -- Cast Ebonbolt followed by Flurry and then Ice Lance if you do not have Glacial Spike enabled
     {{spells.ebonbolt,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and not spells.glacialSpike.isUsable and player.buffStacks(spells.icicles) < 4' , "target" , "ebonbolt_flurry_iceLance" },
     

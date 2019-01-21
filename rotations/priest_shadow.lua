@@ -78,7 +78,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {{"macro"}, 'player.hasTalent(5,3) and mouseover.isAttackable', "/cast [@cursor] "..ShadowCrash },
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20 and target.isAttackable' , "target" },
 
-    {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
+    --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
     {spells.voidBolt , 'player.hasBuff(spells.voidForm)' , env.damageTarget },
     {spells.shadowfiend, 'player.buffStacks(spells.voidForm) > 4' , env.damageTarget },
     {spells.mindbender, 'player.buffStacks(spells.voidForm) > 4' , env.damageTarget },
@@ -100,7 +100,7 @@ kps.rotations.register("PRIEST","SHADOW",{
 
     --{{"macro"}, 'spells.mindBlast.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
     {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
-    {spells.mindFlay, 'not player.isMoving ' , env.damageTarget },
+    {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
 
 },"priest_shadow_bfa")
 
