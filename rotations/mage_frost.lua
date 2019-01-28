@@ -9,10 +9,10 @@ local env = kps.env.mage
 local Blizzard = spells.blizzard.name
 local RingOfFrost  = spells.ringOfFrost.name
 
---kps.runAtEnd(function()
---   kps.gui.addCustomToggle("MAGE","FROST", "pauseRotation", "Interface\\Icons\\Spell_frost_frost", "pauseRotation")
---end)
 
+kps.runAtEnd(function()
+   kps.gui.addCustomToggle("MAGE","FROST", "sheep", "Interface\\Icons\\spell_nature_polymorph", "sheep")
+end)
 
 kps.rotations.register("MAGE","FROST",
 {
@@ -24,6 +24,8 @@ kps.rotations.register("MAGE","FROST",
     env.FocusMouseover,
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
+    
+    {spells.polymorph, 'kps.sheep and focus.isAttackable and not focus.hasMyDebuff(spells.polymorph)' , "focus" },
 
     {spells.iceBlock, 'player.hp <= 0.20' },
     {spells.iceBarrier, 'not player.hasBuff(spells.iceBarrier)' },
@@ -60,30 +62,28 @@ kps.rotations.register("MAGE","FROST",
         {spells.iceNova, 'player.hasTalent(1,3)' },
         {{"macro"}, 'not player.isMoving and target.distanceMax <= 10 and focus.exists and focus.distanceMax <= 10', "/cast [@player] "..Blizzard },
     }},
+    {{"macro"}, 'not player.isMoving and spells.frostNova.cooldown > kps.gcd and not target.hasMyDebuff(spells.frostNova) and target.isAttackable and target.distanceMax <= 10', "/cast [@player] "..RingOfFrost },
+    
+    -- cast Glacial Spike when available and only when you have a Brain Freeze 
+    {spells.glacialSpike, 'player.hasTalent(7,3) and spells.glacialSpike.isUsable and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike" },
+    -- if you have Splitting Ice talented and there is more than 1 target you should cast Glacial Spike when available, even without a Brain Freeze
+    {spells.glacialSpike, 'player.hasTalent(7,3) and spells.glacialSpike.isUsable and player.hasTalent(6,2) and player.plateCount > 1 ' , "target" , "glacialSpike_splittingIce" },
 
     -- if you have have 5 Mastery: Icicles then you cast Glacial Spike, followed by the Flurry -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
     {{spells.ebonbolt,spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and spells.glacialSpike.isUsable and not player.hasBuff(spells.brainFreeze)' , "target" , "ebonbolt_glacialSpike_flurry_iceLance" },
     -- Cast Flurry If you have 5 stacks of Mastery: Icicles after casting Glacial Spike
     {{spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and spells.glacialSpike.isUsable' , "target" , "glacialSpike_flurry_iceLance" },
 
-    -- vous avez un proc Gel mental et 4 stacks de Glaçons ou plus
-    {{spells.frostbolt,spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.buffStacks(spells.icicles) >= 4 and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_glacialSpike_flurry_iceLance" },
     -- vous avez un proc Gel mental et moins de 4 stacks de Glaçons -- if you do not have Glacial Spike talented
-    {{spells.frostbolt,spells.flurry,spells.iceLance}, 'not player.isMoving and not player.hasTalent(7,3) and player.buffStacks(spells.icicles) < 4 and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_flurry_iceLance" },
+    {{spells.frostbolt,spells.flurry,spells.iceLance}, 'not player.isMoving and not player.hasTalent(7,3) and player.buffStacks(spells.icicles) <= 4 and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_flurry_iceLance" },
     -- Cast Ebonbolt followed by Flurry and then Ice Lance if you do not have Glacial Spike enabled
     {{spells.ebonbolt,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and not spells.glacialSpike.isUsable and player.buffStacks(spells.icicles) < 4' , "target" , "ebonbolt_flurry_iceLance" },
-    
-     -- cast Glacial Spike when available and only when you have a Brain Freeze 
-    {spells.glacialSpike, 'player.hasTalent(7,3) and spells.glacialSpike.isUsable and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike" },
-    -- if you have Splitting Ice talented and there is more than 1 target you should cast Glacial Spike when available, even without a Brain Freeze
-    {spells.glacialSpike, 'player.hasTalent(7,3) and spells.glacialSpike.isUsable and player.hasTalent(6,2) and player.plateCount > 1 ' , "target" , "glacialSpike_splittingIce" },
 
-     -- "Blizzard" -- "Freezing Rain"  Blizzard is instant cast and deals 50% increased damage
-    {spells.blizzard, 'player.buffStacks(spells.fingersOfFrost) <= 2 and player.hasBuff(spells.freezingRain)' },
     {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" , "fingersOfFrost" },
+     -- "Blizzard" -- "Freezing Rain"  Blizzard is instant cast and deals 50% increased damage
+    {spells.blizzard, 'player.hasBuff(spells.freezingRain)' },
 
-    {{"macro"}, 'not player.isMoving and spells.frostNova.cooldown > kps.gcd and not target.hasMyDebuff(spells.frostNova) and target.isAttackable and target.distanceMax <= 10', "/cast [@player] "..RingOfFrost },
-    {spells.frozenOrb },    
+    {spells.frozenOrb, 'target.hasMyDebuff(spells.frostNova)' , "target" },    
     {spells.rayOfFrost, 'player.hasTalent(7,2)' },
     {spells.cometStorm, 'player.hasTalent(6,3)' },
 

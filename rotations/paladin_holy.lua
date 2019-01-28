@@ -70,9 +70,9 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'heal.lowestUnitInRaid.hp > heal.lowestTankInRaid.hp and heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid },
     {spells.holyShock, 'target.isAttackable' , "target" , "holyShock_target" },
 
-
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
     {spells.ruleOfLaw, 'player.hasTalent(2,3) and heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
+    {spells.ruleOfLaw, 'heal.lowestTankInRaid.hp < 0.90 and heal.lowestUnitInRaid.hp < 0.90' },
     -- "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
     {spells.auraMastery, 'player.hasTalent(4,3) and heal.countLossInRange(0.80) > 3 and spells.ruleOfLaw.cooldown > kps.gcd' },
 
@@ -104,7 +104,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid  }, 
     {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestUnitInRaid.hp < 0.40' , kps.heal.lowestUnitInRaid  }, 
 
-    {spells.flashOfLight, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" , "flashOfLight_mouseover" },        
+    {spells.flashOfLight, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55' , "mouseover" , "flashOfLight_mouseover" },        
     {spells.holyLight, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.85' , "mouseover" , "holyLight_mouseover" }, 
     -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
     -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana.
@@ -119,7 +119,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.consecration, 'not player.isMoving and target.isAttackable and target.distance <= 10' },
     {spells.crusaderStrike, 'target.isAttackable and target.isAttackable and target.distance <= 10' , "target" },
     
-    {{"macro"}, 'true' , "/startattack" },
+    --{{"macro"}, 'true' , "/startattack" },
 
 }
 ,"holy_paladin_bfa")

@@ -65,12 +65,14 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower > 2 and player.myBuffDuration(spells.inquisition) <= 20 and target.isAttackable' , "target" , "inquisition" },
     {spells.wakeOfAshes, 'player.holyPower <= 1 and player.hasBuff(spells.avengingWrath) and target.isAttackable and target.distance <= 10' , "target" },
     {spells.wakeOfAshes, 'player.holyPower <= 1 and player.hasBuff(spells.crusade) and target.isAttackable and target.distance <= 10' , "target" },
-    {spells.wakeOfAshes, 'player.holyPower <= 1 and not player.hasTalent(7,2) and spells.avengingWrath.cooldown > 45 and target.isAttackable and target.distance <= 10' , "target" , "wakeOfAshes_holyPower"},
-    {spells.wakeOfAshes, 'player.holyPower <= 1 and player.hasTalent(7,2) and spells.crusade.cooldown > 45 and target.isAttackable and target.distance <= 10' , "target" , "wakeOfAshes_holyPower"},
-    {spells.avengingWrath, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.isAttackable and target.distance <= 10' , "target" },
-    {spells.avengingWrath, 'player.hasTalent(7,1)' },
-    {spells.crusade, 'player.hasTalent(7,2) and player.holyPower >= 3' }, -- replace avengingWrath
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and spells.avengingWrath.cooldown > 45 and target.isAttackable and target.distance <= 10' , "target" , "wakeOfAshes_holyPower"},
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and spells.crusade.cooldown > 45 and target.isAttackable and target.distance <= 10' , "target" , "wakeOfAshes_holyPower"},
 
+    {{"nested"},'(target.isElite or player.plateCount > 1) and target.isAttackable and target.distance <= 10', {
+        {spells.avengingWrath, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20' },
+        {spells.avengingWrath, 'player.hasTalent(7,1)' },
+        {spells.crusade, 'player.hasTalent(7,2) and player.holyPower >= 3' }, -- replace avengingWrath
+    }},
     -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.
     -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
     -- Templar's Verdict or Divine Storm at 3-4 Holy Power if following spells/buffs are active: Divine Purpose, Avenging Wrath/Crusade, Execution Sentence.
@@ -86,7 +88,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.bladeOfJustice, 'target.isAttackable and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
     {spells.crusaderStrike, 'target.isAttackable'}, --Generates 1 Holy Power
     
-    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
+    {spells.divineStorm, 'player.plateCount > 1 and target.isAttackable' , "target" , "divineStorm" },
     {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
 
     {{"macro"}, 'true' , "/startattack" },

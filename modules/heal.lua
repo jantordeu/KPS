@@ -166,7 +166,7 @@ kps.RaidStatus.prototype.lowestUnitInRaid = kps.utils.cachedValue(function()
     local lowestUnit = kps["env"].player
     local lowestHp = 2
     for name,unit in pairs(raidStatus) do
-        if unit.isHealable and not unit.isTankInRaid and unit.hp < lowestHp then
+        if unit.isHealable and not unit.isRaidTank and unit.hp < lowestHp then
             lowestUnit = unit
             lowestHp = lowestUnit.hp
         end
@@ -732,17 +732,21 @@ print("|cff1eff00LOWEST|cffffffff", kps["env"].heal.lowestInRaid.name,"/",kps["e
 print("|cffff8000TARGET:|cffffffff", kps["env"].heal.lowestTargetInRaid.name,"/",kps["env"].heal.lowestTargetInRaid.hp)
 print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"/",kps["env"].heal.lowestTankInRaid.hp)
 print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"/",kps["env"].heal.lowestUnitInRaid.hp)
---print("|cffff8000CountLossDistance_85:|cffffffff", kps["env"].heal.countLossInDistance(0.85,10))
+--print("|cffff8000CountLossDistance_90:|cffffffff", kps["env"].heal.countLossInDistance(0.90,10))
 print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90),"|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
 print("|cff1eff00HEAL:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
 print("|cFFFF0000DMG:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 
---local posX, posY  = C_Map.GetPlayerMapPosition(C_Map.GetBestMapForUnit("player"), "player"):GetXY()
---print("|cffff8000isFacing:|cffffffff", posX, posY )
+-- uiMapID = C_Map.GetBestMapForUnit(unitToken) -- the unit token ("player", "partyN", "raidN")
+-- C_Map.GetPlayerMapPosition(uiMapID, unitToken)
+local posX, posY  = C_Map.GetPlayerMapPosition(C_Map.GetBestMapForUnit("player"), "player"):GetXY()
+print("|cffff8000player:|cffffffff", posX, posY )
+local posX, posY  = C_Map.GetPlayerMapPosition(C_Map.GetBestMapForUnit("target"), "target"):GetXY()
+print("|cffff8000target:|cffffffff", posX, posY )
 
-print("|cffff8000UnitCount:|cffffffff", kps["env"].heal.hasNotBuffAtonementImportantUnitCount)
-print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cffff8000isAttackable:|cffffffff",kps["env"].target.isAttackable)
+--print("|cffff8000UnitCount:|cffffffff", kps["env"].heal.hasNotBuffAtonementImportantUnitCount)
+--print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cffff8000isAttackable:|cffffffff",kps["env"].target.isAttackable)
 
 --print("|cffff8000plateCountvampiricTouch:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 --print("|cffff8000plateCountshadowWordPain:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.shadowWordPain))
@@ -782,8 +786,8 @@ print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cfff
 --print("myBuffDuration:",kps["env"].player.myBuffDuration(aura))
 --print("hasBuff:",kps["env"].player.hasBuff(aura))
 
---local spell = kps.Spell.fromId(6572)
---local spellname = spell.name -- tostring(kps.spells.warrior.revenge)
+--local spell = kps.Spell.fromId(2061)
+--local spellname = spell.name
 --local spelltable = GetSpellPowerCost(spellname)[1] 
 --for i,j in pairs(spelltable) do
 --print(i," - ",j)
@@ -818,7 +822,7 @@ print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cfff
 
 --print("|cffff8000hasRoleInRaidTANK:|cffffffff", kps["env"].heal.lowestInRaid.hasRoleInRaid("TANK"))
 --print("|cffff8000hasRoleInRaidHEALER:|cffffffff", kps["env"].heal.lowestInRaid.hasRoleInRaid("HEALER"))
---print("|cffff8000isTankInRaid:|cffffffff", kps["env"].heal.lowestInRaid.isTankInRaid)
+--print("|cffff8000isRaidTank:|cffffffff", kps["env"].heal.lowestInRaid.isRaidTank)
 
 
 --print("|cffff8000BuffValue:|cffffffff", kps["env"].player.buffDuration(kps.spells.priest.masteryEchoOfLight))

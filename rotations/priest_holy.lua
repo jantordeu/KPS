@@ -49,8 +49,9 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Guardian Spirit" 47788
     {spells.guardianSpirit, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
+    {spells.guardianSpirit, 'target.isRaidBoss and targettarget.isHealable and not targetarget.isRaidTank' , "targettarget" },
     {spells.guardianSpirit, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
-    {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
+    --{spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
     
     -- "Holy Word: Serenity" -- set at 0.55 to avoid spam FH
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "POH_holyWordSerenity" },
@@ -65,7 +66,7 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Dissipation de masse" 32375
     {{"macro"}, 'keys.ctrl', "/cast [@cursor] "..MassDispel },
     -- "Holy Word: Sanctify" -- macro does not work for @target, @mouseover... ONLY @cursor and @player -- Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew
-    {{"macro"}, 'mouseover.isHealable and mouseover.isTankInRaid and mouseover.hp < 0.80', "/cast [@cursor] "..HolyWordSanctify },
+    {{"macro"}, 'mouseover.isHealable and mouseover.isRaidTank and mouseover.hp < 0.80', "/cast [@cursor] "..HolyWordSanctify },
     {{"macro"},'heal.countLossInDistance(0.80,10) > 3' , "/cast [@player] "..HolyWordSanctify },
 
     -- "Dispel" "Purifier" 527
@@ -95,8 +96,8 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.desperatePrayer, 'player.hp < 0.70' , "player" },
     {{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' ,"/use item:5512" },
     -- "Soins rapides" 2060 Important Unit
-    {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and not spells.flashHeal.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
-    {spells.flashHeal, 'not player.isMoving and player.hp < 0.55 not spells.flashHeal.isRecastAt("player")' , "player" , "FLASH_PLAYER"  },
+    {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.40 and not spells.flashHeal.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
+    {spells.flashHeal, 'not player.isMoving and player.hp < 0.40 not spells.flashHeal.isRecastAt("player")' , "player" , "FLASH_PLAYER"  },
     -- "Angelic Feather"
     {{"macro"},'player.hasTalent(2,3) and not player.isSwimming and player.isMovingFor(1.2) and not player.hasBuff(spells.angelicFeather)' , "/cast [@player] "..AngelicFeather },
     -- "Levitate" 1706
@@ -114,7 +115,7 @@ kps.rotations.register("PRIEST","HOLY",{
     }},
     -- "Prayer of Mending" (Tank only)
     {spells.prayerOfMending, 'not player.isMoving and not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending)' , kps.heal.lowestTankInRaid }, 
-    {spells.prayerOfMending, 'not player.isMoving and heal.lowestInRaid.hp > 0.40' , kps.heal.hasNotBuffMending , "POM" },
+    {spells.prayerOfMending, 'not player.isMoving' , kps.heal.hasNotBuffMending , "POM" },
     -- kps.lastCast["name"] ne fonctionne pas si lastCast etait une macro 'kps.lastCast["name"] == spells.prayerOfMending' or 'spells.prayerOfMending.lastCasted(4)'
     {spells.flashHeal, 'not player.isMoving and spells.prayerOfMending.lastCasted(4) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid ,"FLASH_POM" },
     {spells.flashHeal, 'not player.isMoving and spells.prayerOfMending.lastCasted(4) and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid ,"FLASH_POM" },
@@ -130,7 +131,6 @@ kps.rotations.register("PRIEST","HOLY",{
     -- SLOT 1 /use 14
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(1) and heal.lowestInRaid.hp < 0.80' , "/use 14" },
 
-    {spells.holyNova, 'kps.holyNova' , "target" },
     {spells.circleOfHealing, 'heal.lowestInRaid.hp < 0.90 and player.isMoving' , kps.heal.lowestInRaid  },
     {spells.circleOfHealing, 'heal.lowestTankInRaid.hp < 0.90 and heal.lowestUnitInRaid.hp < 0.90' , kps.heal.lowestTankInRaid },
     {spells.circleOfHealing, 'heal.countLossInRange(0.90) > 2' , kps.heal.lowestTankInRaid },
@@ -138,6 +138,7 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.90)*2 > heal.countInRange' , kps.heal.lowestInRaid },
     {spells.divineStar, 'player.hasTalent(6,2) and heal.countLossInRange(0.90) > 3 and target.isAttackable and target.distance <= 30' , "target" },
     {spells.divineStar, 'player.hasTalent(6,2) and heal.countLossInRange(0.90)*2 > heal.countInRange and target.isAttackable and target.distance <= 30' , "target" },
+    {spells.holyNova, 'kps.holyNova' , "target" },
 
     -- "Prayer of Healing" 596
     {spells.prayerOfHealing, 'kps.mouseOver and mouseover.isHealable and not player.isMoving and mouseover.hpIncoming < 0.65 and heal.countLossInRange(0.80) > 3' , "mouseover" ,"POH_mouseover" },
@@ -183,7 +184,7 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.bindingHeal, 'heal.lowestUnitInRaid.hp > heal.lowestTankInRaid.hp and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid ,"BINDING_TANK" },
     }},
     -- "Soins" 2060
-    {spells.renew, 'spells.holyWordSanctify.cooldown > 6 and heal.lowestTankInRaid.hp < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
+    {spells.renew, 'spells.holyWordSanctify.cooldown > 6 and heal.lowestTankInRaid.hp < 0.95 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
     {spells.heal, 'not player.isMoving and heal.lowestUnitInRaid.hpIncoming < 0.85 and heal.lowestUnitInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestUnitInRaid , "heal_lowest" },
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.85' , kps.heal.lowestTankInRaid , "heal_tank" },
     {spells.heal, 'not player.isMoving and spells.holyWordSerenity.cooldown > 6 and heal.lowestInRaid.hpIncoming < 0.90' , kps.heal.lowestInRaid },

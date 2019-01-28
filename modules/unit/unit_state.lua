@@ -129,21 +129,21 @@ function Unit.hasAttackableTarget(self)
 end 
 
 --[[[
-@function `<UNIT>.isTankInRaid` - returns true if the given unit is a tank
+@function `<UNIT>.isRaidTank` - returns true if the given unit is a tank
 ]]--
 
-function Unit.isTankInRaid(self)
+function Unit.isRaidTank(self)
     if UnitGroupRolesAssigned(self.unit) == "TANK" then return true end
     if kps["env"].focus.unit == self.unit then return true end
     return false
 end
 
-function Unit.isHealerInRaid(self)
+function Unit.isRaidHealer(self)
     if UnitGroupRolesAssigned(self.unit) == "HEALER" then return true end
     return false
 end
 
-function Unit.isDamagerInRaid(self)
+function Unit.isRaidDamager(self)
     if UnitGroupRolesAssigned(self.unit) == "DAMAGER" then return true end
     return false
 end 

@@ -425,7 +425,7 @@ Members:
  * `<UNIT>.hasPet` - returns true if the given unit has a pet.
  * `<UNIT>.isUnit(<UNIT-STRING>)` - returns true if the given unit is otherunit. heal.lowestInRaid.isUnit("player")
  * `<UNIT>.hasAttackableTarget` - returns true if the given unit has attackable target
- * `<UNIT>.isTankInRaid` - returns true if the given unit is a tank
+ * `<UNIT>.isRaidTank` - returns true if the given unit is a tank
  * `<UNIT>.hasRoleInRaid(<STRING>)` - returns true if the given unit has role TANK, HEALER, DAMAGER, NONE
 
 
