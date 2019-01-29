@@ -9,14 +9,16 @@ local env = kps.env.paladin
 
 kps.rotations.register("PALADIN","HOLY",
 {
-    -- "Bouclier divin" ""Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
-    {spells.divineShield, 'spells.blessingOfSacrifice.lastCasted(4)' , "player" },
-    {spells.divineShield, 'player.hp < 0.30' , "player" },
-    {spells.divineShield, 'player.isTarget and target.isRaidBoss' , "player" },
+
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec. during that time the caster also cannot attack or use spells.
     {spells.divineProtection, 'spells.blessingOfSacrifice.lastCasted(4) and not player.hasBuff(spells.divineShield)' , "player" },
     {spells.divineProtection, 'player.hp < 0.30 and not player.hasBuff(spells.divineShield)' , "player" },
     {spells.divineProtection, 'player.isTarget and target.isRaidBoss and not player.hasBuff(spells.divineShield)' , "player" },
+    
+    -- "Bouclier divin" ""Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
+    {spells.divineShield, 'player.hp < 0.30' , "player" },
+    {spells.divineShield, 'player.isTarget and target.isRaidBoss' , "player" },
+    {spells.divineShield, 'target.isRaidBoss and targettarget.isHealable and not targetarget.isRaidTank' , "targettarget" },
 
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
@@ -40,6 +42,7 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Blessing of Protection" -- can be used to clear harmful physical damage debuffs and bleeds from the target.
     {spells.blessingOfProtection, 'player.hp < 0.30' , kps.heal.lowestUnitInRaid },
     {spells.blessingOfProtection, 'heal.lowestUnitInRaid.hp < 0.30' , kps.heal.lowestUnitInRaid },
+    {spells.blessingOfProtection, 'player.isPVP and heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid },
 
     {spells.cleanse, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
     {{"nested"},'kps.cooldowns', {
@@ -52,16 +55,23 @@ kps.rotations.register("PALADIN","HOLY",
     {{"nested"}, 'kps.interrupt' ,{
         {spells.hammerOfJustice, 'focus.distance < 10 and focus.isCasting and focus.isAttackable' , "focus" },
         {spells.hammerOfJustice, 'target.distance < 10 and target.isCasting and target.isAttackable' , "target" },
+        {spells.hammerOfJustice, 'focustarget.distance < 10 and focustarget.isCasting and focustarget.isAttackable' , "focustarget" },
+        {spells.repentance, 'focus.isCasting and focus.distance < 30 and focus.isAttackable' , "focus" },
         {spells.repentance, 'target.isCasting and target.distance < 30 and target.isAttackable' , "target" },
+        {spells.repentance, 'focustarget.isCasting and focustarget.distance < 30 and focustarget.isAttackable' , "focustarget" },
     }},
     
     -- APPLY MANUAL -- "Guide de lumière" "Beacon of Light" -- Targeting this ally directly with Flash of Light or Holy Light also refunds 25% of Mana spent on those heals -- your heals on other party or raid members to also heal that ally for 40% of the amount healed.
-    --{spells.beaconOfLight, 'not heal.lowestTankInRaid.hasBuff(spells.beaconOfLight) and not heal.lowestTankInRaid.hasBuff(spells.beaconOfFaith) and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid },
-    -- APPLY MANUAL -- "Beacon of Faith" -- Mark a second target as a Beacon, mimicking the effects of Beacon of Light. Your heals will now heal both of your Beacons, but at 30% reduced effectiveness.
-    --{spells.beaconOfFaith, 'player.hasTalent(7,2) and not heal.lowestTankInRaid.hasBuff(spells.beaconOfLight) and not heal.lowestTankInRaid.hasBuff(spells.beaconOfFaith) and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid },
-   
+    --{spells.beaconOfLight, 'not heal.lowestTankInRaid.hasBuff(spells.beaconOfLight) and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid },
+    -- "Beacon of Faith" -- Mark a second target as a Beacon, mimicking the effects of Beacon of Light. Your heals will now heal both of your Beacons, but at 30% reduced effectiveness.
+    {spells.beaconOfFaith, 'player.hasTalent(7,2) and not player.hasBuff(spells.beaconOfFaith) and not player.hasBuff(spells.beaconOfLight)' , "player" },
     -- "Guide de vertu" "Beacon of Virtue" -- Replaces "Beacon of Light"  -- Applique un Guide de lumière sur la cible et 3 allié blessé à moins de 30 mètres pendant 8 sec. Vos soins leur rendent 40% du montant soigné.
     {spells.beaconOfVirtue, 'player.hasTalent(7,3) and not heal.lowestTankInRaid.hasBuff(spells.beaconOfVirtue) and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid },
+
+    -- TRINKETS -- SLOT 0 /use 13
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
+    -- TRINKETS -- SLOT 1 /use 14
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
 
     -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.80' , kps.heal.lowestTankInRaid },
@@ -72,7 +82,7 @@ kps.rotations.register("PALADIN","HOLY",
 
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
     {spells.ruleOfLaw, 'player.hasTalent(2,3) and heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
-    {spells.ruleOfLaw, 'heal.lowestTankInRaid.hp < 0.90 and heal.lowestUnitInRaid.hp < 0.90' },
+    {spells.ruleOfLaw, 'heal.lowestTankInRaid.hp < 0.90 and heal.lowestUnitInRaid.hp < 0.90 and not player.hasBuff(spells.ruleOfLaw)' },
     -- "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
     {spells.auraMastery, 'player.hasTalent(4,3) and heal.countLossInRange(0.80) > 3 and spells.ruleOfLaw.cooldown > kps.gcd' },
 
@@ -100,9 +110,9 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestTankInRaid.hp < 0.85 and player.hp > 0.90 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid },
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestUnitInRaid.hp < 0.85 and player.hp > 0.90 and not heal.lowestUnitInRaid.isUnit("player")' , kps.heal.lowestUnitInRaid }, 
 
-    {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and player.hp < 0.40' , "player"  }, 
-    {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid  }, 
-    {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestUnitInRaid.hp < 0.40' , kps.heal.lowestUnitInRaid  }, 
+    {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and player.hp < 0.55' , "player"  }, 
+    {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid  }, 
+    {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestUnitInRaid.hp < 0.55' , kps.heal.lowestUnitInRaid  }, 
 
     {spells.flashOfLight, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55' , "mouseover" , "flashOfLight_mouseover" },        
     {spells.holyLight, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.85' , "mouseover" , "holyLight_mouseover" }, 

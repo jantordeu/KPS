@@ -130,6 +130,7 @@ kps.spells.battlerez.eternalGuardian = kps.Spell.fromId(126393) -- Eternal Guard
 -- Immune Heal
 kps.spells.immuneHeal = {}
 kps.spells.immuneHeal.misery = kps.Spell.fromId(243961) -- Misery
+kps.spells.immuneHeal.caressOfDeath = kps.Spell.fromId(285213) -- Caress of Death
 
 -- Absorption Heal
 kps.spells.absorptionHeal = {}
@@ -142,7 +143,7 @@ kps.spells.absorptionHeal.chilledBlood = kps.Spell.fromId(245586) -- Chilled Blo
 -- Boss Debuff (Uldir)
 kps.spells.bossDebuff = {}
 kps.spells.bossDebuff.deathwish = kps.Spell.fromId(274271) -- Magic
---kps.spells.bossDebuff.pitOfDespair = kps.Spell.fromId(276031) -- Curse
+kps.spells.bossDebuff.grievousAxe = kps.Spell.fromId(284781) -- Roi Rastakhan Dazar'alor
 
 
 -- ignore Aura Buff
