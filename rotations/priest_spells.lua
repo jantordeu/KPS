@@ -263,5 +263,7 @@ kps.spells.priest.answeredPrayers = kps.Spell.fromId(253437)
 kps.spells.priest.everlastingHope = kps.Spell.fromId(253443)
 -- "Puissance du côté obscur"  -- "Power of the Dark Side" -- Your next Penance will deal 50% additional damage or healing.
 kps.spells.priest.powerOfTheDarkSide = kps.Spell.fromId(198069)
+-- "Thought Harvester" -- Mind Sear damage increased by 150%.
+kps.spells.priest.thoughtHarvester = kps.Spell.fromId(288343)
 
 

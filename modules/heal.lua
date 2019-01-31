@@ -630,45 +630,6 @@ kps.RaidStatus.prototype.atonementHealthRaid = kps.utils.cachedValue(function()
 end)
 
 --[[[
-@function `heal.hasNotBuffImportantUnit` - Returns the immportant unit (TANK,HEALER) with out a buff or false. heal.hasNotBuffAtonementImportantUnit(spells.atonement)
-]]--
-
-local importantUnitHasNotBuff = function (spell)
-    for name,player in pairs(raidStatus) do
-        if player.isHealable and player.myBuffDuration(spell) < 2 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
-            if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
-                return player
-            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.80 then
-                return player
-            end
-        end
-    end
-    return false
-end
-
-local importantUnitHasNotBuffCount = function (spell)
-    local count = 0
-    for name,player in pairs(raidStatus) do
-        if player.isHealable and player.myBuffDuration(spell) < 2 and not player.hasDebuff(kps.spells.priest.weakenedSoul) then
-            if UnitGroupRolesAssigned(player.unit) == "TANK" or player.guid == kps["env"].focus.guid then
-                count = count + 1 
-            elseif UnitGroupRolesAssigned(player.unit) == "HEALER" and player.hp < 0.80 then
-                count = count + 1
-            end
-        end
-    end
-    return count
-end
-
-kps.RaidStatus.prototype.hasNotBuffAtonementImportantUnit = kps.utils.cachedValue(function()
-    return importantUnitHasNotBuff(kps.spells.priest.atonement)
-end)
-
-kps.RaidStatus.prototype.hasNotBuffAtonementImportantUnitCount = kps.utils.cachedValue(function()
-    return importantUnitHasNotBuffCount(kps.spells.priest.atonement)
-end)
-
---[[[
 @function `heal.enemyTarget` - Returns the enemy target for all raid members
 ]]--
 kps.RaidStatus.prototype.enemyTarget = kps.utils.cachedValue(function()
@@ -734,19 +695,13 @@ print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"/",kps
 print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"/",kps["env"].heal.lowestUnitInRaid.hp)
 --print("|cffff8000CountLossDistance_90:|cffffffff", kps["env"].heal.countLossInDistance(0.90,10))
 print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90),"|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
-print("|cff1eff00HEAL:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
-print("|cFFFF0000DMG:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
+print("|cff1eff00HealTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
+print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 
--- uiMapID = C_Map.GetBestMapForUnit(unitToken) -- the unit token ("player", "partyN", "raidN")
--- C_Map.GetPlayerMapPosition(uiMapID, unitToken)
-local posX, posY  = C_Map.GetPlayerMapPosition(C_Map.GetBestMapForUnit("player"), "player"):GetXY()
-print("|cffff8000player:|cffffffff", posX, posY )
-local posX, posY  = C_Map.GetPlayerMapPosition(C_Map.GetBestMapForUnit("target"), "target"):GetXY()
-print("|cffff8000target:|cffffffff", posX, posY )
-
---print("|cffff8000UnitCount:|cffffffff", kps["env"].heal.hasNotBuffAtonementImportantUnitCount)
 --print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cffff8000isAttackable:|cffffffff",kps["env"].target.isAttackable)
+print("|cffff8000isRaidBoss:|cffffffff", kps["env"].target.isRaidBoss,"|cffff8000isRaidTank:|cffffffff",kps["env"].target.isRaidTank)
+
 
 --print("|cffff8000plateCountvampiricTouch:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 --print("|cffff8000plateCountshadowWordPain:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.shadowWordPain))
@@ -778,9 +733,6 @@ print("|cffff8000target:|cffffffff", posX, posY )
 --print("|cffff8000BuffCount:|cffffffff", kps["env"].heal.hasBuffCount(atonement))
 --print("|cffff8000BuffAtonementCount_90:|cffffffff", kps["env"].heal.hasBuffAtonementCount(0.90))
 --print("|cffff8000NotBuffAtonementCount_90:|cffffffff", kps["env"].heal.hasNotBuffAtonementCount(0.90))
---
---print("|cffff8000ImportantUnit:|cffffffff", kps["env"].heal.hasNotBuffAtonementImportantUnit)
---print("|cffff8000hasNotBuffAtonementUnit:|cffffffff", kps["env"].heal.hasNotBuffAtonement.unit)
 
 --local aura = kps.spells.priest.powerWordShield-- kps.spells.paladin.consecration
 --print("myBuffDuration:",kps["env"].player.myBuffDuration(aura))

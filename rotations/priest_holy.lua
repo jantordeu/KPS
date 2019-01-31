@@ -49,8 +49,9 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Guardian Spirit" 47788
     {spells.guardianSpirit, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
-    {spells.guardianSpirit, 'target.isRaidBoss and targettarget.isHealable and not targetarget.isRaidTank' , "targettarget" },
+    --{spells.guardianSpirit, 'target.isRaidBoss and targettarget.isHealable and not targettarget.isRaidTank' , "targettarget" },
     {spells.guardianSpirit, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
+    {spells.guardianSpirit, 'focus.isHealable and focus.hp < 0.30' , "focus" },
     --{spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
     
     -- "Holy Word: Serenity" -- set at 0.55 to avoid spam FH
@@ -96,8 +97,8 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.desperatePrayer, 'player.hp < 0.70' , "player" },
     {{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' ,"/use item:5512" },
     -- "Soins rapides" 2060 Important Unit
-    {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.40 and not spells.flashHeal.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
-    {spells.flashHeal, 'not player.isMoving and player.hp < 0.40 not spells.flashHeal.isRecastAt("player")' , "player" , "FLASH_PLAYER"  },
+    {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and not spells.flashHeal.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
+    {spells.flashHeal, 'not player.isMoving and player.hp < 0.55 not spells.flashHeal.isRecastAt("player")' , "player" , "FLASH_PLAYER"  },
     -- "Angelic Feather"
     {{"macro"},'player.hasTalent(2,3) and not player.isSwimming and player.isMovingFor(1.2) and not player.hasBuff(spells.angelicFeather)' , "/cast [@player] "..AngelicFeather },
     -- "Levitate" 1706
@@ -117,9 +118,9 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.prayerOfMending, 'not player.isMoving and not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending)' , kps.heal.lowestTankInRaid }, 
     {spells.prayerOfMending, 'not player.isMoving' , kps.heal.hasNotBuffMending , "POM" },
     -- kps.lastCast["name"] ne fonctionne pas si lastCast etait une macro 'kps.lastCast["name"] == spells.prayerOfMending' or 'spells.prayerOfMending.lastCasted(4)'
-    {spells.flashHeal, 'not player.isMoving and spells.prayerOfMending.lastCasted(4) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid ,"FLASH_POM" },
+    {spells.flashHeal, 'not player.isMoving and spells.prayerOfMending.lastCasted(4) and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"FLASH_POM" },
     {spells.flashHeal, 'not player.isMoving and spells.prayerOfMending.lastCasted(4) and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid ,"FLASH_POM" },
-    {spells.flashHeal, 'not player.isMoving and spells.prayerOfHealing.lastCasted(4) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid ,"FLASH_POH" },
+    {spells.flashHeal, 'not player.isMoving and spells.prayerOfHealing.lastCasted(4) and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"FLASH_POH" },
     {spells.flashHeal, 'not player.isMoving and spells.prayerOfHealing.lastCasted(4) and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid ,"FLASH_POH" },
     {spells.flashHeal, 'kps.mouseOver and mouseover.isHealable and not player.isMoving and mouseover.hpIncoming < 0.40' , "mouseover" ,"FLASH_mouseover" },  
 
@@ -168,8 +169,8 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid , "FLASH_TANK" },
     }},
     -- "Renew" 139
-    {{"nested"}, 'player.isMoving and heal.lowestInRaid.hp < 0.90' ,{
-        {spells.renew, 'mouseover.isHealable and mouseover.hpIncoming < 0.90 and not mouseover.hasBuff(spells.renew)' , "mouseover" },
+    {{"nested"}, 'player.isMoving' ,{
+        {spells.renew, 'mouseover.isHealable and mouseover.hp < 1 and not mouseover.hasBuff(spells.renew)' , "mouseover" },
         {spells.renew, 'heal.lowestTankInRaid.hp < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
         {spells.renew, 'player.hp < 0.90 and not player.hasBuff(spells.renew)' , "player" },
         {spells.renew, 'heal.lowestInRaid.hp < 0.90 and not heal.lowestInRaid.hasBuff(spells.renew)' , kps.heal.lowestInRaid, "RENEW_LOWEST" },
@@ -185,6 +186,8 @@ kps.rotations.register("PRIEST","HOLY",{
     }},
     -- "Soins" 2060
     {spells.renew, 'spells.holyWordSanctify.cooldown > 6 and heal.lowestTankInRaid.hp < 0.95 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
+    {spells.renew, 'spells.holyWordSanctify.cooldown > 6 and player.hp < 0.95 and not player.hasBuff(spells.renew)' , "player", "RENEW_PLAYER" },
+    
     {spells.heal, 'not player.isMoving and heal.lowestUnitInRaid.hpIncoming < 0.85 and heal.lowestUnitInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestUnitInRaid , "heal_lowest" },
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.85' , kps.heal.lowestTankInRaid , "heal_tank" },
     {spells.heal, 'not player.isMoving and spells.holyWordSerenity.cooldown > 6 and heal.lowestInRaid.hpIncoming < 0.90' , kps.heal.lowestInRaid },

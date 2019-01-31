@@ -147,27 +147,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.smite, 'not player.isMoving and target.isAttackable' , "target" },
     }},
     
-    -- GROUPHEAL
-    -- heal.lossHealthRaid` - Returns the loss Health for all raid members
-    -- heal.atonementHealthRaid - Returns the loss Health for all raid members with buff atonement
-    -- heal.hasBuffCount(spells.atonement)
-    -- heal.hasNotBuffAtonementCount(0.80) -- count unit below 0.80 health without atonement buff
-    -- heal.hasBuffAtonementCount(0.80) -- count unit below 0.80 health with atonement buff
-    -- heal.countLossInRange(0.80) -- count unit below 0.80 health
-    -- heal.atonementHealthRaid -- Returns the loss Health for all raid members with buff atonement
-    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 5' , kps.heal.lowestTankInRaid , "radiance" },
-    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and player.myBuffDuration(spells.atonement) < 5' , "player" , "radiance" },
-    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementImportantUnitCount > 2', kps.heal.hasNotBuffAtonementImportantUnit , "radiance_count" },
-    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2' , kps.heal.hasNotBuffAtonement , "radiance" },
-    {spells.powerWordShield, 'heal.hasNotBuffAtonementImportantUnitCount > 0' , kps.heal.hasNotBuffAtonementImportantUnit , "hasNotBuffAtonementImportantUnit" },
-
-    {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and not spells.shadowMend.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "shadowMend_tank" },
-    {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and spells.penance.cooldown > kps.gcd' , kps.heal.lowestTankInRaid , "shadowMend_tank" },
-    {spells.penance, 'heal.lowestTankInRaid.hp < 0.65 ' , kps.heal.lowestTankInRaid  },
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not spells.shadowMend.isRecastAt("player")' , "player" , "shadowMend_player" },
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and spells.penance.cooldown > kps.gcd' , "player" , "shadowMend_player" },
-    {spells.penance, 'player.hp < 0.65 ' , "player"  },
-
     {{"nested"}, 'kps.mouseOver and mouseover.isHealable' , {
         {spells.powerWordRadiance, 'not player.isMoving and heal.countLossInRange(0.80) - heal.hasBuffAtonementCount(0.80) > 2' , "mouseover" , "radiance_mouseover"},
         {spells.shadowMend, 'not player.isMoving and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" , "shadowMend_mouseover"},
@@ -178,13 +157,34 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.smite, 'not player.isMoving and mouseover.myBuffDuration(spells.atonement) > 2 and mouseovertarget.isAttackable' , "mouseovertarget" , "smite_mouseover" },
         {spells.penance, 'mouseover.myBuffDuration(spells.atonement) > 2 and mouseovertarget.isAttackable' , "mouseovertarget" , "penance_mouseover_offensive" },
     }},
+    
+    -- GROUPHEAL
+    -- heal.lossHealthRaid` - Returns the loss Health for all raid members
+    -- heal.atonementHealthRaid - Returns the loss Health for all raid members with buff atonement
+    -- heal.hasBuffCount(spells.atonement)
+    -- heal.hasNotBuffAtonementCount(0.80) -- count unit below 0.80 health without atonement buff
+    -- heal.hasBuffAtonementCount(0.80) -- count unit below 0.80 health with atonement buff
+    -- heal.countLossInRange(0.80) -- count unit below 0.80 health
+    -- heal.atonementHealthRaid -- Returns the loss Health for all raid members with buff atonement
+    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 5' , kps.heal.lowestTankInRaid , "radiance" },
+    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and player.myBuffDuration(spells.atonement) < 5' , "player" , "radiance" },
+    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2' , kps.heal.hasNotBuffAtonement , "radiance" },
+    {spells.powerWordShield, 'heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid },
+    {spells.powerWordShield, 'player.myBuffDuration(spells.atonement) < 2 and not player.hasDebuff(spells.weakenedSoul)' , "player" },
+    {spells.powerWordShield, 'heal.hasNotBuffAtonement.hp < 0.80 and not heal.hasNotBuffAtonement.isUnit("player") and not heal.hasNotBuffAtonement.hasDebuff(spells.weakenedSoul)' , kps.heal.hasNotBuffAtonement ,  "powerWordShield_lowest" },
+
+    {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and not spells.shadowMend.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "shadowMend_tank" },
+    {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and spells.penance.cooldown > kps.gcd' , kps.heal.lowestTankInRaid , "shadowMend_tank" },
+    {spells.penance, 'heal.lowestTankInRaid.hp < 0.65 ' , kps.heal.lowestTankInRaid  },
+    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not spells.shadowMend.isRecastAt("player")' , "player" , "shadowMend_player" },
+    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and spells.penance.cooldown > kps.gcd' , "player" , "shadowMend_player" },
+    {spells.penance, 'player.hp < 0.65 ' , "player"  },
 
     {spells.shadowWordPain, 'target.isAttackable and not target.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("target")' , "target" },
     {spells.powerWordSolace, 'player.hasTalent(3,3) and heal.hasBuffAtonement.hp < 1' , env.damageTarget },
     {spells.penance, 'heal.hasBuffAtonement.hp < 0.80' , env.damageTarget , "penance_offensive" },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.55' , env.damageTarget },
     {spells.shadowMend, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.55', kps.heal.lowestInRaid ,  "shadowMend_lowest" },
-    {spells.powerWordShield, 'heal.hasNotBuffAtonement.hp < 0.80 and not heal.hasNotBuffAtonement.isUnit("player") and not heal.hasNotBuffAtonement.hasDebuff(spells.weakenedSoul)' , kps.heal.hasNotBuffAtonement ,  "powerWordShield_lowest" },
     {spells.smite, 'not player.isMoving' , env.damageTarget },
 
 }
