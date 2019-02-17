@@ -53,7 +53,7 @@ end
 -- "worldboss", "rareelite", "elite", "rare", "normal"
 function Unit.isElite(self)
     if not Unit.exists(self) then return false end
-    if UnitClassification(self.unit) == "elite" then
+    if string.find(UnitClassification(self.unit),"elite") then
         return true
     end
     return false

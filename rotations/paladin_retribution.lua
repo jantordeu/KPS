@@ -9,8 +9,8 @@ local env = kps.env.paladin
 kps.rotations.register("PALADIN","RETRIBUTION",
 {
 
-    {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance < 10' , "/target mouseover" },
-    {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance < 10' , "/target mouseover" },
+    {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
+    {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
     env.FocusMouseover,
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'not focus.isAttackable' , "/clearfocus" },
@@ -33,13 +33,13 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     
     -- Interrupt
     {{"nested"}, 'kps.interrupt',{
-        {spells.hammerOfJustice, 'focus.distance < 10 and focus.isCasting and focus.isAttackable' , "focus" },
-        {spells.hammerOfJustice, 'target.distance < 10 and target.isCasting and target.isAttackable' , "target" },
+        {spells.hammerOfJustice, 'focus.distance <= 10 and focus.isCasting and focus.isAttackable' , "focus" },
+        {spells.hammerOfJustice, 'target.distance <= 10 and target.isCasting and target.isAttackable' , "target" },
         -- " Réprimandes" "Rebuke" -- Interrupts spellcasting and prevents any spell in that school from being cast for 4 sec.
         {spells.rebuke, 'target.isCasting and target.isAttackable and target.castTimeLeft < 1' , "target" },
         {spells.rebuke, 'focus.isCasting and focus.isAttackable and focus.castTimeLeft < 1' , "focus" },
-        --{spells.blindingLight, 'target.distance < 10 and player.plateCount > 2' , "target" },
-        {spells.blindingLight, 'player.hasTalent(3,3) and target.distance < 10 and target.isCasting and target.isAttackable' , "target" },
+        --{spells.blindingLight, 'target.distance <= 10 and player.plateCount > 2' , "target" },
+        {spells.blindingLight, 'player.hasTalent(3,3) and target.distance <= 10 and target.isCasting and target.isAttackable' , "target" },
         {spells.repentance, 'player.hasTalent(3,2) and target.isCasting and target.isAttackable' , "target" },
     }},
 
@@ -54,9 +54,11 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.blessingOfProtection, 'player.hp < 0.55' , "player"},
 
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
-    -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and player.hasBuff(spells.crusade) and target.isAttackable' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and player.hasBuff(spells.avengingWrath) and target.isAttackable' , "/use 13" },
+   -- TRINKETS -- SLOT 1 /use 14
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and player.hasBuff(spells.crusade) and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and player.hasBuff(spells.avengingWrath) and target.isAttackable' , "/use 14" },
     
     -- "Shield of Vengeance" -- Creates a barrier of holy light that absorbs (30 / 100 * Total health) damage for 15 sec.
     {spells.shieldOfVengeance, 'player.incomingDamage > player.incomingHeal and target.distance <= 10'},
@@ -68,8 +70,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.templarsVerdict, 'player.holyPower == 5 and target.isAttackable' , "target" , "templarsVerdict_5" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower) and target.isAttackable' , "target" , "divineStorm_empyreanPower" },
     {{"nested"}, 'player.hasBuff(spells.crusade) or player.hasBuff(spells.avengingWrath)', {
-        {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm_5" },
-        {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict_5" },
+        {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm_buff" },
+        {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict_buff" },
     }},
     
     {{"nested"}, 'player.holyPower <= 1 and target.isAttackable and target.distance <= 10', {
@@ -90,12 +92,12 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- Templar's Verdict or Divine Storm at 3-4 Holy Power if following spells/buffs are active: Divine Purpose, Avenging Wrath/Crusade, Execution Sentence.
     -- Righteous Verdict Talent(1,2) -- Templar's Verdict increases the damage of your next Templar's Verdict by 15% for 6 sec.
 
-    {spells.judgment, 'target.isAttackable' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
+    {spells.judgment, 'target.isAttackable and target.distance <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
     {spells.consecration, 'player.hasTalent(4,2) target.isAttackable and target.distance <= 10' }, -- Generates 1 Holy Power.
     {spells.hammerOfWrath, 'player.hasTalent(2,3) and target.isAttackable' , "target" }, -- Generates 1 Holy Power.
-    {spells.bladeOfJustice, 'target.isAttackable and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
     {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10'}, --Generates 1 Holy Power
-    
+    {spells.bladeOfJustice, 'target.isAttackable and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
+
     {spells.divineStorm, 'player.plateCount > 1 and target.isAttackable' , "target" , "divineStorm" },
     {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
 

@@ -58,12 +58,12 @@ kps.rotations.register("PALADIN","HOLY",
     }},
     -- Interrupt
     {{"nested"}, 'kps.interrupt' ,{
-        {spells.hammerOfJustice, 'focus.distance < 10 and focus.isCasting and focus.isAttackable' , "focus" },
-        {spells.hammerOfJustice, 'target.distance < 10 and target.isCasting and target.isAttackable' , "target" },
-        {spells.hammerOfJustice, 'focustarget.distance < 10 and focustarget.isCasting and focustarget.isAttackable' , "focustarget" },
-        {spells.repentance, 'focus.isCasting and focus.distance < 30 and focus.isAttackable' , "focus" },
-        {spells.repentance, 'target.isCasting and target.distance < 30 and target.isAttackable' , "target" },
-        {spells.repentance, 'focustarget.isCasting and focustarget.distance < 30 and focustarget.isAttackable' , "focustarget" },
+        {spells.hammerOfJustice, 'focus.distance <= 10 and focus.isCasting and focus.isAttackable' , "focus" },
+        {spells.hammerOfJustice, 'target.distance <= 10 and target.isCasting and target.isAttackable' , "target" },
+        {spells.hammerOfJustice, 'focustarget.distance <= 10 and focustarget.isCasting and focustarget.isAttackable' , "focustarget" },
+        {spells.repentance, 'focus.isCasting and focus.distance <= 30 and focus.isAttackable' , "focus" },
+        {spells.repentance, 'target.isCasting and target.distance <= 30 and target.isAttackable' , "target" },
+        {spells.repentance, 'focustarget.isCasting and focustarget.distance <= 30 and focustarget.isAttackable' , "focustarget" },
     }},
 
     -- APPLY MANUAL -- "Guide de lumière" "Beacon of Light" -- Targeting this ally directly with Flash of Light or Holy Light also refunds 25% of Mana spent on those heals -- your heals on other party or raid members to also heal that ally for 40% of the amount healed.

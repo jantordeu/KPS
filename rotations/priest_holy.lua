@@ -161,19 +161,20 @@ kps.rotations.register("PRIEST","HOLY",{
        {spells.smite, 'not player.isMoving and targettarget.isAttackable', "targettarget" },
        {spells.smite, 'not player.isMoving and focustarget.isAttackable', "focustarget" },
     }},
-
-    {{"nested"}, 'heal.countInRange <= 5' ,{
-        {spells.renew, 'heal.lowestTankInRaid.hp < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
-        {spells.renew, 'heal.lowestUnitInRaid.hpIncoming < 0.90 and not heal.lowestUnitInRaid.hasBuff(spells.renew)' , kps.heal.lowestUnitInRaid, "RENEW_LOWEST" },
-        {spells.flashHeal, 'not player.isMoving and heal.lowestUnitInRaid.hp < 0.65 and heal.lowestUnitInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestUnitInRaid , "FLASH_LOWEST" },
-        {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid , "FLASH_TANK" },
-    }},
+    
     -- "Renew" 139
     {{"nested"}, 'player.isMoving' ,{
         {spells.renew, 'mouseover.isHealable and mouseover.hp < 1 and not mouseover.hasBuff(spells.renew)' , "mouseover" },
         {spells.renew, 'heal.lowestTankInRaid.hp < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
         {spells.renew, 'player.hp < 0.90 and not player.hasBuff(spells.renew)' , "player" },
+        {spells.holyNova, 'heal.countLossInDistance(0.90,10) > 3' , "target" },
         {spells.renew, 'heal.lowestInRaid.hp < 0.90 and not heal.lowestInRaid.hasBuff(spells.renew)' , kps.heal.lowestInRaid, "RENEW_LOWEST" },
+    }},
+    {{"nested"}, 'heal.countInRange <= 5' ,{
+        {spells.renew, 'heal.lowestTankInRaid.hp < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
+        {spells.renew, 'heal.lowestUnitInRaid.hpIncoming < 0.90 and not heal.lowestUnitInRaid.hasBuff(spells.renew)' , kps.heal.lowestUnitInRaid, "RENEW_LOWEST" },
+        {spells.flashHeal, 'not player.isMoving and heal.lowestUnitInRaid.hp < 0.65 and heal.lowestUnitInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestUnitInRaid , "FLASH_LOWEST" },
+        {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid , "FLASH_TANK" },
     }},
     -- "Soins rapides" 2060 RAID
     {spells.flashHeal, 'not player.isMoving and heal.lowestUnitInRaid.hp < 0.40 and heal.lowestUnitInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestUnitInRaid , "FLASH_LOWEST" },
@@ -186,12 +187,12 @@ kps.rotations.register("PRIEST","HOLY",{
     }},
     -- "Soins" 2060
     {spells.renew, 'spells.holyWordSanctify.cooldown > 6 and heal.lowestTankInRaid.hp < 0.95 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
-    {spells.renew, 'spells.holyWordSanctify.cooldown > 6 and player.hp < 0.95 and not player.hasBuff(spells.renew)' , "player", "RENEW_PLAYER" },
+    {spells.renew, 'spells.holyWordSanctify.cooldown > 6 and player.hp < 0.85 and not player.hasBuff(spells.renew)' , "player", "RENEW_PLAYER" },
     
-    {spells.heal, 'not player.isMoving and heal.lowestUnitInRaid.hpIncoming < 0.85 and heal.lowestUnitInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestUnitInRaid , "heal_lowest" },
-    {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.85' , kps.heal.lowestTankInRaid , "heal_tank" },
-    {spells.heal, 'not player.isMoving and spells.holyWordSerenity.cooldown > 6 and heal.lowestInRaid.hpIncoming < 0.90' , kps.heal.lowestInRaid },
-    {spells.holyNova, 'player.isMoving and heal.countLossInDistance(0.90,10) > 3' , "target" },
+    {spells.heal, 'not player.isMoving and heal.lowestUnitInRaid.hpIncoming < 0.90 and heal.lowestUnitInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestUnitInRaid , "heal_lowest" },
+    {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
+    {spells.heal, 'not player.isMoving and spells.holyWordSerenity.cooldown > 6' , kps.heal.lowestInRaid },
+
     {spells.holyFire, 'player.isMoving' , env.damageTarget },
     {spells.smite, 'not player.isMoving', env.damageTarget },
 

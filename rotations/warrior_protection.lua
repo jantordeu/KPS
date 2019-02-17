@@ -18,8 +18,8 @@ end)
 kps.rotations.register("WARRIOR","PROTECTION",
 {
     
-    {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance < 10' , "/target mouseover" },
-    {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance < 10' , "/target mouseover" },
+    {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
+    {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
     env.ScreenMessage,
     
     {spells.taunt, 'kps.taunt and not player.isTarget' , "target" , "taunt" },
@@ -60,7 +60,7 @@ kps.rotations.register("WARRIOR","PROTECTION",
     {spells.shieldSlam},
     {spells.revenge, 'spells.revenge.cost == 0' , "target", "revenge_free" },
     {spells.revenge, 'player.rage > 90' , "target", "revenge_rage" },
-    {spells.thunderClap, 'target.distance < 10'},
+    {spells.thunderClap, 'target.distance <= 10'},
 
     {{"nested"}, 'player.hasTalent(6,2)', {
         {spells.ignorePain, ' and player.hasBuff(spells.vengeanceIgnorePain) and player.myBuffDuration(spells.ignorePain) < 12 and player.buffValue(spells.ignorePain) < player.hpMax * 0.50' , "target", "ignorePain_buffvalue" },
@@ -69,9 +69,9 @@ kps.rotations.register("WARRIOR","PROTECTION",
     }},
     
     {spells.ignorePain, 'player.buffValue(spells.ignorePain) < player.incomingDamage and player.myBuffDuration(spells.ignorePain) < 9' , "target", "ignorePain" },
-    {spells.devastate, 'target.distance < 10' , "target" , "devastate" },  
+    {spells.devastate, 'target.distance <= 10' , "target" , "devastate" },  
 
-    {{"nested"}, 'player.plateCount > 2 and target.distance < 10', {
+    {{"nested"}, 'player.plateCount > 2 and target.distance <= 10', {
         {spells.avatar},
         {spells.thunderClap},
         {spells.ravager},

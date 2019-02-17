@@ -17,8 +17,8 @@ end)
 kps.rotations.register("PALADIN","PROTECTION",
 {
 
-    {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance < 10' , "/target mouseover" },
-    {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance < 10' , "/target mouseover" },
+    {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
+    {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
     env.FocusMouseover,
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'not focus.isAttackable' , "/clearfocus" },
@@ -34,10 +34,10 @@ kps.rotations.register("PALADIN","PROTECTION",
     
     -- Interrupts
     {{"nested"}, 'kps.interrupt',{
-        {spells.hammerOfJustice, 'focus.distance < 10 and focus.isCasting' , "focus" },
-        {spells.hammerOfJustice, 'target.distance < 10 and target.isCasting' , "target" },
-        {spells.blindingLight, 'target.distance < 10 and target.isCasting' , "target" },
-        {spells.blindingLight, 'target.distance < 10 and player.plateCount > 2' , "target" },
+        {spells.hammerOfJustice, 'focus.distance <= 10 and focus.isCasting' , "focus" },
+        {spells.hammerOfJustice, 'target.distance <= 10 and target.isCasting' , "target" },
+        {spells.blindingLight, 'target.distance <= 10 and target.isCasting' , "target" },
+        {spells.blindingLight, 'target.distance <= 10 and player.plateCount > 2' , "target" },
         -- " Réprimandes" "Rebuke" -- Interrupts spellcasting and prevents any spell in that school from being cast for 4 sec.
         {spells.rebuke, 'target.isCasting' , "target" },
         {spells.rebuke, 'focus.isCasting' , "focus" },
@@ -46,7 +46,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
     {spells.ardentDefender, 'player.hp < 0.55 and player.incomingDamage > player.incomingHeal' },  
@@ -62,7 +62,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"nested"}, 'kps.pauseRotation',{
         {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
         {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
-        {spells.judgment, 'target.isAttackable and target.distance < 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" , "judgment_pause" },
+        {spells.judgment, 'target.isAttackable and target.distance <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" , "judgment_pause" },
         {spells.hammerOfTheRighteous, 'player.hasBuff(spells.consecration) and target.distance <= 10', "target" , "hammerOfTheRighteous_pause" },
         {spells.consecration, 'not player.isMoving and not target.hasMyDebuff(spells.consecration) and target.distance <= 10' , "target" , "consecration_pause" },
     }},
@@ -90,8 +90,8 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Bouclier du vengeur" -- "Avenger's Shield" -- Augmente de 20% les effets de votre prochain Bouclier du vertueux. -- dégâts du Sacré, avant de rebondir sur 2 ennemis proches supplémentaires.
     {spells.avengersShield, 'spells.avengersShield.isUsable and target.distance <= 10' , "target" , "avengersShield_isUsable" },
     {spells.avengersShield, 'target.distance <= 10 and not target.hasMyDebuff(spells.avengersShield)' , "target" , "avengersShield" },
-    {spells.judgment, 'target.isAttackable and target.distance < 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
-    {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distance < 30 and spells.judgment.charges == 2' , "target" },
+    {spells.judgment, 'target.isAttackable and target.distance <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
+    {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distance <= 30 and spells.judgment.charges == 2' , "target" },
     {spells.consecration, 'not player.isMoving and not target.hasMyDebuff(spells.consecration) and target.distance <= 10' , "target" , "consecration_target" },
     {spells.consecration, 'not player.isMoving and not player.hasBuff(spells.consecration) and target.distance <= 10' , "player" , "consecration_player" },
     -- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant de 12% les dégâts de leur prochaine attaque automatique contre vous.
