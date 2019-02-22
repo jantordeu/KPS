@@ -89,6 +89,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity < 90' , "target" , "darkAscension" },
     {spells.voidEruption, 'spells.voidEruption.isUsable and not player.hasBuff(spells.voidForm)' , "target" , "insanity_usable" },
     
+    {spells.mindBlast, 'not player.isMoving and player.plateCount < 3' , env.damageTarget },
     {spells.mindSear, 'not player.isMoving and player.plateCount > 4' , env.damageTarget },
     {spells.mindSear, 'player.hasBuff(spells.thoughtHarvester) and not player.isMoving and player.plateCount > 2' , env.damageTarget },
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("mouseover")' , 'mouseover' },

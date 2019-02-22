@@ -163,6 +163,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 5' , kps.heal.lowestTankInRaid , "radiance" },
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and player.myBuffDuration(spells.atonement) < 5' , "player" , "radiance" },
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2' , kps.heal.hasNotBuffAtonement , "radiance" },
+    {spells.powerWordRadiance, 'not player.isMoving and heal.countLossInRange(0.80) - heal.hasBuffAtonementCount(0.80) > 2' , kps.heal.hasNotBuffAtonement , "radiance" },
     {spells.powerWordShield, 'heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid },
     {spells.powerWordShield, 'player.myBuffDuration(spells.atonement) < 2 and not player.hasDebuff(spells.weakenedSoul)' , "player" },
     {spells.powerWordShield, 'target.isAttackable and targettarget.isFriend and targettarget.myBuffDuration(spells.atonement) < 2 and targettarget.hp < 1 and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
@@ -174,8 +175,9 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and spells.penance.cooldown > kps.gcd' , "player" },
     {spells.penance, 'player.hp < 0.65 ' , "player"  },
 
-    {spells.shadowWordPain, 'target.isAttackable and not target.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("target")' , "target" },
+    {spells.shadowWordPain, 'target.isAttackable and not target.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("target")' , env.damageTarget },
     {spells.powerWordSolace, 'player.hasTalent(3,3) and heal.hasBuffAtonement.hp < 1' , env.damageTarget },
+    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and heal.hasBuffAtonementCount(0.80) > 2' , env.damageTarget },
     {spells.penance, 'heal.hasBuffAtonement.hp < 0.80' , env.damageTarget , "penance_offensive" },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.55' , env.damageTarget },
     {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.55', kps.heal.lowestInRaid ,  "shadowMend_lowest" },
