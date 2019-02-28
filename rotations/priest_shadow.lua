@@ -41,19 +41,17 @@ kps.rotations.register("PRIEST","SHADOW",{
         {spells.psychicHorror, 'player.hasTalent(4,3) and target.isInterruptable and target.castTimeLeft < 1' , "target" },
         {spells.silence, 'target.isInterruptable and target.castTimeLeft < 1' , "target" },
         {spells.psychicScream, 'not player.hasTalent(4,2) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
-        {spells.psychicScream, 'not player.hasTalent(4,2) and player.isTarget and target.distance <= 10 and player.plateCount >= 3' , "player" },
         -- "Mind Bomb" 205369 -- 30 yd range -- debuff "Explosion mentale" 226943 -- replace cri Psychic Scream
-        {spells.mindBomb, 'player.hasTalent(4,2) and player.isTarget and target.distance <= 10 and target.isCasting' , "target" },
-        {spells.mindBomb, 'player.hasTalent(4,2) and player.isTarget and target.distance <= 10 and player.plateCount > 3 ' , "target" },
+        {spells.mindBomb, 'player.hasTalent(4,2) and player.isTarget and target.distance <= 30 and target.isCasting' , "target" },
     }},
     -- "Dissipation de la magie" -- Dissipe la magie sur la cible ennemie, supprimant ainsi 1 effet magique bénéfique.
     {spells.dispelMagic, 'target.isAttackable and target.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "target" },
     {spells.dispelMagic, 'mouseover.isAttackable and mouseover.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "mouseover" },
     -- "Purify Disease" 213634
-    {spells.fireBlood, 'player.isDispellable("Magic")' , "player" },
-    {spells.fireBlood, 'player.isDispellable("Disease")' , "player" },
-    {spells.fireBlood, 'player.isDispellable("Poison")' , "player" },
-    {spells.fireBlood, 'player.isDispellable("Curse")' , "player" },
+--    {spells.fireBlood, 'player.isDispellable("Magic")' , "player" },
+--    {spells.fireBlood, 'player.isDispellable("Disease")' , "player" },
+--    {spells.fireBlood, 'player.isDispellable("Poison")' , "player" },
+--    {spells.fireBlood, 'player.isDispellable("Curse")' , "player" },
     {{"nested"}, 'kps.cooldowns',{
         {spells.purifyDisease, 'mouseover.isDispellable("Disease")' , "mouseover" },
         {spells.purifyDisease, 'player.isDispellable("Disease")' , "player" },
@@ -88,20 +86,23 @@ kps.rotations.register("PRIEST","SHADOW",{
 
     {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity < 90' , "target" , "darkAscension" },
     {spells.voidEruption, 'spells.voidEruption.isUsable and not player.hasBuff(spells.voidForm)' , "target" , "insanity_usable" },
-    
-    {spells.mindBlast, 'not player.isMoving and player.plateCount < 3' , env.damageTarget },
-    {spells.mindSear, 'not player.isMoving and player.plateCount > 4' , env.damageTarget },
-    {spells.mindSear, 'player.hasBuff(spells.thoughtHarvester) and not player.isMoving and player.plateCount > 2' , env.damageTarget },
-    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("mouseover")' , 'mouseover' },
-    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4.8' , 'mouseover' },
+
     {spells.vampiricTouch, 'not player.isMoving and focus.myDebuffDuration(spells.vampiricTouch) < 6.3 and focus.isAttackable and not spells.vampiricTouch.isRecastAt("focus")' , 'focus' },
     {spells.shadowWordPain, 'focus.myDebuffDuration(spells.shadowWordPain) < 4.8 and focus.isAttackable' , 'focus' },
 
-    --{spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
-    
+    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 5' , env.damageTarget },
+    {spells.mindBlast, 'not player.isMoving and spells.mindBlast.charges == 2 and player.plateCount <= 5' , env.damageTarget },
+    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 3' , env.damageTarget },
+    {spells.mindBlast, 'not player.isMoving and player.plateCount <= 2' , env.damageTarget },
+
+    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("mouseover")' , 'mouseover' },
+    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4.8' , 'mouseover' },
+
+    {spells.shadowMend, 'kps.defensive and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
+
     --{{"macro"}, 'spells.mindBlast.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
     {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
-    {spells.mindSear, 'not player.isMoving and player.plateCount > 2' , env.damageTarget },
+    {spells.mindSear, 'not player.isMoving and player.hasBuff(spells.thoughtHarvester) and player.plateCount >= 2' , env.damageTarget },
     {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
 
 },"priest_shadow_bfa")

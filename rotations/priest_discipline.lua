@@ -51,14 +51,10 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.dispelMagic, 'mouseover.isAttackable and mouseover.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "mouseover" },   
     {spells.purify, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
 
-
     {{"nested"}, 'kps.interrupt' ,{
         {spells.shiningForce, 'player.hasTalent(4,3) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
         {spells.psychicScream, 'player.hasTalent(4,3) and spells.shiningForce.cooldown > 0 and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
-        {spells.shiningForce, 'player.hasTalent(4,3) and player.isTarget and target.distance <= 10 and player.plateCount >= 3' , "player" },
-        {spells.psychicScream, 'player.hasTalent(4,3) and player.isTarget and spells.shiningForce.cooldown > 0 and target.distance <= 10 and player.plateCount >= 3' , "player" },
         {spells.psychicScream, 'not player.hasTalent(4,3) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
-        {spells.psychicScream, 'not player.hasTalent(4,3) and player.isTarget and target.distance <= 10 and player.plateCount >= 3' , "player" },
     }},
 
     {spells.giftOfTheNaaru, 'player.hp < 0.70' , "player" },
@@ -103,6 +99,18 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.divineStar, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 2 and target.isAttackable and target.distance <= 30' , "target" },
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.80) > 2' },
     {spells.holyNova, 'kps.holyNova and target.distance <= 10' , "target" },
+    
+    -- GROUPHEAL
+    -- heal.lossHealthRaid` - Returns the loss Health for all raid members
+    -- heal.atonementHealthRaid - Returns the loss Health for all raid members with buff atonement
+    -- heal.hasBuffCount(spells.atonement)
+    -- heal.hasNotBuffAtonementCount(0.80) -- count unit below 0.80 health without atonement buff
+    -- heal.hasBuffAtonementCount(0.80) -- count unit below 0.80 health with atonement buff
+    -- heal.countLossInRange(0.80) -- count unit below 0.80 health
+
+    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 5' , kps.heal.lowestTankInRaid , "radiance" },
+    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and player.myBuffDuration(spells.atonement) < 5' , "player" , "radiance" },
+    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2' , kps.heal.hasNotBuffAtonement , "radiance" },
 
     {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0' },
     {{"nested"}, 'spells.powerWordRadiance.lastCasted(7)' , {
@@ -137,13 +145,11 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.powerWordShield, 'mouseover.isFriend and mouseover.myBuffDuration(spells.atonement) < 2 and mouseover.hp < 1 and not mouseover.hasDebuff(spells.weakenedSoul)' , "mouseover" },
         {spells.shadowMend, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.55 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
         {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not spells.shadowMend.isRecastAt("player")' , "player" },
-        {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and not spells.shadowMend(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
+        {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and not spells.shadowMend.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
         {spells.shadowWordPain, 'target.isAttackable and not target.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("target")' , "target" }, 
         {spells.shadowWordPain, 'focus.isAttackable and not focus.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("focus")' , "focus" },
         {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and not mouseover.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
         {spells.powerWordSolace, 'player.hasTalent(3,3) and target.isAttackable' , "target" },
-        {spells.penance, 'player.hp < 0.55' , "player" },
-        {spells.penance, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid },
         {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and target.isAttackable and spells.penance.cooldown < 6' , "target" },
         {spells.penance, 'target.isAttackable' , "target" },
         {spells.divineStar, 'player.hasTalent(6,2) and target.isAttackable and target.distance <= 30' , "target" },
@@ -152,18 +158,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.smite, 'not player.isMoving and target.isAttackable' , "target" },
     }},
 
-    -- GROUPHEAL
-    -- heal.lossHealthRaid` - Returns the loss Health for all raid members
-    -- heal.atonementHealthRaid - Returns the loss Health for all raid members with buff atonement
-    -- heal.hasBuffCount(spells.atonement)
-    -- heal.hasNotBuffAtonementCount(0.80) -- count unit below 0.80 health without atonement buff
-    -- heal.hasBuffAtonementCount(0.80) -- count unit below 0.80 health with atonement buff
-    -- heal.countLossInRange(0.80) -- count unit below 0.80 health
-    -- heal.atonementHealthRaid -- Returns the loss Health for all raid members with buff atonement
-    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 5' , kps.heal.lowestTankInRaid , "radiance" },
-    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2 and player.myBuffDuration(spells.atonement) < 5' , "player" , "radiance" },
-    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.80) > 2' , kps.heal.hasNotBuffAtonement , "radiance" },
-    {spells.powerWordRadiance, 'not player.isMoving and heal.countLossInRange(0.80) - heal.hasBuffAtonementCount(0.80) > 2' , kps.heal.hasNotBuffAtonement , "radiance" },
     {spells.powerWordShield, 'heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid },
     {spells.powerWordShield, 'player.myBuffDuration(spells.atonement) < 2 and not player.hasDebuff(spells.weakenedSoul)' , "player" },
     {spells.powerWordShield, 'target.isAttackable and targettarget.isFriend and targettarget.myBuffDuration(spells.atonement) < 2 and targettarget.hp < 1 and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
@@ -176,9 +170,9 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.penance, 'player.hp < 0.65 ' , "player"  },
 
     {spells.shadowWordPain, 'target.isAttackable and not target.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("target")' , env.damageTarget },
-    {spells.powerWordSolace, 'player.hasTalent(3,3) and heal.hasBuffAtonement.hp < 1' , env.damageTarget },
-    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and heal.hasBuffAtonementCount(0.80) > 2' , env.damageTarget },
-    {spells.penance, 'heal.hasBuffAtonement.hp < 0.80' , env.damageTarget , "penance_offensive" },
+    {spells.powerWordSolace, 'player.hasTalent(3,3) and heal.atonementHealthRaid > 0' , env.damageTarget },
+    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and heal.atonementHealthRaid > 15000' , env.damageTarget },
+    {spells.penance, 'heal.atonementHealthRaid > 0' , env.damageTarget , "penance_offensive" },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.55' , env.damageTarget },
     {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.55', kps.heal.lowestInRaid ,  "shadowMend_lowest" },
     {spells.smite, 'not player.isMoving' , env.damageTarget },

@@ -117,7 +117,7 @@ function kps.env.priest.damageTarget()
     elseif UnitIsAttackable("focus") then return "focus"
     elseif UnitIsAttackable("focustarget") then return "focustarget"
     elseif UnitIsAttackable("mouseovertarget") then return "mouseovertarget"
-    else return kps.env.heal.enemyTarget
+    else return kps.env.heal.enemyLowest -- kps.env.heal.enemyTarget
     end
 end
 
