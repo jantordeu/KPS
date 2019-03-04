@@ -207,7 +207,6 @@ local shouldInterrupt = setmetatable({}, {
         local spellCasting, _, _, _, endTime, _, _, _, _ = UnitCastingInfo("player")
         if spellCasting == nil then return false end
         if endTime == nil then return false end
-        if kps.defensive then return false end
         local target = kps.lastTarget
         local targetHealth = UnitHealth(kps.lastTarget) / UnitHealthMax(kps.lastTarget)
 

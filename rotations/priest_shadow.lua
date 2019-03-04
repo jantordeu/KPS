@@ -19,7 +19,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     env.FocusMouseoverShadow,
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
-    {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
+    --{{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
     -- "Dissipation de masse" 32375
     {{"macro"}, 'keys.ctrl', "/cast [@cursor] "..MassDispel },
@@ -43,15 +43,14 @@ kps.rotations.register("PRIEST","SHADOW",{
         {spells.psychicScream, 'not player.hasTalent(4,2) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
         -- "Mind Bomb" 205369 -- 30 yd range -- debuff "Explosion mentale" 226943 -- replace cri Psychic Scream
         {spells.mindBomb, 'player.hasTalent(4,2) and player.isTarget and target.distance <= 30 and target.isCasting' , "target" },
+        --{spells.mindBomb, 'player.hasTalent(4,2) and not target.isControlled and target.distance <= 30' , "target" },
     }},
     -- "Dissipation de la magie" -- Dissipe la magie sur la cible ennemie, supprimant ainsi 1 effet magique bénéfique.
     {spells.dispelMagic, 'target.isAttackable and target.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "target" },
     {spells.dispelMagic, 'mouseover.isAttackable and mouseover.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "mouseover" },
+    {spells.arcaneTorrent, 'player.timeInCombat > 9 and target.isAttackable' , "target" },
+
     -- "Purify Disease" 213634
---    {spells.fireBlood, 'player.isDispellable("Magic")' , "player" },
---    {spells.fireBlood, 'player.isDispellable("Disease")' , "player" },
---    {spells.fireBlood, 'player.isDispellable("Poison")' , "player" },
---    {spells.fireBlood, 'player.isDispellable("Curse")' , "player" },
     {{"nested"}, 'kps.cooldowns',{
         {spells.purifyDisease, 'mouseover.isDispellable("Disease")' , "mouseover" },
         {spells.purifyDisease, 'player.isDispellable("Disease")' , "player" },

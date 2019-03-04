@@ -171,7 +171,6 @@ end
 local overHealTableUpdate = function()
     -- kps.defensive in case I want to heal with mouseover (e.g. debuff absorb heal)
     local onCD = kps.env.priest.holyWordSerenityOnCD()
-    if kps.defensive then onCD = true end
     local overHealTable = { {kps.spells.priest.flashHeal.name, 0.855 , onCD}, {kps.spells.priest.heal.name, 0.955 , onCD}, {kps.spells.priest.prayerOfHealing.name, 3 , kps.defensive} }
     return  overHealTable
 end
