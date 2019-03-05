@@ -116,8 +116,8 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
 
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 5' , kps.heal.lowestTankInRaid , "radiance" },
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and player.myBuffDuration(spells.atonement) < 5' , "player" , "radiance" },
-    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and not heal.hasNotBuffAtonement.isUnit("player") ' , kps.heal.hasNotBuffAtonement , "radiance_NotBuffAtonement" },
-    {spells.powerWordRadiance, 'not player.isMoving and mouseover.isHealable and heal.hasNotBuffAtonementCount(0.82) > 2' , "mouseover" , "radiance_mouseover"},
+    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and not heal.hasNotBuffAtonement.isUnit("player") and not spells.powerWordRadiance.isRecastAt(heal.hasNotBuffAtonement.unit)' , kps.heal.hasNotBuffAtonement , "radiance_hasNotBuffAtonement" },
+    {spells.powerWordRadiance, 'not player.isMoving and mouseover.isHealable and heal.hasNotBuffAtonementCount(0.82) > 2 and not spells.powerWordRadiance.isRecastAt("mouseover")' , "mouseover" , "radiance_mouseover"},
 
     {spells.powerWordShield, 'mouseover.isHealable and mouseover.myBuffDuration(spells.atonement) < 2 and mouseover.hp < 0.92 and not mouseover.hasDebuff(spells.weakenedSoul)' , "mouseover" , "powerWordShield_mouseover" },
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" , "shadowMend_mouseover"},
@@ -136,6 +136,13 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.shadowfiend, 'not player.hasTalent(3,2) and spells.powerWordRadiance.lastCasted(7)' , env.damageTarget },
     {spells.penance, 'heal.hasBuffAtonement.hp < 0.82' , env.damageTarget  },
     {spells.smite, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.82' , env.damageTarget  },
+    
+    {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and not spells.shadowMend.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
+    {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and spells.penance.cooldown > kps.gcd' , kps.heal.lowestTankInRaid },
+    {spells.penance, 'heal.lowestTankInRaid.hp < 0.65 ' , kps.heal.lowestTankInRaid  },
+    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not spells.shadowMend.isRecastAt("player")' , "player" },
+    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and spells.penance.cooldown > kps.gcd' , "player" },
+    {spells.penance, 'player.hp < 0.65 ' , "player"  },
 
     {{"nested"}, 'kps.mouseOver and mouseover.isHealable' , {
         {spells.shadowMend, 'not player.isMoving and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" , "shadowMend_mouseover"},
@@ -174,13 +181,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.shadowfiend, 'not player.hasTalent(3,2) and target.isAttackable' , "target" },
         {spells.smite, 'not player.isMoving and target.isAttackable' , "target" },
     }},
-
-    {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and not spells.shadowMend.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
-    {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and spells.penance.cooldown > kps.gcd' , kps.heal.lowestTankInRaid },
-    {spells.penance, 'heal.lowestTankInRaid.hp < 0.65 ' , kps.heal.lowestTankInRaid  },
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not spells.shadowMend.isRecastAt("player")' , "player" },
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and spells.penance.cooldown > kps.gcd' , "player" },
-    {spells.penance, 'player.hp < 0.65 ' , "player"  },
 
     {spells.shadowWordPain, 'target.isAttackable and not target.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("target")' , env.damageTarget },
     {spells.shadowWordPain, 'focus.isHealable and focustarget.isAttackable and not focustarget.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("focustarget")' , "focustarget" },
