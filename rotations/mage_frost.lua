@@ -11,7 +11,7 @@ local RingOfFrost  = spells.ringOfFrost.name
 
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("MAGE","FROST", "sheep", "Interface\\Icons\\spell_nature_polymorph", "sheep")
+   kps.gui.addCustomToggle("MAGE","FROST", "control", "Interface\\Icons\\spell_nature_polymorph", "control")
 end)
 
 kps.rotations.register("MAGE","FROST",
@@ -25,7 +25,7 @@ kps.rotations.register("MAGE","FROST",
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
     
-    {spells.polymorph, 'kps.sheep and focus.isAttackable and not focus.hasMyDebuff(spells.polymorph)' , "focus" },
+    {spells.polymorph, 'kps.control and focus.isAttackable and not focus.hasMyDebuff(spells.polymorph) and focus.myDebuffDuration(spells.polymorph) < 2' , "focus" },
 
     {spells.iceBlock, 'player.hp <= 0.20' },
     {spells.iceBarrier, 'not player.hasBuff(spells.iceBarrier)' },
@@ -38,8 +38,6 @@ kps.rotations.register("MAGE","FROST",
         {spells.counterspell, 'target.isInterruptable' , "target" },
         {spells.counterspell, 'focus.isInterruptable' , "focus" },
     }},
-    {spells.polymorph, 'kps.defensive and focus.exists and not focus.isAttackable and focus.myDebuffDuration(spells.polymorph) < 2' , "focus" },
-    {spells.polymorph, 'kps.defensive and focus.exists and not focus.isAttackable and not focus.hasDebuff(spells.polymorph)' , "focus" },
     
     -- TRINKETS
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(0)' , "/use 13" },

@@ -87,7 +87,7 @@ end
 -- All kinds
 local function onSetHyperlink(self, link)
   local kind, id = string.match(link,"^(%a+):(%d+)")
-  addLineByKind(self, kind, id)
+  addLineByKind(self, id, kind)
 end
 
 hooksecurefunc(GameTooltip, "SetAction", function(self, slot)
@@ -151,10 +151,14 @@ end)
 
 -- Talents
 hooksecurefunc(GameTooltip, "SetTalent", function(self, id)
+  local spellID = select(6, GetTalentInfoByID(id))
   addLine(self, id, kinds.talent)
+  addLine(self, spellID, kinds.spell)
 end)
 hooksecurefunc(GameTooltip, "SetPvpTalent", function(self, id)
+  local spellID = select(6, GetPvpTalentInfoByID(id))
   addLine(self, id, kinds.talent)
+  addLine(self, spellID, kinds.spell)
 end)
 
 -- NPCs
@@ -343,5 +347,5 @@ hooksecurefunc("QuestMapLogTitleButton_OnEnter", function(self)
 end)
 
 hooksecurefunc("TaskPOI_OnEnter", function(self)
-  if self and self.questID then addLine(WorldMapTooltip, self.questID, kinds.quest) end
+  if self and self.questID then addLine(GameTooltip, self.questID, kinds.quest) end
 end)

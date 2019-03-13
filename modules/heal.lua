@@ -702,9 +702,14 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cffff8000isAttackable:|cffffffff",kps["env"].target.isAttackable)
 --print("|cffff8000isRaidBoss:|cffffffff", kps["env"].target.isRaidBoss,"|cffff8000isRaidTank:|cffffffff",kps["env"].target.isRaidTank)
 --print("|cffff8000isElite:|cffffffff", kps["env"].target.isElite,"|cffff8000enemyTarget:|cffffffff",kps["env"].heal.enemyTarget)
-print("|cffff8000DurationMax:|cffffffff", kps["env"].target.myDebuffDurationMax(kps.spells.priest.shadowWordPain))
+--print("|cffff8000DurationMax:|cffffffff", kps["env"].target.myDebuffDurationMax(kps.spells.priest.shadowWordPain))
+--print("|cffff8000timeInCombat:|cffffffff", kps["env"].player.timeInCombat)
 
+--print("|cffff8000countCharge:|cffffffff", kps.spells.priest.powerWordRadiance.charges)
+--print("|cffff8000cooldownCharge:|cffffffff", kps.spells.priest.powerWordRadiance.cooldownCharges)
+--print("|cffff8000cooldownSpellCharge:|cffffffff", kps.spells.priest.powerWordRadiance.cooldown)
 
+--print("|cffff8000buffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.warrior.ignorePain))
 
 --print("|cffff8000plateCountvampiricTouch:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 --print("|cffff8000plateCountshadowWordPain:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.shadowWordPain))
@@ -759,7 +764,6 @@ print("|cffff8000DurationMax:|cffffffff", kps["env"].target.myDebuffDurationMax(
 --print("|cffff8000AtonementUnit:|cffffffff", kps["env"].heal.hasBuffAtonement.name)
 --print("|cffff8000NotAtonementUnit:|cffffffff", kps["env"].heal.hasNotBuffAtonement.name)
 
-
 --for _,unit in ipairs(tanksInRaid()) do
 --print("TANKS",unit.name)
 --end
@@ -768,17 +772,9 @@ print("|cffff8000DurationMax:|cffffffff", kps["env"].target.myDebuffDurationMax(
 --print("DAMAGE",unit.name)
 --end
 
-
---print("|cffff8000buffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.warrior.ignorePain))
---print("|cffff8000countCharge:|cffffffff", kps.spells.priest.powerWordRadiance.charges)
---print("|cffff8000cooldownCharge:|cffffffff", kps.spells.priest.powerWordRadiance.cooldownCharges)
---print("|cffff8000cooldownSpellCharge:|cffffffff", kps.spells.priest.powerWordRadiance.cooldown)
-
-
 --print("|cffff8000hasRoleInRaidTANK:|cffffffff", kps["env"].heal.lowestInRaid.hasRoleInRaid("TANK"))
 --print("|cffff8000hasRoleInRaidHEALER:|cffffffff", kps["env"].heal.lowestInRaid.hasRoleInRaid("HEALER"))
 --print("|cffff8000isRaidTank:|cffffffff", kps["env"].heal.lowestInRaid.isRaidTank)
-
 
 --print("|cffff8000BuffValue:|cffffffff", kps["env"].player.buffDuration(kps.spells.priest.masteryEchoOfLight))
 --print("|cffff8000BuffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.priest.masteryEchoOfLight))

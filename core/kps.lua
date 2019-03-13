@@ -12,7 +12,6 @@ local castSequenceMessage = nil
 
 
 kps.runMacro = function(macroText)
-    -- Call Macro Text
     RunMacroText(macroText)
 end
 

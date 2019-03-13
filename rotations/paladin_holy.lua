@@ -61,9 +61,9 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.hammerOfJustice, 'focus.distance <= 10 and focus.isCasting and focus.isAttackable' , "focus" },
         {spells.hammerOfJustice, 'target.distance <= 10 and target.isCasting and target.isAttackable' , "target" },
         {spells.hammerOfJustice, 'focustarget.distance <= 10 and focustarget.isCasting and focustarget.isAttackable' , "focustarget" },
-        {spells.repentance, 'focus.isCasting and focus.distance <= 30 and focus.isAttackable' , "focus" },
-        {spells.repentance, 'target.isCasting and target.distance <= 30 and target.isAttackable' , "target" },
-        {spells.repentance, 'focustarget.isCasting and focustarget.distance <= 30 and focustarget.isAttackable' , "focustarget" },
+        {spells.repentance, 'player.hasTalent(3,2) and focus.isCasting and focus.distance <= 30 and focus.isAttackable' , "focus" },
+        {spells.repentance, 'player.hasTalent(3,2) and target.isCasting and target.distance <= 30 and target.isAttackable' , "target" },
+        {spells.repentance, 'player.hasTalent(3,2) and focustarget.isCasting and focustarget.distance <= 30 and focustarget.isAttackable' , "focustarget" },
     }},
 
     -- APPLY MANUAL -- "Guide de lumière" "Beacon of Light" -- Targeting this ally directly with Flash of Light or Holy Light also refunds 25% of Mana spent on those heals -- your heals on other party or raid members to also heal that ally for 40% of the amount healed.
@@ -87,7 +87,8 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid },
     {spells.holyShock, 'heal.lowestUnitInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestUnitInRaid.hp < 0.90' , kps.heal.lowestUnitInRaid },
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid },
+    {spells.holyShock, 'kps.mouseOver and mouseover.isHealable and mouseover.hp < 1' , "mouseover" },
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 1' , kps.heal.lowestTankInRaid },
 
     -- "Jugement de lumière" -- permet aux 25 prochaines attaques réussies contre la cible de rendre (5% of Spell power) points de vie à l’attaquant.
     {spells.judgment, 'player.hasTalent(5,1) and target.isAttackable' , "target" },
@@ -115,10 +116,11 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Prisme sacré" -- "Holy Prism" -- deals (75% of Spell power) Holy damage and radiates (50% of Spell power) healing to 5 allies within 15 yards. it heals for (100% of Spell power) and radiates (45% of Spell power) Holy damage to 5 enemies within 15 yards.
     {spells.holyPrism, 'player.hasTalent(5,2) and heal.countLossInRange(0.85) > 2 and target.isAttackable and targettarget.isFriend and targettarget.hp < 0.90' , "targettarget" },
 
+    {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestTankInRaid.hp < 0.80 and player.hp > 0.90 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid },
+    {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestUnitInRaid.hp < 0.80 and player.hp > 0.90 and not heal.lowestUnitInRaid.isUnit("player")' , kps.heal.lowestUnitInRaid },
+
     {spells.flashOfLight, 'kps.mouseOver and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55' , "mouseover" , "flashOfLight_mouseover" },        
-    {spells.holyLight, 'kps.mouseOver and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.85' , "mouseover" , "holyLight_mouseover" },
-    {spells.lightOfTheMartyr, 'heal.lowestTankInRaid.hp < 0.85 and player.hp > 0.90 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid },
-    {spells.lightOfTheMartyr, 'heal.lowestUnitInRaid.hp < 0.85 and player.hp > 0.90 and not heal.lowestUnitInRaid.isUnit("player")' , kps.heal.lowestUnitInRaid },
+    {spells.holyLight, 'kps.mouseOver and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.90' , "mouseover" , "holyLight_mouseover" },
     -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
     -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana.
     {spells.flashOfLight, 'not player.isMoving and heal.lowestUnitInRaid.hp < 0.55 and heal.lowestUnitInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestUnitInRaid , "FLASH_LOWEST" },
@@ -128,7 +130,6 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
 
     -- Damage
-    {spells.holyShock, 'target.isAttackable' , "target" },
     {spells.judgment, 'target.isAttackable' , "target" },
     {spells.consecration, 'not player.isMoving and target.isAttackable and target.distance <= 10' },
     {spells.crusaderStrike, 'target.isAttackable and target.isAttackable and target.distance <= 10' , "target" },

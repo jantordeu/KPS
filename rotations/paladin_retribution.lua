@@ -91,15 +91,15 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
     -- Templar's Verdict or Divine Storm at 3-4 Holy Power if following spells/buffs are active: Divine Purpose, Avenging Wrath/Crusade, Execution Sentence.
     -- Righteous Verdict Talent(1,2) -- Templar's Verdict increases the damage of your next Templar's Verdict by 15% for 6 sec.
+    
+    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
+    {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
 
     {spells.judgment, 'target.isAttackable and target.distance <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
     {spells.consecration, 'player.hasTalent(4,2) target.isAttackable and target.distance <= 10' }, -- Generates 1 Holy Power.
     {spells.hammerOfWrath, 'player.hasTalent(2,3) and target.isAttackable' , "target" }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10'}, --Generates 1 Holy Power
     {spells.bladeOfJustice, 'target.isAttackable and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
-
-    {spells.divineStorm, 'player.plateCount > 1 and target.isAttackable' , "target" , "divineStorm" },
-    {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
 
     {{"macro"}, 'true' , "/startattack" },
 
