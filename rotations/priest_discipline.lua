@@ -48,8 +48,8 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
    {spells.painSuppression, 'player.hp < 0.40' , "player" },
 
     -- "Dissipation de la magie" -- Dissipe la magie sur la cible ennemie, supprimant ainsi 1 effet magique bénéfique.
-    {spells.dispelMagic, 'target.isAttackable and target.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "target" },
-    {spells.dispelMagic, 'mouseover.isAttackable and mouseover.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "mouseover" },   
+    {spells.dispelMagic, 'target.isAttackable and target.isBuffDispellable and not spells.dispelMagic.lastCasted(7)' , "target" },
+    {spells.dispelMagic, 'mouseover.isAttackable and mouseover.isBuffDispellable and not spells.dispelMagic.lastCasted(7)' , "mouseover" },   
     {spells.arcaneTorrent, 'player.timeInCombat > 9 and target.isAttackable and target.distance <= 10' , "target" },
 
     {spells.mindControl, 'kps.control and focus.isAttackable and not focus.hasMyDebuff(spells.mindControl) and focus.myDebuffDuration(spells.mindControl) < 2' , "focus" },
@@ -91,15 +91,12 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {{"macro"}, 'not player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.timeInCombat > 30' , "/use [@player] 14" },
 
     {{"nested"}, 'player.hasBuff(spells.rapture)' , {
-        {spells.powerWordShield, 'not heal.lowestTankInRaid.hasBuff(spells.powerWordShield)' , kps.heal.lowestTankInRaid },
-        {spells.powerWordShield, 'target.isAttackable and targettarget.isHealable and not targettarget.hasBuff(spells.powerWordShield) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" , "powerWordShield_targettarget" },
-        {spells.powerWordShield, 'not player.hasBuff(spells.powerWordShield) and player.hp < 0.82' , "player" },
-        {spells.powerWordShield, 'not heal.lowestUnitInRaid.hasBuff(spells.powerWordShield) and heal.lowestUnitInRaid.hp < 0.82' , kps.heal.lowestUnitInRaid },
-        {spells.powerWordShield, 'mouseover.isHealable and not mouseover.hasBuff(spells.powerWordShield) and mouseover.hp < 0.995' , "mouseover" },
+        {spells.powerWordShield, 'not heal.lowestTankInRaid.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
+        {spells.powerWordShield, 'target.isAttackable and targettarget.isHealable and not targettarget.hasBuff(spells.powerWordShield) and not targettarget.hasDebuff(spells.weakenedSoul) and not spells.powerWordShield.isRecastAt("targettarget")' , "targettarget" , "powerWordShield_targettarget" },
+        {spells.powerWordShield, 'not player.hasBuff(spells.powerWordShield) and player.hp < 0.82 and not spells.powerWordShield.isRecastAt("player")' , "player" },
+        {spells.powerWordShield, 'not heal.lowestUnitInRaid.hasBuff(spells.powerWordShield) and heal.lowestUnitInRaid.hp < 0.82 and not spells.powerWordShield.isRecastAt(heal.lowestUnitInRaid.unit)' , kps.heal.lowestUnitInRaid },
     }},
-    {spells.rapture, 'heal.lowestTankInRaid.hp < 0.40 and not heal.lowestTankInRaid.hasBuff(spells.painSuppression)' , kps.heal.lowestTankInRaid },
-    {spells.rapture, 'spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.cooldown > 7 and heal.hasNotBuffAtonementCount(0.65) > 2' },
-    
+
     -- GROUPHEAL
     -- heal.lossHealthRaid` - Returns the loss Health for all raid members
     -- heal.atonementHealthRaid - Returns the loss Health for all raid members with buff atonement
@@ -110,14 +107,17 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     -- heal.hasNotBuffAtonement.hp < 0.92 -- UNIT with lowest health without Atonement Buff on raid -- default "player" 
     -- heal.hasBuffAtonement.hp < 0.92 - UNIT with lowest health with Atonement Buff on raid e.g. -- default "player"
 
-    {spells.penance, 'spells.schism.lastCasted(7)' , env.damageTarget  , "penance_schism" },    
-    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and spells.rapture.lastCasted(9)' , env.damageTarget , "schism_rapture" },
-    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and spells.powerWordRadiance.lastCasted(7) and spells.powerWordRadiance.charges == 0' , env.damageTarget , "schism_charges" },
+    {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0' }, 
+    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and spells.evangelism.lastCasted(5)' , env.damageTarget , "schism_evangelism" },   
+    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and spells.rapture.lastCasted(5)' , env.damageTarget , "schism_rapture" },
+    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(7) and heal.hasBuffAtonementCount(0.82) > 2 ' , env.damageTarget , "schism_charges" },
+    {spells.penance, 'spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(7) and heal.hasBuffAtonement.hp < 0.92' , env.damageTarget  , "penance_charges" },  
+    {spells.mindbender, 'player.hasTalent(3,2) and spells.powerWordRadiance.lastCasted(7) and heal.hasBuffAtonementCount(0.82) > 2' , env.damageTarget },
+    {spells.shadowfiend, 'not player.hasTalent(3,2) and spells.powerWordRadiance.lastCasted(7) and heal.hasBuffAtonementCount(0.82) > 2' , env.damageTarget },
+    
+    {spells.rapture, 'heal.lowestTankInRaid.hp < 0.40 and not heal.lowestTankInRaid.hasBuff(spells.painSuppression)' },
+    {spells.rapture, 'spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(7) and heal.hasNotBuffAtonementCount(0.65) > 2' },
 
-    {spells.mindbender, 'player.hasTalent(3,2) and spells.powerWordRadiance.lastCasted(6) and heal.hasBuffAtonementCount(0.82) > 2' , env.damageTarget },
-    {spells.shadowfiend, 'not player.hasTalent(3,2) and spells.powerWordRadiance.lastCasted(6) and heal.hasBuffAtonementCount(0.82) > 2' , env.damageTarget },  
-
-    {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0' },
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and not spells.powerWordRadiance.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "radiance" },
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and player.myBuffDuration(spells.atonement) < 2 and not spells.powerWordRadiance.isRecastAt("player")' , "player" , "radiance" },
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and not heal.hasNotBuffAtonement.isUnit("player") and not spells.powerWordRadiance.isRecastAt(heal.hasNotBuffAtonement.unit)' , kps.heal.hasNotBuffAtonement , "radiance_hasNotBuffAtonement" },
@@ -152,8 +152,8 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("target") and heal.lowestInRaid.hp > 0.82' , "target", "pain_target" },
     {spells.powerWordSolace, 'player.hasTalent(3,3)' , env.damageTarget },
 
-    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and heal.hasBuffAtonementCount(0.82) >= 2' , env.damageTarget , "schism_count" },
-    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and heal.hasBuffAtonement.hp < 0.40' , env.damageTarget , "schism_low" },
+    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and heal.hasBuffAtonementCount(0.82) > 2' , env.damageTarget , "schism_count" },
+    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and heal.hasBuffAtonement.hp < 0.65' , env.damageTarget , "schism_low" },
     {spells.penance, 'heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid  , "penance_defensive" },
     {spells.penance, 'player.hp < 0.40' , "player"  , "penance_defensive" },
     {spells.penance, 'heal.hasBuffAtonement.hp < 0.92' , env.damageTarget  , "penance_offensive" },
