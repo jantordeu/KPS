@@ -13,13 +13,10 @@ kps.spells.potion.draenicIntellectPotion = kps.Spell.fromId(156426) -- Draenic I
 kps.spells.potion.draenicAgilityPotion = kps.Spell.fromId(156577) -- Draenic Agility Potion
 kps.spells.potion.draenicStrengthPotion = kps.Spell.fromId(156428) -- Draenic Strength Potion
 
--- Spells which require a select (cast on ground player)
-kps.spells.aeg = {}
-kps.spells.aeg.holyWordSanctify = kps.Spell.fromId(34861) -- Holy Word: Sanctify
-kps.spells.aeg.powerWordBarrier = kps.Spell.fromId(62618) -- Power Word: Barrier
 
 -- Spells which require a select (cast on ground cursor)
 kps.spells.ae = {}
+kps.spells.ae.powerWordBarrier = kps.Spell.fromId(62618) -- Power Word: Barrier
 kps.spells.ae.bindingShot = kps.Spell.fromId(109248) -- Binding Shot
 kps.spells.ae.shadowfury = kps.Spell.fromId(30283) -- Shadowfury
 kps.spells.ae.massDispel = kps.Spell.fromId(32375) -- Mass Dispel
@@ -43,6 +40,8 @@ kps.spells.ae.defile = kps.Spell.fromId(152280) -- Defile
 kps.spells.ae.metamorphosis = kps.Spell.fromId(187827) -- Metamorphosis
 kps.spells.ae.starfall = kps.Spell.fromId(191034) -- Starfall
 kps.spells.ae.efflorescence = kps.Spell.fromId(145205) -- Efflorescence
+kps.spells.ae.infernalStrike = kps.Spell.fromId(189110) -- Infernal Strike
+kps.spells.ae.bilescourgeBombers = kps.Spell.fromId(267211) -- Bilescourge Bombers
 
 
 -- Crowd Control Spells
@@ -69,6 +68,7 @@ kps.spells.cc.repentance = kps.Spell.fromId(20066) -- Repentance
 kps.spells.mount = {}
 kps.spells.mount.frostwolfWarWolf = kps.Spell.fromId(164222) -- Frostwolf War Wolf
 kps.spells.mount.telaariTalbuk = kps.Spell.fromId(165803) -- Telaari Talbuk
+kps.spells.mount.druidForm = kps.Spell.fromId(783) -- Druid Form
 
 
 -- Bloodlust
@@ -110,6 +110,7 @@ kps.spells.ignore.blink = kps.Spell.fromId(1953) -- Blink
 kps.spells.ignore.deterrence = kps.Spell.fromId(19263) -- Deterrence
 kps.spells.ignore.disengage = kps.Spell.fromId(781) -- Disengage
 kps.spells.ignore.iceFloes = kps.Spell.fromId(108839) -- Ice Floes
+kps.spells.ignore.felRush = kps.Spell.fromId(195072) -- Fel Rush
 
 
 -- Greater Draenic Flasks

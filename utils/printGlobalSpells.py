@@ -51,12 +51,6 @@ spells.poly.add_spell(61780, "Turkey") # Polymorph: Turkey
 spells.poly.add_spell(28271, "Turtle") # Polymorph: Turtle
 spells.poly.add_spell(51514) # Hex
 
-# Spells which require a select (cast on ground player) - usually AE Spells
-spells.group("aeg","Spells which require a select (cast on ground player)")
-spells.aeg.add_all_spells([34861,62618])
-spells.aeg.add_spell(34861) # -- Holy Word: Sanctify
-spells.aeg.add_spell(62618) # -- Power Word: Barrier
-
 # Spells which require a select (cast on ground cursor) - usually AE Spells
 spells.group("ae","Spells which require a select (cast on ground cursor)")
 spells.ae.add_all_spells([109248,30283,32375,34861,43265,62618,2120,114158, 115313, 6544, 33395, 116011, 115315, 152108,61882])
@@ -68,6 +62,8 @@ spells.ae.add_spell(152280) # Defile
 spells.ae.add_spell(187827) # Metamorphosis
 spells.ae.add_spell(191034) # Starfall
 spells.ae.add_spell(145205) # Efflorescence
+spells.ae.add_spell(34861) # Holy Word: Sanctify
+spells.ae.add_spell(62618) # Power Word: Barrier
 
 # User-Priorized Spells to ignore
 spells.group("ignore","User-Priorized Spells to ignore")

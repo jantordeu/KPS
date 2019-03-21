@@ -51,8 +51,7 @@ end
 @function `<UNIT>.isDrinking` - returns true if the given unit is currently eating/drinking.
 ]]--
 function Unit.isDrinking(self)
-    -- doesn't matter which drinking buff we're using, all of them have the same name!
-    return Unit.hasBuff(self)(kps.Spell.fromId(431))
+    return Unit.hasBuff(self)(kps.Spell.fromId(431)) -- doesn't matter which drinking buff we're using, all of them have the same name!
 end
 
 --[[[

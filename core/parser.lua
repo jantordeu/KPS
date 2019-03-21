@@ -143,7 +143,7 @@ local function fnParseMacro(macroText, conditionFn)
                 kps.runMacro(macroText)
             elseif kps["env"].player.isCasting and string.find(macroText,"/stopcasting") ~= nil then
                kps.runMacro("/stopcasting")
-               if kps.debug then print("/stopcasting") end
+               if kps.debug then print("StopCasting") end
             end
         end
         -- Macro always return nil,nil to allow other spells to be cast! Actual macro casting is done within this function!
@@ -935,7 +935,6 @@ end
 
 local function compileTable(hydraTable)
     local compiledTable = {}
-    --for _, spellTable in pairs(hydraTable) do
     for _, spellTable in ipairs(hydraTable) do
         -- Spell-Table is already a function - just add it!
         if type(spellTable) == "function" then

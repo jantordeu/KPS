@@ -126,20 +126,6 @@ kps.RaidStatus.prototype.lowestInRaid = kps.utils.cachedValue(function()
     return lowestUnit
 end)
 
-
--- Highest Player in Raid
-kps.RaidStatus.prototype.highestInRaid = kps.utils.cachedValue(function()
-    local highestUnit = kps["env"].player
-    local highestHp = 0
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hp > highestHp then
-            highestUnit = unit
-            highestHp = highestUnit.hp
-        end
-    end
-    return highestUnit
-end)
-
 --[[[
 @function `heal.lowestTankInRaid` - Returns the lowest tank in the raid - a tank is either:
     * any group member that has the Group Role `TANK`
@@ -188,7 +174,7 @@ kps.RaidStatus.prototype.defaultTarget = kps.utils.cachedValue(function()
     if kps.env.player.hp < 0.55 then return kps["env"].player end
     -- If the focus target is below 50% - take it (must be some reason there is a focus after all...)
     -- focus.isFriend coz isHealable (e.g. UnitInRange) is only available for members of the player's group.
-    if kps["env"].focus.isFriend and kps["env"].focus.hp < 0.55 then return kps["env"].focus end
+    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.55 then return kps["env"].focus end
     -- MAYBE we also focused an enemy so we can heal it's target...
     if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.55 then return kps["env"].focustarget end
     -- Now do the same for target...
@@ -211,7 +197,7 @@ kps.RaidStatus.prototype.defaultTank = kps.utils.cachedValue(function()
     if kps.env.player.hp < 0.55 then return kps["env"].player end
     -- If the focus target is below 50% - take it (must be some reason there is a focus after all...) 
     -- focus.isFriend coz isHealable (e.g. UnitInRange) is only available for members of the player's group.
-    if kps["env"].focus.isFriend and kps["env"].focus.hp < 0.55 then return kps["env"].focus end
+    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.55 then return kps["env"].focus end
     -- MAYBE we also focused an enemy so we can heal it's target...
     if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.55 then return kps["env"].focustarget end
     -- Now do the same for target...

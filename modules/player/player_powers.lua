@@ -128,6 +128,12 @@ function Player.insanity(self)
     return UnitPower("player", 13)
 end
 --[[[
+@function `player.arcaneCharges` - Arcane Charges (Arcane Mage)
+]]--
+function Player.arcaneCharges(self)
+    return UnitPower("player", 16)
+end
+--[[[
 @function `player.fury` - Fury (Demon Hunter)
 ]]--
 function Player.fury(self)

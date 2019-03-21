@@ -23,46 +23,24 @@ function kps.write(...)
     DEFAULT_CHAT_FRAME:AddMessage("|cffff8000KPS: " .. strjoin(" ", tostringall(...))); -- color orange
 end
 
-kps.useItem = function(bagItem)
+kps.useItem = function(itemId)
     return function ()
         return true
     end
-    -- TODO: Return a FUNCTION which uses Item!
-    --[[
-
-            if IsEquippedItem(id) then
-                slot = select(9, GetItemInfo(id))
-                if string.find(slot, "TRINKET") ~= nil then
-                    s1 = select(1,GetInventorySlotInfo("Trinket0Slot"))
-                    s2 = select(1,GetInventorySlotInfo("Trinket1Slot"))
-                    t1 = GetInventoryItemID("player", s1)
-                    t2 = GetInventoryItemID("player", s2)
-
-                    if t1 == id then
-                        priorityMacro = "/use "..s1
-                    end
-                    if t2 == id then
-                        priorityMacro = "/use "..s2
-                    end
-
-                end
-
-    ]]
 end
 
-local function handlePriorityActions(spell)
+local function handlePriorityActions()
     if priorityMacro ~= nil then
         priorityMacro = nil
     elseif priorityAction ~= nil then
         priorityAction = nil
     elseif prioritySpell ~= nil then
-        if prioritySpell.canBeCastAt("target") then
+        if prioritySpell.canBeCastAt("target") and prioritySpell.cooldown < 2 then
             prioritySpell.cast()
             LOG.warn("Priority Spell %s was casted.", prioritySpell)
             prioritySpell = nil
         else
-            if prioritySpell.cooldown > 3 then prioritySpell = nil end
-            return false
+            if prioritySpell.cooldown > 2 then prioritySpell = nil end
         end
     else
         return false
@@ -89,10 +67,9 @@ kps.combatStep = function ()
         if castSequence[castSequenceIndex] ~= nil and (castSequenceStartTime + kps.maxCastSequenceLength > GetTime()) then
             local spell = castSequence[castSequenceIndex]()
             if spell.canBeCastAt(castSequenceTarget) and not player.isCasting then
-                --kps.write("Cast-Sequence: |cffffffff"..spell)
-                LOG.debug("Cast-Sequence: %s. %s", castSequenceIndex, spell)
-                spell.cast(castSequenceTarget,castSequenceMessage)
+                LOG.warn("Cast-Sequence: %s. %s", castSequenceIndex, spell)
                 castSequenceIndex = castSequenceIndex + 1
+                --spell.cast(castSequenceTarget,castSequenceMessage)
             end
         else
             castSequenceIndex = nil
@@ -103,11 +80,23 @@ kps.combatStep = function ()
         if not activeRotation then return end
         activeRotation.checkTalents()
         local spell, target, message = activeRotation.getSpell()
-
         if player.pause then return end
- 
-        if spell ~= nil and not player.isCasting and not handlePriorityActions(spell) then
-            if spell.name == nil then
+
+        if spell ~= nil and spell.cast ~= nil and not player.isCasting then
+            if prioritySpell ~= nil then
+                if prioritySpell.canBeCastAt("target") and prioritySpell.cooldown < 2 then
+                    --prioritySpell.cast()
+                    local name = prioritySpell.name
+                    local needsSelect = prioritySpell.needsSelect
+            		LOG.warn("Priority Spell %s was casted.", prioritySpell)
+            		prioritySpell = nil
+                    return name, "target", needsSelect
+                else
+                    if prioritySpell.cooldown > 2 then prioritySpell = nil end
+                    -- spell.cast(target,message)
+                    return spell.name, target, spell.needsSelect
+                end
+            elseif spell.name == nil then
                 LOG.debug("Starting Cast-Sequence...")
                 castSequenceIndex = 1
                 castSequence = spell
@@ -116,7 +105,8 @@ kps.combatStep = function ()
                 castSequenceMessage = message
             else
                 LOG.debug("Casting %s for next cast.", spell.name)
-                spell.cast(target, message)
+                --spell.cast(target,message)
+                return spell.name, target, spell.needsSelect
             end
         end
     end
@@ -128,20 +118,16 @@ hooksecurefunc("UseAction", function(...)
         local stype,id,_ = GetActionInfo(select(1, ...))
         if stype == "spell" then
             local spell = kps.Spell.fromId(id)
-            if (prioritySpell == nil or prioritySpell.name ~= spell.name) and spell.isPrioritySpell then
+            if prioritySpell == nil and spell.isPrioritySpell then
                 prioritySpell = spell
                 LOG.warn("Set %s for next cast.", spell.name)
             end
         end
         if stype == "item" then
-            priorityAction = kps.useItem(id)
+            kps.useItem(id)
         end
         if stype == "macro" then
-            -- name, icon, body, isLocal = GetMacroInfo("name" or macroSlot)
             local macroText = select(3, GetMacroInfo(id))
-            if string.find(macroText,"kps") == nil then
-                priorityMacro = macroText
-            end
         end
     end
 end)

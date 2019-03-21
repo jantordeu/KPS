@@ -48,6 +48,10 @@ local agonyCount = function()
     if kps.env.boss4.hasMyDebuff(kps.spells.warlock.agony) then count = count + 1 end
     return count
 end
+
+--[[[
+@function `player.timeToShard` - returns average time to the next soul shard.
+]]--
 function Player.timeToShard(self)
     local activeAgonies = agonyCount()
     if activeAgonies == 0 then return 999999 end
@@ -249,7 +253,7 @@ local itemCooldown = function(item)
     local itemName,_ = GetItemSpell(item) -- Useful for determining whether an item is usable.
     if not usable then return 999 end
     if not itemName then return 999 end
-    if enable == 0 then return 999 end 
+    if enable == 0 then return 999 end
     local cd = start+duration-GetTime()
     if cd < 0 then return 0 end
     return cd

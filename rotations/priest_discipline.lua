@@ -87,8 +87,8 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     --{{"macro"}, 'player.hasTrinket(0) == 160649 and player.useTrinket(0) and targettarget.exists and targettarget.isHealable' , "/use [@targettarget] 13" },
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 30' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.timeInCombat > 30' , "/use [@player] 14" },
-    {{"macro"}, 'not player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.timeInCombat > 30' , "/use [@player] 14" },
+    {{"macro"}, 'player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.timeInCombat > 9' , "/use [@player] 14" },
+    {{"macro"}, 'not player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.timeInCombat > 9' , "/use [@player] 14" },
 
     {{"nested"}, 'player.hasBuff(spells.rapture)' , {
         {spells.powerWordShield, 'not heal.lowestTankInRaid.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
@@ -107,17 +107,19 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     -- heal.hasNotBuffAtonement.hp < 0.92 -- UNIT with lowest health without Atonement Buff on raid -- default "player" 
     -- heal.hasBuffAtonement.hp < 0.92 - UNIT with lowest health with Atonement Buff on raid e.g. -- default "player"
 
-    {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0' }, 
-    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and spells.evangelism.lastCasted(5)' , env.damageTarget , "schism_evangelism" },   
+    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and spells.evangelism.lastCasted(5)' , env.damageTarget , "schism_evangelism" },
     {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and spells.rapture.lastCasted(5)' , env.damageTarget , "schism_rapture" },
     {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(7) and heal.hasBuffAtonementCount(0.82) > 2 ' , env.damageTarget , "schism_charges" },
-    {spells.penance, 'spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(7) and heal.hasBuffAtonement.hp < 0.92' , env.damageTarget  , "penance_charges" },  
+    {spells.penance, 'spells.evangelism.lastCasted(5) and heal.hasBuffAtonement.hp < 0.82' , env.damageTarget  , "penance_evangelism" },
+    {spells.penance, 'spells.rapture.lastCasted(5) and heal.hasBuffAtonement.hp < 0.82' , env.damageTarget  , "penance_rapture" },
+    {spells.penance, 'spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(7) and heal.hasBuffAtonement.hp < 0.82' , env.damageTarget  , "penance_charges" }, 
     {spells.mindbender, 'player.hasTalent(3,2) and spells.powerWordRadiance.lastCasted(7) and heal.hasBuffAtonementCount(0.82) > 2' , env.damageTarget },
     {spells.shadowfiend, 'not player.hasTalent(3,2) and spells.powerWordRadiance.lastCasted(7) and heal.hasBuffAtonementCount(0.82) > 2' , env.damageTarget },
-    
+
     {spells.rapture, 'heal.lowestTankInRaid.hp < 0.40 and not heal.lowestTankInRaid.hasBuff(spells.painSuppression)' },
     {spells.rapture, 'spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(7) and heal.hasNotBuffAtonementCount(0.65) > 2' },
 
+    {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0' }, 
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and not spells.powerWordRadiance.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "radiance" },
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and player.myBuffDuration(spells.atonement) < 2 and not spells.powerWordRadiance.isRecastAt("player")' , "player" , "radiance" },
     {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.82) > 2 and not heal.hasNotBuffAtonement.isUnit("player") and not spells.powerWordRadiance.isRecastAt(heal.hasNotBuffAtonement.unit)' , kps.heal.hasNotBuffAtonement , "radiance_hasNotBuffAtonement" },
@@ -163,6 +165,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.luminousBarrier, 'player.hasTalent(7,2) and heal.countLossInRange(0.82)*2 > heal.countInRange' },
 
     {spells.shadowWordPain, 'mouseover.isHealable and mouseovertarget.isAttackable and mouseover.myBuffDuration(spells.atonement) > 2 and mouseovertarget.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("mouseovertarget")' , "mouseovertarget" , "pain_mouseovertarget" },
+    {spells.shadowWordPain, 'heal.lowestInRaid.hp > 0.92 and mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.65' , env.damageTarget , "smite_lowest" },
 
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" , "shadowMend_mouseover"},

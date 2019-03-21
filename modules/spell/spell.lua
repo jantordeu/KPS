@@ -24,16 +24,7 @@ local castAt = setmetatable({}, {
             if target == nil then target = "target" end
 
             if self.needsSelect then
-                if self.needsSelectPlayer then
-                    kps.runMacro("/cast [@player] "..self.name)
-                else
-                    kps.runMacro("/cast [@cursor] "..self.name)
-                end
---              SetCVar("deselectOnClick", "0")
---              CastSpellByName(self.name)
---              CameraOrSelectOrMoveStart(1)
---              CameraOrSelectOrMoveStop(1)
---              SetCVar("deselectOnClick", "1")
+                kps.runMacro("/cast [@cursor] "..self.name)
             else
                 CastSpellByName(self.name,target)
             end

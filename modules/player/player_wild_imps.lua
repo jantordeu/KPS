@@ -20,7 +20,7 @@ local function updateWildImps( ... )
         if (value + 25) < compTime then
             impTime[index] = nil
             impCount = impCount - 1
-
+            if impCount < 0 then impCount = 0 end
             print(("Imp timed out. Count: |cff00ff00%d|r"):format(impCount))
         end
     end
@@ -32,7 +32,7 @@ local function updateWildImps( ... )
                 impTime[index] = nil
                 impCast[index] = nil
                 impCount = impCount - 1
-
+                if impCount < 0 then impCount = 0 end
                 print(("Imp died. Count: |cff00ff00%d|r"):format(impCount))
             end
         end
@@ -50,6 +50,7 @@ local function updateWildImps( ... )
                     impCast[index] = nil
                     impTime[index] = nil
                     impCount = impCount - 1
+                    if impCount < 0 then impCount = 0 end
 
                     print(("Imp casted n times and died. Count: |cff00ff00%d|r"):format(impCount))
                 end
@@ -64,6 +65,7 @@ local function updateWildImps( ... )
             for index, value in pairs(impTime) do
                 impTime[index] = nil
                 impCount = impCount - 1
+                if impCount < 0 then impCount = 0 end
                 print(("Imp imploded. Count: |cff00ff00%d|r"):format(impCount))
             end
             impCount = 0
