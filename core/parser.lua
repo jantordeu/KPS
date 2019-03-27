@@ -243,6 +243,8 @@ local function fnParseDefault(spell, condition, target, message)
             local message = messageFn()
             if spell.name == nil then -- CastSequence
                 for _,spellCast in ipairs(spell) do
+                    --print("spell:",spellCast(), "cast:",spellCast().canBeCastAt(target), "cd:",spellCast().cooldown)
+                    --if spellCast().cooldown > 0 then return nil,nil end
                     if not spellCast().canBeCastAt(target) then return nil,nil end
                 end
                 return spell, target, message

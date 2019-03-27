@@ -3,6 +3,7 @@
 @author htordeux
 @version 8.0.1
 ]]--
+
 local spells = kps.spells.mage
 local env = kps.env.mage
 
