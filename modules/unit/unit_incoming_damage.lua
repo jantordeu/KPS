@@ -10,6 +10,7 @@ local moduleLoaded = false
 local incomingDamage = {}
 local updateincomingDamage = function()
     for unit,index in pairs(incomingDamage) do
+        local data = #index
         local delta = GetTime() - index[1][1]
         if delta > incomingTimeRange + 1 then incomingDamage[unit] = nil end
     end
@@ -19,6 +20,7 @@ end
 local incomingHeal = {}
 local updateincomingHeal = function()
     for unit,index in pairs(incomingHeal) do
+        local data = #index
         local delta = GetTime() - index[1][1]
         if delta > incomingTimeRange + 1 then incomingHeal[unit] = nil end
     end

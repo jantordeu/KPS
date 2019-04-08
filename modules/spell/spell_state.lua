@@ -77,7 +77,7 @@ local isRecastAt = setmetatable({}, {
     __index = function(t, self)
         local val = function (unit)
             if unit==nil then unit = "target" end
-            return kps.lastCast==self and UnitGUID(unit) == kps.lastTargetGUID
+            return kps.lastCast == self and UnitGUID(unit) == kps.lastTargetGUID
         end
         t[self] = val
         return val

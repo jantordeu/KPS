@@ -238,4 +238,3 @@ end)
 kps.events.register("PLAYER_REGEN_ENABLED", function()
     kps.autoAttackEnabled = false
 end)
-

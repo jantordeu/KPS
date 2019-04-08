@@ -195,11 +195,3 @@ function Player.timeToNextHolyPower(self)
     return timeToNextHolyPower
 end
 
---[[[
-@function `player.pause` - internal fct do not use. Usage in rotation is {{"pause"}, 'Conditions', number} . pause the rotation during number seconds
-]]--
-function Player.pause(self)
-    if kps.timers.check("pauseRotation") > 0 then return true end
-    return false
-end
-

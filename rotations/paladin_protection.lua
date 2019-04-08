@@ -10,10 +10,6 @@ kps.runAtEnd(function()
    kps.gui.addCustomToggle("PALADIN","PROTECTION", "taunt", "Interface\\Icons\\spell_nature_reincarnation", "taunt")
 end)
 
-kps.runAtEnd(function()
-    kps.gui.addCustomToggle("PALADIN","PROTECTION", "pauseRotation", "Interface\\Icons\\Spell_frost_frost", "pauseRotation")
-end)
-
 kps.rotations.register("PALADIN","PROTECTION",
 {
 
@@ -59,13 +55,6 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 
     {spells.divineShield, 'player.hp < 0.30' },
 
-    {{"nested"}, 'kps.pauseRotation',{
-        {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
-        {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.incomingDamage > player.incomingHeal and player.hp < 0.82' },
-        {spells.judgment, 'target.isAttackable and target.distance <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" , "judgment_pause" },
-        {spells.consecration, 'not player.isMoving and not target.hasMyDebuff(spells.consecration) and target.distance <= 10' , "target" , "consecration_pause" },
-    }},
-    {{"pause"}, 'kps.pauseRotation', 2},
     -- "Hand of Reckoning" -- taunt
     {spells.handOfReckoning, 'kps.taunt and not player.isTarget' , "target" , "taunt" },
 
