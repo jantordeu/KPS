@@ -188,7 +188,6 @@ Members:
  * `heal.aggroTankFocus` - Returns the tank with highest aggro on the current focus (*not* the unit with the highest aggro!). If there is no tank in the focus thread list, the `heal.defaultTank` is returned instead.
     When used as a _target_ in your rotation, you *must* write `kps.heal.aggroTankFocus`!
  * `heal.aggroTank` - Returns the tank or unit if overnuked with highest aggro and lowest health Without otherunit specified.
- * `heal.lowestTargetInRaid` - Returns the raid unit with lowest health targeted by enemy nameplate.
  * `heal.hasDebuffDispellable` - Returns the raid unit with dispellable debuff e.g. {spells.purify, 'heal.hasDebuffDispellable() ~= nil' , kps.heal.hasDebuffDispellable("Magic") },
  * `heal.isMagicDispellable` - Returns the raid unit with magic debuff to dispel e.g. {spells.purify, 'heal.isMagicDispellable' , kps.heal.isMagicDispellable },
  * `heal.isDiseaseDispellable` - Returns the raid unit with disease debuff to dispel

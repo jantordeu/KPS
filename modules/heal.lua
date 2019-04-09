@@ -360,22 +360,6 @@ kps.RaidStatus.prototype.lowestAggroTank = kps.utils.cachedValue(function()
     return myTank
 end)
 
---[[[
-@function `heal.lowestTargetInRaid` - Returns the raid unit with lowest health targeted by enemy nameplate. nameplate must be enable.
-]]--
-
-kps.RaidStatus.prototype.lowestTargetInRaid = kps.utils.cachedValue(function()
-    local lowestUnit = kps["env"].player
-    local lowestHp = 2
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.isTarget and unit.hp < lowestHp then
-            lowestUnit = unit
-            lowestHp = lowestUnit.hp
-        end
-    end
-    return lowestUnit
-end)
-
 --------------------------------------------------------------------------------------------
 ------------------------------- RAID DEBUFF
 --------------------------------------------------------------------------------------------
@@ -676,7 +660,6 @@ function kpstest()
 --end
 
 print("|cff1eff00LOWEST|cffffffff", kps["env"].heal.lowestInRaid.name,"/",kps["env"].heal.lowestInRaid.hp)
-print("|cffff8000TARGET:|cffffffff", kps["env"].heal.lowestTargetInRaid.name,"/",kps["env"].heal.lowestTargetInRaid.hp)
 print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"/",kps["env"].heal.lowestTankInRaid.hp)
 print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"/",kps["env"].heal.lowestUnitInRaid.hp)
 --print("|cffff8000CountLossDistance_90:|cffffffff", kps["env"].heal.countLossInDistance(0.90,10))
