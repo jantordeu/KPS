@@ -166,15 +166,9 @@ local UnitCastingInfo = UnitCastingInfo
 -- name, text, texture, startTimeMS, endTimeMS, isTradeSkill, castID, notInterruptible, spellId = UnitCastingInfo("unit")
 -- name, text, texture, startTimeMS, endTimeMS, isTradeSkill, notInterruptible = UnitChannelInfo(self.unit)
 
-function kps.env.priest.holyWordSerenityOnCD()
-    if kps.spells.priest.holyWordSerenity.cooldown > kps.gcd then return true end
-    return false
-end
-
 local overHealTableUpdate = function()
     -- kps.defensive in case I want to heal with mouseover (e.g. debuff absorb heal)
-    local onCD = kps.env.priest.holyWordSerenityOnCD()
-    local overHealTable = { {kps.spells.priest.flashHeal.name, 0.855 , onCD}, {kps.spells.priest.heal.name, 0.955 , onCD}, {kps.spells.priest.prayerOfHealing.name, 3 , kps.defensive} }
+    local overHealTable = { {kps.spells.priest.flashHeal.name, 0.855 , kps.defensive}, {kps.spells.priest.heal.name, 0.955 , kps.defensive}, {kps.spells.priest.prayerOfHealing.name, 3 , kps.defensive} }
     return  overHealTable
 end
 
@@ -184,8 +178,8 @@ local ShouldInterruptCasting = function (interruptTable, countLossInRange)
     if spellCasting == nil then return false end
     if endTime == nil then return false end
     local target = kps.lastTarget
-    local targetHealth = UnitHealth(kps.lastTarget) / UnitHealthMax(kps.lastTarget)
-
+    local targetHealth = UnitHealth(target) / UnitHealthMax(target)
+    if type(targetHealth) ~= "number" then return false end
 
     for key, healSpellTable in pairs(interruptTable) do
         local breakpoint = healSpellTable[2]

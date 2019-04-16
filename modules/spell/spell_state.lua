@@ -200,7 +200,8 @@ local shouldInterrupt = setmetatable({}, {
         if spellCasting == nil then return false end
         if endTime == nil then return false end
         local target = kps.lastTarget
-        local targetHealth = UnitHealth(kps.lastTarget) / UnitHealthMax(kps.lastTarget)
+        local targetHealth = UnitHealth(target) / UnitHealthMax(target)
+        if type(targetHealth) ~= "number" then return false end
 
         if self.name == spellCasting then
             if self.name == kps.spells.priest.prayerOfHealing.name and breakpoint < 3 then
@@ -210,7 +211,7 @@ local shouldInterrupt = setmetatable({}, {
                 DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING flashHeal ".. target .." health: "..targetHealth, 0, 0.5, 0.8)
                 return true
             elseif self.name == kps.spells.priest.heal.name and targetHealth > breakpoint then
-                DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING heal ".."|".. target .." health: "..targetHealth, 0, 0.5, 0.8)
+                DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING heal ".. target .." health: "..targetHealth, 0, 0.5, 0.8)
                 return true
             end
         end
