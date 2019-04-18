@@ -187,14 +187,15 @@ function Spell.lastCasted(self)
 end
 
 --[[[
-@function `<SPELL>.shouldInterrupt(<BREAKPOINT)` - returns true if the casting spell overheals above brealpoint (e.g.: `spells.heal.shouldInterrupt(0.90)`).
+@function `<SPELL>.shouldInterrupt(<BREAKPOINT>, flag)` - returns true if the casting spell overheals above brealpoint (e.g.: `spells.heal.shouldInterrupt(0.90)`).
 ]]--
 -- name, text, texture, startTimeMS, endTimeMS, isTradeSkill, castID, notInterruptible, spellId = UnitCastingInfo("unit")
 -- name, text, texture, startTimeMS, endTimeMS, isTradeSkill, notInterruptible = UnitChannelInfo("unit")
 local shouldInterrupt = setmetatable({}, {
     __index = function(t, self)
-        local val = function(breakpoint)
+        local val = function(breakpoint,flag)
 
+        if flag ~= nil and flag == false then return false end
         if kps.lastTargetGUID == nil then return false end
         local spellCasting, _, _, _, endTime, _, _, _, _ = UnitCastingInfo("player")
         if spellCasting == nil then return false end

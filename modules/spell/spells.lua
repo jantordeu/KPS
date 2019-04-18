@@ -132,6 +132,7 @@ kps.spells.battlerez.eternalGuardian = kps.Spell.fromId(126393) -- Eternal Guard
 kps.spells.immuneHeal = {}
 kps.spells.immuneHeal.misery = kps.Spell.fromId(243961) -- Misery
 kps.spells.immuneHeal.caressOfDeath = kps.Spell.fromId(285213) -- Caress of Death
+kps.spells.immuneHeal.embraceOfTheVoid = kps.Spell.fromId(282738) -- Embrace of the Void
 
 -- Absorption Heal
 kps.spells.absorptionHeal = {}

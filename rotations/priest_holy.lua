@@ -36,7 +36,7 @@ kps.rotations.register("PRIEST","HOLY",{
     env.holyWordSanctifyMessage,
     env.haloMessage,
     --env.ShouldInterruptCasting,
-    {{"macro"}, 'kps.defensive and spells.heal.shouldInterrupt(0.995) and spells.holyWordSerenity.cooldown < kps.gcd' , "/stopcasting" },
+    {{"macro"}, 'kps.defensive and spells.heal.shouldInterrupt(0.995,spells.holyWordSerenity.cooldown < kps.gcd)' , "/stopcasting" },
     {{"macro"}, 'kps.defensive and spells.flashHeal.shouldInterrupt(0.90)' , "/stopcasting" },
     {{"macro"}, 'kps.defensive and spells.prayerOfHealing.shouldInterrupt(heal.countLossInRange(0.80))' , "/stopcasting" },
 
@@ -44,7 +44,7 @@ kps.rotations.register("PRIEST","HOLY",{
     {{"nested"}, 'player.hasBuff(spells.spiritOfRedemption) and not heal.lowestInRaid.isUnit("player")' ,{
         {spells.holyWordSerenity, 'true' , kps.heal.lowestInRaid},
         {spells.prayerOfMending, 'true' , kps.heal.lowestInRaid},
-        {spells.holyWordSalvation, 'player.hasTalent(7,3) and heal.countLossInRange(0.80) > 2'},
+        --{spells.holyWordSalvation, 'player.hasTalent(7,3) and heal.countLossInRange(0.80) > 2'},
         {spells.circleOfHealing, 'true' , kps.heal.lowestInRaid},
         {spells.halo },
         {spells.prayerOfHealing, 'heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid},
