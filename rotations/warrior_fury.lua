@@ -24,7 +24,7 @@ kps.rotations.register("WARRIOR","FURY",
     {{"macro"}, 'not focus.isAttackable' , "/clearfocus" },
     env.ScreenMessage,
 
-    {spells.berserkerRage, 'target.isCasting' },
+    {spells.berserkerRage, 'target.isAttackable and target.isCasting' },
     {spells.berserkerRage, 'focus.isAttackable and focus.isCasting' },
     -- Charge enemy
     {spells.heroicThrow, 'kps.defensive and target.isAttackable and target.distance >= 10' },
@@ -55,12 +55,17 @@ kps.rotations.register("WARRIOR","FURY",
     -- "Souhait ardent de Kil'jaeden" 144259
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(0)' , "/use 13" },
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(1)' , "/use 14" },
-    
-    {spells.furiousSlash, 'player.hasTalent(3,3) and player.myBuffDuration(spells.furiousSlash) < 4 and target.isAttackable and target.distance <= 10' , "target" , "furiousSlash_buff"},
-    {spells.furiousSlash, 'player.hasTalent(3,3) and player.buffStacks(spells.furiousSlash) < 3 and target.isAttackable and target.distance <= 10' , "target" , "furiousSlash_stacks"},
-    
+
     {spells.rampage, 'player.myBuffDuration(spells.enrage) < kps.gcd' , "target" , "rampage_enrage" },
     {spells.rampage, 'player.rage >= 90' , "target" , "rampage_dumprage" },
+    
+    -- "Reckless Abandon" talent Recklessness generates 100 Rage and lasts 4 sec longer.
+    {spells.recklessness, 'kps.cooldowns and player.hasTalent(7,1) and player.rage <= 25 and target.isAttackable and target.distance <= 10' },
+    {spells.recklessness, 'kps.cooldowns and not player.hasTalent(7,1) and player.rage >= 75 and target.isAttackable and target.distance <= 10' },
+    
+    -- "Mort subite" -- "Sudden Death" -- Execute can be used on any target, regardless of their health.
+    {spells.execute, 'target.hp <= 0.20 and player.hasBuff(spells.enrage)' , "target" , "execute_hp" },
+    {spells.execute, 'spells.execute.isUsable and player.hasBuff(spells.enrage)' , "target" , "execute_usable" },
 
     {{"nested"}, 'kps.multiTarget and target.distance <= 10 and target.isAttackable', {
         {spells.whirlwind, 'player.buffStacks(spells.whirlwind) < 2 ' , "target" , "whirlwind_multiTarget_stacks" },
@@ -75,14 +80,6 @@ kps.rotations.register("WARRIOR","FURY",
         {spells.ragingBlow, 'target.isAttackable and target.distance <= 10' , "target" , "ragingBlow_multiTarget" },
         {spells.whirlwind, 'true' , "target" , "whirlwind_multiTarget" },
     }},
-    -- "Reckless Abandon" talent Recklessness generates 100 Rage and lasts 4 sec longer.
-    {spells.recklessness, 'player.hasTalent(7,1) and player.rage <= 75 and target.isAttackable and target.distance <= 10' },
-    {spells.recklessness, 'not player.hasTalent(7,1) and player.rage >= 75 and target.isAttackable and target.distance <= 10' },
-
-    {spells.whirlwind, 'player.plateCount >= 3 and player.buffStacks(spells.whirlwind) < 2 and target.distance <= 10 and target.isAttackable' , "target" , "whirlwind_plateCount_stacks" },
-    -- "Mort subite" -- "Sudden Death" -- Execute can be used on any target, regardless of their health.
-    {spells.execute, 'target.hp <= 0.20 and player.hasBuff(spells.enrage)' , "target" , "execute_hp" },
-    {spells.execute, 'spells.execute.isUsable and player.hasBuff(spells.enrage)' , "target" , "execute_usable" },
 
     {{"nested"}, 'player.hasBuff(spells.recklessness) and target.distance <= 10 and target.isAttackable' , {
     	{spells.dragonRoar, 'true' , "target" , "dragonRoar" },
@@ -102,7 +99,8 @@ kps.rotations.register("WARRIOR","FURY",
     {spells.bloodthirst, 'target.isAttackable and target.distance <= 10' , "target" },
 
     {spells.ragingBlow, 'target.isAttackable and target.distance <= 10' , "target" , "ragingBlow_charges"},
-    {spells.furiousSlash, 'player.hasTalent(3,3) and target.isAttackable and target.distance <= 10' , "target" },
+    {spells.furiousSlash, 'player.hasTalent(3,3) and player.myBuffDuration(spells.furiousSlash) < 4 and target.isAttackable and target.distance <= 10' , "target" , "furiousSlash_buff"},
+    {spells.furiousSlash, 'player.hasTalent(3,3) and player.buffStacks(spells.furiousSlash) < 3 and target.isAttackable and target.distance <= 10' , "target" , "furiousSlash_stacks"},
     {spells.whirlwind, 'target.isAttackable and target.distance <= 10' , "target" },
 
     {{"macro"}, 'true' , "/startattack" },

@@ -42,7 +42,6 @@ kps.combatStep = function ()
     if combatStarted < 0 then combatStarted = time() end
     kps.timeInCombat = time() - combatStarted
 
-
     -- Check for rotation
     if not kps.rotations.getActive() then
         kps.write("KPS does not have a rotation for your class (", kps.classes.className() ,") or spec (", kps.classes.specName(), ")!")
