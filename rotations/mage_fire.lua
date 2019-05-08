@@ -51,11 +51,6 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14    
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
-
-    {spells.runeOfPower, 'player.hasTalent(3,3) and not player.hasBuff(spells.runeOfPowerBuff) and spells.runeOfPower.charges == 2' , "player" },
-    {spells.runeOfPower, 'player.hasTalent(3,3) and not player.hasBuff(spells.runeOfPowerBuff) and spells.combustion.cooldown >= 40' , "player" }, 
-    {spells.combustion, 'player.hasBuff(spells.hotStreak) and player.hasBuff(spells.runeOfPowerBuff) and spells.fireBlast.charges > 0' },
-    {{spells.runeOfPower,spells.combustion}, 'player.hasBuff(spells.hotStreak) and spells.fireBlast.charges > 0' },
         
     {{"nested"}, 'player.hasBuff(spells.combustion)', {
         {{spells.pyroblast,spells.fireBlast}, 'spells.fireBlast.charges > 0' , "target" },

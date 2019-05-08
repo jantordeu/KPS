@@ -78,8 +78,10 @@ kps.rotations.register("PRIEST","SHADOW",{
     {{"macro"}, 'player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.hp < 0.85' , "/use [@player] 14" },
     
     --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
-    {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindSear.cooldownTotal == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
-    {spells.voidBolt , 'player.hasBuff(spells.voidForm)' , env.damageTarget },
+    {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidEruption.cooldown == 0 and spells.mindSear.cooldownTotal == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
+    {spells.voidEruption, 'target.isAttackable and not player.isMoving' , env.damageTarget  },
+    {spells.darkAscension, 'target.isAttackable and player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity < 90' , "target" , "darkAscension" },
+
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },
     {spells.mindbender, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },
 
@@ -92,9 +94,6 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },
     {spells.shadowMend, 'kps.defensive and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
     --{spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20 and target.isAttackable' , "target" },
-
-    {spells.darkAscension, 'target.isAttackable and player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity < 90' , "target" , "darkAscension" },
-    {spells.voidEruption, 'target.isAttackable and not player.isMoving and not player.hasBuff(spells.voidForm)' , "target" , "insanity_usable" },
 
     {{"nested"}, 'not player.hasBuff(spells.voidForm)',{
         {spells.darkVoid, 'not player.isMoving and player.hasTalent(3,3)' , env.damageTarget , "darkVoid" },

@@ -21,7 +21,6 @@ function kps.env.warrior.FocusMouseover()
     if not UnitExists("focus") and not UnitIsUnit("target","mouseover") and UnitIsAttackable("mouseover") and UnitAffectingCombat("mouseover") then
         kps.runMacro("/focus mouseover")
     end
-    return nil, nil
 end
 
 local function heroicLeapOnScreen()

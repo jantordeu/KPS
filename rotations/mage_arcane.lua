@@ -1,7 +1,7 @@
 --[[[
 @module Mage Arcane Rotation
-@generated_from mage_arcane.simc
-@version 8.0.1
+@author kirk24788
+@version 8.1.0
 ]]--
 local spells = kps.spells.mage
 local env = kps.env.mage
@@ -9,10 +9,18 @@ local env = kps.env.mage
 
 kps.rotations.register("MAGE","ARCANE",
 {
--- ERROR in 'counterspell,if=target.debuff.casting.react': Spell 'kps.spells.mage.casting' unknown (in expression: 'target.debuff.casting.react')!
-    {spells.timeWarp, 'target.hp < 25 or player.timeInCombat > 5'}, -- time_warp,if=target.health.pct<25|time>5
-    {spells.runeOfPower, 'player.buffDuration(spells.runeOfPower) < 2 * 1'}, -- rune_of_power,if=buff.rune_of_power.remains<2*spell_haste
-    {spells.mirrorImage}, -- mirror_image
-    {spells.arcaneBlast}, -- arcane_blast
+
+    {{"nested"}, 'spells.arcanePower.cooldown <= 0 or player.arcaneCharges >= 4', {
+        {spells.arcanePower },
+        {spells.presenceOfMind },
+        {spells.arcaneMissiles, 'player.hasBuff(spells.clearcasting)' },
+        {spells.arcaneBlast},
+    }},
+    {{"nested"}, 'true', {
+        {spells.evocation, 'player.mana < 0.2'},
+        {spells.arcaneMissiles, 'player.hasBuff(spells.clearcasting) and player.mana < 0.95' },
+        {spells.arcaneBarrage, 'player.mana < 0.5 and player.arcaneCharges >= 4' },
+        {spells.arcaneBlast},
+    }},
 }
-,"mage_arcane.simc")
+,"Easy Mode")

@@ -17,31 +17,17 @@ function kps.env.warlock.isHavocUnit(unit)
     return true
 end
 
-local burningRushLastMovement = 0
-function kps.env.warlock.deactivateBurningRushIfNotMoving(seconds)
-    return function ()
-        if not seconds then seconds = 0 end
-        local player = kps.env.player
-        if player.isMoving or not player.hasBuff(kps.spells.warlock.burningRush) then
-            burningRushLastMovement = GetTime()
-        else
-            local nonMovingDuration = GetTime() - burningRushLastMovement
-            if nonMovingDuration >= seconds then
-                kps.runMacro("/cancelaura "..kps.spells.warlock.burningRush)
-            end
-        end
-    end
+local function UnitIsAttackable(unit)
+    if UnitIsDeadOrGhost(unit) then return false end
+    if not UnitExists(unit) then return false end
+    if (string.match(GetUnitName(unit), kps.locale["Dummy"])) then return true end
+    if UnitCanAttack("player",unit) == false then return false end
+    if not kps.env.harmSpell.inRange(unit) then return false end
+    return true
 end
 
--- Config FOCUS with MOUSEOVER
 function kps.env.warlock.FocusMouseover()
-    local mouseover = kps.env.mouseover
-    if not UnitExists("focus") and not UnitIsUnit("target","mouseover") and mouseover.isAttackable then
-        if not mouseover.hasMyDebuff(kps.spells.warlock.agony) then
-            kps.runMacro("/focus mouseover")
-        else
-            kps.runMacro("/focus mouseover")
-        end
+    if not UnitExists("focus") and not UnitIsUnit("target","mouseover") and UnitIsAttackable("mouseover") and UnitAffectingCombat("mouseover") then
+        kps.runMacro("/focus mouseover")
     end
-    return nil, nil
 end

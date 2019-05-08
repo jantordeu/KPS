@@ -231,5 +231,4 @@ kps.spells.warrior.wildSlashes = kps.Spell.fromId(216273)
 kps.spells.warrior.willOfTheFirstKing = kps.Spell.fromId(209548)
 kps.spells.warrior.willToSurvive = kps.Spell.fromId(188683)
 kps.spells.warrior.wrathAndFury = kps.Spell.fromId(200849)
-
 kps.spells.warrior.stoneform = kps.Spell.fromId(20594)

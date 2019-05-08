@@ -1,6 +1,6 @@
 --[[[
 @module Druid Restoration Rotation
-@author xvir.subzrk
+@author Kirk24788.xvir.subzrk
 @version 7.0.3
 ]]--
 local spells = kps.spells.druid
