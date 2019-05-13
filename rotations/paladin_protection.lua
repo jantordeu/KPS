@@ -39,45 +39,40 @@ kps.rotations.register("PALADIN","PROTECTION",
         {spells.rebuke, 'focus.isCasting' , "focus" },
     }},
     
+    -- "Hand of Reckoning" -- taunt
+    {spells.handOfReckoning, 'kps.taunt and not player.isTarget' , "target" , "taunt" },
+    
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
-    -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
-    {spells.ardentDefender, 'player.hp < 0.55 and player.incomingDamage > player.incomingHeal' },  
-    {spells.ardentDefender, 'target.isRaidBoss and target.isCasting and player.incomingDamage > player.incomingHeal' },   
-    -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
-    {spells.blessingOfProtection, 'mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
-    {spells.blessingOfProtection, 'player.hp < 0.55 and not player.hasBuff(spells.ardentDefender)' , "player"},
-    -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
-    {spells.guardianOfAncientKings, 'player.hp < 0.55 and not player.hasBuff(spells.ardentDefender)' },
-    -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 
-    {spells.divineShield, 'player.hp < 0.30' },
-
-    -- "Hand of Reckoning" -- taunt
-    {spells.handOfReckoning, 'kps.taunt and not player.isTarget' , "target" , "taunt" },
-
-    {spells.seraphim, 'player.hasTalent(7,3) and player.incomingDamage > player.incomingHeal' },
     -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
-    {spells.avengingWrath, 'player.incomingDamage > player.incomingHeal and player.hp < 0.85' },
-    {spells.avengingWrath, 'player.incomingDamage - player.incomingHeal > player.hpMax * 0.10' },
-    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
-    {spells.layOnHands, 'player.hp < 0.40' },
-    -- "Main du protecteur" talent replace "Lumière du protecteur" -- rendre à une cible alliée 30% de ses points de vie manquants.
-    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.82 and not player.hasBuff(spells.shieldOfTheRighteous)' },
-    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.82 and not player.hasBuff(spells.shieldOfTheRighteous)' },
+    {spells.avengingWrath, 'player.incomingDamage > player.incomingHeal and player.hp < 0.65' },
+    {spells.avengingWrath, 'player.incomingDamage - player.incomingHeal > player.hpMax * 0.10' },    
+    -- "Main du protecteur" talent replace "Lumière du protecteur"
     {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.65' },
     {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.65' },
 
-    -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
-    -- "Avenger's Valor" --"Vaillance du vengeur" -- Buff Increases the effects of your next Shield of the Righteous by 20%.
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and player.hp < 0.95' , "target" , "shieldOfTheRighteous_incomingDamage"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and player.incomingDamage > player.incomingHeal' , "target" , "shieldOfTheRighteous_avengersValor"},
+    -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
+    {spells.ardentDefender, 'player.hp < 0.40 and spells.shieldOfTheRighteous.charges == 0' },  
+    -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
+    {spells.guardianOfAncientKings, 'player.hp < 0.40 and not player.hasBuff(spells.ardentDefender)' },
+    -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
+    {spells.blessingOfProtection, 'mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
+    {spells.blessingOfProtection, 'player.hp < 0.40 and not player.hasBuff(spells.ardentDefender)' , "player"},
+    -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 
+    {spells.divineShield, 'player.hp < 0.30 and spells.blessingOfProtection;cooldown > 0' },
+    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
+    {spells.layOnHands, 'player.hp < 0.40' },
 
     -- "Bouclier du vengeur" -- "Avenger's Shield" -- Augmente de 20% les effets de votre prochain Bouclier du vertueux. -- dégâts du Sacré, avant de rebondir sur 2 ennemis proches supplémentaires.
-    {spells.avengersShield, 'spells.avengersShield.isUsable and target.distance <= 10' , "target" , "avengersShield_isUsable" },
-    {spells.avengersShield, 'target.distance <= 10 and not target.hasMyDebuff(spells.avengersShield)' , "target" , "avengersShield" },
+    {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and not player.hasBuff(spells.avengersShield)' , "target" , "avengersShield_isUsable" },
+    {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and target.isCasting' , "target" , "avengersShield_casting" },
+    -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage - player.incomingHeal > player.hpMax * 0.10' , "target" , "shieldOfTheRighteous_incomingDamage"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage - player.incomingHeal > 0 and spells.shieldOfTheRighteous.charges >= 2' , "target" , "shieldOfTheRighteous_charges"},
+
     {spells.judgment, 'target.isAttackable and target.distance <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
     {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distance <= 30 and spells.judgment.charges == 2' , "target" },
     {spells.consecration, 'not player.isMoving and not target.hasMyDebuff(spells.consecration) and target.distance <= 10' , "target" , "consecration_target" },
@@ -88,9 +83,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.hammerOfTheRighteous, 'not player.hasTalent(1,3) and player.hasBuff(spells.consecration) and target.distance <= 10', "target" , "hammerOfTheRighteous" },
 
     {spells.flashOfLight, 'not player.isMoving and not player.isInGroup and player.hp < 0.72 and target.distance > 10', 'player'},
-    {spells.judgment, 'target.isAttackable and target.distance > 10' , "target" },
 
-    
     {{"macro"}, 'true' , "/startattack" },
 
  }

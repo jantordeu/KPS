@@ -18,12 +18,10 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec. during that time the caster also cannot attack or use spells.
     {spells.divineProtection, 'spells.blessingOfSacrifice.lastCasted(4) and not player.hasBuff(spells.divineShield)' , "player" },
     {spells.divineProtection, 'player.hp < 0.30 and not player.hasBuff(spells.divineShield)' , "player" },
-    {spells.divineProtection, 'player.isTarget and target.isRaidBoss and not player.hasBuff(spells.divineShield)' , "player" },
 
     -- "Bouclier divin" ""Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
     {spells.divineShield, 'player.hp < 0.30' , "player" },
     {spells.divineShield, 'player.isTarget and target.isRaidBoss' , "player" },
-    {spells.divineShield, 'target.isRaidBoss and targettarget.isHealable and not targettarget.isRaidTank' , "targettarget" },
 
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
@@ -47,7 +45,6 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Blessing of Protection" -- can be used to clear harmful physical damage debuffs and bleeds from the target.
     {spells.blessingOfProtection, 'player.hp < 0.30' , kps.heal.lowestUnitInRaid },
     {spells.blessingOfProtection, 'heal.lowestUnitInRaid.hp < 0.30' , kps.heal.lowestUnitInRaid },
-    {spells.blessingOfProtection, 'player.isPVP and heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid },
 
     {spells.cleanse, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
     {{"nested"},'kps.cooldowns', {

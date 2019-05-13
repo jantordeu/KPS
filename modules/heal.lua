@@ -667,6 +667,7 @@ print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90
 print("|cff1eff00HealTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
 print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
+print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 
 --print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cffff8000isAttackable:|cffffffff",kps["env"].target.isAttackable)
 --print("|cffff8000isRaidBoss:|cffffffff", kps["env"].target.isRaidBoss,"|cffff8000isRaidTank:|cffffffff",kps["env"].target.isRaidTank)

@@ -100,7 +100,7 @@ local function UnitIsAttackable(unit)
     return true
 end
 
-function kps.env.mage.IsAttackable(unit) -- {spells.frostbolt, 'IsAttackable("target")' , "target" },
+function kps.env.mage.IsAttackable(unit)
     if UnitIsAttackable(unit) and not UnitHasAura(unit) then return true end
     return false
 end

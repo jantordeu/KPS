@@ -71,13 +71,14 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.crusade, 'player.hasTalent(7,2) and player.holyPower >= 3 and target.isAttackable and target.distance <= 10' },
 
     {spells.divineStorm, 'player.holyPower == 5 and player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm_5" },
-    {spells.templarsVerdict, 'player.holyPower == 5 and target.isAttackable' , "target" , "templarsVerdict_5" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower) and target.isAttackable' , "target" , "divineStorm_empyreanPower" },
-    {{"nested"}, 'player.hasBuff(spells.crusade) or player.hasBuff(spells.avengingWrath)', {
-        {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm_buff" },
-        {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict_buff" },
-    }},
-    
+    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable and player.hasBuff(spells.crusade)' , "target" , "divineStorm_buff" },
+    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable and player.hasBuff(spells.avengingWrath)' , "target" , "divineStorm_buff" },
+
+    {spells.templarsVerdict, 'player.holyPower == 5 and target.isAttackable' , "target" , "templarsVerdict_5" },
+    {spells.templarsVerdict, 'player.holyPower == 5 and target.isAttackable and player.hasBuff(spells.crusade)' , "target" , "templarsVerdict_5" },
+    {spells.templarsVerdict, 'player.holyPower == 5 and target.isAttackable and player.hasBuff(spells.avengingWrath)' , "target" , "templarsVerdict_5" },
+
     {{"nested"}, 'player.holyPower <= 1 and target.isAttackable and target.distance <= 10', {
         {spells.wakeOfAshes, 'player.hasBuff(spells.avengingWrath)' , "target" , "wakeOfAshes_avengingWrath" },
         {spells.wakeOfAshes, 'player.hasBuff(spells.crusade)' , "target" , "wakeOfAshes_crusade" },
