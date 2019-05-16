@@ -214,6 +214,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.65 and heal.lowestInRaid.myBuffDuration(spells.atonement) < 2', kps.heal.lowestInRaid ,  "shadowMend_lowest" },
     {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.65 and heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)', kps.heal.lowestInRaid ,  "powerWordShield_lowest" },
     {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and heal.hasBuffAtonementCount(0.80) >= 3' , env.damageTarget , "schism_count" },
+    {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and heal.hasBuffAtonement.hp < 0.40' , env.damageTarget , "schism_lowest" },
     {spells.penance, 'heal.hasBuffAtonement.hp < 0.90' , env.damageTarget  , "penance_offensive_lowest" },
     {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.40', kps.heal.lowestInRaid ,  "shadowMend_lowest" },
     {spells.penance, 'heal.hasBuffAtonement.hp < 0.40 and not heal.hasBuffAtonement.isUnit("player")' , kps.heal.hasBuffAtonement , "penance_defensive_lowest" },
