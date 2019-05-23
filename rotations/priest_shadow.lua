@@ -78,24 +78,24 @@ kps.rotations.register("PRIEST","SHADOW",{
     {{"macro"}, 'not player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , "/use 14" },
     {{"macro"}, 'player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.hp < 0.85' , "/use [@player] 14" },
     
-    --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
-    {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidEruption.cooldown == 0 and spells.mindSear.cooldownTotal == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
-    {spells.voidEruption, 'spells.voidEruption.isUsable' , env.damageTarget , "voidBolt" },
 
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },
     {spells.mindbender, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },
     --{spells.shadowCrash, 'player.hasTalent(5,3)' },
     --{spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20' , "target" }, 
     
+    {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity >= 60' , env.damageTarget , "voidEruption_60" },
+    {spells.voidEruption, 'not player.isMoving and not player.hasTalent(7,1) and player.insanity >= 90' , env.damageTarget , "voidEruption_90"  },
+    {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity <= 60', env.damageTarget },
+    --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
+    {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidEruption.cooldown == 0 and spells.mindSear.cooldownTotal == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
+    {spells.voidEruption, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
+
     -- Pandemic allow DoTs to be refreshed upto 30% -- myDebuffDurationMax(spells.vampiricTouch) == 27.3 -- duration(21) + 30% (6.3) -- 70% (14.7)
     -- Pandemic allow DoTs to be refreshed upto 30% -- myDebuffDurationMax(spells.shadowWordPain) == 20.8 -- duration(16) + 30% (4.8) -- 70% (11.2)
     {spells.shadowWordPain, 'player.isMoving and target.myDebuffDuration(spells.shadowWordPain) < 16.8' , "target" },
     {spells.shadowWordPain, 'player.isMoving and focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 16.8' , "focus" },
     {spells.shadowWordPain, 'player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 11.2' , "mouseover" },
-
-    {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity >= 60' , env.damageTarget , "voidEruption_60" },
-    {spells.voidEruption, 'not player.isMoving and not player.hasTalent(7,1) and player.insanity >= 90' , env.damageTarget , "voidEruption_90"  },
-    {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity <= 60', env.damageTarget },
 
     -- "Levitate" 1706
     {spells.levitate, 'player.isFallingFor(1.4) and not player.hasBuff(spells.levitate)' , "player" },
@@ -124,6 +124,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     
     {spells.mindBlast, 'not player.isMoving and player.plateCount <= 4 and player.hasBuff(spells.voidForm)' , env.damageTarget },
     {spells.mindSear, 'kps.mindSear and not player.isMoving and player.hasBuff(spells.voidForm)' , env.damageTarget },
+    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 4 and player.hasBuff(spells.voidForm) and focus.myDebuffDuration(spells.vampiricTouch) > 6.3 and focus.myDebuffDuration(spells.shadowWordPain) > 4.8' , env.damageTarget },
 
     {{spells.vampiricTouch,spells.shadowWordPain}, 'focus.isAttackable and not player.isMoving and focus.myDebuffDuration(spells.vampiricTouch) < 6.3 and focus.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.vampiricTouch.isRecastAt("focus")' , "focus" },
     {spells.vampiricTouch, 'focus.isAttackable and not player.isMoving and focus.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("focus")' , "focus"  },

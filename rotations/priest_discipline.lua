@@ -102,7 +102,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.powerWordShield, 'not player.hasBuff(spells.powerWordShield) and player.hp < 0.80 and not spells.powerWordShield.isRecastAt("player")' , "player" },
         {spells.powerWordShield, 'not heal.lowestTankInRaid.hasBuff(spells.powerWordShield) and heal.lowestTankInRaid.hp < 0.80' , kps.heal.lowestTankInRaid },
         {spells.powerWordShield, 'not heal.lowestUnitInRaid.hasBuff(spells.powerWordShield) and heal.lowestUnitInRaid.hp < 0.80 and not spells.powerWordShield.isRecastAt(heal.lowestUnitInRaid.unit)' , kps.heal.lowestUnitInRaid },
-        {spells.powerWordShield, 'mouseover.isHealable and mouseover.hp < 0.65 and not mouseover.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt("mouseover")' , "mouseover" },
+        {spells.powerWordShield, 'mouseover.isHealable and mouseover.hp < 0.80 and not mouseover.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt("mouseover")' , "mouseover" },
         {spells.powerWordShield, 'targettarget.isHealable and targettarget.hp < 0.80 and not targettarget.hasBuff(spells.powerWordShield)' , "targettarget" },
     }},
 
