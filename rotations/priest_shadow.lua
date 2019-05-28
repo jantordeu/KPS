@@ -98,7 +98,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.shadowWordPain, 'player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 11.2' , "mouseover" },
 
     -- "Levitate" 1706
-    {spells.levitate, 'player.isFallingFor(1.4) and not player.hasBuff(spells.levitate)' , "player" },
+    {spells.levitate, 'player.isFallingFor(1.2) and not player.hasBuff(spells.levitate)' , "player" },
     -- "Power Word: Shield" 17 -- "Body and Soul"
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.2) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
     {spells.powerWordShield, 'player.hp < 0.55 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },

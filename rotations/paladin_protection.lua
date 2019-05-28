@@ -15,9 +15,9 @@ kps.rotations.register("PALADIN","PROTECTION",
 
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
-    env.FocusMouseover,
+    --env.FocusMouseover,
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
-    {{"macro"}, 'not focus.isAttackable' , "/clearfocus" },
+    {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
     
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
@@ -84,8 +84,6 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.hammerOfTheRighteous, 'not player.hasTalent(1,3) and player.hasBuff(spells.consecration) and target.distance <= 10', "target" , "hammerOfTheRighteous" },
 
     {spells.flashOfLight, 'not player.isMoving and not player.isInGroup and player.hp < 0.72 and target.distance > 10', 'player'},
-
-    {{"macro"}, 'true' , "/startattack" },
 
  }
 ,"paladin_protection_bfa")

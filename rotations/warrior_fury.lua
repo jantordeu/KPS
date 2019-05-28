@@ -21,7 +21,6 @@ kps.rotations.register("WARRIOR","FURY",
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
     env.FocusMouseover,
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
-    {{"macro"}, 'not focus.isAttackable' , "/clearfocus" },
     env.ScreenMessage,
 
     {spells.berserkerRage, 'target.isAttackable and target.isCasting' },

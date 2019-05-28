@@ -18,7 +18,6 @@ kps.rotations.register("WARLOCK","AFFLICTION",
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     env.FocusMouseover,
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
-    {{"macro"}, 'not focus.isAttackable' , "/clearfocus" },
         
     {spells.summonDarkglare, 'not player.isMoving and target.hasMyDebuff(spells.corruption) and player.soulShards == 0 and spells.phantomSingularity.cooldown > 0'},
 
