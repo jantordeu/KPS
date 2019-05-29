@@ -56,7 +56,9 @@ kps.combatStep = function ()
     if kps.castSequence ~= nil then
         if kps.castSequence[kps.castSequenceIndex] ~= nil and (castSequenceStartTime + kps.maxCastSequenceLength > GetTime()) then
             local spell = kps.castSequence[kps.castSequenceIndex]()
-            if spell.canBeCastAt(castSequenceTarget) then
+            if spell.canBeCastAt(castSequenceTarget) and not player.isCasting then
+                LOG.warn("Cast-Sequence: %s. %s", kps.castSequenceIndex, spell)
+                kps.castSequenceIndex = kps.castSequenceIndex + 1
                 return spell.cast(castSequenceTarget)
             end
         else
@@ -86,13 +88,12 @@ kps.combatStep = function ()
             end
         end
         -- Cast Sequence Table
-        if type(spell) == "table" and spell.cast == nil and spell[0] == nil then
+        if type(spell) == "table" and spell.cast == nil then
             LOG.debug("Starting Cast-Sequence...")
             kps.castSequenceIndex = 1
             kps.castSequence = spell
             castSequenceStartTime = GetTime()
             castSequenceTarget = target
-            return
         end
         -- Macro !
         if type(spell) == "string" then

@@ -32,7 +32,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     --{{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
     -- "Dissipation de masse" 32375
-    {{"macro"}, 'keys.ctrl', "/cast [@cursor] "..MassDispel },
+    {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0 ', "/cast [@cursor] "..MassDispel },
     -- "Dispersion" 47585
     {spells.dispersion, 'player.hp < 0.40' },
     {{"macro"}, 'player.hasBuff(spells.dispersion) and player.hp > 0.995' , "/cancelaura "..Dispersion },
@@ -77,7 +77,6 @@ kps.rotations.register("PRIEST","SHADOW",{
     {{"macro"}, 'player.useTrinket(0) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , "/use 13"},
     {{"macro"}, 'not player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , "/use 14" },
     {{"macro"}, 'player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.hp < 0.85' , "/use [@player] 14" },
-    
 
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },
     {spells.mindbender, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },

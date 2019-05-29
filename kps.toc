@@ -15,7 +15,6 @@ core\config.lua
 core\delayed_functions.lua
 core\kps.lua
 core\events.lua
-core\castsequence.lua
 core\locale.lua
 core\utils.lua
 core\lexer.lua

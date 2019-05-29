@@ -205,7 +205,7 @@ local function fnParseCastSequence(spellList)
     for _, spell in ipairs(spellList) do
         table.insert(parsedSpellList, fnParseSpell(spell))
     end
-    return function ( )
+    return function ()
         return parsedSpellList
     end
 end
@@ -226,12 +226,12 @@ local function fnParseDefault(spell, condition, target, message)
         if conditionFn() then
             local message = messageFn()
             if spell.name == nil then -- CastSequence
+                local validCastSequence = true
                 for _,spellCast in ipairs(spell) do
-                    --print("spell:",spellCast(), "cast:",spellCast().canBeCastAt(target), "cd:",spellCast().cooldown)
-                    --if spellCast().cooldown > 0 then return nil,nil end
-                    if not spellCast().canBeCastAt(target) then return nil,nil end
+                    --print("spell:",spellCast(), "cast:",spellCast().canBeCastAt(target))
+                    if not spellCast().canBeCastAt(target) then validCastSequence = false end
                 end
-                return spell, target, message
+                if validCastSequence == true then return spell, target end
             elseif spell.canBeCastAt(target) then
                 return spell, target, message
             end
