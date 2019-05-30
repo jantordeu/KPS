@@ -19,8 +19,9 @@ end
 
 function kps.env.paladin.FocusMouseover()
     if not UnitExists("focus") and not UnitIsUnit("target","mouseover") and UnitIsAttackable("mouseover") and UnitAffectingCombat("mouseover") then
-        kps.runMacro("/focus mouseover")
+        return true -- kps.runMacro("/focus mouseover")
     end
+    return false
 end
 
 function kps.env.paladin.countFriend()
