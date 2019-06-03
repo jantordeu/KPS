@@ -77,10 +77,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.hammerOfWrath, 'player.hasTalent(2,3) and target.isAttackable and player.hasBuff(spells.crusade)' , "target" }, -- Generates 1 Holy Power.
 
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower) and target.isAttackable' , "target" , "divineStorm_empyreanPower" },
-    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable and player.hasBuff(spells.crusade)' , "target" , "divineStorm_buff" },
-    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable and player.hasBuff(spells.avengingWrath)' , "target" , "divineStorm_buff" },
-    {spells.templarsVerdict, 'target.isAttackable and player.hasBuff(spells.crusade)' , "target" , "templarsVerdict_5" },
-    {spells.templarsVerdict, 'target.isAttackable and player.hasBuff(spells.avengingWrath)' , "target" , "templarsVerdict_5" },
+    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
+    {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
 
     {{"nested"}, 'player.holyPower <= 1 and target.isAttackable and target.distance <= 10', {
         {spells.wakeOfAshes, 'player.hasBuff(spells.avengingWrath)' , "target" , "wakeOfAshes_avengingWrath" },
@@ -93,15 +91,11 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
     -- Templar's Verdict or Divine Storm at 3-4 Holy Power if following spells/buffs are active: Divine Purpose, Avenging Wrath/Crusade, Execution Sentence.
     -- Righteous Verdict Talent(1,2) -- Templar's Verdict increases the damage of your next Templar's Verdict by 15% for 6 sec.
-    
-    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
-    {spells.divineStorm, 'focus.isAttackable and target.isAttackable' , "target" , "divineStorm" },
-    {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
 
-    {spells.consecration, 'player.hasTalent(4,2) target.isAttackable and target.distance <= 10' }, -- Generates 1 Holy Power.
-    {spells.hammerOfWrath, 'player.hasTalent(2,3) and target.isAttackable' , "target" }, -- Generates 1 Holy Power.
-    {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10'}, --Generates 1 Holy Power
-    {spells.bladeOfJustice, 'target.isAttackable and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
+    {spells.consecration, 'player.holyPower <= 4 and player.hasTalent(4,2) target.isAttackable and target.distance <= 10' }, -- Generates 1 Holy Power.
+    {spells.hammerOfWrath, 'player.holyPower <= 4 and player.hasTalent(2,3) and target.isAttackable' , "target" }, -- Generates 1 Holy Power.
+    {spells.crusaderStrike, 'player.holyPower <= 4 and target.isAttackable and target.distance <= 10'}, --Generates 1 Holy Power
+    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.isAttackable and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
 
     --{{"macro"}, 'true' , "/startattack" },
 

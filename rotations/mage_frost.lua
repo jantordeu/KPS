@@ -22,7 +22,7 @@ kps.rotations.register("MAGE","FROST",
     
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
-    env.FocusMouseover,
+    {{"macro"}, 'FocusMouseover()' , "/focus mouseover" },
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
     
@@ -45,7 +45,7 @@ kps.rotations.register("MAGE","FROST",
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(1)' , "/use 14" },
 
     -- "Slow Fall"
-    {spells.slowFall, 'player.isFallingFor(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
+    {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
     {spells.iceFloes, 'player.hasTalent(2,3) and player.isMoving and not player.hasBuff(spells.iceFloes)' },
     {spells.mirrorImage, 'player.hasTalent(3,2)' },
     {spells.runeOfPower, 'player.hasTalent(3,3)' },

@@ -34,7 +34,7 @@ kps.rotations.register("WARRIOR","PROTECTION",
     {spells.shockwave, 'target.isCasting' , "target" },
     
     -- Charge enemy
-    {{"macro"}, 'keys.shift and not player.hasBuff(spells.battleCry)', "/cast [@cursor] "..HeroicLeap },
+    {{"macro"}, 'keys.shift', "/cast [@cursor] "..HeroicLeap },
     {spells.heroicThrow, 'kps.defensive and target.isAttackable and target.distance > 10' },
     {spells.intercept, 'kps.defensive and target.isAttackable and target.distance > 10' },
 
@@ -63,9 +63,9 @@ kps.rotations.register("WARRIOR","PROTECTION",
     {spells.thunderClap, 'target.distance <= 10'},
 
     {{"nested"}, 'player.hasTalent(6,2)', {
-        {spells.ignorePain, ' and player.hasBuff(spells.vengeanceIgnorePain) and player.myBuffDuration(spells.ignorePain) < 12 and player.buffValue(spells.ignorePain) < player.hpMax * 0.50' , "target", "ignorePain_buffvalue" },
-        {spells.ignorePain, 'player.hasTalent(6,2) and player.hasBuff(spells.vengeanceIgnorePain) and player.myBuffDuration(spells.ignorePain) < 3' , "target", "ignorePain_duration" },
-        {spells.revenge, 'player.hasTalent(6,2) and player.hasBuff(spells.vengeanceRevenge) and player.myBuffDuration(spells.ignorePain) < 9' , "target", "revenge_buff" },
+        {spells.ignorePain, 'player.myBuffDuration(spells.ignorePain) < 12 and player.buffValue(spells.ignorePain) < player.hpMax * 0.50' , "target", "ignorePain_buffvalue" },
+        {spells.ignorePain, 'player.hasTalent(6,2) and player.myBuffDuration(spells.ignorePain) < 3' , "target", "ignorePain_duration" },
+        {spells.revenge, 'player.hasTalent(6,2) and player.myBuffDuration(spells.ignorePain) < 9' , "target", "revenge_buff" },
     }},
     
     {spells.ignorePain, 'player.buffValue(spells.ignorePain) < player.incomingDamage and player.myBuffDuration(spells.ignorePain) < 9' , "target", "ignorePain" },

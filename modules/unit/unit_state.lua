@@ -41,6 +41,29 @@ function Unit.isMoving(self)
 end
 
 --[[[
+@function `<UNIT>.isMovingTimer(<SECONDS>)` - returns true if the player is falling longer than n seconds.
+]]--
+
+local IsMovingSince = setmetatable({}, {
+    __index = function(t, unit)
+        local val = function (delay)
+            if delay == nil then delay = 1 end
+            local unitIsMoving = select(1,GetUnitSpeed(unit)) > 0
+            if not unitIsMoving and kps.timers.check("Moving") > 0 then kps.timers.reset("Moving") end
+            if unitIsMoving then
+                if kps.timers.check("Moving") == 0 then kps.timers.create("Moving", delay * 2 ) end
+            end
+            if unitIsMoving and kps.timers.check("Moving") > 0 and kps.timers.check("Moving") < delay then return true end
+            return false
+        end
+        t[unit] = val
+        return val
+    end})
+function Unit.isMovingTimer(self)
+    return IsMovingSince[self.unit]
+end
+
+--[[[
 @function `<UNIT>.isDead` - returns true if the unit is dead.
 ]]--
 function Unit.isDead(self)

@@ -561,17 +561,17 @@ end
 ]]--
 
 function Unit.isControlled(self)
-	local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
-	local i = 1
-	auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
-	while auraName do
-		local crowdControl = kps.spells.crowdControl[spellId]
-		if crowdControl ~= nil then
-			if crowdControl == "CC" then return true end
-		end
-		i = i + 1
-		auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
-	end
-	return false
+    local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+    local i = 1
+    auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
+    while auraName do
+        local crowdControl = kps.spells.crowdControl[spellId]
+        if crowdControl ~= nil then
+            if crowdControl == "CC" then return true end
+        end
+        i = i + 1
+        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
+    end
+    return false
 end
 

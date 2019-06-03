@@ -19,7 +19,7 @@ kps.rotations.register("WARRIOR","FURY",
 
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
-    env.FocusMouseover,
+    {{"macro"}, 'FocusMouseover()' , "/focus mouseover" },
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     env.ScreenMessage,
 
@@ -81,16 +81,16 @@ kps.rotations.register("WARRIOR","FURY",
     }},
 
     {{"nested"}, 'player.hasBuff(spells.recklessness) and target.distance <= 10 and target.isAttackable' , {
-    	{spells.dragonRoar, 'true' , "target" , "dragonRoar" },
-    	{spells.siegebreaker, 'player.hasTalent(6,2)' },
+        {spells.dragonRoar, 'true' , "target" , "dragonRoar" },
+        {spells.siegebreaker, 'player.hasTalent(6,2)' },
     }},
 
-	-- "Siegebreaker" -- "Briseur de siège" -- increasing your damage done to the target by 15% for 10 sec.
-	-- "Dragon Roar" -- Physical damage to all enemies within 12 yds and reducing their movement speed by 50% for 6 sec.
+    -- "Siegebreaker" -- "Briseur de siège" -- increasing your damage done to the target by 15% for 10 sec.
+    -- "Dragon Roar" -- Physical damage to all enemies within 12 yds and reducing their movement speed by 50% for 6 sec.
     {{"nested"}, 'spells.recklessness.cooldown >= 30 and target.distance <= 10 and target.isAttackable', {
-    	{spells.dragonRoar, 'player.hasTalent(7,3) and target.hasDebuff(spells.siegebreaker)' , "target" , "dragonRoar_siegebreaker" },
-    	{spells.dragonRoar, 'not player.hasTalent(7,3) and player.hasBuff(spells.enrage)' , "target" , "dragonRoar" },
-    	{spells.siegebreaker, 'player.hasTalent(6,2) and player.rage >= 75' },
+        {spells.dragonRoar, 'player.hasTalent(7,3) and target.hasDebuff(spells.siegebreaker)' , "target" , "dragonRoar_siegebreaker" },
+        {spells.dragonRoar, 'not player.hasTalent(7,3) and player.hasBuff(spells.enrage)' , "target" , "dragonRoar" },
+        {spells.siegebreaker, 'player.hasTalent(6,2) and player.rage >= 75' },
     }},
 
     {spells.bloodthirst, 'not player.hasBuff(spells.enrage) and target.isAttackable and target.distance <= 10' , "target" },

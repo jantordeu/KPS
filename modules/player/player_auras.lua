@@ -19,12 +19,12 @@ function Player.isFalling(self)
 end
 
 --[[[
-@function `player.isFallingFor(<seconds>)` - returns true if the player is falling longer than n seconds.
+@function `player.IsFallingSince(<seconds>)` - returns true if the player is falling longer than n seconds.
 ]]--
 
-local IsFallingFor = function(delay)
+local IsFallingSince = function(delay)
     if delay == nil then delay = 1 end
-    if not IsFalling() then kps.timers.reset("Falling") end
+    if not IsFalling() and kps.timers.check("Falling") > 0 then kps.timers.reset("Falling") end
     if IsFalling() then
         if kps.timers.check("Falling") == 0 then kps.timers.create("Falling", delay * 2 ) end
     end
@@ -32,27 +32,8 @@ local IsFallingFor = function(delay)
     return false
 end
 
-function Player.isFallingFor(self)
-    return IsFallingFor
-end
-
---[[[
-@function `player.isMovingFor(<seconds>)` - returns true if the player is falling longer than n seconds.
-]]--
-
-local IsMovingFor = function(delay)
-    if delay == nil then delay = 1 end
-    local playerIsMoving = select(1,GetUnitSpeed("player")) > 0
-    if not playerIsMoving then kps.timers.reset("Moving") end
-    if playerIsMoving then
-        if kps.timers.check("Moving") == 0 then kps.timers.create("Moving", delay * 2 ) end
-    end
-    if playerIsMoving and kps.timers.check("Moving") > 0 and kps.timers.check("Moving") < delay then return true end
-    return false
-end
-
-function Player.isMovingFor(self)
-    return IsMovingFor
+function Player.IsFallingSince(self)
+    return IsFallingSince
 end
 
 --[[[

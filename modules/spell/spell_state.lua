@@ -102,7 +102,7 @@ local castTimeLeft = setmetatable({}, {
                 if endTime == nil then return 0 end
                 if tostring(self.name) == tostring(name) then return ((endTime - (GetTime() * 1000 ) )/1000) end
             else
-            	if tostring(self.name) == tostring(name) then return ((endTime - (GetTime() * 1000 ) )/1000) end
+                if tostring(self.name) == tostring(name) then return ((endTime - (GetTime() * 1000 ) )/1000) end
             end
             return 0
         end
