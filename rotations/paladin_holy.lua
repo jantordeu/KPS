@@ -105,11 +105,11 @@ kps.rotations.register("PALADIN","HOLY",
     
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
     {spells.ruleOfLaw, 'player.hasTalent(2,3) and heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
-    {spells.ruleOfLaw, 'player.hasTalent(2,3) and heal.lowestTankInRaid.hp < 0.90 and heal.lowestUnitInRaid.hp < 0.90 and not player.hasBuff(spells.ruleOfLaw)' },
+    {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5 and not player.hasBuff(spells.ruleOfLaw)' },
     -- APPLY MANUAL "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
-    --{spells.auraMastery, 'player.hasTalent(4,3) and heal.countLossInRange(0.80)*2 > heal.countInRange' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.85,15) > 2 and target.distance <= 15' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.80,15) > 2' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.80,30) > 2 and player.hasBuff(spells.ruleOfLaw)' },
     -- "Prisme sacré" -- "Holy Prism" -- deals (75% of Spell power) Holy damage and radiates (50% of Spell power) healing to 5 allies within 15 yards. it heals for (100% of Spell power) and radiates (45% of Spell power) Holy damage to 5 enemies within 15 yards.
     {spells.holyPrism, 'player.hasTalent(5,2) and heal.countLossInRange(0.85) > 2 and target.isAttackable and targettarget.isFriend and targettarget.hp < 0.90' , "targettarget" },
 

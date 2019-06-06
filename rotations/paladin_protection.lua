@@ -30,13 +30,13 @@ kps.rotations.register("PALADIN","PROTECTION",
     
     -- Interrupts
     {{"nested"}, 'kps.interrupt',{
-        {spells.hammerOfJustice, 'focus.distance <= 10 and focus.isCasting' , "focus" },
-        {spells.hammerOfJustice, 'target.distance <= 10 and target.isCasting' , "target" },
+        {spells.hammerOfJustice, 'focus.distance <= 10 and focus.isCasting and focus.isInterruptable' , "focus" },
+        {spells.hammerOfJustice, 'target.distance <= 10 and target.isCasting and target.isInterruptable' , "target" },
         {spells.blindingLight, 'target.distance <= 10 and target.isCasting' , "target" },
         {spells.blindingLight, 'target.distance <= 10 and player.plateCount > 2' , "target" },
         -- " Réprimandes" "Rebuke" -- Interrupts spellcasting and prevents any spell in that school from being cast for 4 sec.
-        {spells.rebuke, 'target.isCasting' , "target" },
-        {spells.rebuke, 'focus.isCasting' , "focus" },
+        {spells.rebuke, 'target.isCasting and target.isInterruptable' , "target" },
+        {spells.rebuke, 'focus.isCasting and focus.isInterruptable' , "focus" },
     }},
     
     -- "Hand of Reckoning" -- taunt
