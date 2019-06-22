@@ -26,10 +26,10 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         -- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
         {spells.handOfHindrance, 'target.isMovingTimer(1.4)' , "target" },
         {spells.handOfHindrance, 'focus.isMovingTimer(1.4)' , "focus" },
-        {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
-        {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.80'},
         {spells.layOnHands, 'player.hp < 0.40', 'player'},
-        {spells.flashOfLight, 'not player.hasTalent(6,1) and player.hp < 0.55 and not spells.flashOfLight.isRecastAt("player")', 'player'},
+        {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.80'},
+        {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
+        {spells.flashOfLight, 'not player.hasTalent(6,1) and player.hp < 0.65 and not spells.flashOfLight.isRecastAt("player")', 'player'},
     }},
     
     -- Interrupt
@@ -40,6 +40,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.rebuke, 'target.isCasting and target.isInterruptable and target.castTimeLeft < 2' , "target" },
         {spells.rebuke, 'focus.isCasting and focus.isInterruptable and focus.castTimeLeft < 2' , "focus" },
         {spells.blindingLight, 'player.hasTalent(3,3) and target.distance <= 10 and target.isCasting' , "target" },
+        -- "Repentir" "Repentance" -- Forces an enemy target to meditate, incapacitating them for 1 min.
         {spells.repentance, 'player.hasTalent(3,2) and target.isCasting' , "target" },
     }},
 
@@ -54,11 +55,11 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.blessingOfProtection, 'player.hp < 0.55' , "player"},
 
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and player.hasBuff(spells.crusade) and target.isAttackable' , "/use 13" },
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and player.hasBuff(spells.avengingWrath) and target.isAttackable' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and player.hasBuff(spells.crusade) and target.isAttackable' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and player.hasBuff(spells.avengingWrath) and target.isAttackable' , "/use 13" },
    -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and player.hasBuff(spells.crusade) and target.isAttackable' , "/use 14" },
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and player.hasBuff(spells.avengingWrath) and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and player.hasBuff(spells.crusade) and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and player.hasBuff(spells.avengingWrath) and target.isAttackable' , "/use 14" },
     
     -- "Shield of Vengeance" -- Creates a barrier of holy light that absorbs (30 / 100 * Total health) damage for 15 sec.
     {spells.shieldOfVengeance, 'player.incomingDamage > player.incomingHeal and target.distance <= 10'},
@@ -67,7 +68,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 3 and player.myBuffDuration(spells.inquisition) <= 20 and target.isAttackable' , "target" , "inquisition" },
     {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.isAttackable and target.distance <= 10' },
     {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(7,1) and target.isAttackable and target.distance <= 10' },
-    {spells.crusade, 'kps.cooldowns and player.hasTalent(7,2) and player.holyPower >= 3 and target.isAttackable and target.distance <= 10' },
+    {spells.crusade, 'kps.cooldowns and player.hasTalent(7,2) and target.isAttackable and target.distance <= 10' },
 
     {{"nested"}, 'player.holyPower <= 1 and target.isAttackable and target.distance <= 10', {
         {spells.wakeOfAshes, 'player.hasBuff(spells.avengingWrath)' , "target" , "wakeOfAshes_avengingWrath" },
@@ -77,8 +78,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     }},
 
     {spells.divineStorm, 'kps.multiTarget and target.isAttackable' , "target" , "divineStorm" },
-    {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower) and target.isAttackable' , "target" , "divineStorm_empyreanPower" },
+    {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
     {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
     {spells.hammerOfWrath, 'player.hasTalent(2,3) and target.isAttackable and player.hasBuff(spells.crusade)' , "target" }, -- Generates 1 Holy Power.
 
@@ -87,11 +88,12 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- Templar's Verdict or Divine Storm at 3-4 Holy Power if following spells/buffs are active: Divine Purpose, Avenging Wrath/Crusade, Execution Sentence.
     -- Righteous Verdict Talent(1,2) -- Templar's Verdict increases the damage of your next Templar's Verdict by 15% for 6 sec.
 
+    {spells.judgment, 'player.holyPower <= 4 and target.isAttackable and target.distance <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power 
     {spells.bladeOfJustice, 'player.holyPower <= 3 and target.isAttackable and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
-    {spells.judgment, 'target.isAttackable and target.distance <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power 
     {spells.hammerOfWrath, 'player.holyPower <= 4 and player.hasTalent(2,3) and target.isAttackable' , "target" }, -- Generates 1 Holy Power.
     {spells.consecration, 'player.holyPower <= 4 and player.hasTalent(4,2) target.isAttackable and target.distance <= 10' }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'player.holyPower <= 4 and target.isAttackable and target.distance <= 10'}, --Generates 1 Holy Power
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.isAttackable and target.distance <= 10' , "target" },
 
     --{{"macro"}, 'true' , "/startattack" },
 

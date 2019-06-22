@@ -126,3 +126,4 @@ hooksecurefunc("UseAction", function(...)
 end)
 
 kps.lastCastedSpell = nil
+kps.lastSentSpell = nil

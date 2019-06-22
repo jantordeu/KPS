@@ -60,9 +60,9 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.guardianOfAncientKings, 'player.hp < 0.40 and not player.hasBuff(spells.ardentDefender)' },
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
     {spells.blessingOfProtection, 'mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
-    {spells.blessingOfProtection, 'player.hp < 0.40 and not player.hasBuff(spells.ardentDefender)' , "player"},
+    {spells.blessingOfProtection, 'player.hp < 0.40 and not player.hasBuff(spells.ardentDefender) and not player.hasBuff(spells.guardianOfAncientKings)' , "player"},
     -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 
-    {spells.divineShield, 'player.hp < 0.30 and spells.blessingOfProtection;cooldown > 0' },
+    {spells.divineShield, 'player.hp < 0.30 and spells.blessingOfProtection.cooldown > 0' },
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
     {spells.layOnHands, 'player.hp < 0.40' },
 

@@ -81,7 +81,7 @@ function Player.plateTable(self)
 end
 
 --[[[
-@function `<UNIT>.plateCount` - e.g. 'player.plateCount' returns namePlates count in combat (actives enemies)
+@function `<PLAYER>.plateCount` - e.g. 'player.plateCount' returns namePlates count in combat (actives enemies)
 ]]--
 -- UnitIsPlayer("unit") --  Returns true if the specified unit is a player character, false otherwise.
 function Player.plateCount(self)
@@ -93,7 +93,7 @@ function Player.plateCount(self)
 end
 
 --[[[
-@function `<UNIT>.plateCountDebuff` - e.g. 'player.plateCountDebuff(spells.shadowWordPain)' returns namePlates count with specified debuff in combat (actives enemies)
+@function `<PLAYER>.plateCountDebuff` - e.g. 'player.plateCountDebuff(spells.shadowWordPain)' returns namePlates count with specified debuff in combat (actives enemies)
 ]]--
 
 local UnitHasDebuff = function(unit,spellName)
@@ -123,7 +123,7 @@ function Player.plateCountDebuff(spell)
 end
 
 --[[[
-@function `<UNIT>.isTarget` - returns true if the unit is targeted by an enemy nameplate
+@function `<PLAYER>.isTarget` - returns true if the unit is targeted by an enemy nameplate
 ]]--
 function Player.isTarget(self)
     for nameplate,_ in pairs(activeUnitPlates) do
@@ -136,7 +136,7 @@ function Player.isTarget(self)
 end
 
 --[[[
-@function `<UNIT>.isTargetCount` - returns the number of enemies targeting player.
+@function `<PLAYER>.isTargetCount` - returns the number of enemies targeting player.
 ]]--
 
 function Player.isTargetCount(self)

@@ -21,7 +21,7 @@ kps.runAtEnd(function()
 end)
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PRIEST","HOLY", "mindControl ", "Interface\\Icons\\spell_nature_polymorph", "mindControl ")
+   kps.gui.addCustomToggle("PRIEST","HOLY", "mindControl ", "Interface\\Icons\\Priest_spell_leapoffaith_a", "mindControl")
 end)
 
 
@@ -55,6 +55,7 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Fade" 586 "Disparition"
     {spells.fade, 'player.isTarget and player.isInGroup' },
     -- "Guardian Spirit" 47788
+    {spells.guardianSpirit, 'focus.hp < 0.30 and focus.isRaidTank' , "focus" },
     {spells.guardianSpirit, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid},
     {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
@@ -65,6 +66,7 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Holy Word: Serenity"
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "POH_holyWordSerenity" },
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid , "POH_holyWordSerenity" },
+    {spells.holyWordSerenity, 'focus.hp < 0.40 and focus.isRaidTank' , "focus" },
     {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid},
     {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.40 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid},
     {spells.holyWordSerenity, 'player.hp < 0.55' , "player"},
@@ -76,6 +78,10 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.flashHeal, 'heal.lowestInRaid.hp < 0.72' , kps.heal.lowestInRaid},
         {spells.flashHeal, 'player.myBuffDuration(spells.surgeOfLight) < 4' , kps.heal.lowestInRaid},
     }},
+
+    -- BUTTON
+    --{spells.leapOfFaith, 'keys.alt and mouseover.isHealable', "mouseover" },
+    --{spells.mindControl, 'keys.alt and target.isAttackable and not target.hasMyDebuff(spells.mindControl) and target.myDebuffDuration(spells.mindControl) < 2' , "target" },
 
     -- "Dissipation de masse" 32375
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@cursor] "..MassDispel },
@@ -109,13 +115,12 @@ kps.rotations.register("PRIEST","HOLY",{
     }},
 
     {{"nested"}, 'kps.interrupt' ,{
-        {spells.holyWordChastise, 'player.hasTalent(4,2) and target.isAttackable and target.isCasting' , "target" },
-        {spells.holyWordChastise, 'player.hasTalent(4,2) and mouseover.isAttackable and mouseover.isCasting' , "mouseover" },
+        {spells.holyWordChastise, 'player.hasTalent(4,2) and target.isInterruptable and target.isCasting' , "target" },
+        {spells.holyWordChastise, 'player.hasTalent(4,2) and mouseover.isInterruptable and mouseover.isCasting' , "mouseover" },
         {spells.shiningForce, 'player.hasTalent(4,3) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
         {spells.psychicScream, 'player.hasTalent(4,3) and spells.shiningForce.cooldown > 0 and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
         {spells.psychicScream, 'not player.hasTalent(4,3) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
     }},
-    {spells.mindControl, 'kps.mindControl and target.isAttackable and not target.hasMyDebuff(spells.mindControl) and target.myDebuffDuration(spells.mindControl) < 2' , "target" },
 
     {{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
     {spells.giftOfTheNaaru, 'player.hp < 0.70' , "player" },
@@ -158,8 +163,8 @@ kps.rotations.register("PRIEST","HOLY",{
     
     -- "Soins rapides" 2060 Important Unit
     {{"nested"}, 'not player.isMoving and spells.prayerOfHealing.lastCasted(3.4)' ,{
-        {spells.flashHeal, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"FLASH_POH" },
         {spells.flashHeal, 'player.hp < 0.40' , kps.heal.lowestInRaid ,"FLASH_POH" },
+        {spells.flashHeal, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"FLASH_POH" },
         {spells.flashHeal, 'heal.lowestUnitInRaid.hp < 0.40' , kps.heal.lowestUnitInRaid ,"FLASH_POH" },
     }},
       -- "Prayer of Mending" (Tank only)

@@ -238,3 +238,32 @@ end)
 kps.events.register("PLAYER_REGEN_ENABLED", function()
     kps.autoAttackEnabled = false
 end)
+
+
+-- UNIT_SPELLCAST_START -- Fired when a unit begins casting a non-instant cast spell, including party/raid members or the player. 
+--kps.events.register("UNIT_SPELLCAST_START", function (unit, lineId, spellId)
+--    if unit == "player" and kps.castSequence ~= nil then
+--        local spellName = select(1, GetSpellInfo(spellId))
+--        local spellWhichShouldBeCasted = kps.castSequence[kps.castSequenceIndex]().name
+--        if spellName == spellWhichShouldBeCasted then
+--            kps.castSequenceIndex = kps.castSequenceIndex + 1
+--        end
+--    end
+--end)
+
+-- UNIT_SPELLCAST_SUCCEEDED -- Fired when a spell is cast successfully. Event is received even if spell is resisted.
+kps.events.register("UNIT_SPELLCAST_SUCCEEDED", function (unit, lineId, spellId)
+   if unit == "player" then
+       kps.lastCastedSpell = select(1, GetSpellInfo(spellId))
+   end
+end)
+
+-- UNIT_SPELLCAST_SENT -- Fired when a unit attempts to cast a spell regardless of the success of the cast.
+kps.events.register("UNIT_SPELLCAST_SENT", function (unit, unittarget, lineId, spellId)
+   if unit == "player" then
+       kps.lastSentSpell = select(1, GetSpellInfo(spellId))
+   end
+end)
+
+
+

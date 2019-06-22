@@ -21,7 +21,7 @@ kps.runAtEnd(function()
 end)
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "mindControl ", "Interface\\Icons\\spell_nature_polymorph", "mindControl ")
+   kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "mindControl ", "Interface\\Icons\\Priest_spell_leapoffaith_a", "mindControl ")
 end)
 
 
@@ -42,6 +42,10 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     -- "Power Word: Barrier" 62618
     {{"macro"}, 'keys.shift', "/cast [@cursor] "..Barriere },
     
+    -- BUTTON
+    --{spells.leapOfFaith, 'keys.alt and mouseover.isHealable', "mouseover" },
+    --{spells.mindControl, 'keys.alt and target.isAttackable and not target.hasMyDebuff(spells.mindControl) and target.myDebuffDuration(spells.mindControl) < 2' , "target" },
+    
    {spells.painSuppression, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid },
    {spells.painSuppression, 'player.hp < 0.30' , "player" },
    {spells.painSuppression, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
@@ -58,7 +62,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.psychicScream, 'player.hasTalent(4,3) and spells.shiningForce.cooldown > 0 and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
         {spells.psychicScream, 'not player.hasTalent(4,3) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
     }},
-    {spells.mindControl, 'kps.mindControl and target.isAttackable and not target.hasMyDebuff(spells.mindControl) and target.myDebuffDuration(spells.mindControl) < 2' , "target" },
 
     -- "Dispel" "Purifier" 527
     {spells.purify, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
@@ -142,6 +145,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.powerWordShield, 'player.myBuffDuration(spells.atonement) < 2 and not player.hasDebuff(spells.weakenedSoul)' , "player" },
         {spells.powerWordShield, 'target.isAttackable and targettarget.isFriend and targettarget.hp < 0.90 and targettarget.myBuffDuration(spells.atonement) < 2 and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" , "powerWordShield_targettarget" },
         {spells.powerWordShield, 'mouseover.isFriend and mouseover.myBuffDuration(spells.atonement) < 2 and mouseover.hp < 0.90 and not mouseover.hasDebuff(spells.weakenedSoul)' , "mouseover" },
+        {spells.powerWordSolace, 'player.hasTalent(3,3) and target.isAttackable' , "target" },
         {spells.shadowMend, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.65 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
         {spells.shadowMend, 'not player.isMoving and player.hp < 0.65 and not spells.shadowMend.isRecastAt("player")' , "player" },
         {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.65 and not spells.shadowMend.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
@@ -151,7 +155,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.shadowWordPain, 'not player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
         {spells.shadowWordPain, 'not player.hasTalent(6,1) and focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("focus")' , "focus" },
         {spells.shadowWordPain, 'not player.hasTalent(6,1) and mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
-        {spells.powerWordSolace, 'player.hasTalent(3,3) and target.isAttackable' , "target" },
         {spells.holyNova, 'kps.holyNova' },
         {spells.schism, 'not player.isMoving and player.hasTalent(1,3) and target.isAttackable and spells.penance.cooldown < 7' , "target" },
         {spells.penance, 'target.isAttackable' , "target" },

@@ -12,7 +12,7 @@ local MassDispel = spells.massDispel.name
 
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PRIEST","SHADOW", "mindControl ", "Interface\\Icons\\spell_nature_polymorph", "mindControl ")
+   kps.gui.addCustomToggle("PRIEST","SHADOW", "mindControl ", "Interface\\Icons\\Priest_spell_leapoffaith_a", "mindControl ")
 end)
 
 kps.runAtEnd(function()
@@ -44,6 +44,10 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.giftOfTheNaaru, 'player.hp < 0.65', "player" },
      -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
     {spells.vampiricEmbrace, 'heal.lowestInRaid.hp < 0.55' },
+    
+    -- BUTTON
+    --{spells.leapOfFaith, 'keys.alt and mouseover.isHealable', "mouseover" },
+    --{spells.mindControl, 'keys.alt and target.isAttackable and not target.hasMyDebuff(spells.mindControl) and target.myDebuffDuration(spells.mindControl) < 2' , "target" },
    
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
@@ -64,7 +68,6 @@ kps.rotations.register("PRIEST","SHADOW",{
         {spells.arcaneTorrent, 'player.timeInCombat > 30 and mouseover.isAttackable and mouseover.distance <= 10' , "target" },
         {spells.arcaneTorrent, 'player.timeInCombat > 30 and target.isAttackable and target.distance <= 10' , "target" },
     }},
-    {spells.mindControl, 'kps.mindControl and target.isAttackable and not target.hasMyDebuff(spells.mindControl) and target.myDebuffDuration(spells.mindControl) < 2' , "target" },
 
     -- "Purify Disease" 213634
     {{"nested"}, 'kps.cooldowns',{
@@ -140,7 +143,7 @@ kps.rotations.register("PRIEST","SHADOW",{
 
     {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 4' , env.damageTarget },
     {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
-    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 2' , env.damageTarget },
+    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 3' , env.damageTarget },
     {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
 
 },"priest_shadow_bfa")
