@@ -269,4 +269,5 @@ kps.spells.paladin.everyManForHimself = kps.Spell.fromId(59752)
 kps.spells.paladin.avengersValor = kps.Spell.fromId(197561)
 -- "Selfless Healer" -- Temps d’incantation d’Éclair lumineux réduit de 25%. Éclair lumineux rend 10% de points de vie supplémentaires.
 kps.spells.paladin.selflessHealer = kps.Spell.fromId(114250)
-
+-- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.  When you Holy Shock, all targets with Glimmer of Light are damaged for 6 or healed for 6.
+kps.spells.paladin.glimmerOfLight = kps.Spell.fromId(287280)

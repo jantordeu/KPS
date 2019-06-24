@@ -55,7 +55,7 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Fade" 586 "Disparition"
     {spells.fade, 'player.isTarget and player.isInGroup' },
     -- "Guardian Spirit" 47788
-    {spells.guardianSpirit, 'focus.hp < 0.30 and focus.isRaidTank' , "focus" },
+    {spells.guardianSpirit, 'focus.exists and focus.hp < 0.30 and focus.isRaidTank' , "focus" },
     {spells.guardianSpirit, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid},
     {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
@@ -66,7 +66,7 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Holy Word: Serenity"
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "POH_holyWordSerenity" },
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid , "POH_holyWordSerenity" },
-    {spells.holyWordSerenity, 'focus.hp < 0.40 and focus.isRaidTank' , "focus" },
+    {spells.holyWordSerenity, 'focus.exists and focus.hp < 0.40 and focus.isRaidTank' , "focus" },
     {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid},
     {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.40 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid},
     {spells.holyWordSerenity, 'player.hp < 0.55' , "player"},
@@ -188,7 +188,6 @@ kps.rotations.register("PRIEST","HOLY",{
 
     -- "Prayer of Healing" 596
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' , kps.heal.lowestInRaid , "POH_party" },
-    {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80)*2 >= heal.countInRange and heal.countInRange >= 5' , kps.heal.lowestInRaid , "POH_count" },
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and heal.countLossInRange(0.90) > 4' , kps.heal.lowestInRaid , "POH" },
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 3 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "POH" },
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 3' , kps.heal.lowestTankInRaid , "POH" },
