@@ -267,3 +267,8 @@ kps.spells.priest.powerOfTheDarkSide = kps.Spell.fromId(198069)
 kps.spells.priest.thoughtHarvester = kps.Spell.fromId(288343)
 -- "Arcane Torrent" -- Blood Elf Racial -- Remove 1 beneficial effect from all enemies within 8 yards and restore 3% of your mana.
 kps.spells.priest.arcaneTorrent = kps.Spell.fromId(232633)
+
+-- AZERITE ESSENCE
+-- "Concentrated Flame" -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
+kps.spells.priest.concentratedFlame = kps.Spell.fromId(295373)
+

@@ -35,8 +35,8 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Pierre de soins" 5512
     {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" },    
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
-    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
     {spells.layOnHands, 'player.hp < 0.30', "player" },
+    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
     {spells.layOnHands, 'heal.lowestInRaid.hp < 0.30', kps.heal.lowestInRaid },
 
     -- "Bestow Faith" "Don de foi" -- Récupère (150% of Spell power) points de vie à expiration. -- 12 sec cd

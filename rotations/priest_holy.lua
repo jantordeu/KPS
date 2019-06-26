@@ -62,11 +62,15 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.guardianSpirit, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
     {spells.guardianSpirit, 'heal.lowestAggroTank.hp < 0.30 and not heal.lowestAggroTank.isRaidTank' , kps.heal.lowestAggroTank },
     {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
+    
+    -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
+    {spells.concentratedFlame, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid},
+    {spells.concentratedFlame, 'heal.countLossInRange(0.80) > 3' , kps.heal.lowestInRaid},
  
     -- "Holy Word: Serenity"
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "POH_holyWordSerenity" },
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid , "POH_holyWordSerenity" },
-    {spells.holyWordSerenity, 'focus.exists and focus.hp < 0.40 and focus.isRaidTank' , "focus" },
+    {spells.holyWordSerenity, 'focus.exists and focus.hp < 0.55 and focus.isRaidTank' , "focus" },
     {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid},
     {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.40 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid},
     {spells.holyWordSerenity, 'player.hp < 0.55' , "player"},

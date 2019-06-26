@@ -26,12 +26,13 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         -- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
         {spells.handOfHindrance, 'target.isMovingTimer(1.4)' , "target" },
         {spells.handOfHindrance, 'focus.isMovingTimer(1.4)' , "focus" },
-        {spells.layOnHands, 'player.hp < 0.40', 'player'},
-        {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.80'},
-        {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
-        {spells.flashOfLight, 'not player.hasTalent(6,1) and player.hp < 0.65 and not spells.flashOfLight.isRecastAt("player")', 'player'},
     }},
-    
+    {spells.layOnHands, 'player.hp < 0.40', 'player'},
+    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
+    {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
+    {spells.flashOfLight, 'not player.hasTalent(6,1) and player.hp < 0.65 and not spells.flashOfLight.isRecastAt("player")', 'player'},
+    {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.80'}, 
+      
     -- Interrupt
     {{"nested"}, 'kps.interrupt',{
         {spells.hammerOfJustice, 'focus.distance <= 10 and focus.isCasting' , "focus" },
@@ -70,15 +71,16 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(7,1) and target.isAttackable and target.distance <= 10' },
     {spells.crusade, 'kps.cooldowns and player.hasTalent(7,2) and player.holyPower >= 3 and target.isAttackable and target.distance <= 10' },
 
+    {spells.hammerOfWrath, 'player.holyPower <= 4 and player.hasTalent(2,3) and target.isAttackable' , "target" }, -- Generates 1 Holy Power.
     {spells.bladeOfJustice, 'player.holyPower <= 3 and target.isAttackable and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
     {spells.wakeOfAshes, 'player.holyPower <= 1 and target.isAttackable and target.distance <= 10' , "target" },
 
+    {spells.executionSentence, 'spells.avengingWrath.cooldown >= 30 and target.isAttackable' , "target" },
+    {spells.executionSentence, 'spells.crusade.cooldown >= 30 and target.isAttackable' , "target" },
     {spells.divineStorm, 'kps.multiTarget and target.isAttackable' , "target" , "divineStorm" },
-    {spells.executionSentence, 'target.isAttackable' , "target" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower) and target.isAttackable' , "target" , "divineStorm_empyreanPower" },
     {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
     {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
-    {spells.hammerOfWrath, 'player.hasTalent(2,3) and target.isAttackable and player.hasBuff(spells.crusade)' , "target" }, -- Generates 1 Holy Power.
 
     -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.
     -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
@@ -86,10 +88,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- Righteous Verdict Talent(1,2) -- Templar's Verdict increases the damage of your next Templar's Verdict by 15% for 6 sec.
 
     {spells.judgment, 'player.holyPower <= 4 and target.isAttackable and target.distance <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power 
-    {spells.hammerOfWrath, 'player.holyPower <= 4 and player.hasTalent(2,3) and target.isAttackable' , "target" }, -- Generates 1 Holy Power.
     {spells.consecration, 'player.holyPower <= 4 and player.hasTalent(4,2) target.isAttackable and target.distance <= 10' }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'player.holyPower <= 4 and target.isAttackable and target.distance <= 10'}, --Generates 1 Holy Power
-
 
     --{{"macro"}, 'true' , "/startattack" },
 
