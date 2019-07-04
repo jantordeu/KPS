@@ -59,12 +59,15 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and player.hasBuff(spells.crusade) and target.isAttackable' , "/use 13" },
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and player.hasBuff(spells.avengingWrath) and target.isAttackable' , "/use 13" },
    -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and player.hasBuff(spells.crusade) and target.isAttackable' , "/use 14" },
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and player.hasBuff(spells.avengingWrath) and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and player.hasBuff(spells.crusade) and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and player.hasBuff(spells.avengingWrath) and target.isAttackable' , "/use 14" },
     
     -- "Shield of Vengeance" -- Creates a barrier of holy light that absorbs (30 / 100 * Total health) damage for 15 sec.
     {spells.shieldOfVengeance, 'player.incomingDamage > player.incomingHeal and target.distance <= 10'},
     {spells.shieldOfVengeance, 'player.plateCount >= 3 and target.distance <= 10'},
+    
+    {{spells.judgment,spells.bladeOfJustice}, 'player.timeInCombat < 5 and player.hasTalent(7,3) and spells.avengingWrath.cooldown == 0 and player.holyPower < 3' , "target" },
+    {{spells.judgment,spells.bladeOfJustice}, 'player.timeInCombat < 5 and player.hasTalent(7,2) and spells.crusade.cooldown == 0 and player.holyPower < 3' , "target" },
    
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 3 and player.myBuffDuration(spells.inquisition) <= 20 and target.isAttackable' , "target" , "inquisition" },
     {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.isAttackable and target.distance <= 10' },
@@ -77,10 +80,9 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     {spells.executionSentence, 'spells.avengingWrath.cooldown >= 30 and target.isAttackable' , "target" },
     {spells.executionSentence, 'spells.crusade.cooldown >= 30 and target.isAttackable' , "target" },
-    {spells.divineStorm, 'kps.multiTarget and target.isAttackable' , "target" , "divineStorm" },
+    {spells.divineStorm, 'kps.multiTarget and player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower) and target.isAttackable' , "target" , "divineStorm_empyreanPower" },
     {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
-    {spells.divineStorm, 'player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
 
     -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.
     -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.

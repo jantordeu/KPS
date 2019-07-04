@@ -271,4 +271,11 @@ kps.spells.priest.arcaneTorrent = kps.Spell.fromId(232633)
 -- AZERITE ESSENCE
 -- "Concentrated Flame" -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
 kps.spells.priest.concentratedFlame = kps.Spell.fromId(295373)
+-- "Memory of Lucid Dreams"
+kps.spells.priest.memoryOfLucidDreams = kps.Spell.fromId(298357)
+-- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
+kps.spells.priest.refreshment = kps.Spell.fromId(296197)
+kps.spells.priest.theWellOfExistence = kps.Spell.fromId(296138)
+-- "Overcharge Mana" -- Overcharge your mana for 10 sec, causing each spell you cast to increase your healing by 3%, stacking.
+kps.spells.priest.overchargeMana = kps.Spell.fromId(296072)
 

@@ -57,15 +57,18 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Guardian Spirit" 47788
     {spells.guardianSpirit, 'focus.exists and focus.hp < 0.30 and focus.isRaidTank' , "focus" },
     {spells.guardianSpirit, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid},
-    {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid},
+    {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },
     {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
     {spells.guardianSpirit, 'heal.lowestAggroTank.hp < 0.30 and not heal.lowestAggroTank.isRaidTank' , kps.heal.lowestAggroTank },
     {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
     
-    -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.concentratedFlame, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid},
-    {spells.concentratedFlame, 'heal.countLossInRange(0.80) > 3' , kps.heal.lowestInRaid},
+    --AZERITE
+    {spells.concentratedFlame, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid },
+    {spells.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid },
+    {spells.refreshment, 'player.buffValue(spells.theWellOfExistence) > 35000 and heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid},
+    {spells.refreshment, 'player.buffValue(spells.theWellOfExistence) > 35000 and heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },
+    {spells.overchargeMana, 'heal.countLossInRange(0.80) > 4' },
  
     -- "Holy Word: Serenity"
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "POH_holyWordSerenity" },

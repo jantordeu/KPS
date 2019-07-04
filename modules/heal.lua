@@ -680,6 +680,10 @@ print("|cffff8000plateCountDebuff:|cffffffff", kps["env"].player.plateCountDebuf
 --print("|cffff8000cooldownSpellCharge:|cffffffff", kps.spells.priest.powerWordRadiance.cooldown)
 
 --print("|cffff8000buffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.warrior.ignorePain))
+--print("|cffff8000buffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.priest.theWellOfExistence))
+--print("|cffff8000buffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.priest.masteryEchoOfLight))
+
+
 
 --print("|cffff8000plateCountvampiricTouch:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 --print("|cffff8000plateCountshadowWordPain:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.shadowWordPain))

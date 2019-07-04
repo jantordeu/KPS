@@ -43,7 +43,9 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- "Don des naaru" 59544
     {spells.giftOfTheNaaru, 'player.hp < 0.65', "player" },
      -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
-    {spells.vampiricEmbrace, 'heal.lowestInRaid.hp < 0.55' },
+    {spells.vampiricEmbrace, 'heal.lowestInRaid.hp < 0.55 or player.hp < 0.55' },
+    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },
+   
     
     -- BUTTON
     --{spells.leapOfFaith, 'keys.alt and mouseover.isHealable', "mouseover" },
@@ -62,9 +64,8 @@ kps.rotations.register("PRIEST","SHADOW",{
         -- "Dissipation de la magie" -- Dissipe la magie sur la cible ennemie, supprimant ainsi 1 effet magique bénéfique.
         {spells.dispelMagic, 'target.isAttackable and target.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "target" },
         {spells.dispelMagic, 'mouseover.isAttackable and mouseover.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "mouseover" },
+        {spells.arcaneTorrent, 'player.timeInCombat > 30 and target.isAttackable and target.distance <= 10' , "target" },
     }},
-    {spells.arcaneTorrent, 'player.timeInCombat > 30 and mouseover.isAttackable and mouseover.distance <= 10' , "target" },
-    {spells.arcaneTorrent, 'player.timeInCombat > 30 and target.isAttackable and target.distance <= 10' , "target" },
 
     -- "Purify Disease" 213634
     {{"nested"}, 'kps.cooldowns',{
@@ -87,9 +88,12 @@ kps.rotations.register("PRIEST","SHADOW",{
     
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },
     {spells.mindbender, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },
-    {spells.shadowCrash, 'player.hasTalent(5,3) and target.isAttackable' },
+    --{spells.shadowCrash, 'player.hasTalent(5,3) and target.isAttackable' },
     --{spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20' , "target" },
-    {spells.concentratedFlame, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },
+    
+    --AZERITE
+    {spells.concentratedFlame, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
+    {spells.memoryOfLucidDreams, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 18 and player.buffStacks(spells.voidForm) < 23' , env.damageTarget },
 
     -- Pandemic allow DoTs to be refreshed upto 30% -- myDebuffDurationMax(spells.vampiricTouch) == 27.3 -- duration(21) + 30% (6.3) -- 70% (14.7)
     -- Pandemic allow DoTs to be refreshed upto 30% -- myDebuffDurationMax(spells.shadowWordPain) == 20.8 -- duration(16) + 30% (4.8) -- 70% (11.2)
@@ -100,8 +104,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- "Levitate" 1706
     {spells.levitate, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.levitate)' , "player" },
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },
-    {spells.shadowMend, 'kps.defensive and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
+    {spells.shadowMend, 'kps.defensive and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" },
     -- "Power Word: Shield" 17 -- "Body and Soul"
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.2) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
     {spells.powerWordShield, 'player.hp < 0.55 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
@@ -133,7 +136,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.voidForm) and player.plateCount < 4' , env.damageTarget },
     {spells.mindSear, 'kps.multiTarget not player.isMoving and player.hasBuff(spells.voidForm) and player.plateCount >= 4 and focus.myDebuffDuration(spells.vampiricTouch) > 6.3 and focus.myDebuffDuration(spells.shadowWordPain) > 4.8' , env.damageTarget },
 
-    {{spells.vampiricTouch,spells.shadowWordPain}, 'mouseover.inCombat and mouseover.isAttackable and not player.isMoving and mouseover.myDebuffDuration(spells.vampiricTouch) < 6.3 and mouseover.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },    
+    --{{spells.vampiricTouch,spells.shadowWordPain}, 'mouseover.inCombat and mouseover.isAttackable and not player.isMoving and mouseover.myDebuffDuration(spells.vampiricTouch) < 6.3 and mouseover.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },    
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4.8' , "mouseover" },
 

@@ -55,7 +55,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.65' },
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
-    {spells.ardentDefender, 'player.hp < 0.40 and spells.shieldOfTheRighteous.charges == 0' },  
+    {spells.ardentDefender, 'player.hp < 0.55 and spells.shieldOfTheRighteous.charges == 0' },  
     -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
     {spells.guardianOfAncientKings, 'player.hp < 0.40 and not player.hasBuff(spells.ardentDefender)' },
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
@@ -72,7 +72,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage - player.incomingHeal > player.hpMax * 0.10' , "target" , "shieldOfTheRighteous_incomingDamage"},
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage - player.incomingHeal > 0 and spells.shieldOfTheRighteous.charges >= 2' , "target" , "shieldOfTheRighteous_charges"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and spells.shieldOfTheRighteous.charges == 3' , "target" , "shieldOfTheRighteous_charges"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersShield) and spells.shieldOfTheRighteous.charges == 3' , "target" , "shieldOfTheRighteous_charges"},
 
     {spells.judgment, 'target.isAttackable and target.distance <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
     {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distance <= 30 and spells.judgment.charges == 2' , "target" },
