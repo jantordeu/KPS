@@ -30,8 +30,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.layOnHands, 'player.hp < 0.40', 'player'},
     {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
     {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
-    {spells.flashOfLight, 'not player.hasTalent(6,1) and player.hp < 0.65 and not spells.flashOfLight.isRecastAt("player")', 'player'},
-    {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.80'}, 
+    {spells.flashOfLight, 'not player.hasTalent(6,1) and player.hp < 0.65 and player.buffStacks(spells.selflessHealer) >= 1', 'player'},
+    {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.65'}, 
       
     -- Interrupt
     {{"nested"}, 'kps.interrupt',{
@@ -68,6 +68,11 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     
     {{spells.judgment,spells.bladeOfJustice}, 'player.timeInCombat < 5 and player.hasTalent(7,3) and spells.avengingWrath.cooldown == 0 and player.holyPower < 3' , "target" },
     {{spells.judgment,spells.bladeOfJustice}, 'player.timeInCombat < 5 and player.hasTalent(7,2) and spells.crusade.cooldown == 0 and player.holyPower < 3' , "target" },
+
+    -- AZERITE
+    -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
+    {spells.concentratedFlame, 'target.isAttackable and target.distance <= 30 and player.holyPower >= 3' , "target" },
+    {spells.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath)' , "target" },
    
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 3 and player.myBuffDuration(spells.inquisition) <= 20 and target.isAttackable' , "target" , "inquisition" },
     {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.isAttackable and target.distance <= 10' },

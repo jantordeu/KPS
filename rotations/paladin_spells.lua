@@ -271,3 +271,9 @@ kps.spells.paladin.avengersValor = kps.Spell.fromId(197561)
 kps.spells.paladin.selflessHealer = kps.Spell.fromId(114250)
 -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.  When you Holy Shock, all targets with Glimmer of Light are damaged for 6 or healed for 6.
 kps.spells.paladin.glimmerOfLight = kps.Spell.fromId(287280)
+
+-- AZERITE ESSENCE
+-- "Concentrated Flame" -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
+kps.spells.paladin.concentratedFlame = kps.Spell.fromId(295373)
+-- "Memory of Lucid Dreams"
+kps.spells.paladin.memoryOfLucidDreams = kps.Spell.fromId(298357)

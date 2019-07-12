@@ -133,6 +133,7 @@ kps.spells.immuneHeal = {}
 kps.spells.immuneHeal.misery = kps.Spell.fromId(243961) -- Misery
 kps.spells.immuneHeal.caressOfDeath = kps.Spell.fromId(285213) -- Caress of Death
 kps.spells.immuneHeal.embraceOfTheVoid = kps.Spell.fromId(282738) -- Embrace of the Void
+kps.spells.immuneHeal.darkestDepths = kps.Spell.fromId(292127) -- Darkest Depths -- Reduces incoming healing by 100%
 
 -- Absorption Heal
 kps.spells.absorptionHeal = {}
