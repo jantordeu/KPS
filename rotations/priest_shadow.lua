@@ -84,9 +84,9 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.powerWordShield, 'player.isMovingSince(1.2) and player.mana > 0.60 and player.insanity < 0.60 and not player.hasBuff(spells.voidForm) and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid , "SCHIELD_MOVING_lowest" },
     {spells.powerWordShield, 'kps.defensive and heal.lowestTankInRaid.isMovingTimer(1.4) and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' ,  kps.heal.lowestTankInRaid },
     
-    -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
+    -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14 -- and GetCritChance() > 50
     {{"macro"}, 'not player.isMoving and player.useTrinket(0) and player.hasBuff(spells.voidForm)' , "/use 13"},
-    {{"macro"}, 'not player.isMoving and player.useTrinket(1) and player.hasBuff(spells.voidForm) and GetCritChance() > 50' , "/use 14" },
+    {{"macro"}, 'not player.isMoving and player.useTrinket(1) and player.hasBuff(spells.voidForm)' , "/use 14" },
 
     {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity >= 60' , env.damageTarget , "voidEruption_60" },
     {spells.voidEruption, 'not player.isMoving and not player.hasTalent(7,1) and player.insanity >= 90' , env.damageTarget , "voidEruption_90"  },

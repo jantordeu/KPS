@@ -189,11 +189,11 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
 
     -- TANK 
     {spells.penance, 'heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid  , "penance_defensive" },
-    {spells.penance, 'heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and heal.lowestTankInRaid.hp < 0.90' , env.damageTarget },
+    {spells.penance, 'heal.lowestTankInRaid.myBuffDuration(spells.atonement) > 2 and heal.lowestTankInRaid.hp < 0.90' , env.damageTarget },
     {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid },
     
     -- PLAYER
-    {spells.penance, 'player.myBuffDuration(spells.atonement) > 2 and player.hp < 0.40' , "player"  , "penance_defensive" },
+    {spells.penance, 'player.hp < 0.40' , "player"  , "penance_defensive" },
     {spells.penance, 'player.myBuffDuration(spells.atonement) > 2 and player.hp < 0.90' , env.damageTarget  , "penance_offensive" },
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.40' , "player" },
 
