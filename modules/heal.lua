@@ -585,9 +585,9 @@ kps.RaidStatus.prototype.hasNotBuffAtonementCount = kps.utils.cachedValue(functi
 end)
 
 --[[[
-@function `heal.atonementHealthRaid` - Returns the loss Health for all raid members with buff atonement
+@function `heal.lossHealthRaidAtonement` - Returns the loss Health for all raid members with buff atonement
 ]]--
-kps.RaidStatus.prototype.atonementHealthRaid = kps.utils.cachedValue(function()
+kps.RaidStatus.prototype.lossHealthRaidAtonement = kps.utils.cachedValue(function()
     local hpTotal = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
@@ -668,6 +668,18 @@ print("|cff1eff00HealTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incoming
 print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --print("|cffff8000plateCountDebuff:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
+
+-- CR_CRIT_SPELL = 11;
+-- CR_HASTE_SPELL = 20;
+
+--bonusCRIT = GetCombatRatingBonus(11)
+--bonusHASTE = GetCombatRatingBonus(20)
+--print("crit:",bonusCRIT,"haste:", bonusHASTE)
+--
+--local spellHastePercent = UnitSpellHaste("player")
+--local critChancePercent = GetCritChance()
+--print("crit:",critChancePercent,"haste:", spellHastePercent)
+
 
 --print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cffff8000isAttackable:|cffffffff",kps["env"].target.isAttackable)
 --print("|cffff8000isRaidBoss:|cffffffff", kps["env"].target.isRaidBoss,"|cffff8000isRaidTank:|cffffffff",kps["env"].target.isRaidTank)

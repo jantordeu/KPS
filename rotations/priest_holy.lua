@@ -60,7 +60,6 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },
     {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
-    {spells.guardianSpirit, 'heal.lowestAggroTank.hp < 0.30 and not heal.lowestAggroTank.isRaidTank' , kps.heal.lowestAggroTank },
     {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
     
     --AZERITE

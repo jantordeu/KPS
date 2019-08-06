@@ -16,15 +16,6 @@ kps.events.register("UI_ERROR_MESSAGE", function(event_type, event_error)
       end
 end)
 
-local function disableTurningAfterCombat()
-   if kps.timers.check("Facing") > 0 then
-      TurnLeftStop()
-      CameraOrSelectOrMoveStop()
-   end
-end
-kps.events.register("PLAYER_REGEN_ENABLED", disableTurningAfterCombat)
-kps.events.register("PLAYER_UNGHOST", disableTurningAfterCombat)
-
 kps.events.register("UNIT_SPELLCAST_START", function(...)
       if kps.autoTurn and kps.timers.check("Facing") > 0 then
          local unitID = select(1,...)

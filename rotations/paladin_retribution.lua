@@ -85,7 +85,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     {spells.executionSentence, 'spells.avengingWrath.cooldown >= 30 and target.isAttackable' , "target" },
     {spells.executionSentence, 'spells.crusade.cooldown >= 30 and target.isAttackable' , "target" },
-    {spells.divineStorm, 'kps.multiTarget and player.plateCount > 2 and target.isAttackable' , "target" , "divineStorm" },
+    {spells.divineStorm, 'kps.multiTarget and player.plateCount >= 3 and target.isAttackable' , "target" , "divineStorm" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower) and target.isAttackable' , "target" , "divineStorm_empyreanPower" },
     {spells.templarsVerdict, 'target.isAttackable' , "target" , "templarsVerdict" },
 
