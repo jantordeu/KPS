@@ -55,9 +55,8 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Fade" 586 "Disparition"
     {spells.fade, 'player.isTarget and player.isInGroup' },
     -- "Guardian Spirit" 47788
-    {spells.guardianSpirit, 'focus.exists and focus.hp < 0.30 and focus.isRaidTank' , "focus" },
+    {spells.guardianSpirit, 'focus.isHealable and focus.hp < 0.30' , "focus" },
     {spells.guardianSpirit, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid},
-    {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },
     {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
     {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
@@ -72,9 +71,8 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Holy Word: Serenity"
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "POH_holyWordSerenity" },
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid , "POH_holyWordSerenity" },
-    {spells.holyWordSerenity, 'focus.exists and focus.hp < 0.55 and focus.isRaidTank' , "focus" },
+    {spells.holyWordSerenity, 'focus.isHealable and focus.hp < 0.55' , "focus" },
     {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid},
-    {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.40 and heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid},
     {spells.holyWordSerenity, 'player.hp < 0.55' , "player"},
     {spells.holyWordSerenity, 'mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" },
     {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid},
@@ -93,7 +91,6 @@ kps.rotations.register("PRIEST","HOLY",{
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@cursor] "..MassDispel },
     -- "Holy Word: Sanctify" -- macro does not work for @target, @mouseover -- ONLY @cursor and @player -- Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew
     {{"macro"}, 'keys.shift and spells.holyWordSanctify.cooldown == 0', "/cast [@cursor] "..HolyWordSanctify },
-    {{"macro"}, 'mouseover.isHealable and mouseover.isRaidTank and mouseover.hp < 0.80 and spells.holyWordSanctify.cooldown == 0', "/cast [@cursor] "..HolyWordSanctify },
     {{"macro"}, 'heal.countLossInDistance(0.80,10) > 2 and spells.holyWordSanctify.cooldown == 0' , "/cast [@player] "..HolyWordSanctify },
 
     -- "Dispel" "Purifier" 527
@@ -188,7 +185,6 @@ kps.rotations.register("PRIEST","HOLY",{
     {{"nested"}, 'not player.isMoving and mouseover.isHealable' ,{
         {spells.prayerOfHealing, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.80 and mouseover.hp > 0.40 and heal.countLossInRange(0.80) > 3' , "mouseover" ,"POH_mouseover" },
         {spells.flashHeal, 'mouseover.isUnit("player") and mouseover.hp < 0.40' , "mouseover" ,"FLASH_mouseover" },
-        {spells.flashHeal, 'mouseover.isRaidTank and mouseover.hp < 0.40' , "mouseover" ,"FLASH_mouseover" },
         {spells.flashHeal, 'mouseover.hp < 0.40' , "mouseover" ,"FLASH_mouseover" },
     }},
 
@@ -200,15 +196,9 @@ kps.rotations.register("PRIEST","HOLY",{
 
     -- DAMAGE
     {{"nested"}, 'kps.multiTarget' , {
-       {spells.holyWordChastise, 'target.isAttackable' , "target" },
-       {spells.holyWordChastise, 'targettarget.isAttackable', "targettarget" },
-       {spells.holyWordChastise, 'focustarget.isAttackable', "focustarget" },
-       {spells.holyFire, 'target.isAttackable' , "target" },
-       {spells.holyFire, 'targettarget.isAttackable', "targettarget" },
-       {spells.holyFire, 'focustarget.isAttackable', "focustarget" },
-       {spells.smite, 'not player.isMoving and target.isAttackable', "target" },
-       {spells.smite, 'not player.isMoving and targettarget.isAttackable', "targettarget" },
-       {spells.smite, 'not player.isMoving and focustarget.isAttackable', "focustarget" },
+       {spells.holyWordChastise, 'true' , env.damageTarget },
+       {spells.holyFire, 'true' , env.damageTarget },
+       {spells.smite, 'not player.isMoving' , env.damageTarget },
     }},
     
     -- PLAYER
@@ -227,7 +217,6 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
     -- "Soins"
     {spells.heal, 'not player.isMoving and mouseover.isHealable and mouseover.hpIncoming < 0.90' , "mouseover" ,"heal_mouseover" },
-    {spells.heal, 'not player.isMoving and mouseover.isHealable and mouseover.isRaidTank' , "mouseover" ,"heal_mouseover" },
     {spells.heal, 'not player.isMoving and heal.lowestUnitInRaid.hpIncoming < 0.90 and heal.lowestUnitInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestUnitInRaid , "heal_lowest" },
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
     {spells.heal, 'not player.isMoving and spells.holyWordSerenity.cooldown > 6' , kps.heal.lowestInRaid , "heal_serenity" },
