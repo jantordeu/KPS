@@ -83,10 +83,6 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.powerWordShield, 'player.hp < 0.55 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
     {spells.powerWordShield, 'player.isMovingSince(1.2) and player.mana > 0.60 and player.insanity < 0.60 and not player.hasBuff(spells.voidForm) and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid , "SCHIELD_MOVING_lowest" },
     {spells.powerWordShield, 'kps.defensive and heal.lowestTankInRaid.isMovingTimer(1.4) and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' ,  kps.heal.lowestTankInRaid },
-    
-    -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14 -- and GetCritChance() > 50
-    {{"macro"}, 'not player.isMoving and player.useTrinket(0) and player.hasBuff(spells.voidForm)' , "/use 13"},
-    {{"macro"}, 'not player.isMoving and player.useTrinket(1) and player.hasBuff(spells.voidForm)' , "/use 14" },
 
     {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity >= 60' , env.damageTarget , "voidEruption_60" },
     {spells.voidEruption, 'not player.isMoving and not player.hasTalent(7,1) and player.insanity >= 90' , env.damageTarget , "voidEruption_90"  },
@@ -94,6 +90,10 @@ kps.rotations.register("PRIEST","SHADOW",{
     --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and spells.mindFlay.cooldownTotal == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidEruption.cooldown == 0 and spells.mindSear.cooldownTotal == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
     {spells.voidEruption, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
+    
+    -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14 -- and GetCritChance() > 50
+    {{"macro"}, 'not player.isMoving and player.useTrinket(0) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 9' , "/use 13"},
+    {{"macro"}, 'not player.isMoving and player.useTrinket(1) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , "/use 14" },
 
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20' , "target" },    
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 9' , env.damageTarget },

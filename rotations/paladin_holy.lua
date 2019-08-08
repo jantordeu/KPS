@@ -115,7 +115,7 @@ kps.rotations.register("PALADIN","HOLY",
     
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
     {{spells.ruleOfLaw,spells.lightOfDawn}, 'heal.countLossInRange(0.80) > 2 and not player.hasBuff(spells.ruleOfLaw)' },
-    {spells.ruleOfLaw, 'focus.exists and focus.hp < 0.65 and focus.isRaidTank and focus.distance >= 40' },
+    {spells.ruleOfLaw, 'focus.isHealable and focus.hp < 0.65 and focus.isRaidTank and focus.distance >= 40' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
     -- "Breaking Dawn" -- AZERITE -- Increases the healing done by Light of Dawn by 483 and its range to 40 yards.
     {spells.lightOfDawn, 'heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5 and target.distance <= 15' },
