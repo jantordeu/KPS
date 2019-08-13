@@ -46,9 +46,9 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     --{spells.leapOfFaith, 'keys.alt and mouseover.isHealable', "mouseover" },
     --{spells.mindControl, 'keys.alt and target.isAttackable and not target.hasMyDebuff(spells.mindControl) and target.myDebuffDuration(spells.mindControl) < 2' , "target" },
    
-    {spells.painSuppression, 'focus.isHealable and focus.hp < 0.30' , "focus" },
-    {spells.painSuppression, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid},
-    {spells.painSuppression, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
+    {spells.painSuppression, 'focus.isHealable and focus.hp < 0.55 and spells.penance.cooldown > 4' , "focus" },
+    {spells.painSuppression, 'heal.lowestTankInRaid.hp < 0.55 and spells.penance.cooldown > 4' , kps.heal.lowestTankInRaid},
+    {spells.painSuppression, 'player.hp < 0.55 and spells.penance.cooldown > 4' , "player"},
     {spells.painSuppression, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
     {spells.painSuppression, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
 
@@ -98,17 +98,18 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     -- heal.hasNotBuffAtonementCount(0.80) -- count unit below 0.80 health without atonement buff
     -- heal.hasBuffAtonementCount(0.80) -- count unit below 0.80 health with atonement buff
     -- heal.countLossInRange(0.80) -- count unit below 0.80 health
+    -- heal.countInRange -- count unit inrange
     -- heal.hasNotBuffAtonement.hp < 0.90 -- UNIT with lowest health without Atonement Buff on raid -- default "player" 
     -- heal.hasBuffAtonement.hp < 0.90 - UNIT with lowest health with Atonement Buff on raid e.g. -- default "player"
-    
-    {{spells.powerWordShield,spells.penance}, 'player.hasBuff(spells.rapture) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid },
+
     {{spells.powerWordShield,spells.shadowMend}, 'not player.isMoving and player.hasBuff(spells.rapture) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid },
+    {{spells.powerWordShield,spells.penance}, 'player.hasBuff(spells.rapture) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid },
     {{"nested"}, 'player.hasBuff(spells.rapture)' , {
         {spells.powerWordShield, 'not heal.lowestTankInRaid.hasBuff(spells.powerWordShield) and heal.lowestTankInRaid.hp < 0.80' , kps.heal.lowestTankInRaid },
         {spells.powerWordShield, 'not player.hasBuff(spells.powerWordShield) and player.hp < 0.80' , "player" },
-        {spells.powerWordShield, 'mouseover.isHealable and mouseover.hp < 0.80 and not mouseover.hasBuff(spells.powerWordShield)' , "mouseover" },    
         {spells.powerWordShield, 'targettarget.isHealable and not targettarget.hasBuff(spells.powerWordShield) and targettarget.hp < 0.80' , "targettarget" },
         {spells.powerWordShield, 'not heal.lowestUnitInRaid.hasBuff(spells.powerWordShield) and heal.lowestUnitInRaid.hp < 0.55' , kps.heal.lowestUnitInRaid },
+        {spells.powerWordShield, 'mouseover.isHealable and not mouseover.hasBuff(spells.powerWordShield)' , "mouseover" }, 
     }},
     {spells.rapture, 'heal.hasNotBuffAtonementCount(0.65) >= 3 and spells.penance.cooldown > 4 and spells.schism.cooldown > 4' },
     {spells.rapture, 'heal.lowestTankInRaid.hp < 0.40 and spells.penance.cooldown > 4 and spells.schism.cooldown > 4' },
@@ -117,6 +118,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.concentratedFlame, 'heal.lossHealthRaidAtonement > 0' , kps.heal.lowestInRaid },
     {spells.memoryOfLucidDreams, 'heal.lossHealthRaidAtonement > 0' , kps.heal.lowestInRaid },
     {spells.overchargeMana,'heal.hasBuffAtonementCount(0.80) >= 5 and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(5)' , kps.heal.lowestInRaid },
+    {spells.overchargeMana,'heal.hasBuffAtonementCount(0.80) >= 5 and spells.evangelism.lastCasted(5)' , kps.heal.lowestInRaid },
     {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(5)' },
 
     {spells.shadowWordPain,'not player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("target")', "target" , "pain_mouseover"},
@@ -152,6 +154,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.shadowCovenant, 'player.hasTalent(5,3) and heal.countLossInRange(0.80) >= 3' , kps.heal.lowestInRaid },
     {spells.luminousBarrier, 'player.hasTalent(7,2) and heal.countLossInRange(0.80)*2 > heal.countInRange' },
     {spells.holyNova, 'player.hasBuff(spells.suddenRevelation)' },
+    {spells.holyNova, 'kps.holyNova and target.distance <= 10' },
     
    -- NOT ISINGROUP
     {{"nested"}, 'kps.multiTarget' , {
