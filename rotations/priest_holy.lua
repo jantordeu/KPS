@@ -94,8 +94,8 @@ kps.rotations.register("PRIEST","HOLY",{
     {{"macro"}, 'heal.countLossInDistance(0.80,10) > 2 and spells.holyWordSanctify.cooldown == 0' , "/cast [@player] "..HolyWordSanctify },
 
     -- "Dispel" "Purifier" 527
-    {spells.purify, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
     {{"nested"},'kps.cooldowns', {
+        {spells.purify, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
         {spells.purify, 'heal.lowestTankInRaid.isDispellable("Magic")' , kps.heal.lowestTankInRaid},
         {spells.purify, 'player.isDispellable("Magic")' , "player" },
         {spells.purify, 'heal.lowestInRaid.isDispellable("Magic")' , kps.heal.lowestInRaid},

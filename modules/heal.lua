@@ -497,7 +497,7 @@ local unitHasBuff = function(spell)
     local lowestHp = 2
     local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) > 2 and unit.hp < lowestHp then
+        if unit.isHealable and unit.myBuffDuration(spell) > 0 and unit.hp < lowestHp then
             lowestHp = unit.hp
             lowestUnit = unit
         end
@@ -517,7 +517,7 @@ local unitHasNotBuff = function(spell)
     local lowestHp = 2
     local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) < 2 and unit.hp < lowestHp then
+        if unit.isHealable and unit.myBuffDuration(spell) == 0 and unit.hp < lowestHp then
             lowestHp = unit.hp
             lowestUnit = unit
         end
@@ -554,7 +554,7 @@ local unitHasBuffHealth = function(health)
     local maxcount = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) > 2 and unit.hp < health then
+        if unit.isHealable and unit.myBuffDuration(spell) > 0 and unit.hp < health then
             maxcount = maxcount + 1
         end
     end
@@ -573,7 +573,7 @@ local unitHasNotBuffHealth = function(health)
     local maxcount = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) < 2 and unit.hp < health then
+        if unit.isHealable and unit.myBuffDuration(spell) == 0 and unit.hp < health then
             maxcount = maxcount + 1
         end
     end
@@ -591,7 +591,7 @@ kps.RaidStatus.prototype.lossHealthRaidAtonement = kps.utils.cachedValue(functio
     local hpTotal = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) > 2 then
+        if unit.isHealable and unit.myBuffDuration(spell) > 0 then
             local hpLoss = unit.hpMax - unit.hpTotal
             hpTotal = hpTotal + hpLoss
         end
@@ -669,6 +669,8 @@ print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomi
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --print("|cffff8000plateCountDebuff:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 
+print("|cffff8000buffDuration:|cffffffff", kps["env"].player.myBuffDuration(kps.spells.priest.atonement))
+
 -- CR_CRIT_SPELL = 11;
 -- CR_HASTE_SPELL = 20;
 
@@ -678,7 +680,7 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --
 --local spellHastePercent = UnitSpellHaste("player")
 --local critChancePercent = GetCritChance()
---print("crit:",critChancePercent,"haste:", spellHastePercent)
+--print("crit:", critChancePercent,"haste:", spellHastePercent)
 
 
 --print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cffff8000isAttackable:|cffffffff",kps["env"].target.isAttackable)
