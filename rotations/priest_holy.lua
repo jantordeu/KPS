@@ -170,7 +170,7 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.flashHeal, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"FLASH_POH" },
         {spells.flashHeal, 'heal.lowestUnitInRaid.hp < 0.40' , kps.heal.lowestUnitInRaid ,"FLASH_POH" },
     }},
-      -- "Prayer of Mending" (Tank only)
+    -- "Prayer of Mending" (Tank only)
     {spells.prayerOfMending, 'not player.isMoving and not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending)' , kps.heal.lowestTankInRaid },
     {spells.prayerOfMending, 'not player.isMoving' , kps.heal.hasNotBuffMending , "POM" }, 
 
