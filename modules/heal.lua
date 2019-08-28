@@ -497,7 +497,7 @@ local unitHasBuff = function(spell)
     local lowestHp = 2
     local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) > 0 and unit.hp < lowestHp then
+        if unit.isHealable and unit.hasMyBuff(spell) and unit.hp < lowestHp then
             lowestHp = unit.hp
             lowestUnit = unit
         end
@@ -517,7 +517,7 @@ local unitHasNotBuff = function(spell)
     local lowestHp = 2
     local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) == 0 and unit.hp < lowestHp then
+        if unit.isHealable and not unit.hasMyBuff(spell) and unit.hp < lowestHp then
             lowestHp = unit.hp
             lowestUnit = unit
         end
@@ -554,7 +554,7 @@ local unitHasBuffHealth = function(health)
     local maxcount = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) > 0 and unit.hp < health then
+        if unit.isHealable and unit.hasMyBuff(spell) and unit.hp < health then
             maxcount = maxcount + 1
         end
     end
@@ -573,7 +573,7 @@ local unitHasNotBuffHealth = function(health)
     local maxcount = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) == 0 and unit.hp < health then
+        if unit.isHealable and not unit.hasMyBuff(spell) and unit.hp < health then
             maxcount = maxcount + 1
         end
     end
@@ -591,7 +591,7 @@ kps.RaidStatus.prototype.lossHealthRaidAtonement = kps.utils.cachedValue(functio
     local hpTotal = 0
     local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.myBuffDuration(spell) > 0 then
+        if unit.isHealable and unit.hasMyBuff(spell) then
             local hpLoss = unit.hpMax - unit.hpTotal
             hpTotal = hpTotal + hpLoss
         end

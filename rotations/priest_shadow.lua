@@ -48,7 +48,10 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
     {spells.shadowMend, 'kps.defensive and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" },
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },
-    
+     -- "Power Word: Shield" 17 -- "Body and Soul"
+    {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.2) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
+    {spells.powerWordShield, 'player.hp < 0.55 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
+   
     -- BUTTON
     --{spells.leapOfFaith, 'keys.alt and mouseover.isHealable', "mouseover" },
     --{spells.mindControl, 'keys.alt and target.isAttackable and not target.hasMyDebuff(spells.mindControl) and target.myDebuffDuration(spells.mindControl) < 2' , "target" },
@@ -80,12 +83,6 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- "Levitate" 1706
     {spells.levitate, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.levitate)' , "player" },
 
-    -- "Power Word: Shield" 17 -- "Body and Soul"
-    {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.2) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
-    {spells.powerWordShield, 'player.hp < 0.55 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
-    {spells.powerWordShield, 'player.isMovingSince(1.2) and player.mana > 0.60 and player.insanity < 0.60 and not player.hasBuff(spells.voidForm) and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid , "SCHIELD_MOVING_lowest" },
-    {spells.powerWordShield, 'kps.defensive and heal.lowestTankInRaid.isMovingTimer(1.4) and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' ,  kps.heal.lowestTankInRaid },
-
     {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity >= 60' , env.damageTarget , "voidEruption_60" },
     {spells.voidEruption, 'not player.isMoving and not player.hasTalent(7,1) and player.insanity >= 90' , env.damageTarget , "voidEruption_90"  },
     {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity <= 60', env.damageTarget },
@@ -106,7 +103,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
     {spells.concentratedFlame, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
-    {spells.memoryOfLucidDreams, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17 and player.buffStacks(spells.voidForm) < 25 and player.insanity < 60' , env.damageTarget },
+    {spells.memoryOfLucidDreams, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17 and player.buffStacks(spells.voidForm) < 28 and player.insanity < 60' , env.damageTarget },
 
     {{"nested"}, 'not player.hasBuff(spells.voidForm)',{
         {spells.darkVoid, 'kps.multiTarget and not player.isMoving and player.hasTalent(3,3)' , env.damageTarget , "darkVoid" },

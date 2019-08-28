@@ -65,6 +65,30 @@ function Unit.hasBuff(self)
 end
 
 --[[[
+@function `<UNIT>.hasMyBuff(<SPELL>)` - return true if the unit has the given buff (`target.hasMyBuff(spells.renew)`)
+]]--
+
+local hasMyBuff = setmetatable({}, {
+__index = function(t, unit)
+   local val = function (spell)
+       local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+       local i = 1
+       auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+       while auraName do
+           if auraName == spell.name and caster == "player" then return true end
+           i = i + 1
+           auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+       end
+      return false
+   end
+   t[unit] = val
+   return val
+end})
+function Unit.hasMyBuff(self)
+    return hasBuff[self.unit]
+end
+
+--[[[
 @function `<UNIT>.hasDebuff(<SPELL>)` - returns true if the unit has the given debuff (`target.hasDebuff(spells.immolate)`)
 ]]--
 
