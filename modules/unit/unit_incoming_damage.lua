@@ -77,6 +77,9 @@ local bitband = bit.band
 local GetUnitName = GetUnitName
 local GetTime = GetTime
 
+local RAID_AFFILIATION = bit.bor(COMBATLOG_OBJECT_AFFILIATION_PARTY, COMBATLOG_OBJECT_AFFILIATION_RAID, COMBATLOG_OBJECT_AFFILIATION_MINE)
+local bitband = bit.band
+
 local combatLogUpdate = function () -- CombatLogGetCurrentEventInfo()
     local currentTime = GetTime()
     --local event = select(2,...)

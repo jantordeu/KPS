@@ -663,13 +663,18 @@ print("|cff1eff00LOWEST|cffffffff", kps["env"].heal.lowestInRaid.name,"/",kps["e
 print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"/",kps["env"].heal.lowestTankInRaid.hp)
 print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"/",kps["env"].heal.lowestUnitInRaid.hp)
 --print("|cffff8000CountLossDistance_90:|cffffffff", kps["env"].heal.countLossInDistance(0.90,10))
-print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90),"|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
+print("|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
+print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90))
 print("|cff1eff00HealTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
 print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
---print("|cffff8000plateCountDebuff:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
+print("|cffff8000BuffAtonementCount_90:|cffffffff", kps["env"].heal.hasBuffAtonementCount(0.90))
+print("|cffff8000NotBuffAtonementCount_90:|cffffffff", kps["env"].heal.hasNotBuffAtonementCount(0.90))
 
-print("|cffff8000buffDuration:|cffffffff", kps["env"].player.myBuffDuration(kps.spells.priest.atonement))
+
+--print("|cffff8000countCharge:|cffffffff", kps.spells.priest.mindBlast.charges)
+--print("|cffff8000countCharge:|cffffffff", kps.spells.priest.powerWordRadiance.charges)
+--print("|cffff8000buffDuration:|cffffffff", kps["env"].player.myBuffDuration(kps.spells.priest.atonement),"hasBuff:", kps["env"].player.hasMyBuff(kps.spells.priest.atonement) )
 
 -- CR_CRIT_SPELL = 11;
 -- CR_HASTE_SPELL = 20;

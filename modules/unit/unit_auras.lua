@@ -9,36 +9,62 @@ local UnitDebuff = UnitDebuff
 local UnitCanAssist = UnitCanAssist
 
 local UnitHasBuff = function(unit,spellName)
-        local auraName,count,debuffType,duration,endTime,caster,isStealable,spellid,isBossDebuff,value
+        local auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitBuff(unit,i)
+        auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unit,i)
         while auraName do
             if auraName == spellName then
-                return auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3
+                return auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitBuff(unit,i)
+            auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unit,i)
         end
-    return "UnitBuffAuraName",nil,0,nil,0,0,"me",false, nil,0,false, false,nil,nil,0,0,0
+    return nil
 end
 
 local UnitHasDebuff = function(unit,spellName)
-        local auraName,count,debuffType,duration,endTime,caster,isStealable,spellid,isBossDebuff,value
+        local auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitDebuff(unit,i)
+        auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unit,i)
         while auraName do
             if auraName == spellName then
-                return auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3
+                return auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitDebuff(unit,i)
+            auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unit,i)
         end
-    return "UnitDebuffAuraName",nil,0,nil,0,0,"me",false, nil,0,false, false,nil,nil,0,0,0
+    return nil
 end
 
--- name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, isCastByPlayer, nameplateShowAll, timeMod, ... = AuraUtil.FindAuraByName(auraName, unit, filter)
--- name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff("unit", index[, "filter"])
--- name, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff("unit", index[, "filter"]])
+
+local buffOrDebuff = function(unit, spellName, buffFn, onlyMine)
+    for i=1,40 do
+        local auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = buffFn(unit,i)
+        if name == spellName and (not onlyMine or caster == "player") then
+            return auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
+        end
+    end
+    return nil
+end
+
+local buffOrDebuffTimeLeft = function(unit, spellName, buffFn, onlyMine)
+    local auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = buffOrDebuff(unit, spellName, buffFn, onlyMine)
+    if expirationTime == nil then return 0 end
+    local timeLeft = expirationTime - GetTime() -- lag?
+    if timeLeft < 0 then return 0 end
+    return timeLeft
+end
+
+local buffOrDebuffCount = function(unit, spellName, buffFn, onlyMine)
+    local count = 0
+    for i=1,40 do
+        local auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = buffFn(unit,i)
+        if name == spellName and (not onlyMine or caster == "player") then
+            count = count + 1
+        end
+    end
+    return count
+end
 
 --[[[
 @function `<UNIT>.hasBuff(<SPELL>)` - return true if the unit has the given buff (`target.hasBuff(spells.renew)`)
@@ -47,13 +73,13 @@ end
 local hasBuff = setmetatable({}, {
 __index = function(t, unit)
    local val = function (spell)
-       local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+       local auraName
        local i = 1
-       auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+       auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
        while auraName do
            if auraName == spell.name then return true end
            i = i + 1
-           auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+           auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
        end
       return false
    end
@@ -71,13 +97,13 @@ end
 local hasMyBuff = setmetatable({}, {
 __index = function(t, unit)
    local val = function (spell)
-       local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+       local auraName, caster
        local i = 1
-       auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+       auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
        while auraName do
            if auraName == spell.name and caster == "player" then return true end
            i = i + 1
-           auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+           auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
        end
       return false
    end
@@ -95,13 +121,13 @@ end
 local hasDebuff = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         while auraName do
             if auraName == spell.name then return true end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         end
        return false
     end
@@ -119,13 +145,13 @@ end
 local hasMyDebuff = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName, caster
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         while auraName do
             if auraName == spell.name and caster == "player" then return true end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         end
        return false
     end
@@ -143,18 +169,18 @@ end
 local myBuffDuration = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName,duration,expirationTime,caster
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         while auraName do
             if auraName == spell.name and caster == "player" then
-                if endTime == nil then return 0 end
-                local timeLeft = endTime - GetTime() -- lag?
+                if expirationTime == nil then return 0 end
+                local timeLeft = expirationTime - GetTime() -- lag?
                 if timeLeft < 0 then return 0 end
                 return timeLeft
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         end
         return 0
     end
@@ -172,18 +198,18 @@ end
 local myDebuffDuration = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName,duration,expirationTime,caster
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         while auraName do
             if auraName == spell.name and caster == "player" then
-                if endTime == nil then return 0 end
-                local timeLeft = endTime - GetTime() -- lag?
+                if expirationTime == nil then return 0 end
+                local timeLeft = expirationTime - GetTime() -- lag?
                 if timeLeft < 0 then return 0 end
                 return timeLeft
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         end
         return 0
     end
@@ -201,16 +227,16 @@ end
 local myDebuffDurationMax = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName,duration,expirationTime,caster
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         while auraName do
             if auraName == spell.name and caster == "player" then
-                if endTime == nil then return 0 end
+                if expirationTime == nil then return 0 end
                 return duration
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         end
        return 0
     end
@@ -228,18 +254,18 @@ end
 local buffDuration = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName,duration,expirationTime
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         while auraName do
             if auraName == spell.name then
-                if endTime == nil then return 0 end
-                local timeLeft = endTime - GetTime() -- lag?
+                if expirationTime == nil then return 0 end
+                local timeLeft = expirationTime - GetTime() -- lag?
                 if timeLeft < 0 then return 0 end
                 return timeLeft
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         end
        return 0
     end
@@ -258,18 +284,18 @@ end
 local debuffDuration = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName,duration,expirationTime
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         while auraName do
             if auraName == spell.name then
-                if endTime == nil then return 0 end
-                local timeLeft = endTime - GetTime() -- lag?
+                if expirationTime == nil then return 0 end
+                local timeLeft = expirationTime - GetTime() -- lag?
                 if timeLeft < 0 then return 0 end
                 return timeLeft
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         end
        return 0
     end
@@ -287,15 +313,15 @@ end
 local debuffStacks = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName,count
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         while auraName do
             if auraName == spell.name then
                 return count
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         end
        return 0
     end
@@ -312,15 +338,15 @@ end
 local buffStacks = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName,count
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         while auraName do
             if auraName == spell.name then
                 return count
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         end
        return 0
     end
@@ -339,16 +365,16 @@ end
 local debuffCount = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName
         local i = 1
         local auraCount = 0
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         while auraName do
             if auraName == spell.name then
                 auraCount = auraCount + 1
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         end
        return auraCount
     end
@@ -365,16 +391,16 @@ end
 local buffCount = setmetatable({}, {
  __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName
         local i = 1
         local auraCount = 0
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         while auraName do
             if auraName == spell.name then
                 auraCount = auraCount + 1
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         end
        return auraCount
     end
@@ -391,16 +417,16 @@ end
 local myDebuffCount = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName,caster
         local i = 1
         local auraCount = 0
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         while auraName do
             if auraName == spell.name and caster == "player" then
                 auraCount = auraCount + 1
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitDebuff(unit,i)
         end
        return auraCount
     end
@@ -417,16 +443,16 @@ end
 local myBuffCount = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+        local auraName,caster
         local i = 1
         local auraCount = 0
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         while auraName do
             if auraName == spell.name and caster == "player" then
                 auraCount = auraCount + 1
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitBuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff(unit,i)
         end
        return auraCount
     end
@@ -444,15 +470,15 @@ end
 local buffValue = setmetatable({}, {
 __index = function(t, unit)
     local val = function (spell)
-        local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff,value1,value2,value3
+        local auraName, value2
         local i = 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitBuff(unit,i)
+        auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, value1,value2,value3 = UnitBuff(unit,i)
         while auraName do
             if auraName == spell.name then
                 return value2
             end
             i = i + 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitBuff(unit,i)
+            auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, value1,value2,value3 = UnitBuff(unit,i)
         end
         return 0
     end
@@ -472,16 +498,16 @@ local isDebuffDispellable = setmetatable({}, {
     __index = function(t, unit)
         local val = function (dispelType)
             if not UnitCanAssist("player", unit) then return false end
-            local auraName,count,debuffType,duration,endTime,caster,spellid
+            local auraName,count,debuffType,duration,expirationTime,caster,spellid
             local i = 1
-            auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid = UnitDebuff(unit,i)
+            auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitDebuff(unit,i)
             if dispelType == nil then dispelType = "Magic" end
             while auraName do
                 if debuffType ~= nil and debuffType == dispelType then
                     return true
                 end
                 i = i + 1
-                auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid = UnitDebuff(unit,i)
+                auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitDebuff(unit,i)
             end
             return false
         end
@@ -498,15 +524,15 @@ end
 
 function Unit.isBuffDispellable(self)
     if UnitCanAssist("player", self.unit) then return false end
-    local auraName,count,debuffType,duration,endTime,caster,spellid
+    local auraName,count,debuffType,duration,expirationTime,caster,spellid
     local i = 1
-    auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid = UnitBuff(self.unit,i) 
+    auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitBuff(self.unit,i)
     while auraName do
         if debuffType ~= nil and debuffType == "Magic" then
             return true
         end
         i = i + 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid = UnitBuff(self.unit,i)
+        auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitBuff(self.unit,i)
     end
     return false
 end
@@ -567,15 +593,15 @@ end
 
 function Unit.isStealable(self)
     if UnitCanAssist("player", self.unit) then return false end
-    local auraName,count,debuffType,duration,endTime,caster,isStealable,spellid,isBossDebuff
+    local auraName,isStealable
     local i = 1
-    auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff = UnitBuff(self.unit,i)
+    auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitBuff(self.unit,i)
     while auraName do
         if debuffType ~= nil and isStealable then
             return true
         end
         i = i + 1
-         auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff = UnitBuff(self.unit,i)
+        auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitBuff(self.unit,i)
     end
     return false
 end
@@ -585,16 +611,16 @@ end
 ]]--
 
 function Unit.isControlled(self)
-    local auraName,count,debuffType,duration,endTime,caster,spellid,isBossDebuff
+    local auraName,spellid
     local i = 1
-    auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
+    auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitDebuff(self.unit,i)
     while auraName do
         local crowdControl = kps.spells.crowdControl[spellId]
         if crowdControl ~= nil then
             if crowdControl == "CC" then return true end
         end
         i = i + 1
-        auraName,_,count,debuffType,duration,endTime,caster,_,_,spellid,_,isBossDebuff = UnitDebuff(self.unit,i)
+        auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitDebuff(self.unit,i)
     end
     return false
 end

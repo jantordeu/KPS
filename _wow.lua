@@ -78,12 +78,12 @@ function debugstack(a,b,c)
     return "file.lua:1"
 end
 function UnitBuff( ... )
-    -- auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitBuff(unit, i)
-    return  "UnitBuffAuraName",nil,0,nil,0,0,"me",false, nil,0,false, false,nil,nil,0,0,0
+    -- name, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, ... = UnitBuff("unit", index[, "filter"])
+    return "UnitBuffAuraName",nil,0,nil,0,0,"me",false, nil,0,false, false,false,nil,0,0,0,0
 end
 function UnitDebuff( ... )
-    -- auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitDebuff(unit, i)
-    return "UnitDebuffAuraName",nil,0,nil,0,0,"me",false, nil,0,false, false,nil,nil,0,0,0
+    -- name, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, ... = UnitDebuff("unit", index[, "filter"])
+    return "UnitDebuffAuraName",nil,0,nil,0,0,"me",false, nil,0,false, false,false,nil,0,0,0,0
 end
 function GetSpellCharges( ... )
     return 1
