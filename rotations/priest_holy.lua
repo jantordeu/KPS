@@ -12,10 +12,6 @@ local SpiritOfRedemption = spells.spiritOfRedemption.name
 local MassDispel = spells.massDispel.name
 local AngelicFeather = spells.angelicFeather.name
 
---kps.runAtEnd(function()
---   kps.gui.addCustomToggle("PRIEST","HOLY", "mouseOver", "Interface\\Icons\\priest_spell_leapoffaith_a", "mouseOver")
---end)
-
 kps.runAtEnd(function()
    kps.gui.addCustomToggle("PRIEST","HOLY", "holyNova", "Interface\\Icons\\spell_holy_holynova", "holyNova")
 end)
@@ -60,13 +56,6 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
     {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
-    
-    --AZERITE
-    {spells.concentratedFlame, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid },
-    {spells.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid },
-    {spells.refreshment, 'player.buffValue(spells.theWellOfExistence) > 35000 and heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid},
-    {spells.refreshment, 'player.buffValue(spells.theWellOfExistence) > 35000 and heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },
-    {spells.overchargeMana, 'heal.countLossInRange(0.80) > 4' },
  
     -- "Holy Word: Serenity"
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "POH_holyWordSerenity" },
@@ -135,6 +124,15 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Levitate" 1706
     {spells.levitate, 'player.IsFallingSince(1.4) and not player.hasBuff(spells.levitate)' , "player" },
     
+    --AZERITE
+    {spells.concentratedFlame, 'heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },
+    -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
+    {spells.refreshment, 'player.buffValue(spells.theWellOfExistence) > 20000 and heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
+    {spells.overchargeMana, 'heal.countLossInRange(0.80) > 4' },
+    -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
+    {spells.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    
     -- TRINKETS
     -- SLOT 0 /use 13
     -- "Inoculating Extract" 160649 -- "Extrait d’inoculation" 160649
@@ -148,7 +146,7 @@ kps.rotations.register("PRIEST","HOLY",{
     
     {spells.circleOfHealing, 'heal.lowestTankInRaid.hp < 0.95 and heal.lowestUnitInRaid.hp < 0.95' , kps.heal.lowestTankInRaid },
     {spells.circleOfHealing, 'heal.countLossInRange(0.95) > 2' , kps.heal.lowestInRaid },
-    {spells.holyNova, 'kps.holyNova' , "target" },
+    {spells.holyNova, 'kps.holyNova and target.distance <= 10' , "target" },
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid },
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.90) > 4' , kps.heal.lowestInRaid },
     {spells.divineStar, 'player.hasTalent(6,2) and heal.countLossInRange(0.85) > 2 and target.distance <= 30' , "target" },

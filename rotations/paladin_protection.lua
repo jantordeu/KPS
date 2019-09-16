@@ -55,8 +55,8 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
     {spells.avengingWrath, 'player.incomingDamage > player.incomingHeal and player.hp < 0.65' },
     -- "Main du protecteur" talent replace "Lumière du protecteur"
-    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.60' },
-    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.60' },
+    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.65' },
+    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.65' },
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
     {spells.ardentDefender, 'player.hp < 0.40 and target.isCasting and target.isRaidBoss' }, 
@@ -73,10 +73,9 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.layOnHands, 'player.hp < 0.40' },
 
     -- "Bouclier du vengeur" -- "Avenger's Shield" -- Augmente de 20% les effets de votre prochain Bouclier du vertueux. -- dégâts du Sacré, avant de rebondir sur 2 ennemis proches supplémentaires.
-    {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and not player.hasBuff(spells.avengersShield)' , "target" , "avengersShield_isUsable" },
+    {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and not player.hasBuff(spells.avengersShield) and spells.shieldOfTheRighteous.charges > 0' , "target" , "avengersShield_isUsable" },
     {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and target.isCasting' , "target" , "avengersShield_casting" },
     -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and spells.shieldOfTheRighteous.charges == 3' , "target" , "shieldOfTheRighteous_charges_3"},
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage - player.incomingHeal > 0 and player.hp < 0.65' , "target" , "shieldOfTheRighteous_incomingDamage"},
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage - player.incomingHeal > 0 and spells.shieldOfTheRighteous.charges >= 2' , "target" , "shieldOfTheRighteous_charges"},
 
