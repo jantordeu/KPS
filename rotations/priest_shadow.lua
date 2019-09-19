@@ -103,7 +103,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20' , "target" },    
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 18' , env.damageTarget },
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.hasBuff(spells.memoryOfLucidDreams)' , env.damageTarget },
-    {{"macro"}, 'spells.shadowCrash.cooldown == 0 and target.isAttackable and not target.isMoving and target.distanceMax <= 8' , "/cast [@player] "..ShadowCrash },
+    {{"macro"}, 'spells.shadowCrash.cooldown == 0 and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..ShadowCrash },
     {{"macro"}, 'spells.shadowCrash.cooldown == 0 and mouseover.inCombat and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..ShadowCrash },
 
     {spells.darkVoid, 'kps.multiTarget and not player.hasBuff(spells.voidForm) and not player.isMoving and player.hasTalent(3,3)' , env.damageTarget , "darkVoid" },
@@ -129,7 +129,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 5' , env.damageTarget },
     {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
     {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 3' , env.damageTarget },
-    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.hasBuff(spells.thoughtHarvester)' , env.damageTarget },
+    --{spells.mindSear, 'kps.multiTarget and not player.isMoving and player.hasBuff(spells.thoughtHarvester)' , env.damageTarget },
     {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
 
 },"priest_shadow_bfa")
