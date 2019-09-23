@@ -273,7 +273,7 @@ kps.spells.priest.suddenRevelation = kps.Spell.fromId(287360)
 -- AZERITE ESSENCE
 -- "Concentrated Flame" -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
 kps.spells.priest.concentratedFlame = kps.Spell.fromId(295373)
--- "Memory of Lucid Dreams"
+-- "Memory of Lucid Dreams" -- Increasing your [Mana][Energy][Maelstrom] generation rate by 100% and your Leech by 0 for 15 sec.
 kps.spells.priest.memoryOfLucidDreams = kps.Spell.fromId(298357)
 -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
 kps.spells.priest.refreshment = kps.Spell.fromId(296197)

@@ -86,6 +86,11 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.80' , kps.heal.lowestTankInRaid  }, 
     }},
     
+    -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
+    {spells.overchargeMana, 'heal.countLossInRange(0.85)*2 > heal.countInRange' },
+    -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
+    {spells.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    
     -- APPLY MANUAL "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
     -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.
 
@@ -107,7 +112,7 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Croisé vengeur --"Avenging Crusader" -- Replaces Avenging Wrath -- 3 nearby allies will be healed for 250% of the damage done. Crusader Strike, Judment damage increased by 30%.
     {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.lowestTankInRaid.hp < 0.65' },
     {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 3' },
-    {spells.avengingCrusader, 'player.hasTalent(6,2) heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
+    {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
 
     -- "Jugement de lumière" -- permet aux 25 prochaines attaques réussies contre la cible de rendre (5% of Spell power) points de vie à l’attaquant.
     {spells.judgment, 'target.isAttackable' , "target" },    

@@ -116,7 +116,7 @@ kps.rotations.register("PRIEST","HOLY",{
 
     {{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
     {spells.giftOfTheNaaru, 'player.hp < 0.70' , "player" },
-    {spells.desperatePrayer, 'player.hp < 0.65' , "player" },
+    {spells.desperatePrayer, 'player.hp < 0.55' , "player" },
     {spells.renew, 'player.hpIncoming < 0.70 and not player.hasBuff(spells.renew)' , "player" },
     
     -- "Angelic Feather"
@@ -129,7 +129,7 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
     {spells.refreshment, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
-    {spells.overchargeMana, 'heal.countLossInRange(0.80) > 4' },
+    {spells.overchargeMana, 'heal.countLossInRange(0.85)*2 > heal.countInRange' },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     {spells.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     
@@ -153,9 +153,11 @@ kps.rotations.register("PRIEST","HOLY",{
     
     -- "Renew" 139
     {{"nested"}, 'player.isMoving' ,{
-        {spells.renew, 'heal.lowestTankInRaid.hpIncoming < 1 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
-        {spells.circleOfHealing, 'heal.lowestInRaid.hpIncoming < 0.95' , kps.heal.lowestInRaid  },
-        {spells.renew, 'player.hpIncoming < 0.95 and not player.hasBuff(spells.renew)' , "player" },
+        {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.70' , kps.heal.lowestTankInRaid},
+        {spells.holyWordSerenity, 'player.hp < 0.70' , "player"},
+        {spells.renew, 'heal.lowestTankInRaid.hpIncoming < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
+        {spells.circleOfHealing, 'heal.lowestInRaid.hpIncoming < 0.90' , kps.heal.lowestInRaid  },
+        {spells.renew, 'player.hpIncoming < 0.90 and not player.hasBuff(spells.renew)' , "player" },
         {spells.renew, 'mouseover.isHealable and mouseover.hpIncoming < 0.95 and not mouseover.hasBuff(spells.renew)' , "mouseover" },
         {spells.holyNova, 'heal.countLossInDistance(0.90,10) >= 3' , "target" },
         {spells.renew, 'heal.lowestUnitInRaid.hpIncoming < 0.90 and not heal.lowestUnitInRaid.hasBuff(spells.renew)' , kps.heal.lowestUnitInRaid, "RENEW_LOWEST" },

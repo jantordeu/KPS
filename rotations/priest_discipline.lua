@@ -127,7 +127,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.powerWordShield, 'not player.hasMyBuff(spells.atonement) and player.hp < 0.90 and not player.hasDebuff(spells.weakenedSoul)' , "player" , "powerWordShield_player" },
     -- RADIANCE
     {{"nested"}, 'kps.multiTarget' , {
-        {spells.overchargeMana , 'spells.powerWordRadiance.charges > 0 and spells.schism.cooldown < 9 and heal.countLossInRange(0.85)*2 > heal.countInRange' },
+        --{spells.overchargeMana , 'spells.powerWordRadiance.charges > 0 and spells.schism.cooldown < 9 and heal.countLossInRange(0.85)*2 > heal.countInRange' },
         {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.85) >= 3 and not heal.lowestTankInRaid.hasMyBuff(spells.atonement) and not heal.lowestTankInRaid.isUnit("player") and not spells.powerWordRadiance.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "radiance_tank" },
         {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.85) >= 3 and not player.hasMyBuff(spells.atonement) and not spells.powerWordRadiance.isRecastAt("player")' , "player" , "radiance_player" },
         {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.85) >= 3 and not heal.hasNotBuffAtonement.isUnit("player") and not spells.powerWordRadiance.isRecastAt("heal.hasNotBuffAtonement.unit")' , kps.heal.hasNotBuffAtonement , "radiance_hasNotBuffAtonement" },
