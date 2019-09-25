@@ -711,16 +711,20 @@ print("|cffff8000NotBuffAtonementCount_90:|cffffffff", kps["env"].heal.hasNotBuf
 --    print("unitID",unitID,"name",name)
 --end
 
+--local mindFlay =  kps.spells.priest.mindFlay
+--print("mindFlayCD:",mindFlay.cooldown, "mindFlayCDtotal:",mindFlay.cooldownTotal)
 --local mindSear =  kps.spells.priest.mindSear
 --print("left:",mindSear.castTimeLeft("player"),"cd:",mindSear.cooldown, "cdtotal:",mindSear.cooldownTotal)
 --local mindBlast =  kps.spells.priest.mindBlast
 --print("left:",mindBlast.castTimeLeft("player"),"cd:",mindBlast.cooldown, "cdtotal:",mindBlast.cooldownTotal)
---print(GetSpellCooldown(61304))
+
 
 --local voidEruption = kps.spells.priest.voidEruption
 --local voidBolt = kps.spells.priest.voidBolt
 --print("voidEruptionusable:", voidEruption.isUsable)
 --print("voidBoltusable:", voidBolt.isUsable)
+--print("voidBoltusable:", voidBolt.isUsable)
+--print("voidBoltCooldown:", voidBolt.cooldown)
 
 --print("|cffff8000averageHeal:|cffffffff", kps["env"].heal.averageHealthRaid)
 --print("|cffff8000incomingHeal:|cffffffff", kps["env"].heal.incomingHealthRaid)
