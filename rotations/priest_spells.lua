@@ -280,4 +280,6 @@ kps.spells.priest.refreshment = kps.Spell.fromId(296197)
 kps.spells.priest.theWellOfExistence = kps.Spell.fromId(296138)
 -- "Overcharge Mana" -- Overcharge your mana for 10 sec, causing each spell you cast to increase your healing by 3%, stacking.
 kps.spells.priest.overchargeMana = kps.Spell.fromId(296072)
+-- "The Unbound Force" -- 
+kps.spells.priest.theUnboundForce = kps.Spell.fromId(298452)
 

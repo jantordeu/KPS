@@ -73,11 +73,11 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.layOnHands, 'player.hp < 0.40' },
 
     -- "Bouclier du vengeur" -- "Avenger's Shield" -- Augmente de 20% les effets de votre prochain Bouclier du vertueux. -- dégâts du Sacré, avant de rebondir sur 2 ennemis proches supplémentaires.
-    {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and not player.hasBuff(spells.avengersShield) and spells.shieldOfTheRighteous.charges > 0' , "target" , "avengersShield_isUsable" },
+    {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and not player.hasBuff(spells.avengersShield)' , "target" , "avengersShield_isUsable" },
     {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and target.isCasting' , "target" , "avengersShield_casting" },
     -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage - player.incomingHeal > 0 and player.hp < 0.65' , "target" , "shieldOfTheRighteous_incomingDamage"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage - player.incomingHeal > 0 and spells.shieldOfTheRighteous.charges >= 2' , "target" , "shieldOfTheRighteous_charges"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and player.hp < 0.65' , "target" , "shieldOfTheRighteous_incomingDamage"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and spells.shieldOfTheRighteous.charges >= 2' , "target" , "shieldOfTheRighteous_charges"},
 
     {spells.judgment, 'target.isAttackable and target.distance <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
     {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distance <= 30 and spells.judgment.charges == 2' , "target" },

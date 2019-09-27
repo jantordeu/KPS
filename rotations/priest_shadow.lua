@@ -86,35 +86,44 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
     {spells.concentratedFlame, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
-    {spells.memoryOfLucidDreams, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17 and player.insanity < 61 and player.insanity > 39' , env.damageTarget },
+    {spells.memoryOfLucidDreams, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 19 and player.insanity > 39' , env.damageTarget },
+    -- The Unbound Force -- causing shards of Azerite to strike your target for [(341 * (7.06061) + 341)] Fire damage over 2 sec. This damage is increased by 300% if it critically strikes
+    {spells.theUnboundForce, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 15' , env.damageTarget },
 
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
-    {{"macro"}, 'not player.isMoving and player.useTrinket(0) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17' , "/use 13"},
-    {{"macro"}, 'not player.isMoving and player.useTrinket(1) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 14' , "/use 14" },
+    {{"macro"}, 'not player.isMoving and player.useTrinket(0) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 19' , "/use 13"},
+    {{"macro"}, 'not player.isMoving and player.useTrinket(1) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 15' , "/use 14" },
 
-    {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity >= 60' , env.damageTarget , "voidEruption_60" },
-    {spells.voidEruption, 'not player.isMoving and not player.hasTalent(7,1) and player.insanity >= 90' , env.damageTarget , "voidEruption_90"  },
-    {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity <= 60', env.damageTarget },
+    {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity > 60 and spells.mindBlast.cooldown == 0' , env.damageTarget , "voidEruption_60" },
+    {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity > 70' , env.damageTarget , "voidEruption_60" },
+    {spells.voidEruption, 'not player.isMoving and not player.hasTalent(7,1) and player.insanity > 90' , env.damageTarget , "voidEruption_90"  },
+    {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity < 60', env.damageTarget },
+    
+    {{"nested"}, 'not player.hasBuff(spells.voidForm)',{
+        {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
+        {spells.darkVoid, 'kps.multiTarget and player.hasTalent(3,3) and not player.hasBuff(spells.voidForm) and not player.isMoving' , env.damageTarget , "darkVoid" },
+        {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8' , "target" },
+        {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
+        {spells.mindBlast, 'not player.isMoving and player.insanity < 60' , env.damageTarget , "mindBlast_not_voidForm"},
+    }},
 
     --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
     {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
+    {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.voidForm)' , env.damageTarget , "mindBlast_voidForm"},
 
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20' , "target" },    
-    {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17' , env.damageTarget },
+    {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 19' , env.damageTarget },
     {{"macro"}, 'spells.shadowCrash.cooldown == 0 and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..ShadowCrash },
     {{"macro"}, 'spells.shadowCrash.cooldown == 0 and mouseover.inCombat and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..ShadowCrash },
-
-    {spells.darkVoid, 'kps.multiTarget and player.hasTalent(3,3) and not player.hasBuff(spells.voidForm) and not player.isMoving' , env.damageTarget , "darkVoid" },
 
     --{{spells.vampiricTouch,spells.shadowWordPain}, 'not player.isMoving and not player.hasTalent(3,2) and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and target.myDebuffDuration(spells.shadowWordPain) < 4.8' , "target" },
     {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8' , "target" },
     {spells.shadowWordPain, 'player.isMoving and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 16.8' , "target" },
 
-    {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.memoryOfLucidDreams)' , env.damageTarget },
-    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 5' , env.damageTarget },
     {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget },
+    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 5' , env.damageTarget },
 
     --{{spells.vampiricTouch,spells.shadowWordPain}, 'not player.isMoving and not player.hasTalent(3,2) and focus.isAttackable and focus.myDebuffDuration(spells.vampiricTouch) < 6.3 and focus.myDebuffDuration(spells.shadowWordPain) < 4.8' , "focus" },
     {spells.vampiricTouch, 'focus.isAttackable and not player.isMoving and focus.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("focus")' , "focus"  },
@@ -127,7 +136,6 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- Pandemic allow DoTs to be refreshed upto 30% -- myDebuffDurationMax(spells.shadowWordPain) == 20.8 -- duration(16) + 30% (4.8) -- 70% (11.2)
     {spells.shadowWordPain, 'player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 16.8' , "mouseover" },
 
-    {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
     {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 3' , env.damageTarget },
     --{spells.mindSear, 'kps.multiTarget and not player.isMoving and player.hasBuff(spells.thoughtHarvester)' , env.damageTarget },
     {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
