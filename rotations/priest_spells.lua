@@ -283,3 +283,11 @@ kps.spells.priest.overchargeMana = kps.Spell.fromId(296072)
 -- "The Unbound Force" -- 
 kps.spells.priest.theUnboundForce = kps.Spell.fromId(298452)
 
+
+-- TRINKET
+-- "Shiver Venom Relic" ItemID 168905 
+-- Equip: Your damaging abilities have a high chance to apply Shiver Venom to your target, dealing 1850 Nature damage over 20 seconds, and stacking up to 5 times.
+-- Use: Freeze the Shiver Venom on your target, consuming it to deal [3081 * (1 + Versatility)] Frost damage per stack to all nearby enemies. (1 Min Cooldown)
+kps.spells.priest.shiverVenom = kps.Spell.fromId(301624)
+
+

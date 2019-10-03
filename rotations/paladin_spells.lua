@@ -277,3 +277,5 @@ kps.spells.paladin.glimmerOfLight = kps.Spell.fromId(287280)
 kps.spells.paladin.concentratedFlame = kps.Spell.fromId(295373)
 -- "Memory of Lucid Dreams"
 kps.spells.paladin.memoryOfLucidDreams = kps.Spell.fromId(298357)
+-- "Aegis of the Deep" -- he elements protect you, reducing the damage you take from each attack by 4112 for 15 sec.
+kps.spells.paladin.aegisOfTheDeep = kps.Spell.fromId(298168)
