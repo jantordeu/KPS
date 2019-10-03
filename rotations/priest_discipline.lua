@@ -232,6 +232,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.shadowMend, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.65) >= 1 and not heal.hasNotBuffAtonement.isUnit("player") and not spells.shadowMend.isRecastAt(heal.hasNotBuffAtonement.unit)' , kps.heal.hasNotBuffAtonement , "shadowMend_hasNotBuffAtonement" },    
     {spells.powerWordShield, 'heal.hasNotBuffAtonementCount(0.65) >= 1 and not heal.hasNotBuffAtonement.hasDebuff(spells.weakenedSoul) and not heal.hasNotBuffAtonement.isUnit("player")' , kps.heal.hasNotBuffAtonement , "powerWordShield_hasNotBuffAtonement" },
 
+    {spells.holyNova, 'player.isMoving and heal.countLossInDistance(0.85,10) >= 3' },
     {spells.smite, 'not player.isMoving' , env.damageTarget },
 
 }
