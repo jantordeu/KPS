@@ -142,7 +142,7 @@ kps.spells.paladin.holyPrism = kps.Spell.fromId(114165)
 kps.spells.paladin.holyRitual = kps.Spell.fromId(199422)
 kps.spells.paladin.holyShield = kps.Spell.fromId(152261)
 kps.spells.paladin.holyShock = kps.Spell.fromId(20473)
-kps.spells.paladin.infusionOfLight = kps.Spell.fromId(53576)
+kps.spells.paladin.infusionOfLight = kps.Spell.fromId(54149)
 kps.spells.paladin.inquisition = kps.Spell.fromId(84963)
 kps.spells.paladin.inspiringBeacon = kps.Spell.fromId(273130)
 kps.spells.paladin.inspiringVanguard = kps.Spell.fromId(279387)
@@ -272,10 +272,17 @@ kps.spells.paladin.selflessHealer = kps.Spell.fromId(114250)
 -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.  When you Holy Shock, all targets with Glimmer of Light are damaged for 6 or healed for 6.
 kps.spells.paladin.glimmerOfLight = kps.Spell.fromId(287280)
 
--- AZERITE ESSENCE
+
+-- AZERITE ESSENCE-- "Aegis of the Deep" -- he elements protect you, reducing the damage you take from each attack by 4112 for 15 sec.
+kps.spells.paladin.aegisOfTheDeep = kps.Spell.fromId(298168)
 -- "Concentrated Flame" -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
 kps.spells.paladin.concentratedFlame = kps.Spell.fromId(295373)
--- "Memory of Lucid Dreams"
+-- "Memory of Lucid Dreams" -- Increasing your [Mana][Energy][Maelstrom] generation rate by 100% and your Leech by 0 for 15 sec.
 kps.spells.paladin.memoryOfLucidDreams = kps.Spell.fromId(298357)
--- "Aegis of the Deep" -- he elements protect you, reducing the damage you take from each attack by 4112 for 15 sec.
-kps.spells.paladin.aegisOfTheDeep = kps.Spell.fromId(298168)
+-- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
+kps.spells.paladin.refreshment = kps.Spell.fromId(296197)
+kps.spells.paladin.theWellOfExistence = kps.Spell.fromId(296138)
+-- "Overcharge Mana" -- Overcharge your mana for 10 sec, causing each spell you cast to increase your healing by 3%, stacking.
+kps.spells.paladin.overchargeMana = kps.Spell.fromId(296072)
+-- "The Unbound Force" -- 
+kps.spells.paladin.theUnboundForce = kps.Spell.fromId(298452)
