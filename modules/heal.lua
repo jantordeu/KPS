@@ -547,6 +547,14 @@ kps.RaidStatus.prototype.hasNotBuffRenew = kps.utils.cachedValue(function()
 end)
 
 --[[[
+@function `heal.hasNotBuffGlimmer` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
+]]--
+
+kps.RaidStatus.prototype.hasNotBuffGlimmer = kps.utils.cachedValue(function()
+    return unitHasNotBuff(kps.spells.paladin.glimmerOfLight)
+end)
+
+--[[[
 @function `heal.hasBuffAtonementCount` - e.g. heal.hasBuffAtonementCount(0.85) > 3
 ]]--
 

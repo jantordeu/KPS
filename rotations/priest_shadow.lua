@@ -91,8 +91,9 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.theUnboundForce, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 15' , env.damageTarget },
 
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
-    {{"macro"}, 'not player.isMoving and player.useTrinket(0) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17' , "/use 13"},
-    {{"macro"}, 'not player.isMoving and player.useTrinket(1) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 15' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(0) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17' , "/use 13"},
+    {{"macro"}, 'player.hasTrinket(1) == 167555 and player.useTrinket(1) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 15' , "/use 14" },
+    {{"macro"}, 'player.hasTrinket(1) == 168905 and player.useTrinket(1) and player.hasBuff(spells.voidForm) and target.hasDebuff(spells.shiverVenom)' , "/use 14" },
 
     {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity > 60 and spells.mindBlast.cooldown == 0' , env.damageTarget , "voidEruption_60" },
     {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity > 70' , env.damageTarget , "voidEruption_60" },

@@ -41,8 +41,9 @@ local GetTime = GetTime
 local unitExclude = {}
 
 kps.events.register("UI_ERROR_MESSAGE", function (arg1, arg2)
-    if arg2 == SPELL_FAILED_LINE_OF_SIGHT and UnitAffectingCombat("player") then
-        -- 50 / Cible hors du champ de vision
+    if arg1 == 51 then -- arg2 == SPELL_FAILED_LINE_OF_SIGHT
+        -- 51 / Cible hors du champ de vision
+        if kps.lastTargetGUID == nil then kps.lastTargetGUID = UnitGUID("target") end
         unitExclude[kps.lastTargetGUID] = GetTime()
     end
 end)

@@ -19,6 +19,9 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
     
+    -- "Hand of Reckoning" -- taunt
+    {spells.handOfReckoning, 'kps.taunt and not player.isTarget' , "target" , "taunt" },
+    
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
 
@@ -39,9 +42,6 @@ kps.rotations.register("PALADIN","PROTECTION",
         {spells.rebuke, 'focus.isCasting and focus.isInterruptable' , "focus" },
     }},
     
-    -- "Hand of Reckoning" -- taunt
-    {spells.handOfReckoning, 'kps.taunt and not player.isTarget' , "target" , "taunt" },
-    
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
@@ -50,8 +50,10 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
     {spells.avengingWrath, 'player.incomingDamage > player.incomingHeal and player.hp < 0.65' },
     -- "Main du protecteur" talent replace "Lumière du protecteur"
-    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.72' },
-    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.72' },
+    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.65' },
+    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.65' },
+    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.80 and player.hasBuff(spells.avengersShield)' },
+    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.80 and player.hasBuff(spells.avengersShield)' },
     
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
@@ -74,12 +76,14 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.layOnHands, 'player.hp < 0.40' },
 
     -- "Bouclier du vengeur" -- "Avenger's Shield" -- Augmente de 20% les effets de votre prochain Bouclier du vertueux. -- dégâts du Sacré, avant de rebondir sur 2 ennemis proches supplémentaires.
-    {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and not player.hasBuff(spells.avengersShield) and not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "avengersShield_isUsable" },
+    {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and not player.hasBuff(spells.avengersValor) and not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "avengersShield_isUsable" },
     {spells.avengersShield, 'target.distance <= 10 and spells.avengersShield.isUsable and target.isCasting' , "target" , "avengersShield_casting" },
     -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and spells.shieldOfTheRighteous.charges == 3 and player.hasBuff(spells.avengersShield)' , "target" , "shieldOfTheRighteous_charges"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and spells.shieldOfTheRighteous.charges == 3 ' , "target" , "shieldOfTheRighteous_charges_3"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and player.hp < 0.90 and player.hasBuff(spells.avengersValor) and spells.shieldOfTheRighteous.charges == 2   ' , "target" , "shieldOfTheRighteous_charges_2"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and player.hp < 0.80 and spells.shieldOfTheRighteous.charges == 2 ' , "target" , "shieldOfTheRighteous_charges"},
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and player.hp < 0.65' , "target" , "shieldOfTheRighteous_incomingDamage"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and spells.shieldOfTheRighteous.charges >= 2' , "target" , "shieldOfTheRighteous_charges"},
+
 
     {spells.judgment, 'target.isAttackable and target.distance <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
     {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distance <= 30 and spells.judgment.charges == 2' , "target" },
@@ -90,7 +94,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Hammer of the Righteous" -- "Marteau du vertueux" -- inflige (27% of Attack power)% points de dégâts physiques. -- If you're standing in your Consecration, it also causes a wave of light that hits all nearby enemies for light Holy damage.
     {spells.hammerOfTheRighteous, 'not player.hasTalent(1,3) and player.hasBuff(spells.consecration) and target.distance <= 10', "target" , "hammerOfTheRighteous" },
 
-    {spells.flashOfLight, 'not player.isMoving and not player.isInGroup and player.hp < 0.72 and target.distance > 10', 'player'},
+    {spells.flashOfLight, 'not player.isMoving and not player.isInGroup and player.hp < 0.40 and target.distance > 10', 'player'},
 
  }
 ,"paladin_protection_bfa")

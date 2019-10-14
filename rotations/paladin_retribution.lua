@@ -73,7 +73,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.concentratedFlame, 'target.isAttackable and target.distance <= 30 and player.holyPower >= 3' , "target" },
     {spells.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath)' , "target" },
    
-    {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 3 and player.myBuffDuration(spells.inquisition) <= 20' , "target" , "inquisition" },
+    {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 3 and player.myBuffDuration(spells.inquisition) <= 12' , "target" , "inquisition" },
     {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.distance <= 10' },
     {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(7,1) and target.distance <= 10' },
     {spells.crusade, 'kps.cooldowns and player.hasTalent(7,2) and player.holyPower >= 3 and target.distance <= 10' },

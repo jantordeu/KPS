@@ -553,7 +553,7 @@ end
 ]]--
 function Unit.immuneDamage(self)
     for _,spell in pairs(kps.spells.immuneDamage) do
-        if self.hasBuff(spell) then return true end
+        if self.hasDebuff(spell) then return true end
     end
     return false
 end

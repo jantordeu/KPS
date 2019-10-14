@@ -10,13 +10,19 @@ local env = kps.env.paladin
 kps.rotations.register("PALADIN","HOLY",
 {
 
+    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
+    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
+    {spells.layOnHands, 'player.hp < 0.30', "player" },
+
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec. during that time the caster also cannot attack or use spells
     {spells.divineProtection, 'spells.blessingOfSacrifice.lastCasted(4) and not player.hasBuff(spells.divineShield)' , "player" },
     {spells.divineProtection, 'player.hp < 0.30 and not player.hasBuff(spells.divineShield)' , "player" },
+    {spells.divineProtection, 'player.isTarget and target.isRaidBoss' , "player" },
 
     -- "Bouclier divin" ""Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
+    {spells.divineShield, 'spells.blessingOfSacrifice.lastCasted(4) and not player.hasBuff(spells.divineProtection)' , "player" },
     {spells.divineShield, 'player.hp < 0.30' , "player" },
-    {spells.divineShield, 'player.isTarget and target.isRaidBoss' , "player" },
+    {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid },
 
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
@@ -29,10 +35,6 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.everyManForHimself, 'player.isStun' },
     -- "Pierre de soins" 5512
     {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" },    
-    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
-    {spells.layOnHands, 'player.hp < 0.30', "player" },
-    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
-    {spells.layOnHands, 'heal.lowestInRaid.hp < 0.30', kps.heal.lowestInRaid },
 
     -- "Blessing of Sacrifice"  -- Blessing of Sacrifice can be dangerous to your own life if used without a damage reduction cooldown such as Divine Protection or Divine Shield 
     {spells.blessingOfSacrifice, 'heal.lowestTankInRaid.hp < 0.40 and not heal.lowestTankInRaid.isUnit("player") and player.hp > 0.90 and spells.divineProtection.cooldown < kps.gcd' , kps.heal.lowestTankInRaid },
@@ -40,14 +42,14 @@ kps.rotations.register("PALADIN","HOLY",
 
     -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection
     -- "Blessing of Protection" -- can be used to clear harmful physical damage debuffs and bleeds from the target.
-    {spells.blessingOfProtection, 'player.hp < 0.30' , kps.heal.lowestUnitInRaid },
     {spells.blessingOfProtection, 'heal.lowestUnitInRaid.hp < 0.30' , kps.heal.lowestUnitInRaid },
+    {spells.blessingOfProtection, 'player.hp < 0.30' , kps.heal.lowestUnitInRaid },
 
-    {spells.cleanse, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
-    {{"nested"},'kps.cooldowns', {
+    {{"nested"},'kps.cooldowns', {    
+        {spells.cleanse, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
         {spells.cleanse, 'player.isDispellable("Magic")' , "player" },
-        {spells.cleanse, 'heal.lowestTankInRaid.isDispellable("Magic")' , kps.heal.lowestTankInRaid},
-        {spells.cleanse, 'heal.lowestInRaid.isDispellable("Magic")' , kps.heal.lowestInRaid},
+        {spells.cleanse, 'heal.lowestTankInRaid.isDispellable("Magic")' , kps.heal.lowestTankInRaid },
+        {spells.cleanse, 'heal.lowestInRaid.isDispellable("Magic")' , kps.heal.lowestInRaid },
         {spells.cleanse, 'heal.isMagicDispellable' , kps.heal.isMagicDispellable , "DISPEL" },
     }},
     -- Interrupt
@@ -77,31 +79,25 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
     -- "Breaking Dawn" -- AZERITE -- Increases the healing done by Light of Dawn by 483 and its range to 40 yards.
-    {spells.lightOfDawn, 'heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
-    {spells.lightOfDawn, 'heal.countLossInRange(0.80) > 2 and heal.countLossInRange(0.90) > 4' },
-    {spells.lightOfDawn, 'heal.countLossInRange(0.80) > 3' },
+    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
+    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and heal.countLossInRange(0.90) > 4' },
+    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.80) > 3' },
 
     -- AZERITE
     -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
-    {spells.refreshment, 'true' , kps.heal.lowestInRaid },
+    {spells.refreshment, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
     {spells.overchargeMana, 'heal.countLossInRange(0.80) > 2' },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     {spells.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid },
     
     -- APPLY MANUAL "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
-
-    -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.
-    -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid },
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid },
-    {spells.holyShock, 'heal.lowestUnitInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestUnitInRaid.hp < 0.90' , kps.heal.lowestUnitInRaid },
-    {spells.holyShock, 'true' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'mouseover.isHealable and mouseover.hp < 0.55' , "mouseover" },
 
     -- "Vengeur sacré" --"Holy Avenger" -- Increases your haste by 30% and your Holy Shock healing by 30% for 20 sec.
-    {spells.holyAvenger, 'player.hasTalent(5,3) and heal.lowestTankInRaid.hp < 0.65' },
-    {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80) > 3' },
-    {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
+    {spells.holyAvenger, 'player.hasTalent(5,3) and heal.lowestInRaid.hp < 0.65' },
+    {spells.holyAvenger, 'player.hasTalent(6,1) and heal.countLossInRange(0.80) > 3' },
+    {spells.holyAvenger, 'player.hasTalent(6,1) and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
     -- "Courroux vengeur" --"Avenging Wrath"  -- Damage, healing, and critical strike chance increased by 20%.
     {spells.avengingWrath, 'player.hasTalent(6,1) and heal.lowestTankInRaid.hp < 0.65' },
     {spells.avengingWrath, 'player.hasTalent(6,1) and heal.countLossInRange(0.80) > 3' },
@@ -110,30 +106,56 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.lowestTankInRaid.hp < 0.65' },
     {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 3' },
     {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
+    
+    -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
+    -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana. 
+    {{"nested"}, 'player.hasBuff(spells.infusionOfLight) and not player.isMoving' ,{
+    {spells.flashOfLight, 'player.hp < 0.65' , "player" , "FLASH_PLAYER"  },
+    {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.65 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
+    {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
+    {spells.holyLight, 'heal.lowestInRaid.hpIncoming < 0.90 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest" },
+    {spells.holyLight, 'heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
+    }},
 
-    -- "Prisme sacré" -- "Holy Prism" -- deals (75% of Spell power) Holy damage and radiates (50% of Spell power) healing to 5 allies within 15 yards. it heals for (100% of Spell power) and radiates (45% of Spell power) Holy damage to 5 enemies within 15 yards.
-    --{spells.holyPrism, 'player.hasTalent(5,2) and heal.countLossInRange(0.90) > 2 and target.isAttackable and targettarget.isFriend and targettarget.hp < 0.90' , "targettarget" },
+    -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.
+    -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally
+    {spells.holyShock, 'player.hp < 0.55' , "player" },
+    {spells.holyShock, 'heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid },
+
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid },
+    {spells.holyShock, 'heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < 0.90 and not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'heal.hasNotBuffGlimmer.hp < 0.90 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "GLIMMER" },
+
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.85' , kps.heal.lowestTankInRaid },
+    {spells.holyShock, 'player.hp < 0.85' , "player" },
+    {spells.holyShock, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
+
+    {spells.holyShock, 'not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid },
+    {spells.holyShock, 'not player.hasBuff(spells.glimmerOfLight)' , "player" },
+    {spells.holyShock, 'not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "GLIMMER" },
 
     -- "Jugement de lumière" -- permet aux 25 prochaines attaques réussies contre la cible de rendre (5% of Spell power) points de vie à l’attaquant.
-    {spells.judgment, 'target.isAttackable' , "target" },    
+    {spells.judgment, 'player.hasTalent(5,1) and target.isAttackable' , "target" },
+    -- "Puissance du croisé -- Frappe du croisé diminue le temps de recharge de Horion sacré et de Lumière de l’aube de 1.5 s.
+    {spells.crusaderStrike, 'player.hasTalent(1,1) and spells.holyShock.cooldown > 0 and heal.lowestInRaid.hp > 0.55 and target.isAttackable and target.distance <= 10' , "target" },
 
-    {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestTankInRaid.hp < 0.80 and player.hp > 0.90 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid },
-    {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestUnitInRaid.hp < 0.80 and player.hp > 0.90 and not heal.lowestUnitInRaid.isUnit("player")' , kps.heal.lowestUnitInRaid },
-
-    -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
-    -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana.     
+    {spells.lightOfTheMartyr, 'heal.lowestTankInRaid.hp < 0.80 and player.hp > 0.90 and not heal.lowestTankInRaid.isUnit("player") and not spells.lightOfTheMartyr.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "MARTYR_tank"},
+    {spells.lightOfTheMartyr, 'heal.lowestUnitInRaid.hp < 0.80 and player.hp > 0.90 and not heal.lowestUnitInRaid.isUnit("player") and not spells.lightOfTheMartyr.isRecastAt(heal.lowestUnitInRaid.unit)' , kps.heal.lowestUnitInRaid , "MARTYR_lowest"},
     {spells.flashOfLight, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" , "flashOfLight_mouseover" },        
     {spells.holyLight, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.90' , "mouseover" , "holyLight_mouseover" },
-
-    {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.65' , "player" , "FLASH_PLAYER"  },
-    {spells.flashOfLight, 'not player.isMoving and heal.lowestUnitInRaid.hp < 0.65 and heal.lowestUnitInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestUnitInRaid , "FLASH_LOWEST" },
+    
+    {spells.flashOfLight, 'not player.isMoving and player.hp < 0.65' , "player" , "FLASH_PLAYER"  },
+    {spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hp < 0.65 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
     {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
-    {spells.holyLight, 'not player.isMoving and heal.lowestUnitInRaid.hpIncoming < 0.90 and heal.lowestUnitInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestUnitInRaid , "heal_lowest" },
+    {spells.holyLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.90 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest" },
     {spells.holyLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
 
     -- Damage
+    {spells.judgment, 'target.isAttackable' , "target" },    
+    {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10' , "target" },
+    {spells.holyShock, 'target.isAttackable' , "target" },
     {spells.consecration, 'not player.isMoving and target.isAttackable and target.distance <= 10' },
-    {spells.crusaderStrike, 'target.isAttackable and target.isAttackable and target.distance <= 10' , "target" },
 
     --{{"macro"}, 'true' , "/startattack" },
 
