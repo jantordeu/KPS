@@ -82,7 +82,7 @@ end
 -- name, text, texture, startTimeMS, endTimeMS, isTradeSkill, notInterruptible = UnitChannelInfo("unit")
 function Unit.isInterruptable(self)
     if UnitCanAttack("player", self.unit) == false then return false end
-    if UnitIsEnemy("player",self.unit) == false then return false end
+    --if UnitIsEnemy("player",self.unit) == false then return false end
     local targetSpell, _, _, _, _, _, _, spellInterruptable,_ = UnitCastingInfo(self.unit)
     local targetChannel, _, _, _, _, _, channelInterruptable = UnitChannelInfo(self.unit)
     -- TODO: Blacklisted spells?

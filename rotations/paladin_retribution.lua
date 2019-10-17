@@ -30,7 +30,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.layOnHands, 'player.hp < 0.40', 'player'},
     {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
     {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
-    {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.65'}, 
+    {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.72'}, 
       
     -- Interrupt
     {{"nested"}, 'kps.interrupt',{
@@ -84,7 +84,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     {spells.executionSentence, 'spells.avengingWrath.cooldown >= 30' , "target" },
     {spells.executionSentence, 'spells.crusade.cooldown >= 30' , "target" },
-    {spells.divineStorm, 'player.plateCount >= 3' , "target" , "divineStorm" },
+    {spells.divineStorm, 'player.plateCount >= 2' , "target" , "divineStorm" },
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
