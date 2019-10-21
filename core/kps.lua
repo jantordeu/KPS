@@ -114,13 +114,11 @@ hooksecurefunc("UseAction", function(...)
             end
         end
         if stype == "item" then
-            kps.useItem(id)
+            priorityAction = kps.useItem(id)
         end
         if stype == "macro" then
             local macroText = select(3, GetMacroInfo(id))
-            if string.find(macroText,"kps") == nil then
-                priorityMacro = macroText
-            end
+            priorityMacro = macroText
         end
     end
 end)

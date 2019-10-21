@@ -190,13 +190,13 @@ local ShouldInterruptCasting = function (interruptTable, countLossInRange)
         local breakpoint = healSpellTable[2]
         local spellName = healSpellTable[1]
         if spellName == spellCasting then
-            if spellName == kps.spells.priest.prayerOfHealing.name and healSpellTable[3] == false and countLossInRange < breakpoint then
+            if spellName == kps.spells.priest.prayerOfHealing.name and healSpellTable[3] == true and countLossInRange < breakpoint then
                 SpellStopCasting()
                 DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING OverHeal "..spellName.."|".." countLossInRange: "..countLossInRange, 0, 0.5, 0.8)
-            elseif spellName == kps.spells.priest.flashHeal.name and healSpellTable[3] == false and targetHealth > breakpoint  then
+            elseif spellName == kps.spells.priest.flashHeal.name and healSpellTable[3] == true and targetHealth > breakpoint  then
                 SpellStopCasting()
                 DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING OverHeal "..spellName.."|"..target.." health: "..targetHealth, 0, 0.5, 0.8)
-            elseif spellName == kps.spells.priest.heal.name and healSpellTable[3] == false and targetHealth > breakpoint then
+            elseif spellName == kps.spells.priest.heal.name and healSpellTable[3] == true and targetHealth > breakpoint then
                 SpellStopCasting()
                 DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING OverHeal "..spellName.."|"..target.." health: "..targetHealth, 0, 0.5, 0.8)
             end

@@ -32,9 +32,9 @@ kps.rotations.register("PRIEST","HOLY",{
     env.holyWordSanctifyMessage,
     env.haloMessage,
     --env.ShouldInterruptCasting,
-    {{"macro"}, 'kps.defensive and spells.heal.shouldInterrupt(0.95,spells.holyWordSerenity.cooldown < kps.gcd)' , "/stopcasting" },
-    {{"macro"}, 'kps.defensive and spells.flashHeal.shouldInterrupt(0.85)' , "/stopcasting" },
-    {{"macro"}, 'kps.defensive and spells.prayerOfHealing.shouldInterrupt(heal.countLossInRange(0.85))' , "/stopcasting" },
+    {{"macro"}, 'spells.heal.shouldInterrupt(0.95, kps.defensive)' , "/stopcasting" },
+    {{"macro"}, 'spells.flashHeal.shouldInterrupt(0.85, kps.defensive)' , "/stopcasting" },
+    {{"macro"}, 'spells.prayerOfHealing.shouldInterrupt(heal.countLossInRange(0.85), kps.defensive)' , "/stopcasting" },
 
     {{"macro"}, 'player.hasBuff(spells.spiritOfRedemption) and heal.lowestInRaid.isUnit("player")' , "/cancelaura "..SpiritOfRedemption },
     {{"nested"}, 'player.hasBuff(spells.spiritOfRedemption) and not heal.lowestInRaid.isUnit("player")' ,{
@@ -51,20 +51,20 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Fade" 586 "Disparition"
     {spells.fade, 'player.isTarget and player.isInGroup' },
     -- "Guardian Spirit" 47788
+    {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'focus.isHealable and focus.hp < 0.30' , "focus" },
     {spells.guardianSpirit, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid},
-    {spells.guardianSpirit, 'player.hp < 0.30' , kps.heal.lowestTankInRaid},
     {spells.guardianSpirit, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
     {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid},
  
     -- "Holy Word: Serenity"
+    {spells.holyWordSerenity, 'player.hp < 0.65' , "player"},
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "POH_holyWordSerenity" },
     {{spells.holyWordSerenity,spells.prayerOfHealing}, 'not player.isMoving and spells.holyWordSerenity.cooldown == 0 and heal.countLossInRange(0.80) > 2 and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid , "POH_holyWordSerenity" },
-    {spells.holyWordSerenity, 'focus.isHealable and focus.hp < 0.55' , "focus" },
-    {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid},
-    {spells.holyWordSerenity, 'player.hp < 0.55' , "player"},
-    {spells.holyWordSerenity, 'mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" },
-    {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid},
+    {spells.holyWordSerenity, 'focus.isHealable and focus.hp < 0.65' , "focus" },
+    {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid},
+    {spells.holyWordSerenity, 'mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" },
+    {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid},
     -- "Surge Of Light"
     {{"nested"}, 'player.hasBuff(spells.surgeOfLight)' , {
         {spells.flashHeal, 'player.buffStacks(spells.surgeOfLight) == 2' , kps.heal.lowestInRaid},

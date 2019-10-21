@@ -71,22 +71,21 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
     {spells.concentratedFlame, 'target.isAttackable and target.distance <= 30 and player.holyPower >= 3' , "target" },
-    {spells.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath)' , "target" },
+    {spells.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath) and player.myBuffDuration(spells.avengingWrath) < 17' , "target" },
    
-    {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 3 and player.myBuffDuration(spells.inquisition) <= 12' , "target" , "inquisition" },
+    {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 2 and player.myBuffDuration(spells.inquisition) <= 12' , "target" , "inquisition" },
     {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.distance <= 10' },
     {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(7,1) and target.distance <= 10' },
-    {spells.crusade, 'kps.cooldowns and player.hasTalent(7,2) and player.holyPower >= 3 and target.distance <= 10' },
+    {spells.crusade, 'kps.cooldowns and player.hasTalent(7,2) and target.distance <= 10' },
 
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distance <= 10' , "target" },
     {spells.hammerOfWrath, 'player.holyPower <= 4 and player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
     {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
-    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distance <= 10' , "target" },
 
-    {spells.executionSentence, 'spells.avengingWrath.cooldown >= 30' , "target" },
-    {spells.executionSentence, 'spells.crusade.cooldown >= 30' , "target" },
     {spells.divineStorm, 'player.plateCount >= 2' , "target" , "divineStorm" },
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
+    {spells.executionSentence, 'true' , "target" , "executionSentence" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
 
     -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.

@@ -28,4 +28,3 @@ function kps.env.paladin.countFriend()
     if not IsInRaid() then return 2 end
     return 4
 end
-

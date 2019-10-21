@@ -20,7 +20,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
     
     -- "Hand of Reckoning" -- taunt
-    {spells.handOfReckoning, 'kps.taunt and not player.isTarget' , "target" , "taunt" },
+    {spells.handOfReckoning, 'kps.taunt and target.isAttackable and not targettarget.isUnit("player")' , "target" , "taunt" },
     
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
@@ -50,10 +50,10 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
     {spells.avengingWrath, 'player.incomingDamage > player.incomingHeal and player.hp < 0.65' },
     -- "Main du protecteur" talent replace "Lumière du protecteur"
-    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.65' },
-    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.65' },
-    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.80 and player.hasBuff(spells.avengersShield)' },
-    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.80 and player.hasBuff(spells.avengersShield)' },
+    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.70' },
+    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.70' },
+    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.80 and player.myBuffDuration(spells.avengersShield) < 9' },
+    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.80 and player.myBuffDuration(spells.avengersShield) < 9' },
     
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
