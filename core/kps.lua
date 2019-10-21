@@ -72,14 +72,21 @@ kps.combatStep = function ()
         local spell, target = activeRotation.getSpell()
         -- Spell Object
         if spell ~= nil and spell.cast ~= nil and not player.isCasting then
-            if prioritySpell ~= nil then
+            if priorityMacro ~= nil then
+                local macro = priorityMacro
+                priorityMacro = nil
+                return macro
+            elseif priorityAction ~= nil then
+                priorityAction()
+                priorityAction = nil
+            elseif prioritySpell ~= nil then
                 if prioritySpell.canBeCastAt("target") then
                     LOG.warn("Priority Spell %s was casted.", prioritySpell)
                     local a, b, c = prioritySpell.cast(target)
                     prioritySpell = nil
                     return a, b, c
                 else
-                    if prioritySpell.cooldown > 2 then prioritySpell = nil end
+                    if prioritySpell.cooldown > 3 then prioritySpell = nil end
                     return spell.cast(target)
                 end
             else
