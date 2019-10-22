@@ -475,7 +475,7 @@ __index = function(t, unit)
         auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, value1,value2,value3 = UnitBuff(unit,i)
         while auraName do
             if auraName == spell.name then
-                return value2
+                return value1
             end
             i = i + 1
             auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, value1,value2,value3 = UnitBuff(unit,i)

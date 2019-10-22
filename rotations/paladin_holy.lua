@@ -85,7 +85,7 @@ kps.rotations.register("PALADIN","HOLY",
 
     -- AZERITE
     -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
-    {spells.refreshment, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    {spells.refreshment, 'player.buffValue(spells.theWellOfExistence) > 0 and heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
     {spells.overchargeMana, 'heal.countLossInRange(0.80) > 2' },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
@@ -107,22 +107,24 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
 
     -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.
-    {spells.holyShock, 'mouseover.isHealable and mouseover.hp < 0.85' , "mouseover" },
+    {spells.holyShock, 'mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" },
     {spells.holyShock, 'player.hp < 0.65' , "player" },
     {spells.holyShock, 'heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid },
     -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid },
-    {spells.holyShock, 'heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < 0.90 and not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid },
-    {spells.holyShock, 'heal.hasNotBuffGlimmer.hp < 0.90 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "GLIMMER" },
+    {spells.holyShock, 'heal.lowestInRaid.hp < 0.90 and not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'heal.lowestUnitInRaid.hp < 0.90 and not heal.lowestUnitInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestUnitInRaid },
+    {spells.holyShock, 'heal.hasNotBuffGlimmer.hp < 0.90 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "GLIMMER_1" },
 
     {spells.holyShock, 'not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid },
     {spells.holyShock, 'not player.hasBuff(spells.glimmerOfLight)' , "player" },
-    {spells.holyShock, 'not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "GLIMMER" },
+    {spells.holyShock, 'not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "GLIMMER_2" },
     
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.85' , kps.heal.lowestTankInRaid },
     {spells.holyShock, 'player.hp < 0.85' , "player" },
     {spells.holyShock, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'heal.lowestUnitInRaid.hp < 0.85' , kps.heal.lowestUnitInRaid },
     
     {spells.holyShock, 'heal.lowestInRaid.hp > 0.95 and target.isAttackable' , "target" },
     

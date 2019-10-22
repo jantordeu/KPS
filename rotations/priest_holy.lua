@@ -129,7 +129,7 @@ kps.rotations.register("PRIEST","HOLY",{
     --AZERITE
     {spells.concentratedFlame, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
-    {spells.refreshment, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    {spells.refreshment, 'player.buffValue(spells.theWellOfExistence) > 0 and heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     {spells.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
