@@ -92,6 +92,16 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid },
     
     -- APPLY MANUAL "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
+    
+    -- Damage    
+    {{"nested"}, 'kps.multiTarget' ,{
+    {spells.holyAvenger, 'player.hasTalent(5,3)' },
+    {spells.avengingWrath, 'player.hasTalent(6,1)' },
+    {spells.judgment, 'target.isAttackable' , "target" },    
+    {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10' , "target" },
+    {spells.holyShock, 'target.isAttackable' , "target" },
+    {spells.consecration, 'not player.isMoving and target.isAttackable and target.distance <= 10' },
+    }},
 
     -- "Vengeur sacré" --"Holy Avenger" -- Increases your haste by 30% and your Holy Shock healing by 30% for 20 sec.
     {spells.holyAvenger, 'player.hasTalent(5,3) and heal.lowestInRaid.hp < 0.65' },
