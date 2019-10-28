@@ -55,13 +55,12 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.blessingOfProtection, 'player.hp < 0.55' , "player"},
 
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" },
     
     -- "Shield of Vengeance" -- Creates a barrier of holy light that absorbs (30 / 100 * Total health) damage for 15 sec.
     {spells.shieldOfVengeance, 'player.incomingDamage > player.incomingHeal and target.distance <= 10'},
-    {spells.shieldOfVengeance, 'player.plateCount >= 3 and target.distance <= 10'},
     
 --    {{spells.judgment,spells.bladeOfJustice}, 'player.timeInCombat < 5 and player.hasTalent(7,3) and spells.avengingWrath.cooldown == 0 and player.holyPower < 3' , "target" },
 --    {{spells.judgment,spells.bladeOfJustice}, 'player.timeInCombat < 5 and player.hasTalent(7,2) and spells.crusade.cooldown == 0 and player.holyPower < 3' , "target" },
@@ -72,9 +71,9 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath) and player.myBuffDuration(spells.avengingWrath) < 17' , "target" },
    
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 2 and player.myBuffDuration(spells.inquisition) <= 12' , "target" , "inquisition" },
-    {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.distance <= 10' },
-    {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,1) and target.distance <= 10' },
-    {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distance <= 10' },
+    {spells.avengingWrath, 'kps.cooldowns and target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.distance <= 10' },
+    {spells.avengingWrath, 'kps.cooldowns and target.isAttackable and player.hasTalent(7,1) and target.distance <= 10' },
+    {spells.crusade, 'kps.cooldowns and target.isAttackable and player.hasTalent(7,2) and target.distance <= 10' },
 
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
     {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distance <= 10' , "target" },

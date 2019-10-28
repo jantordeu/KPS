@@ -11,18 +11,18 @@ kps.rotations.register("PALADIN","HOLY",
 {
 
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
-    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
     {spells.layOnHands, 'player.hp < 0.30', "player" },
+    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
+    
+    -- "Bouclier divin" ""Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
+    {spells.divineShield, 'player.hp < 0.30' , "player" },
+    {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid },
+    {spells.divineShield, 'heal.lowestUnitInRaid.hp < 0.30' , kps.heal.lowestUnitInRaid },
 
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec. during that time the caster also cannot attack or use spells
     {spells.divineProtection, 'spells.blessingOfSacrifice.lastCasted(4) and not player.hasBuff(spells.divineShield)' , "player" },
     {spells.divineProtection, 'player.hp < 0.30 and not player.hasBuff(spells.divineShield)' , "player" },
     {spells.divineProtection, 'player.isTarget and target.isRaidBoss' , "player" },
-
-    -- "Bouclier divin" ""Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
-    {spells.divineShield, 'spells.blessingOfSacrifice.lastCasted(4) and not player.hasBuff(spells.divineProtection)' , "player" },
-    {spells.divineShield, 'player.hp < 0.30' , "player" },
-    {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid },
 
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
@@ -34,7 +34,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" },    
+    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.70' ,"/use item:5512" },    
 
     -- "Blessing of Sacrifice"  -- Blessing of Sacrifice can be dangerous to your own life if used without a damage reduction cooldown such as Divine Protection or Divine Shield 
     {spells.blessingOfSacrifice, 'heal.lowestTankInRaid.hp < 0.40 and not heal.lowestTankInRaid.isUnit("player") and player.hp > 0.90 and spells.divineProtection.cooldown < kps.gcd' , kps.heal.lowestTankInRaid },
@@ -69,9 +69,9 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.beaconOfVirtue, 'player.hasTalent(7,3) and not heal.lowestTankInRaid.hasBuff(spells.beaconOfVirtue) and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid },
 
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
     -- "Bestow Faith" "Don de foi" -- Récupère (150% of Spell power) points de vie à expiration. -- 12 sec cd
     {spells.bestowFaith, 'not heal.lowestTankInRaid.hasBuff(spells.bestowFaith) and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid },    
@@ -131,19 +131,17 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'not player.hasBuff(spells.glimmerOfLight)' , "player" },
     {spells.holyShock, 'not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "GLIMMER_2" },
     
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.85' , kps.heal.lowestTankInRaid },
-    {spells.holyShock, 'player.hp < 0.85' , "player" },
-    {spells.holyShock, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
-    {spells.holyShock, 'heal.lowestUnitInRaid.hp < 0.85' , kps.heal.lowestUnitInRaid },
-    
-    {spells.holyShock, 'heal.lowestInRaid.hp > 0.95 and target.isAttackable' , "target" },
+    {spells.holyShock, 'heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < 0.90' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid },
+    {spells.holyShock, 'player.hp < 0.90' , "player" },
+    {spells.holyShock, 'heal.lowestInRaid.hp > 0.90 and target.isAttackable' , "target" },
     
     -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
     -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana. 
     {{"nested"}, 'player.hasBuff(spells.infusionOfLight) and not player.isMoving' ,{
-    {spells.flashOfLight, 'player.hp < 0.65' , "player" , "FLASH_PLAYER"  },
-    {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.65 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
-    {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
+    {spells.flashOfLight, 'player.hp < 0.55' , "player" , "FLASH_PLAYER"  },
+    {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.55 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
+    {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
     {spells.holyLight, 'heal.lowestInRaid.hpIncoming < 0.90 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest" },
     {spells.holyLight, 'heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
     }},
