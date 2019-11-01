@@ -67,8 +67,9 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.concentratedFlame, 'target.isAttackable and target.distance <= 30 and player.holyPower >= 3' , "target" },
+    {spells.concentratedFlame, 'target.isAttackable and target.distance <= 30' , "target" },
     {spells.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath) and player.myBuffDuration(spells.avengingWrath) < 17' , "target" },
+    {spells.theUnboundForce, 'target.isAttackable and target.distance <= 30' , "target" },
    
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 2 and player.myBuffDuration(spells.inquisition) <= 12' , "target" , "inquisition" },
     {spells.avengingWrath, 'kps.cooldowns and target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.distance <= 10' },
