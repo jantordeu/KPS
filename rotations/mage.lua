@@ -105,11 +105,3 @@ function kps.env.mage.IsAttackable(unit)
     return false
 end
 
-function kps.env.mage.FocusMouseover()
-    if not UnitExists("focus") and not UnitIsUnit("target","mouseover") and UnitIsAttackable("mouseover") and UnitAffectingCombat("mouseover") then
-        return true -- kps.runMacro("/focus mouseover")
-    end
-    return false
-end
-
-

@@ -126,11 +126,6 @@ end
 ------------------------------- SHADOW PRIEST
 --------------------------------------------------------------------------------------------
 
-function kps.env.priest.countFriend()
-    if not IsInRaid() then return 2 end
-    return 4
-end
-
 local MindFlay = kps.spells.priest.mindFlay.name
 local VoidForm = kps.spells.priest.voidForm.name
 local ShadowWordPain = kps.spells.priest.shadowWordPain.name

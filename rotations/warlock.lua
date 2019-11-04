@@ -25,10 +25,3 @@ local function UnitIsAttackable(unit)
     if not kps.env.harmSpell.inRange(unit) then return false end
     return true
 end
-
-function kps.env.warlock.FocusMouseover()
-    if not UnitExists("focus") and not UnitIsUnit("target","mouseover") and UnitIsAttackable("mouseover") and UnitAffectingCombat("mouseover") then
-        return true -- kps.runMacro("/focus mouseover")
-    end
-    return false
-end

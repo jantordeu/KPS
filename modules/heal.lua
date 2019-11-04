@@ -32,9 +32,9 @@ local function updateRaidStatus()
         raidType = "group"
     end
     for i=1,newRaidStatusSize do
-        --if healTargets[i].name ~= nil then
+        if healTargets[i].name ~= nil then
             _raidStatus[_raidStatusIdx][healTargets[i].name] = healTargets[i]
-        --end
+        end
     end
     raidStatus = _raidStatus[_raidStatusIdx]
     raidStatusSize = newRaidStatusSize

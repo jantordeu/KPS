@@ -11,11 +11,12 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
-    {{"macro"}, 'FocusMouseover()' , "/focus mouseover" },
+    {{"macro"}, 'not focus.exists and mouseover.isAttackable and mouseover.inCombat and not mouseover.isUnit("target")' , "/focus mouseover" },
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
     
-    {spells.greaterBlessingOfKings, 'not player.isInGroup and not player.hasBuff(spells.greaterBlessingOfKings)' },
+    {spells.greaterBlessingOfKings, 'not player.isInGroup and not player.hasBuff(spells.greaterBlessingOfKings)' , "player" },
+    {spells.greaterBlessingOfKings, 'player.isInGroup and not heal.lowestTankInRaid.hasBuff(spells.greaterBlessingOfKings)' , kps.heal.lowestTankInRaid },
     
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
@@ -61,12 +62,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     
     -- "Shield of Vengeance" -- Creates a barrier of holy light that absorbs (30 / 100 * Total health) damage for 15 sec.
     {spells.shieldOfVengeance, 'player.incomingDamage > player.incomingHeal and target.distance <= 10'},
-    
---    {{spells.judgment,spells.bladeOfJustice}, 'player.timeInCombat < 5 and player.hasTalent(7,3) and spells.avengingWrath.cooldown == 0 and player.holyPower < 3' , "target" },
---    {{spells.judgment,spells.bladeOfJustice}, 'player.timeInCombat < 5 and player.hasTalent(7,2) and spells.crusade.cooldown == 0 and player.holyPower < 3' , "target" },
 
     -- AZERITE
-    -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
     {spells.concentratedFlame, 'target.isAttackable and target.distance <= 30' , "target" },
     {spells.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath) and player.myBuffDuration(spells.avengingWrath) < 17' , "target" },
     {spells.theUnboundForce, 'target.isAttackable and target.distance <= 30' , "target" },
@@ -77,22 +74,21 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.crusade, 'kps.cooldowns and target.isAttackable and player.hasTalent(7,2) and target.distance <= 10' },
 
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
-    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distance <= 10' , "target" },
-    {spells.hammerOfWrath, 'player.holyPower <= 4 and player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
-    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
-
     {spells.divineStorm, 'player.plateCount >= 2' , "target" , "divineStorm" },
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm" },
     {spells.executionSentence, 'true' , "target" , "executionSentence" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
-
-    -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.
-    -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
-
-    {spells.judgment, 'player.holyPower <= 4 and target.distance <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power 
+    
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distance <= 10' , "target" },
+    {spells.judgment, 'player.holyPower <= 4 and target.distance <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
+    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
+    {spells.hammerOfWrath, 'player.holyPower <= 4 and player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
+    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
     {spells.consecration, 'player.holyPower <= 4 and player.hasTalent(4,2) and target.distance <= 10' }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'player.holyPower <= 4 and target.distance <= 10'}, --Generates 1 Holy Power
 
+    -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.
+    -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
     --{{"macro"}, 'true' , "/startattack" },
 
 }

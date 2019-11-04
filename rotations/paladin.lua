@@ -17,14 +17,13 @@ local function UnitIsAttackable(unit)
     return true
 end
 
-function kps.env.paladin.FocusMouseover()
-    if not UnitExists("focus") and not UnitIsUnit("target","mouseover") and UnitIsAttackable("mouseover") and UnitAffectingCombat("mouseover") then
-        return true -- kps.runMacro("/focus mouseover")
+function kps.env.paladin.damageTarget()
+    if UnitIsAttackable("target") then return "target"
+    elseif UnitIsAttackable("targettarget") then return "targettarget"
+    elseif UnitIsAttackable("focus") then return "focus"
+    elseif UnitIsAttackable("focustarget") then return "focustarget"
+    elseif UnitIsAttackable("mouseovertarget") then return "mouseovertarget"
+    elseif UnitIsAttackable("mouseover") then return "mouseover"
+    else return kps.env.heal.enemyLowest -- kps.env.heal.enemyTarget
     end
-    return false
-end
-
-function kps.env.paladin.countFriend()
-    if not IsInRaid() then return 2 end
-    return 4
 end
