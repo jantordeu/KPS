@@ -41,7 +41,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.blessingOfSacrifice, 'heal.lowestTankInRaid.hp < 0.40 and not heal.lowestTankInRaid.isUnit("player") and player.hp > 0.90 and spells.divineProtection.cooldown < kps.gcd' , kps.heal.lowestTankInRaid },
     -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection -- can be used to clear harmful physical damage debuffs and bleeds from the target.
     {spells.blessingOfProtection, 'heal.lowestUnitInRaid.hp < 0.30' , kps.heal.lowestUnitInRaid },
-    {spells.blessingOfProtection, 'player.hp < 0.30' , kps.heal.lowestUnitInRaid },
+    {spells.blessingOfProtection, 'player.hp < 0.30' , "player" },
 
     {{"nested"},'kps.cooldowns', {    
         {spells.cleanse, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
@@ -91,13 +91,13 @@ kps.rotations.register("PALADIN","HOLY",
     -- APPLY MANUAL "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
     
     -- Damage    
-    {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hp > 0.85' ,{
-    {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hpIncoming < 0.80' , kps.heal.lowestInRaid },
+    {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hpIncoming > 0.85' ,{
+    {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hpIncoming < 0.85' , kps.heal.lowestInRaid },
     {spells.holyAvenger, 'player.hasTalent(5,3)' },
     {spells.avengingWrath, 'player.hasTalent(6,1)' },
-    {spells.judgment, 'target.isAttackable' , "target" },    
+    {spells.judgment,  'true' , env.damageTarget },
+    {spells.holyShock,  'true' , env.damageTarget },
     {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10' , "target" },
-    {spells.holyShock, 'target.isAttackable' , "target" },
     {spells.consecration, 'not player.isMoving and target.isAttackable and target.distance <= 10' },
     }},
 
@@ -133,7 +133,6 @@ kps.rotations.register("PALADIN","HOLY",
     
     {spells.holyShock, 'heal.lowestUnitInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestUnitInRaid.hp < 0.90' , kps.heal.lowestUnitInRaid },
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid },
-    {spells.holyShock, 'heal.lowestInRaid.hp > 0.90 and target.isAttackable' , "target" },
     
     -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
     -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana. 
@@ -165,9 +164,9 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
 
     -- Damage
-    {spells.judgment, 'target.isAttackable' , "target" },    
+    {spells.judgment, 'true' , env.damageTarget },
+    {spells.holyShock, 'true' , env.damageTarget },
     {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10' , "target" },
-    {spells.holyShock, 'target.isAttackable' , "target" },
     {spells.consecration, 'not player.isMoving and target.isAttackable and target.distance <= 10' },
 
     --{{"macro"}, 'true' , "/startattack" },
