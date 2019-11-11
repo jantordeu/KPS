@@ -678,8 +678,8 @@ print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90
 print("|cff1eff00HealTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
 print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
-print("|cffff8000BuffAtonementCount_90:|cffffffff", kps["env"].heal.hasBuffAtonementCount(0.90))
-print("|cffff8000NotBuffAtonementCount_90:|cffffffff", kps["env"].heal.hasNotBuffAtonementCount(0.90))
+--print("|cffff8000BuffAtonementCount_90:|cffffffff", kps["env"].heal.hasBuffAtonementCount(0.90))
+--print("|cffff8000NotBuffAtonementCount_90:|cffffffff", kps["env"].heal.hasNotBuffAtonementCount(0.90))
 
 
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.mindBlast.charges)

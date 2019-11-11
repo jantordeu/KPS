@@ -241,15 +241,11 @@ end)
 
 
 -- UNIT_SPELLCAST_START -- Fired when a unit begins casting a non-instant cast spell, including party/raid members or the player. 
---kps.events.register("UNIT_SPELLCAST_START", function (unit, lineId, spellId)
---    if unit == "player" and kps.castSequence ~= nil then
---        local spellName = select(1, GetSpellInfo(spellId))
---        local spellWhichShouldBeCasted = kps.castSequence[kps.castSequenceIndex]().name
---        if spellName == spellWhichShouldBeCasted then
---            kps.castSequenceIndex = kps.castSequenceIndex + 1
---        end
---    end
---end)
+kps.events.register("UNIT_SPELLCAST_START", function (unit, lineId, spellId)
+   if unit == "player" then
+       kps.lastStartedSpell = select(1, GetSpellInfo(spellId))
+   end
+end)
 
 -- UNIT_SPELLCAST_SUCCEEDED -- Fired when a spell is cast successfully. Event is received even if spell is resisted.
 kps.events.register("UNIT_SPELLCAST_SUCCEEDED", function (unit, lineId, spellId)

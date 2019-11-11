@@ -80,9 +80,9 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
     
     {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distance <= 10' , "target" },
+    {spells.hammerOfWrath, 'player.holyPower <= 4 and player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
     {spells.judgment, 'player.holyPower <= 4 and target.distance <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
     {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
-    {spells.hammerOfWrath, 'player.holyPower <= 4 and player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
     {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distance <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
     {spells.consecration, 'player.holyPower <= 4 and player.hasTalent(4,2) and target.distance <= 10' }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'player.holyPower <= 4 and target.distance <= 10'}, --Generates 1 Holy Power

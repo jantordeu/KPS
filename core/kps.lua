@@ -1,8 +1,8 @@
 
 local LOG=kps.Logger(kps.LogLevel.INFO)
 
-kps.castSequenceIndex = 1
-kps.castSequence = nil
+local castSequenceIndex = 1
+local castSequence = nil
 local castSequenceStartTime = 0
 local castSequenceTarget = 0
 local prioritySpell = nil
@@ -53,17 +53,17 @@ kps.combatStep = function ()
     -- No combat if mounted (except if overriden by config), dead or drinking
     if (player.isMounted and not kps.config.dismountInCombat) or player.isDead or player.isDrinking then return end
 
-    if kps.castSequence ~= nil then
-        if kps.castSequence[kps.castSequenceIndex] ~= nil and (castSequenceStartTime + kps.maxCastSequenceLength > GetTime()) then
-            local spell = kps.castSequence[kps.castSequenceIndex]()
+    if castSequence ~= nil then
+        if castSequence[castSequenceIndex] ~= nil and (castSequenceStartTime + kps.maxCastSequenceLength > GetTime()) then
+            local spell = castSequence[castSequenceIndex]()
             if spell.canBeCastAt(castSequenceTarget) and not player.isCasting then
-                LOG.warn("Cast-Sequence: %s. %s", kps.castSequenceIndex, spell)
-                kps.castSequenceIndex = kps.castSequenceIndex + 1
+                LOG.warn("Cast-Sequence: %s. %s", castSequenceIndex, spell)
+                castSequenceIndex = castSequenceIndex + 1
                 return spell.cast(castSequenceTarget)
             end
         else
-            kps.castSequenceIndex = 0
-            kps.castSequence = nil
+            castSequenceIndex = 0
+            castSequence = nil
         end
     else
         local activeRotation = kps.rotations.getActive()
@@ -77,8 +77,8 @@ kps.combatStep = function ()
                 priorityAction = nil
             elseif prioritySpell ~= nil then
                 if prioritySpell.canBeCastAt("target") then
-                    LOG.warn("Priority Spell %s was casted.", prioritySpell)
                     local action = prioritySpell.cast(target)
+                    LOG.warn("Priority Spell %s was casted.", prioritySpell)
                     prioritySpell = nil
                     return action
                 else
@@ -124,3 +124,4 @@ end)
 
 kps.lastCastedSpell = nil
 kps.lastSentSpell = nil
+kps.lastStartedSpell = nil
