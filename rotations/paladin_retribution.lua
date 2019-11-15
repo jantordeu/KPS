@@ -69,9 +69,11 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.theUnboundForce, 'target.isAttackable and target.distance <= 30' , "target" },
    
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 2 and player.myBuffDuration(spells.inquisition) <= 12' , "target" , "inquisition" },
-    {spells.avengingWrath, 'kps.cooldowns and target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.distance <= 10' },
-    {spells.avengingWrath, 'kps.cooldowns and target.isAttackable and player.hasTalent(7,1) and target.distance <= 10' },
-    {spells.crusade, 'kps.cooldowns and target.isAttackable and player.hasTalent(7,2) and target.distance <= 10' },
+    {{"nested"},'kps.cooldowns', {
+        {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) >= 20 and target.distance <= 10' },
+        {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,1) and target.distance <= 10' },
+        {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distance <= 10' },
+    }},
 
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
     {spells.divineStorm, 'player.plateCount >= 2' , "target" , "divineStorm" },
