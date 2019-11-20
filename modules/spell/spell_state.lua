@@ -175,7 +175,7 @@ end
 ]]--
 local lastCasted = setmetatable({}, {
     __index = function(t, self)
-        local val = function  (duration)
+        local val = function(duration)
             if (GetTime() - self.lastCast) < duration then return true end
             return false
         end

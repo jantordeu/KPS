@@ -111,7 +111,7 @@ __index = function(t, unit)
    return val
 end})
 function Unit.hasMyBuff(self)
-    return hasBuff[self.unit]
+    return hasMyBuff[self.unit]
 end
 
 --[[[

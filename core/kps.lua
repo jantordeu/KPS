@@ -69,7 +69,7 @@ kps.combatStep = function ()
         local activeRotation = kps.rotations.getActive()
         if not activeRotation then return end
         activeRotation.checkTalents()
-        local spell, target = activeRotation.getSpell()
+        local spell, target, message = activeRotation.getSpell()
         -- Spell Object
         if spell ~= nil and spell.cast ~= nil and not player.isCasting then
             if priorityAction ~= nil then
@@ -83,22 +83,22 @@ kps.combatStep = function ()
                     return action
                 else
                     if prioritySpell.cooldown > 3 then prioritySpell = nil end
-                    return spell.cast(target)
+                    return spell.cast(target,message)
                 end
             else
                 LOG.debug("Casting %s for next cast.", spell.name)
-                return spell.cast(target)
+                return spell.cast(target,message)
             end
         end
         -- Cast Sequence Table
         if type(spell) == "table" and spell.cast == nil then
             LOG.debug("Starting Cast-Sequence...")
-            kps.castSequenceIndex = 1
-            kps.castSequence = spell
+            castSequenceIndex = 1
+            castSequence = spell
             castSequenceStartTime = GetTime()
             castSequenceTarget = target
         end
-        -- Macro !
+        -- Macro
         if type(spell) == "string" then
             return spell
         end
