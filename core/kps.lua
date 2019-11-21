@@ -83,11 +83,11 @@ kps.combatStep = function ()
                     return action
                 else
                     if prioritySpell.cooldown > 3 then prioritySpell = nil end
-                    return spell.cast(target,message)
+                    return spell.cast(target)
                 end
             else
                 LOG.debug("Casting %s for next cast.", spell.name)
-                return spell.cast(target,message)
+                return spell.cast(target)
             end
         end
         -- Cast Sequence Table
