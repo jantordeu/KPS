@@ -229,7 +229,7 @@ local function fnParseDefault(spell, condition, target, message)
                 local validCastSequence = true
                 for _,spellCast in ipairs(spell) do
                     --print("spell:",spellCast(), "cast:",spellCast().canBeCastAt(target))
-                    if not spellCast().canBeCastAt(target) then validCastSequence = false end
+                    if not spellCast().canBeCastAt(target) then validCastSequence = false break end
                 end
                 if validCastSequence == true then return spell, target end
             elseif spell.canBeCastAt(target) then
