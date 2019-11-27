@@ -28,11 +28,14 @@ kps.rotations.register("MAGE","FIRE",
    {spells.removeCurse, 'mouseover.isHealable and mouseover.isDispellable("Curse")' , "mouseover" },
    {spells.removeCurse, 'player.isDispellable("Curse")' , "player" },
    {spells.spellsteal, 'target.isStealable' , "target" },
+   {spells.runeOfPower, 'not player.hasBuff(spells.runeOfPower) and not player.isMoving' , "player" },
 
     {{"macro"}, 'player.hasTalent(7,3) and player.hasBuff(spells.runeOfPower) and target.distance <= 5', "/cast [@player] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and player.hasBuff(spells.combustion) and target.distance <= 5', "/cast [@player] "..Meteor },
     {{"macro"}, 'keys.shift and player.hasTalent(7,3) and player.hasBuff(spells.runeOfPower)', "/cast [@cursor] "..Meteor },
     {{"macro"}, 'keys.shift and player.hasTalent(7,3) and player.hasBuff(spells.combustion)', "/cast [@cursor] "..Meteor },
+    
+    {{"macro"}, 'keys.ctrl and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
 
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
@@ -46,31 +49,40 @@ kps.rotations.register("MAGE","FIRE",
        {{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
        {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
      }},
+     
+    -- AZERITE
+    -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
+    {spells.concentratedFlame, 'true' , env.damageTarget },
+    -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
+    {spells.memoryOfLucidDreams, 'player.hasBuff(spells.combustion) ' , env.damageTarget },
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14    
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
-        
+
+    {{"nested"}, 'kps.multiTarget and target.distance <= 10 and target.isAttackable', {
+        {spells.combustion },
+        {{"macro"}, 'keys.ctrl and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
+        {{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast [@player] "..Flamestrike },
+        {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
+        {spells.dragonsBreath, 'true' , "target" },  
+        {spells.livingBomb, 'player.hasTalent(6,3)' , "target" },
+    }},
+    
     {{"nested"}, 'player.hasBuff(spells.combustion)', {
-        {{spells.pyroblast,spells.fireBlast}, 'spells.fireBlast.charges > 0' , "target" },
+        {{spells.pyroblast,spells.fireBlast}, 'spells.fireBlast.cooldown == 0' , "target" },
         {spells.dragonsBreath, 'player.plateCount > 2 and target.distance <= 5 ' , "target" },  
         {{spells.pyroblast,spells.scorch}, 'true', "target" },
     }},
-     
-    {spells.phoenixFlames, 'player.hasTalent(4,3) and spells.phoenixFlames.charges >= 2' , "target" },
-    {{"macro"}, 'keys.ctrl and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
-    {{"macro"}, 'player.plateCount > 2 and player.hasBuff(spells.hotStreak) and target.distance <= 5' , "/cast [@player] "..Flamestrike },
-    
+
+    {{spells.fireball,spells.combustion}, 'not player.isMoving and spells.combustion.cooldown == 0' , "target" }, -- Fireball to generate Heating Up
     {spells.pyroblast, 'player.hasTalent(7,2) and player.hasBuff(spells.pyroclasm)' , "target" },
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
     {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
-  
-    {spells.dragonsBreath, 'player.plateCount > 2 and target.distance <= 5 ' , "target" },  
-    {spells.livingBomb, 'player.hasTalent(6,3) and player.plateCount > 2' , "target" },
     
     {spells.blastWave, 'player.hasTalent(2,3) and not player.hasBuff(spells.combustion) and target.distance <= 5'},
-    {spells.blastWave, 'player.hasTalent(2,3) and player.hasBuff(spells.combustion) and spells.fireBlast.charges == 0 and target.distance <= 5'},
+    {spells.phoenixFlames, 'player.hasTalent(4,3)' , "target" },
 
     {spells.scorch, 'target.hp < 0.30' , "target" },
     {spells.scorch, 'player.isMoving' , "target" },

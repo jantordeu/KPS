@@ -43,6 +43,10 @@ kps.rotations.register("MAGE","FROST",
     -- TRINKETS
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(0)' , "/use 13" },
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(1)' , "/use 14" },
+    
+    -- AZERITE
+    -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
+    {spells.concentratedFlame, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
 
     -- "Slow Fall"
     {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
@@ -62,14 +66,11 @@ kps.rotations.register("MAGE","FROST",
         {{"macro"}, 'not player.isMoving and target.distanceMax <= 10 and spells.blizzard.cooldown == 0', "/cast [@player] "..Blizzard },
     }},
     {{"macro"}, 'not player.isMoving and spells.ringOfFrost.cooldown == 0 and not target.hasMyDebuff(spells.frostNova) and target.isAttackable and target.distanceMax <= 10', "/cast [@player] "..RingOfFrost },
-
-    -- if you have have 5 Mastery: Icicles then you cast Glacial Spike, followed by the Flurry -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
-    {{spells.ebonbolt,spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) == 5 and not player.hasBuff(spells.brainFreeze)' , "target" , "ebonbolt_glacialSpike_flurry_iceLance" },
+    
     -- Cast Flurry If you have 5 stacks of Mastery: Icicles after casting Glacial Spike
-    {{spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) == 5' , "target" , "glacialSpike_flurry_iceLance" },
-    -- cast Glacial Spike when available and only when you have a Brain Freeze 
-    {spells.glacialSpike, 'player.hasTalent(7,3) and player.buffStacks(spells.icicles) == 5 and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike" },
-
+    {{spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) == 5 and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike_flurry_iceLance" },
+    -- if you have have 5 Mastery: Icicles then you cast Glacial Spike, followed by the Flurry -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
+    {spells.ebonbolt, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) == 5 and not player.hasBuff(spells.brainFreeze)' , "target" , "ebonbolt_glacialSpike_flurry_iceLance" },
 
     {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" , "fingersOfFrost" },
      -- "Blizzard" -- "Freezing Rain"  Blizzard is instant cast and deals 50% increased damage
