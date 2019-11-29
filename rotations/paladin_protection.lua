@@ -63,8 +63,8 @@ kps.rotations.register("PALADIN","PROTECTION",
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
     {spells.ardentDefender, 'player.hp < 0.65 and target.isCasting and target.isRaidBoss' }, 
-    {spells.ardentDefender, 'player.hp < 0.65 and spells.handOfTheProtector.cooldown > kps.gcd' }, 
-    {spells.ardentDefender, 'player.hp < 0.65 and spells.lightOfTheProtector.cooldown > kps.gcd' }, 
+    {spells.ardentDefender, 'player.hp < 0.65 and spells.handOfTheProtector.cooldown > player.gcd' }, 
+    {spells.ardentDefender, 'player.hp < 0.65 and spells.lightOfTheProtector.cooldown > player.gcd' }, 
     -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
     {spells.guardianOfAncientKings, 'player.hp < 0.40 and not player.hasBuff(spells.ardentDefender)' },
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.

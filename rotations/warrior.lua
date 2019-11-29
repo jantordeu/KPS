@@ -17,16 +17,3 @@ local function UnitIsAttackable(unit)
     return true
 end
 
-local function heroicLeapOnScreen()
-    if kps.spells.warrior.heroicLeap.cooldown < kps.gcd and kps.spells.warrior.heroicLeap.charges > 0 and kps.timers.check("heroicLeap") == 0 then
-        kps.timers.create("heroicLeap", 10 )
-        kps.utils.createMessage("heroicLeap Ready")
-    end
-end
-
-kps.env.warrior.ScreenMessage = function()
-    return heroicLeapOnScreen()
-end
-
-
-

@@ -243,7 +243,7 @@ end
 --------------------------------------------------------------------------------------------
 
 local function holyWordSanctifyOnScreen()
-    if kps.spells.priest.holyWordSanctify.cooldown < kps.gcd and kps.timers.check("holyWordSanctify") < 1 then
+    if kps.spells.priest.holyWordSanctify.cooldown < kps["env"].player.gcd and kps.timers.check("holyWordSanctify") < 1 then
         kps.timers.create("holyWordSanctify", 10 )
         kps.utils.createMessage("holyWordSanctify Ready")
     end
@@ -254,7 +254,7 @@ kps.env.priest.holyWordSanctifyMessage = function()
 end
 
 local function haloOnScreen()
-    if kps.spells.priest.halo.cooldown < kps.gcd  and kps.timers.check("halo") < 1 then
+    if kps.spells.priest.halo.cooldown < kps["env"].player.gcd  and kps.timers.check("halo") < 1 then
         kps.timers.create("halo", 10 )
         kps.utils.createMessage("halo Ready")
     end

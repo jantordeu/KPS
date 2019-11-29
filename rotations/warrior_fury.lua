@@ -22,8 +22,6 @@ kps.rotations.register("WARRIOR","FURY",
     {{"macro"}, 'not focus.exists and mouseover.isAttackable and mouseover.inCombat and not mouseover.isUnit("target")' , "/focus mouseover" },
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     --{{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
-        
-    env.ScreenMessage,
 
     {spells.berserkerRage, 'target.isAttackable and target.isCasting' },
     {spells.berserkerRage, 'focus.isAttackable and focus.isCasting' },
@@ -41,7 +39,7 @@ kps.rotations.register("WARRIOR","FURY",
     {spells.victoryRush, 'player.hp < 0.80' },
     {spells.victoryRush, 'player.myBuffDuration(spells.victoryRush) < 4' },
     {spells.bloodthirst, 'player.hasBuff(spells.enragedRegeneration)' },
-    {spells.enragedRegeneration, 'spells.bloodthirst.cooldown < kps.gcd and player.hp < 0.70' },
+    {spells.enragedRegeneration, 'spells.bloodthirst.cooldown < player.gcd and player.hp < 0.70' },
     {spells.rallyingCry, 'player.hp < 0.60' },
     {spells.stoneform, 'player.isDispellable("Disease")' , "player" },
     {spells.stoneform, 'player.isDispellable("Poison")' , "player" },
@@ -61,7 +59,7 @@ kps.rotations.register("WARRIOR","FURY",
     {spells.recklessness, 'kps.cooldowns and player.hasTalent(7,1) and player.rage <= 25 and target.isAttackable and target.distance <= 10' },
     {spells.recklessness, 'kps.cooldowns and not player.hasTalent(7,1) and player.rage >= 75 and target.isAttackable and target.distance <= 10' },
     
-    {spells.rampage, 'player.myBuffDuration(spells.enrage) < kps.gcd' , "target" , "rampage_enrage" },
+    {spells.rampage, 'player.myBuffDuration(spells.enrage) < player.gcd' , "target" , "rampage_enrage" },
     {spells.rampage, 'player.rage >= 90' , "target" , "rampage_dumprage" },
     
     -- "Mort subite" -- "Sudden Death" -- Execute can be used on any target, regardless of their health.

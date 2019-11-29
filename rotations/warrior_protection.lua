@@ -20,7 +20,6 @@ kps.rotations.register("WARRIOR","PROTECTION",
     
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
-    env.ScreenMessage,
     
     {spells.taunt, 'kps.taunt and not player.isTarget' , "target" , "taunt" },
     {spells.berserkerRage, 'target.isCasting' },

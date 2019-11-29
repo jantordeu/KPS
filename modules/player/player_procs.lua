@@ -142,10 +142,14 @@ function Player.hasAgiProc(self)
     return agi.hasProc()
 end
 --[[[
-@function `player.gcd` - returns the current global cooldown
+@function `player.gcd` - returns the current global cooldown  
 ]]--
+-- Each 10% of haste reduces the GCD by 0.1 seconds
+-- local _, gcd = GetSpellCooldown(61304) -- Global Cooldown Spell
+-- the GCD when the spell has finished casting could be 0(ZERO), if a new spell had been queued by the game
 function Player.gcd(self)
-    return kps.gcd
+    local haste = 1.5 - (UnitSpellHaste("player") * 0.01)
+    return math.floor(haste*100)/100
 end
 --[[[
 @function `player.bloodlust` - returns true if th player has bloodlus (or heroism, time warp...)

@@ -44,7 +44,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.divineShield, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid },
 
     -- "Blessing of Sacrifice"  -- Blessing of Sacrifice can be dangerous to your own life if used without a damage reduction cooldown such as Divine Protection or Divine Shield 
-    {spells.blessingOfSacrifice, 'heal.lowestTankInRaid.hp < 0.40 and not heal.lowestTankInRaid.isUnit("player") and player.hp > 0.90 and spells.divineProtection.cooldown < kps.gcd' , kps.heal.lowestTankInRaid },
+    {spells.blessingOfSacrifice, 'heal.lowestTankInRaid.hp < 0.40 and not heal.lowestTankInRaid.isUnit("player") and player.hp > 0.90 and spells.divineProtection.cooldown < player.gcd' , kps.heal.lowestTankInRaid },
     -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection -- can be used to clear harmful physical damage debuffs and bleeds from the target.
     {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid },
     {spells.blessingOfProtection, 'player.hp < 0.30' , "player" },
