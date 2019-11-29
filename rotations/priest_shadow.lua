@@ -115,11 +115,10 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
 
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20' , "target" },    
-    {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17' , env.damageTarget },
+    {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 15' , env.damageTarget },
     {{"macro"}, 'spells.shadowCrash.cooldown == 0 and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..ShadowCrash },
     {{"macro"}, 'spells.shadowCrash.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..ShadowCrash },
 
-    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget },
     --{{spells.vampiricTouch,spells.shadowWordPain}, 'not player.isMoving and not player.hasTalent(3,2) and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and target.myDebuffDuration(spells.shadowWordPain) < 4.8' , "target" },
     {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8' , "target" },
@@ -129,7 +128,8 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.shadowWordPain, 'focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 4.8' , "focus"  },
     {spells.shadowWordPain, 'player.isMoving and focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 16.8' , "focus" },
 
-    {spells.mindBlast, 'not player.isMoving and player.buffStacks(spells.voidForm) > 17' , env.damageTarget , "mindBlast_voidForm"},
+    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget },
+    {spells.mindBlast, 'not player.isMoving and player.buffStacks(spells.voidForm) > 9' , env.damageTarget , "mindBlast_voidForm"},
     {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 5' , env.damageTarget },
 
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
