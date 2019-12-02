@@ -255,8 +255,6 @@ kps.spells.priest.wordOfMending = kps.Spell.fromId(278645)
 kps.spells.priest.wordsOfHealing = kps.Spell.fromId(196430)
 kps.spells.priest.weakenedSoul = kps.Spell.fromId(6788)
 kps.spells.priest.fireBlood = kps.Spell.fromId(265221)
-
-
 -- "Exaucements" -- "Answered Prayers" -- Prayer of Healing increases the healing done by your next Flash Heal, Binding Heal or Heal by 60%
 kps.spells.priest.answeredPrayers = kps.Spell.fromId(253437)
 -- "Espoir impérissable" -- "Everlasting Hope" -- increase the healing amount of your next Prayer of Healing spell by 30%.
@@ -269,20 +267,8 @@ kps.spells.priest.thoughtHarvester = kps.Spell.fromId(288343)
 kps.spells.priest.arcaneTorrent = kps.Spell.fromId(232633)
 --  "Sudden Revelation" -- Power Word: Radiance has a 50% chance to cause your next Holy Nova to deal 231 additional damage and reduce the cooldown of Power Word: Radiance by 3 sec.
 kps.spells.priest.suddenRevelation = kps.Spell.fromId(287360)
-
--- AZERITE ESSENCE
--- "Concentrated Flame" -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-kps.spells.priest.concentratedFlame = kps.Spell.fromId(295373)
--- "Memory of Lucid Dreams" -- Increasing your [Mana][Energy][Maelstrom] generation rate by 100% and your Leech by 0 for 15 sec.
-kps.spells.priest.memoryOfLucidDreams = kps.Spell.fromId(298357)
--- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
-kps.spells.priest.refreshment = kps.Spell.fromId(296197)
-kps.spells.priest.theWellOfExistence = kps.Spell.fromId(296138)
--- "Overcharge Mana" -- Overcharge your mana for 10 sec, causing each spell you cast to increase your healing by 3%, stacking.
-kps.spells.priest.overchargeMana = kps.Spell.fromId(296072)
--- "The Unbound Force" -- 
-kps.spells.priest.theUnboundForce = kps.Spell.fromId(298452)
-
+-- AZERITE
+kps.spells.priest.azerite = kps.spells.azerite
 
 -- TRINKET
 -- "Shiver Venom Relic" ItemID 168905 

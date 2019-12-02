@@ -9,15 +9,6 @@ local prioritySpell = nil
 local priorityAction = nil
 local priorityMacro = nil
 
-
-kps.runMacro = function(macroText)
-    RunMacroText(macroText)
-end
-
-kps.stopCasting = function()
-    SpellStopCasting()
-end
-
 function kps.write(...)
     DEFAULT_CHAT_FRAME:AddMessage("|cffff8000KPS: " .. strjoin(" ", tostringall(...))); -- color orange
 end
@@ -26,6 +17,14 @@ kps.useItem = function(itemId)
     return function ()
         return true
     end
+end
+
+kps.runMacro = function(macroText)
+    RunMacroText(macroText)
+end
+
+kps.stopCasting = function()
+    SpellStopCasting()
 end
 
 local combatStarted = -1

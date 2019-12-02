@@ -43,18 +43,18 @@ kps.rotations.register("MAGE","FIRE",
 
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.concentratedFlame, 'not player.hasBuff(spells.combustion)' , "target" },
+    {spells.azerite.concentratedFlame, 'not player.hasBuff(spells.combustion)' , "target" },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     -- Memory of Lucid Dreams should be use it before casting Rune of Power.
-    {spells.memoryOfLucidDreams, 'spells.combustion.cooldown < player.gcd and spells.runeOfPower.charges > 0 and spells.fireBlast.charges > 0' , "target" },
+    {spells.azerite.memoryOfLucidDreams, 'spells.combustion.cooldown < player.gcd and spells.runeOfPower.charges > 0 and spells.fireBlast.charges > 0 and target.isAttackable' , "target" },
     
-    {{"nested"}, 'player.hasBuff(spells.memoryOfLucidDreams)', {
-    	{spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown < player.gcd and spells.fireBlast.charges > 0' , "player" },
-    	{spells.combustion, 'spells.fireBlast.charges > 0 and player.hasBuff(spells.runeOfPower)' , "target" },
+    {{"nested"}, 'player.hasBuff(spells.azerite.memoryOfLucidDreams) and target.isAttackable', {
+    	{spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown < player.gcd and spells.fireBlast.charges > 0' , "player" , "buff_azerite" },
+    	{spells.combustion, 'spells.fireBlast.charges > 0 and player.hasBuff(spells.runeOfPower)' , "target" , "buff_azerite" },
     }},
-    {spells.combustion, 'spells.runeOfPower.lastCasted(2)' , "target" },
-    {spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown < player.gcd and spells.fireBlast.charges > 0' , "player" },
-    {spells.combustion, 'spells.fireBlast.charges > 0 and player.hasBuff(spells.runeOfPower)' , "target" },
+    {spells.combustion, 'spells.runeOfPower.lastCasted(2) and target.isAttackable' , "target" , "lastCasted_runeOfPower" },
+    {spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown < player.gcd and spells.fireBlast.charges > 0 and target.isAttackable' , "player" , "runeOfPower_gcd" },
+    {spells.combustion, 'spells.fireBlast.charges > 0 and player.hasBuff(spells.runeOfPower) and target.isAttackable' , "target" , "buff_runeOfPower"},
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
@@ -65,30 +65,31 @@ kps.rotations.register("MAGE","FIRE",
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
 
     -- One Rune of Power and one Meteor should always be used with Combustion
-    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 2 and spells.combustion.cooldown > 9' , "player" },
-    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges > 0 and spells.meteor.cooldown < 7 and spells.combustion.cooldown > 45' , "player" },
+    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 1 and spells.combustion.cooldown > 45 and spells.meteor.cooldown > 9 and target.isAttackable' , "player" , "runeOfPower_2_charges " },
+    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 2 and spells.combustion.cooldown > 9 and target.isAttackable' , "player" , "runeOfPower_1_charges " },
+    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges > 0 and spells.combustion.cooldown > 45 and spells.meteor.cooldown < 7 and target.isAttackable' , "player" , "runeOfPower_meteor"},
 
     {{"macro"}, 'keys.shift and player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and player.hasBuff(spells.runeOfPower)', "/cast [@cursor] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and player.hasBuff(spells.runeOfPower) and target.distanceMax <= 5', "/cast [@player] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and player.hasBuff(spells.runeOfPower) and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
 
-    {{"nested"}, 'kps.multiTarget', {
+    {{"nested"}, 'kps.multiTarget and target.isAttackable', {
         {spells.dragonsBreath, 'target.distanceMax <= 10' , "target" },
         {spells.livingBomb, 'player.hasTalent(6,3)' , "target" },
         {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and player.hasBuff(spells.combustion)'},
         {{"macro"}, 'keys.shift and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
-        {{"macro"}, 'spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
-        {{"macro"}, 'spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Flamestrike },
+        {{"macro"}, 'spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
+        {{"macro"}, 'spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and mouseover.isAttackable' , "/cast [@cursor] "..Flamestrike },
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
         {spells.scorch, 'target.isAttackable' , "target" },
         {spells.scorch, 'focus.isAttackable' , "focus" },
         {spells.scorch, 'mouseover.isAttackable' , "mouseover" },
     }},
 
-	{{"nested"}, 'player.hasBuff(spells.combustion)', {
+	{{"nested"}, 'player.hasBuff(spells.combustion) and target.isAttackable', {
     	{{"macro"}, 'keys.shift and player.hasTalent(7,3) and spells.meteor.cooldown == 0 ', "/cast [@cursor] "..Meteor },
-    	{{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
-    	{{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
+    	{{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
+    	{{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and mouseover.isAttackable' , "/cast [@cursor] "..Meteor },
      	{spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
         {spells.scorch, 'target.isAttackable' , "target" },
@@ -99,11 +100,10 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
     {spells.pyroblast, 'player.hasTalent(7,2) and player.hasBuff(spells.pyroclasm)' , "target" },
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
-    {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.combustion.cooldown > 9'},
-    {spells.fireBlast, 'spells.fireBlast.charges == 3'},
+    {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.combustion.cooldown > 9' , "target" },
     {{"macro"}, 'keys.shift and spells.meteor.cooldown == 0 and player.hasTalent(7,3)', "/cast [@cursor] "..Meteor },
-    {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
-    {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
+    {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
+    {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and mouseover.isAttackable' , "/cast [@cursor] "..Meteor },
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 10' , "target" },
     {spells.scorch, 'target.hp < 0.30 and target.isAttackable' , "target" },
     {spells.scorch, 'focus.hp < 0.30 and focus.isAttackable' , "focus" },
@@ -112,7 +112,7 @@ kps.rotations.register("MAGE","FIRE",
     -- Fireball to generate Heating Up
     {spells.fireball, 'not player.isMoving and focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus"  },
     {spells.fireball, 'not player.isMoving and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" },
-    {spells.fireball, 'not player.isMoving and target.isAttackable' , "target" }, 
+    {spells.fireball, 'not player.isMoving' , "target" }, 
 
 }
 ,"mage_fire")

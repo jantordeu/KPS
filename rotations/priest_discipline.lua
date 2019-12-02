@@ -82,13 +82,13 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.2) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player", "SCHIELD_MOVING" },
 
     --AZERITE
-    {spells.concentratedFlame, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    {spells.azerite.concentratedFlame, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
-    {spells.refreshment, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    {spells.azerite.refreshment, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
-    {spells.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    {spells.azerite.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
-    -- MANUAL --{spells.overchargeMana , 'spells.powerWordRadiance.charges > 0 and spells.schism.cooldown < 9 and heal.countLossInRange(0.85)*2 > heal.countInRange' },
+    -- MANUAL --{spells.azerite.overchargeMana , 'spells.powerWordRadiance.charges > 0 and spells.schism.cooldown < 9 and heal.countLossInRange(0.85)*2 > heal.countInRange' },
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and heal.countLossInRange(0.80) > 2' , "/use 13" },
@@ -183,7 +183,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.smite, 'not player.isMoving' , env.damageTarget },
     }},
 
---    {{"nested"}, 'player.hasBuff(spells.overchargeMana) and spells.overchargeMana.cooldown < 23' , {
+--    {{"nested"}, 'player.hasBuff(spells.azerite.overchargeMana) and spells.azerite.overchargeMana.cooldown < 23' , {
 --        {spells.evangelism, 'spells.powerWordRadiance.lastCasted(7)' },
 --        {spells.schism, 'not player.isMoving' , env.damageTarget , "overchargeMana" },
 --        {spells.shadowWordPain,'not player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("target")', "target" , "overchargeMana" },
@@ -195,7 +195,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
 --        {spells.smite, 'not player.isMoving' , env.damageTarget , "overchargeMana" },
 --    }},
 --    
---    {{"nested"}, 'player.hasBuff(spells.overchargeMana) and spells.overchargeMana.cooldown > 23' , {
+--    {{"nested"}, 'player.hasBuff(spells.azerite.overchargeMana) and spells.azerite.overchargeMana.cooldown > 23' , {
 --        {spells.powerWordShield, 'not heal.lowestTankInRaid.isUnit("player") and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 5 and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid , "powerWordShield_tank_multiTarget" },
 --        {spells.powerWordShield, 'player.myBuffDuration(spells.atonement) < 5 and not player.hasDebuff(spells.weakenedSoul)' , "player" , "powerWordShield_player_multiTarget" },
 --        {spells.powerWordRadiance, 'not player.isMoving and not heal.lowestTankInRaid.hasMyBuff(spells.atonement) and not heal.lowestTankInRaid.isUnit("player") and not spells.powerWordRadiance.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "radiance_tank_multiTarget" },

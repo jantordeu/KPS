@@ -275,9 +275,8 @@ kps.spells.mage.whiteout = kps.Spell.fromId(278541)
 kps.spells.mage.wingsOfFlame = kps.Spell.fromId(221844)
 kps.spells.mage.wintersReach = kps.Spell.fromId(273346)
 kps.spells.mage.worldInFlames = kps.Spell.fromId(203280)
+-- AZERITE
+kps.spells.mage.azerite = kps.spells.azerite
 
--- AZERITE ESSENCE
--- "Concentrated Flame" -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-kps.spells.mage.concentratedFlame = kps.Spell.fromId(295373)
--- "Memory of Lucid Dreams" -- Increasing your [Mana][Energy][Maelstrom] generation rate by 100% and your Leech by 0 for 15 sec.
-kps.spells.mage.memoryOfLucidDreams = kps.Spell.fromId(298357)
+
+

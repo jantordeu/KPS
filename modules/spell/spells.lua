@@ -166,5 +166,23 @@ kps.spells.immuneDamage.greaterFade = kps.Spell.fromId(213602)
 kps.spells.clippingSpell = {}
 kps.spells.clippingSpell.mindFlay = kps.Spell.fromId(15407)
 
+-- AZERITE ESSENCE
+kps.spells.azerite = {}
+-- "The Unbound Force" -- 
+kps.spells.azerite.theUnboundForce = kps.Spell.fromId(298452)
+-- "Concentrated Flame" -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
+kps.spells.azerite.concentratedFlame = kps.Spell.fromId(295373)
+-- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
+kps.spells.azerite.refreshment = kps.Spell.fromId(296197)
+-- "Overcharge Mana" -- Overcharge your mana for 10 sec, causing each spell you cast to increase your healing by 3%, stacking.
+kps.spells.azerite.overchargeMana = kps.Spell.fromId(296072)
+-- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
+kps.spells.azerite.theWellOfExistence = kps.Spell.fromId(296138)
+-- "Memory of Lucid Dreams" -- Increasing your [Mana][Energy][Maelstrom] generation rate by 100% and your Leech by 0 for 15 sec.
+kps.spells.azerite.memoryOfLucidDreams = kps.Spell.fromId(298357)
+-- "Aegis of the Deep" -- he elements protect you, reducing the damage you take from each attack by 4112 for 15 sec.
+kps.spells.azerite.aegisOfTheDeep = kps.Spell.fromId(298168)
+
+
 
 

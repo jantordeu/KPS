@@ -46,7 +46,7 @@ kps.rotations.register("MAGE","FROST",
     
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.concentratedFlame, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
+    {spells.azerite.concentratedFlame, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
 
     -- "Slow Fall"
     {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },

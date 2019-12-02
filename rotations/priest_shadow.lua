@@ -83,11 +83,11 @@ kps.rotations.register("PRIEST","SHADOW",{
     
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.concentratedFlame, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
+    {spells.azerite.concentratedFlame, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
-    {spells.memoryOfLucidDreams, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17 and player.insanity > 39' , env.damageTarget },
-    -- The Unbound Force -- causing shards of Azerite to strike your target for [(341 * (7.06061) + 341)] Fire damage over 2 sec. This damage is increased by 300% if it critically strikes
-    {spells.theUnboundForce, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 15' , env.damageTarget },
+    {spells.azerite.memoryOfLucidDreams, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17 and player.insanity > 39' , env.damageTarget },
+    -- The Unbound Force -- causing shards of spells.azerite to strike your target for [(341 * (7.06061) + 341)] Fire damage over 2 sec. This damage is increased by 300% if it critically strikes
+    {spells.azerite.theUnboundForce, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) < 15' , env.damageTarget },
 
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
     {{"macro"}, 'player.useTrinket(0) and player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 17' , "/use 13"},

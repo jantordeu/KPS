@@ -84,7 +84,6 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw)' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
-    -- "Breaking Dawn" -- AZERITE -- Increases the healing done by Light of Dawn by 483 and its range to 40 yards.
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.82) > 2 and target.distance <= 30' },
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.92) > 4 and target.distance <= 30' },
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.86) > 3 and target.distance <= 30' },
@@ -93,15 +92,15 @@ kps.rotations.register("PALADIN","HOLY",
 
     -- AZERITE
     -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
-    {spells.refreshment, 'player.buffValue(spells.theWellOfExistence) > 0 and heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    {spells.azerite.refreshment, 'player.buffValue(spells.azerite.theWellOfExistence) > 0 and heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
-    {spells.overchargeMana, 'heal.countLossInRange(0.80) > 2' },
+    {spells.azerite.overchargeMana, 'heal.countLossInRange(0.80) > 2' },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
-    {spells.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid },
+    {spells.azerite.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid },
     
     -- APPLY MANUAL "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
 
-    {{"nested"}, 'kps.tankfocus' ,{
+    {{"nested"}, 'kps.tankfocus and heal.lowestTankInRaid.hp < 0.80' ,{
         {spells.holyShock, 'not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid },
         {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid },
         {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "holyLight_TANK" },

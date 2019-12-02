@@ -57,9 +57,9 @@ kps.rotations.register("PALADIN","PROTECTION",
     
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.concentratedFlame, 'target.isAttackable and target.distance <= 30' , "target" },
-    {spells.memoryOfLucidDreams, 'player.hp < 0.80 and player.incomingDamage > player.incomingHeal' , "target" },
-    {spells.aegisOfTheDeep, 'player.incomingDamage > player.incomingHeal'},
+    {spells.azerite.concentratedFlame, 'target.isAttackable and target.distance <= 30' , "target" },
+    {spells.azerite.memoryOfLucidDreams, 'player.hp < 0.80 and player.incomingDamage > player.incomingHeal' , "target" },
+    {spells.azerite.aegisOfTheDeep, 'player.incomingDamage > player.incomingHeal'},
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
     {spells.ardentDefender, 'player.hp < 0.65 and target.isCasting and target.isRaidBoss' }, 

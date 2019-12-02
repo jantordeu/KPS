@@ -64,13 +64,13 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.shieldOfVengeance, 'player.incomingDamage > player.incomingHeal and target.distanceMax <= 10'},
 
     -- AZERITE
-    {spells.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
-    {spells.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath) and player.myBuffDuration(spells.avengingWrath) < 17' , "target" },
-    {spells.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
+    {spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
+    {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath) and player.myBuffDuration(spells.avengingWrath) < 17' , "target" },
+    {spells.azerite.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
    
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 2 and player.myBuffDuration(spells.inquisition) < 5' , "target" , "inquisition" },
     {spells.inquisition, 'player.hasTalent(7,3) and player.holyPower >= 1 and player.myBuffDuration(spells.inquisition) < 12' , "target" , "inquisition" },
-    {{"nested"},'kps.cooldowns and player.holyPower >= 3', {
+    {{"nested"},'kps.cooldowns and player.holyPower >= 2', {
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) > 20 and target.distanceMax <= 10' },
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
