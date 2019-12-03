@@ -81,9 +81,8 @@ kps.rotations.register("MAGE","FIRE",
         {{"macro"}, 'spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
         {{"macro"}, 'spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and mouseover.isAttackable' , "/cast [@cursor] "..Flamestrike },
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
-        {spells.scorch, 'target.isAttackable' , "target" },
-        {spells.scorch, 'focus.isAttackable' , "focus" },
-        {spells.scorch, 'mouseover.isAttackable' , "mouseover" },
+        {spells.scorch, 'target.isAttackable and player.plateCount >= 2' , "target" },
+        {spells.scorch, 'focus.isAttackable and player.plateCount >= 2' , "focus" },
     }},
 
 	{{"nested"}, 'player.hasBuff(spells.combustion) and target.isAttackable', {

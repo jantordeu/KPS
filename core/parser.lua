@@ -129,7 +129,7 @@ end
 local function fnParseMacro(macroText, conditionFn)
     return function ()
         if conditionFn() then
-            return macroText, "-"
+            return macroText
         end
         return nil, nil
     end
