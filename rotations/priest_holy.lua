@@ -176,6 +176,7 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.flashHeal, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"FLASH_POM" },
         {spells.flashHeal, 'player.hp < 0.55' , "player" ,"FLASH_POM" },
         {spells.flashHeal, 'heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid ,"FLASH_POM" },
+        {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' , kps.heal.lowestInRaid , "POH" },
     }},
 
     {{"nested"}, 'not player.isMoving and mouseover.isHealable' ,{

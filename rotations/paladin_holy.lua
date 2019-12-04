@@ -89,6 +89,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.82) > 2 and target.distance <= 30' },
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.92) > 4 and target.distance <= 30' },
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.86) > 3 and target.distance <= 30' },
+    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.82) > 2 and heal.countInRange <= 5' },
     -- PVP
     {spells.divineFavor, 'player.isPVP' },
 
@@ -185,6 +186,14 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
     {spells.holyLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.90 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest" },
     {spells.holyLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
+    
+    {{"nested"}, 'not player.isMoving and heal.countInRange <= 5' ,{
+        {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.70 and player.incomingDamage > player.incomingHeal' , "player" , "FLASH_PLAYER"  },
+        {spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hp < 0.70 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.incomingDamage > heal.lowestInRaid.incomingHeal' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
+        {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.70 and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
+        {spells.holyLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.90 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest" },
+        {spells.holyLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
+    }},
 
     -- Damage
     {spells.judgment, 'true' , env.damageTarget },
