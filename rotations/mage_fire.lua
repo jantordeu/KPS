@@ -46,14 +46,15 @@ kps.rotations.register("MAGE","FIRE",
     {spells.azerite.concentratedFlame, 'not player.hasBuff(spells.combustion)' , "target" },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     -- Memory of Lucid Dreams should be use it before casting Rune of Power.
-    {spells.azerite.memoryOfLucidDreams, 'spells.combustion.cooldown < player.gcd and spells.runeOfPower.charges > 0 and spells.fireBlast.charges > 0 and target.isAttackable' , "target" },
+    {spells.azerite.memoryOfLucidDreams, 'spells.combustion.cooldown < player.gcd and spells.fireBlast.charges > 0 and target.isAttackable' , "target" },
     
     {{"nested"}, 'player.hasBuff(spells.azerite.memoryOfLucidDreams) and target.isAttackable', {
-    	{spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown < player.gcd and spells.fireBlast.charges > 0' , "player" , "buff_azerite" },
+    	{spells.runeOfPower, 'not player.isMoving and spells.fireBlast.charges > 0 and spells.combustion.cooldown < player.gcd' , "player" , "buff_azerite" },
     	{spells.combustion, 'spells.fireBlast.charges > 0 and player.hasBuff(spells.runeOfPower)' , "target" , "buff_azerite" },
+        {spells.combustion, 'spells.fireBlast.charges > 0 and player.hasTalent(3,1)' , "target" , "buff_azerite" },
     }},
-    {spells.combustion, 'spells.runeOfPower.lastCasted(2) and target.isAttackable' , "target" , "lastCasted_runeOfPower" },
-    {spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown < player.gcd and spells.fireBlast.charges > 0 and target.isAttackable' , "player" , "runeOfPower_gcd" },
+    {spells.combustion, 'spells.runeOfPower.lastCasted(3) and target.isAttackable' , "target" , "lastCasted_runeOfPower" },
+    {spells.runeOfPower, 'not player.isMoving and spells.fireBlast.charges > 0 and spells.combustion.cooldown < player.gcd and target.isAttackable' , "player" , "runeOfPower_gcd" },
     {spells.combustion, 'spells.fireBlast.charges > 0 and player.hasBuff(spells.runeOfPower) and target.isAttackable' , "target" , "buff_runeOfPower"},
 
     -- TRINKETS -- SLOT 0 /use 13
@@ -96,13 +97,16 @@ kps.rotations.register("MAGE","FIRE",
         {spells.scorch, 'mouseover.isAttackable' , "mouseover" },
     }},
 
-    {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
     {spells.pyroblast, 'player.hasTalent(7,2) and player.hasBuff(spells.pyroclasm)' , "target" },
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
+
+    {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
     {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.combustion.cooldown > 9' , "target" },
+
     {{"macro"}, 'keys.shift and spells.meteor.cooldown == 0 and player.hasTalent(7,3)', "/cast [@cursor] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and mouseover.isAttackable' , "/cast [@cursor] "..Meteor },
+
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 10' , "target" },
     {spells.scorch, 'target.hp < 0.30 and target.isAttackable' , "target" },
     {spells.scorch, 'focus.hp < 0.30 and focus.isAttackable' , "focus" },
