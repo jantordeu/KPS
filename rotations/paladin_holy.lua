@@ -57,8 +57,8 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.cleanse, 'heal.isMagicDispellable' , kps.heal.isMagicDispellable , "DISPEL" },
     }},
     -- Interrupt
-    {spells.hammerOfJustice, 'kps.tankhammer and mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10' , "mouseover" },
-    {spells.hammerOfJustice, 'kps.tankhammer and target.distance <= 10 and target.isAttackable and target.distanceMax <= 10' , "target" },
+    {spells.hammerOfJustice, 'kps.tankhammer and mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+    {spells.hammerOfJustice, 'kps.tankhammer and target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
     {{"nested"}, 'kps.interrupt' ,{
         {spells.hammerOfJustice, 'focus.distance <= 10 and focus.isCasting and focus.isAttackable' , "focus" },
         {spells.hammerOfJustice, 'target.distance <= 10 and target.isCasting and target.isAttackable' , "target" },
@@ -84,7 +84,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.bestowFaith, 'not heal.lowestTankInRaid.hasBuff(spells.bestowFaith) and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid },    
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
     {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
-    {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw)' },
+    {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw) and heal.lowestInRaid.hpIncoming < 0.85' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.82) > 2 and target.distance <= 30' },
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.92) > 4 and target.distance <= 30' },
@@ -158,8 +158,8 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'heal.lowestInRaid.hp < 0.90 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid },
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid },
     {spells.holyShock, 'heal.lowestUnitInRaid.hp < 0.90' , kps.heal.lowestUnitInRaid },
+    {spells.holyShock, 'heal.lowestInRaid.hp > 0.90' , env.damageTarget },
 
-    
     {{"nested"}, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' ,{
     {spells.flashOfLight, 'player.hp < 0.55' , "player" , "holyLight_PLAYER" },
     {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "holyLight_TANK" },
@@ -169,7 +169,6 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyLight, 'player.hp < 0.90' , "player" , "heal_player" },
     }},
 
-    {spells.holyShock, 'true' , env.damageTarget },
     -- "Jugement de lumière" -- permet aux 25 prochaines attaques réussies contre la cible de rendre (5% of Spell power) points de vie à l’attaquant.
     {spells.judgment, 'player.hasTalent(5,1) and target.isAttackable' , "target" },
     -- "Puissance du croisé -- Frappe du croisé diminue le temps de recharge de Horion sacré et de Lumière de l’aube de 1.5 s.

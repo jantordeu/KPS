@@ -39,8 +39,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.72'}, 
       
     -- Interrupt
-    {spells.hammerOfJustice, 'kps.tankhammer and mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10' , "mouseover" },
-    {spells.hammerOfJustice, 'kps.tankhammer and target.distance <= 10 and target.isAttackable and target.distanceMax <= 10' , "target" },
+    {spells.hammerOfJustice, 'kps.tankhammer and mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+    {spells.hammerOfJustice, 'kps.tankhammer and target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
     {{"nested"}, 'kps.interrupt',{
         {spells.hammerOfJustice, 'focus.distanceMax <= 10 and focus.isCasting' , "focus" },
         {spells.hammerOfJustice, 'target.distanceMax <= 10 and target.isCasting ' , "target" },
