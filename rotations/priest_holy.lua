@@ -131,8 +131,8 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.azerite.refreshment, 'player.buffValue(spells.azerite.theWellOfExistence) > 0 and heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     {spells.azerite.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    -- MANUAL
     -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
-    -- {spells.azerite.overchargeMana, 'heal.countLossInRange(0.85)*2 > heal.countInRange' }, -- MANUAL
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and heal.countLossInRange(0.80) > 2' , "/use 13" },

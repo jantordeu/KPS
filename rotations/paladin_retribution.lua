@@ -19,25 +19,25 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'not focus.exists and mouseover.isAttackable and mouseover.inCombat and not mouseover.isUnit("target")' , "/focus mouseover" },
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
-    
-    {spells.greaterBlessingOfKings, 'not player.isInGroup and not player.hasBuff(spells.greaterBlessingOfKings)' , "player" },
+
+    -- "Shield of Vengeance" -- Creates a barrier of holy light that absorbs (30 / 100 * Total health) damage for 15 sec.
+    {spells.shieldOfVengeance, 'player.incomingDamage > player.incomingHeal and target.distanceMax <= 10'},
+    {spells.greaterBlessingOfKings, 'not player.isInGroup and not player.hasBuff(spells.greaterBlessingOfKings) and player.incomingDamage > player.incomingHeal' , "player" },
     --{spells.greaterBlessingOfKings, 'player.isInGroup and not heal.lowestTankInRaid.hasBuff(spells.greaterBlessingOfKings)' , kps.heal.lowestTankInRaid },
     
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
     {spells.divineShield, 'player.hp < 0.30' , "player" },
     {spells.divineShield, 'mouseover.isHealable and mouseover.hp < 0.30' ,"mouseover" },
-    -- Def CD's
-    {{"nested"}, 'kps.defensive', {
-        -- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
-        {spells.handOfHindrance, 'target.isMovingTimer(1.4)' , "target" },
-        {spells.handOfHindrance, 'focus.isMovingTimer(1.4)' , "focus" },
-    }},
+
     {spells.layOnHands, 'player.hp < 0.40', 'player'},
     {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
     {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
-    {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.72'}, 
-      
+    {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.65'}, 
+
+    -- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
+    {spells.handOfHindrance, 'kps.tankhammer and mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+    {spells.handOfHindrance, 'kps.tankhammer and target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
     -- Interrupt
     {spells.hammerOfJustice, 'kps.tankhammer and mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
     {spells.hammerOfJustice, 'kps.tankhammer and target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
@@ -63,40 +63,36 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.blessingOfProtection, 'player.hp < 0.55' , "player"},
 
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 20' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" },
-    
-    -- "Shield of Vengeance" -- Creates a barrier of holy light that absorbs (30 / 100 * Total health) damage for 15 sec.
-    {spells.shieldOfVengeance, 'player.incomingDamage > player.incomingHeal and target.distanceMax <= 10'},
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and target.debuffStacks(spells.razorCoral) == 0' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and target.debuffStacks(spells.razorCoral) > 5' , "/use 14" },
 
     -- AZERITE
     {spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath) and player.myBuffDuration(spells.avengingWrath) < 17' , "target" },
     {spells.azerite.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
    
-    {spells.inquisition, 'player.hasTalent(7,3) and spells.avengingWrath.cooldown < player.gcd and player.myBuffDuration(spells.inquisition) < 12 and player.holyPower >= 2 ' , "target" , "inquisition" },
-    {spells.inquisition, 'player.hasTalent(7,3) and spells.avengingWrath.cooldown < 15 and player.myBuffDuration(spells.inquisition) < 12 and player.holyPower >= 3 ' , "target" , "inquisition" },
-    {{"nested"},'kps.cooldowns', {
+    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 12 and player.holyPower >= 3 ' , "target" , "inquisition" },
+    {{"nested"},'kps.cooldowns and player.holyPower >= 2', {
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) > 25 and target.distanceMax <= 10' },
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
     }},
 
+    {spells.hammerOfWrath, 'player.hasTalent(2,3) and player.holyPower <= 4' , "target" }, -- Generates 1 Holy Power.
+    {spells.executionSentence, 'true' , "target" , "executionSentence" },
     {spells.divineStorm, 'player.plateCount >= 2' , "target" , "divineStorm" },
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm" },
-    {spells.executionSentence, 'true' , "target" , "executionSentence" },
     {spells.templarsVerdict, 'player.hasBuff(spells.divinePurpose)' , "target" , "templarsVerdict" },
     {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
- 
+
     {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
-    {spells.wakeOfAshes, 'player.holyPower == 0 and target.distanceMax <= 10 and spells.avengingWrath.cooldown > player.gcd' , "target" }, 
     {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distanceMax <= 10 and spells.avengingWrath.cooldown > player.gcd' , "target" },
-    {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
     {spells.judgment, 'target.distanceMax <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
-    {spells.consecration, 'player.hasTalent(4,2) and target.distanceMax <= 10' }, -- Generates 1 Holy Power.
+    {spells.consecration, 'player.hasTalent(4,2) and not target.isMoving and target.distanceMax <= 10' }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'target.distanceMax <= 10'}, --Generates 1 Holy Power
 
     -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.

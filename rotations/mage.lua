@@ -52,56 +52,42 @@ end
 ------------------------------- MAGE
 --------------------------------------------------------------------------------------------
 
-local UnitHasDebuff = function(unit,spellName)
-    local auraName,count,debuffType,duration,endTime,caster,isStealable,spellid,isBossDebuff,value
-    local i = 1
-    auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitDebuff(unit,i)
-    while auraName do
-        if auraName == spellName then
+function kps.env.mage.damageTarget()
+    if UnitIsAttackable("target") then return "target"
+    elseif UnitIsAttackable("targettarget") then return "targettarget"
+    elseif UnitIsAttackable("focus") then return "focus"
+    elseif UnitIsAttackable("focustarget") then return "focustarget"
+    elseif UnitIsAttackable("mouseovertarget") then return "mouseovertarget"
+    elseif UnitIsAttackable("mouseover") then return "mouseover"
+    else return kps.env.heal.enemyLowest -- kps.env.heal.enemyTarget
+    end
+end
+
+-- Config FOCUS with MOUSEOVER
+function kps.env.mage.FocusMouseoverFire()
+    local mouseover = kps.env.mouseover
+    local focus = kps.env.focus
+    if not focus.exists and not UnitIsUnit("target","mouseover") and mouseover.isAttackable and mouseover.inCombat then
+        if not mouseover.hasMyDebuff(kps.spells.mage.ignite) then
+            --kps.runMacro("/focus mouseover")
+            return true
+        elseif not mouseover.hasMyDebuff(kps.spells.mage.conflagration) then
+            --kps.runMacro("/focus mouseover")
+            return true
+        else
+            --kps.runMacro("/focus mouseover")
             return true
         end
-        i = i + 1
-        auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitDebuff(unit,i)
-    end
-    return false
-end
-
-local UnitHasBuff = function(unit,spellName)
-    local auraName,count,debuffType,duration,endTime,caster,isStealable,spellid,isBossDebuff,value
-    local i = 1
-    auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitBuff(unit,i)
-    while auraName do
-        if auraName == spellName then
+    elseif focus.exists and not UnitIsUnit("target","mouseover") and not UnitIsUnit("focus","mouseover") and focus.myDebuffDuration(kps.spells.mage.ignite) > 2 and focus.myDebuffDuration(kps.spells.mage.conflagration) > 2 then
+        if not mouseover.hasMyDebuff(kps.spells.mage.conflagration) and mouseover.isAttackable and mouseover.inCombat then
+            --kps.runMacro("/focus mouseover")
+            return true
+        elseif not mouseover.hasMyDebuff(kps.spells.mage.ignite) and mouseover.isAttackable and mouseover.inCombat then
+            --kps.runMacro("/focus mouseover")
             return true
         end
-        i = i + 1
-        auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitBuff(unit,i)
     end
     return false
 end
 
-
-local auraTable = {kps.Spell.fromId(642), kps.Spell.fromId(47585), kps.Spell.fromId(20066)}
-
-local function UnitHasAura(unit)
-    for _,aura in ipairs(auraTable)  do -- #auraTable
-        if UnitHasBuff(unit,aura.name) then return true end
-        if UnitHasDebuff(unit,aura.name) then return true end
-    end
-    return false
-end
-
-local function UnitIsAttackable(unit)
-    if UnitIsDeadOrGhost(unit) then return false end
-    if not UnitExists(unit) then return false end
-    if (string.match(GetUnitName(unit), kps.locale["Dummy"])) then return true end
-    if UnitCanAttack("player",unit) == false then return false end
-    if not kps.env.harmSpell.inRange(unit) then return false end
-    return true
-end
-
-function kps.env.mage.IsAttackable(unit)
-    if UnitIsAttackable(unit) and not UnitHasAura(unit) then return true end
-    return false
-end
 

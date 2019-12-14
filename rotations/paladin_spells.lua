@@ -274,3 +274,8 @@ kps.spells.paladin.selflessHealer = kps.Spell.fromId(114250)
 -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.  When you Holy Shock, all targets with Glimmer of Light are damaged for 6 or healed for 6.
 kps.spells.paladin.glimmerOfLight = kps.Spell.fromId(287280)
 
+-- TRINKET
+-- "Razor Coral" -- Reactivating this ability will remove Razor Coral from your target, granting you 61 Critical Strike per stack for 20 sec.
+kps.spells.paladin.razorCoral = kps.Spell.fromId(303568)
+
+

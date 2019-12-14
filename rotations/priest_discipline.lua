@@ -128,11 +128,11 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
 
     -- RADIANCE
     {{"nested"}, 'spells.powerWordRadiance.lastCasted(9)' , {
-        {spells.evangelism, 'spells.powerWordRadiance.charges == 0 and heal.hasBuffCount(spells.atonement) > 4' },
+        {spells.evangelism, 'spells.powerWordRadiance.charges == 0 and heal.hasBuffAtonementCount(0.82) > 3' },
         {spells.schism, 'not player.isMoving and heal.hasBuffAtonementCount(0.82) > 3' , env.damageTarget },
         {spells.mindbender, 'player.hasTalent(3,2) and heal.hasBuffAtonementCount(0.82) > 3' , env.damageTarget },
         {spells.shadowfiend, 'not player.hasTalent(3,2) and heal.hasBuffAtonementCount(0.82) > 3' , env.damageTarget }, 
-        {spells.penance, 'heal.hasBuffAtonementCount(0.90) > 0' , env.damageTarget  },
+        {spells.penance, 'true' , env.damageTarget  },
         {spells.powerWordSolace, 'true' , env.damageTarget  },
     }},
     {spells.powerWordRadiance, 'not player.isMoving and mouseover.isHealable and heal.hasNotBuffAtonementCount(0.82) > 3 and not spells.powerWordRadiance.isRecastAt("mouseover")' , "mouseover" , "radiance_mouseover" },  
