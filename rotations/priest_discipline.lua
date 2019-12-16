@@ -21,7 +21,7 @@ kps.runAtEnd(function()
 end)
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "mindControl", "Interface\\Icons\\Priest_spell_leapoffaith_a", "mindControl ")
+   kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "mindControl", "Interface\\Icons\\Priest_spell_leapoffaith_a", "mindControl")
 end)
 
 

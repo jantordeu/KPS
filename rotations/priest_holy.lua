@@ -128,7 +128,7 @@ kps.rotations.register("PRIEST","HOLY",{
     --AZERITE
     {spells.azerite.concentratedFlame, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
-    {spells.azerite.refreshment, 'player.buffValue(spells.azerite.theWellOfExistence) > 0 and heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    {spells.azerite.refreshment, 'player.buffValue(spells.azerite.theWellOfExistence) > 19000 and heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     {spells.azerite.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
     -- MANUAL
