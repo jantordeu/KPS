@@ -87,10 +87,10 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw) and heal.lowestInRaid.hpIncoming < 0.85' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.82) > 2 and target.distance <= 30' },
-    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.82) > 2 and heal.countInRange <= 5' },
     {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.85) > 3 and target.distance <= 30' },
-    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInDistance(0.85,10) > 2' },
-    {spells.lightOfDawn, 'player.isMoving and heal.countLossInDistance(0.90,10) > 2' },
+    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.90) > 4 and target.distance <= 30' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.82,10) > 2' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.85,10) > 3' },
     
     -- PVP
     {spells.divineFavor, 'player.isPVP' },

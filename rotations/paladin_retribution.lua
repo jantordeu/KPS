@@ -66,31 +66,33 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 20' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and target.debuffStacks(spells.razorCoral) == 0' , "/use 14" },
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and target.debuffStacks(spells.razorCoral) > 5' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and target.debuffStacks(spells.razorCoral) >= 4' , "/use 14" },
 
     -- AZERITE
     {spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
-    {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath) and player.myBuffDuration(spells.avengingWrath) < 17' , "target" },
+    {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.hasBuff(spells.avengingWrath) and player.myBuffDuration(spells.avengingWrath)' , "target" },
     {spells.azerite.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
    
-    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 12 and player.holyPower >= 3 ' , "target" , "inquisition" },
-    {{"nested"},'kps.cooldowns and player.holyPower >= 2', {
+    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 5 and player.holyPower >= 3' , "target" , "inquisition_5" },
+    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 15 and spells.executionSentence.cooldown < 10 and player.holyPower >= 3' , "target" , "inquisition_15" },
+    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 20 and spells.avengingWrath.cooldown < 15 and player.holyPower >= 3' , "target" , "inquisition_20" },
+    {{"nested"},'kps.cooldowns', {
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) > 25 and target.distanceMax <= 10' },
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
     }},
 
     {spells.hammerOfWrath, 'player.hasTalent(2,3) and player.holyPower <= 4' , "target" }, -- Generates 1 Holy Power.
+    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distanceMax <= 10 and spells.avengingWrath.cooldown > player.gcd' , "target" },
     {spells.executionSentence, 'true' , "target" , "executionSentence" },
-    {spells.divineStorm, 'player.plateCount >= 2' , "target" , "divineStorm" },
+
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm" },
-    {spells.templarsVerdict, 'player.hasBuff(spells.divinePurpose)' , "target" , "templarsVerdict" },
-    {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict" },
+    {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
+    {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
 
-    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
-    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distanceMax <= 10 and spells.avengingWrath.cooldown > player.gcd' , "target" },
     {spells.judgment, 'target.distanceMax <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
     {spells.consecration, 'player.hasTalent(4,2) and not target.isMoving and target.distanceMax <= 10' }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'target.distanceMax <= 10'}, --Generates 1 Holy Power

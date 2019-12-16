@@ -63,9 +63,9 @@ kps.rotations.register("MAGE","FIRE",
     }},
 
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and target.isAttackable' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14    
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5 and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
     
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
@@ -87,8 +87,10 @@ kps.rotations.register("MAGE","FIRE",
         {{"macro"}, 'player.plateCount >= 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
         {{"macro"}, 'player.plateCount >= 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and mouseover.isAttackable' , "/cast [@cursor] "..Flamestrike },
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)', "target" },
+        {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite) and target.distanceMax <= 10  and player.plateCount >= 3' , "target" , "scorch_target_ignite" },
+        {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite) and target.distanceMax <= 10  and player.plateCount >= 3' , "focus" , "scorch_focus_ignite" },
+        {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite) and mouseover.distanceMax <= 10  and player.plateCount >= 3' , "mouseover" , "scorch_mouseover_ignite" },
         {spells.scorch, 'target.isAttackable and target.distanceMax <= 10 and player.plateCount >= 3' , "target" },
-        {spells.scorch, 'focus.isAttackable and target.distanceMax <= 10 and player.plateCount >= 3' , "focus" },
     }},
 
 	{{"nested"}, 'player.hasBuff(spells.combustion) and target.isAttackable', {
@@ -97,9 +99,10 @@ kps.rotations.register("MAGE","FIRE",
     	{{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
      	{spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
+        {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target" },
+        {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus" },
+        {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" },
         {spells.scorch, 'target.isAttackable' , "target" },
-        {spells.scorch, 'focus.isAttackable' , "focus" },
-        {spells.scorch, 'mouseover.isAttackable' , "mouseover" },
     }},
     
     -- debuff "Ignite" 12654 -- Scorch & fireball -- spells.ignite
@@ -115,15 +118,14 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
 
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 10' , "target" },
-    {spells.scorch, 'spells.fireBlast.charges == 0 and target.distanceMax <= 5 and target.isAttackable' , "target" },
-    {spells.scorch, 'target.hp < 0.30 and target.distanceMax <= 5 and target.isAttackable' , "target" },
+    {spells.scorch, 'spells.fireBlast.charges == 0 and target.distanceMax <= 5 and target.isAttackable' , "target" , "scorch_fireBlast.charges" },
     {spells.scorch, 'player.isMoving and target.isAttackable' , "target" },
-    {spells.scorch, 'player.isMoving and focus.isAttackable' , "focus" },
+    {spells.scorch, 'player.isMoving and focus.isAttackable' , "focus" , "scorch_focus" },
 
     -- Fireball to generate Heating Up
     {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
-    {spells.fireball, 'not player.isMoving and focus.isAttackable and not focus.hasMyDebuff(spells.conflagration)' , "focus"  },
-    {spells.fireball, 'not player.isMoving and focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus"  },
+    {spells.fireball, 'not player.isMoving and not target.hasMyDebuff(spells.conflagration)' , "target" , "fireball_target_conflagration"},
+    {spells.fireball, 'not player.isMoving and focus.isAttackable and not focus.hasMyDebuff(spells.conflagration)' , "focus" , "fireball_focus_conflagration" },
     {spells.fireball, 'not player.isMoving' , "target" }, 
 
 }

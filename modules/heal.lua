@@ -731,7 +731,8 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --print("|cffff8000buffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.priest.theWellOfExistence))
 --print("|cffff8000buffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.priest.masteryEchoOfLight))
 
-
+--local debuff = kps.spells.mage.conflagration
+--print("|cffff8000Debuff:|cffffffff", kps["env"].target.hasMyDebuff(debuff))
 
 --print("|cffff8000plateCountvampiricTouch:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.vampiricTouch))
 --print("|cffff8000plateCountshadowWordPain:|cffffffff", kps["env"].player.plateCountDebuff(kps.spells.priest.shadowWordPain))
