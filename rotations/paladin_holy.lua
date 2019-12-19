@@ -21,7 +21,7 @@ kps.rotations.register("PALADIN","HOLY",
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     
     -- ShouldInterruptCasting,
-    {{"macro"}, 'spells.holyLight.shouldInterrupt(0.95,kps.defensive)' , "/stopcasting" },
+    --{{"macro"}, 'spells.holyLight.shouldInterrupt(0.95,kps.defensive)' , "/stopcasting" },
     {{"macro"}, 'spells.flashOfLight.shouldInterrupt(0.90,kps.defensive)' , "/stopcasting" },
     
     {spells.blessingOfFreedom , 'player.isRoot' },
@@ -38,7 +38,7 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec. during that time the caster also cannot attack or use spells
     {spells.divineProtection, 'spells.blessingOfSacrifice.lastCasted(4) and not player.hasBuff(spells.divineShield)' , "player" },
     {spells.divineProtection, 'player.hp < 0.40 and not player.hasBuff(spells.divineShield)' , "player" },
-    {spells.divineProtection, 'player.hp < 0.90 and player.isTarget and target.isRaidBoss' , "player" },
+    {spells.divineProtection, 'player.hp < 0.40 and player.isTarget and target.isRaidBoss' , "player" },
     
     -- "Bouclier divin" ""Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
     {spells.divineShield, 'player.hp < 0.30' , "player" },
@@ -86,9 +86,9 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw) and heal.lowestInRaid.hpIncoming < 0.85' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
-    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.82) > 2 and target.distance <= 30' },
-    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.85) > 3 and target.distance <= 30' },
-    {spells.lightOfDawn, 'not player.isMoving and heal.countLossInRange(0.90) > 4 and target.distance <= 30' },
+    {spells.lightOfDawn, 'heal.countLossInRange(0.82) > 2 and target.distance <= 20' },
+    {spells.lightOfDawn, 'heal.countLossInRange(0.85) > 3 and target.distance <= 20' },
+    {spells.lightOfDawn, 'heal.countLossInRange(0.90) > 4 and target.distance <= 20' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.82,10) > 2' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.85,10) > 3' },
     
@@ -108,7 +108,7 @@ kps.rotations.register("PALADIN","HOLY",
     {{"nested"}, 'kps.tankhammer and heal.lowestTankInRaid.hp < 0.85' ,{
         {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 7' , kps.heal.lowestTankInRaid },
         {spells.holyShock, 'true' , kps.heal.lowestTankInRaid },
-        {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "holyLight_TANK" },
+        {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid , "holyLight_TANK" },
         {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
         -- "Blessing of Sacrifice"  -- Blessing of Sacrifice can be dangerous to your own life if used without a damage reduction cooldown such as Divine Protection or Divine Shield 
         {spells.blessingOfSacrifice, 'heal.lowestTankInRaid.hp < 0.40 and not heal.lowestTankInRaid.isUnit("player") and player.hp > 0.90 and spells.divineProtection.cooldown < player.gcd' , kps.heal.lowestTankInRaid },
@@ -119,10 +119,10 @@ kps.rotations.register("PALADIN","HOLY",
 
     -- Damage
     {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hpIncoming > 0.85' ,{
-        {spells.holyShock, 'not mouseover.hasDebuff(spells.glimmerOfLight)' , "mouseover" },
+        {spells.holyShock, 'mouseover.isAttackable and not mouseover.hasDebuff(spells.glimmerOfLight)' , "mouseover" },
         {spells.holyShock,  'true' , env.damageTarget },
         {spells.holyAvenger, 'player.hasTalent(5,3)' },
-        {spells.avengingWrath, 'player.hasTalent(6,1)' },
+        {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(6,1)' },
         {spells.judgment,  'true' , env.damageTarget },
         {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10' , "target" },
         {spells.consecration, 'not player.isMoving and target.isAttackable and target.distance <= 10' },
@@ -144,7 +144,15 @@ kps.rotations.register("PALADIN","HOLY",
     }},
     -- "Vengeur sacré" --"Holy Avenger" -- Increases your haste by 30% and your Holy Shock healing by 30% for 20 sec.
     {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
+    {spells.avengingWrath, 'player.hasTalent(5,3) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
 
+    {{"nested"}, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and spells.holyShock.cooldown > player.gcd' ,{
+        {spells.flashOfLight, 'player.hp < 0.55 and not spells.flashOfLight.isRecastAt("player")' , "player" , "flash_PLAYER_infusion" },
+        {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.55 and not spells.flashOfLight.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "flash_TANK_infusion" },
+        {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.55 and not spells.flashOfLight.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "flash_LOWEST_infusion" },
+        {spells.holyLight, 'heal.lowestInRaid.hp < 0.90 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "heal_lowest_infusion" },
+        {spells.holyLight, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
+    }},
 
     -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
     -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana.
@@ -154,25 +162,22 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid , "holyShock_lowestTank" },
     {spells.holyShock, 'not player.hasBuff(spells.glimmerOfLight)' , "player" , "holyShock_player" },
 
-    {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.90 and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "holyShock_target" },
+    -- 216411/divine-purpose -- Divine Purpose Your next Holy Shock costs no mana. 10 seconds remaining
+    -- 216413/divine-purpose -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
+    {spells.holyShock, 'player.hasBuff(spells.divinePurposeHolyShock) and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_divinePurpose_GLIMMER" },
     {spells.holyShock, 'not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
     {spells.holyShock, 'not heal.lowestUnitInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestUnitInRaid , "holyShock_lowestUnit" },
     {spells.holyShock, 'not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
     
-    {spells.holyShock, 'player.hp < 0.65' , "player" },
-    {spells.holyShock, 'heal.lowestInRaid.hp < 0.65 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid },
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid },
+    {spells.holyShock, 'player.hp < 0.70' , "player" },
+    {spells.holyShock, 'heal.lowestInRaid.hp < 0.70 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.70' , kps.heal.lowestTankInRaid },
+    
+    {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.90 and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "holyShock_target" },
+    {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.90 and mouseover.isAttackable and not mouseover.hasDebuff(spells.glimmerOfLight)' , "mouseover" , "holyShock_mouseover" },
 
     {spells.holyShock, 'heal.lowestInRaid.hp < 0.90 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid },
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid  },
-
-    {{"nested"}, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' ,{
-        {spells.flashOfLight, 'player.hp < 0.55' , "player" , "holyLight_PLAYER" },
-        {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "holyLight_TANK" },
-        {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid , "holyLight_LOWEST" },
-        {spells.holyLight, 'heal.lowestInRaid.hp < 0.90 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "heal_lowest" },
-        {spells.holyLight, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
-    }},
 
     -- "Jugement de lumière" -- permet aux 25 prochaines attaques réussies contre la cible de rendre (5% of Spell power) points de vie à l’attaquant.
     {spells.judgment, 'player.hasTalent(5,1) and target.isAttackable' , "target" },

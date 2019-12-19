@@ -312,7 +312,7 @@ local countInDistance = function(health,distance)
     if health == nil then health = 2 end
     local count = 0
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hp < health and unit.distance <= distance then
+        if unit.isHealable and unit.hp < health and unit.distanceMax <= distance then
             count = count + 1
         end
     end

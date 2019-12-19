@@ -214,6 +214,9 @@ local shouldInterrupt = setmetatable({}, {
             elseif self.name == kps.spells.priest.heal.name and targetHealth > breakpoint then
                 DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING heal ".. target .." health: "..targetHealth, 0, 0.5, 0.8)
                 return true
+            elseif self.name == kps.spells.paladin.holyLight.name and targetHealth > breakpoint then
+                DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING holyLight ".. target .." health: "..targetHealth, 0, 0.5, 0.8)
+                return true
             elseif self.name == kps.spells.paladin.flashOfLight.name and targetHealth > breakpoint then
                 DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING flashOfLight ".. target .." health: "..targetHealth, 0, 0.5, 0.8)
                 return true

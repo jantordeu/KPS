@@ -278,4 +278,11 @@ kps.spells.paladin.glimmerOfLight = kps.Spell.fromId(287280)
 -- "Razor Coral" -- Reactivating this ability will remove Razor Coral from your target, granting you 61 Critical Strike per stack for 20 sec.
 kps.spells.paladin.razorCoral = kps.Spell.fromId(303568)
 
+-- BUFF
+-- 216411/divine-purpose -- Divine Purpose Your next Holy Shock costs no mana. 10 seconds remaining
+-- 216413/divine-purpose -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
+kps.spells.paladin.divinePurposeHolyShock = kps.Spell.fromId(216411)
+kps.spells.paladin.divinePurposeLightOfDawn = kps.Spell.fromId(216413)
+
+
 
