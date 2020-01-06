@@ -180,9 +180,9 @@ kps.spells.azerite.overchargeMana = kps.Spell.fromId(296072)
 kps.spells.azerite.theWellOfExistence = kps.Spell.fromId(296138)
 -- "Memory of Lucid Dreams" -- Increasing your [Mana][Energy][Maelstrom] generation rate by 100% and your Leech by 0 for 15 sec.
 kps.spells.azerite.memoryOfLucidDreams = kps.Spell.fromId(298357)
--- "Aegis of the Deep" -- he elements protect you, reducing the damage you take from each attack by 4112 for 15 sec.
+-- "Aegis of the Deep" -- elements protect you, reducing the damage you take from each attack by 4112 for 15 sec.
 kps.spells.azerite.aegisOfTheDeep = kps.Spell.fromId(298168)
-
-
-
-
+-- "Azeroth's Undying Gift" -- "Don éternel d’Azeroth" -- Reduce all damage you take by 20% for 4 sec.
+kps.spells.azerite.azerothUndyingGift = kps.Spell.fromId(293019)
+-- "Gardien d’Azeroth" -- "Guardian of Azeroth" -- un gardien d’Azeroth pendant 30 sec. Ce gardien empale votre cible avec des pointes d’azérite toutes les 2 s
+kps.spells.azerite.guardianOfAzeroth = kps.Spell.fromId(295840)

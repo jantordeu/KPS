@@ -10,7 +10,7 @@ local Meteor = spells.meteor.name
 local Flamestrike = spells.flamestrike.name
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("MAGE","FIRE", "meteor", "Interface\\Icons\\spell_mage_meteor", "Meteor")
+   kps.gui.addCustomToggle("MAGE","FIRE", "polymorph", "Interface\\Icons\\spell_nature_polymorph", "polymorph")
 end)
 
 kps.rotations.register("MAGE","FIRE",
@@ -46,7 +46,9 @@ kps.rotations.register("MAGE","FIRE",
        {spells.blazingBarrier, 'player.isTarget'},
        {{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
        {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
-     }},
+    }},
+    
+    {spells.polymorph, 'kps.polymorph and focus.isAttackable and focus.hasMyDebuff(spells.polymorph) and focus.myDebuffDuration(spells.polymorph) < 3' , "focus" },
 
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
@@ -63,9 +65,9 @@ kps.rotations.register("MAGE","FIRE",
     }},
 
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and not player.hasBuff(spells.combustion) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14    
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and not player.hasBuff(spells.combustion) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
     
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
@@ -80,13 +82,13 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and player.hasBuff(spells.runeOfPower) and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
 
     {{"nested"}, 'kps.multiTarget and target.isAttackable', {
-        {spells.dragonsBreath, 'target.distanceMax <= 10' , "target" },
-        {spells.livingBomb, 'player.hasTalent(6,3)' , "target" },
         {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and player.hasBuff(spells.combustion)' , "target" },
         {{"macro"}, 'keys.shift and player.plateCount >= 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
         {{"macro"}, 'player.plateCount >= 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
         {{"macro"}, 'player.plateCount >= 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and mouseover.isAttackable' , "/cast [@cursor] "..Flamestrike },
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)', "target" },
+        {spells.dragonsBreath, 'target.distanceMax <= 10' , "target" },
+        {spells.livingBomb, 'player.hasTalent(6,3)' , "target" },
         {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite) and target.distanceMax <= 10  and player.plateCount >= 3' , "target" , "scorch_target_ignite" },
         {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite) and target.distanceMax <= 10  and player.plateCount >= 3' , "focus" , "scorch_focus_ignite" },
         {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite) and mouseover.distanceMax <= 10  and player.plateCount >= 3' , "mouseover" , "scorch_mouseover_ignite" },
@@ -104,7 +106,7 @@ kps.rotations.register("MAGE","FIRE",
         {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" },
         {spells.scorch, 'target.isAttackable' , "target" },
     }},
-    
+ 
     -- debuff "Ignite" 12654 -- Scorch & fireball -- spells.ignite
     -- debuff "Conflagration" 226757 -- fireball -- spells.conflagration
 
@@ -118,6 +120,7 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
 
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 10' , "target" },
+    {spells.livingBomb,  'player.hasTalent(6,3)' , "target" },
     {spells.scorch, 'spells.fireBlast.charges == 0 and target.distanceMax <= 5 and target.isAttackable' , "target" , "scorch_fireBlast.charges" },
     {spells.scorch, 'player.isMoving and target.isAttackable' , "target" },
     {spells.scorch, 'player.isMoving and focus.isAttackable' , "focus" , "scorch_focus" },

@@ -12,7 +12,7 @@ local RingOfFrost  = spells.ringOfFrost.name
 
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("MAGE","FROST", "control", "Interface\\Icons\\spell_nature_polymorph", "control")
+   kps.gui.addCustomToggle("MAGE","FROST", "polymorph", "Interface\\Icons\\spell_nature_polymorph", "polymorph")
 end)
 
 kps.rotations.register("MAGE","FROST",
@@ -26,7 +26,7 @@ kps.rotations.register("MAGE","FROST",
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
     
-    {spells.polymorph, 'kps.control and focus.isAttackable and not focus.hasMyDebuff(spells.polymorph) and focus.myDebuffDuration(spells.polymorph) < 2' , "focus" },
+    {spells.polymorph, 'kps.polymorph and focus.isAttackable and focus.hasMyDebuff(spells.polymorph) and focus.myDebuffDuration(spells.polymorph) < 2' , "focus" },
 
     {spells.iceBlock, 'player.hp <= 0.20' },
     {spells.iceBarrier, 'not player.hasBuff(spells.iceBarrier)' },

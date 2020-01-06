@@ -100,7 +100,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
 
     -- GROUPHEAL
     -- heal.lossHealthRaid` - Returns the loss Health for all raid members
-    -- heal.lossHealthRaidAtonement - Returns the loss Health for all raid members with buff atonement
     -- heal.hasBuffCount(spells.atonement)
     -- heal.hasNotBuffAtonementCount(0.80) -- count unit below 0.80 health without atonement buff
     -- heal.hasBuffAtonementCount(0.80) -- count unit below 0.80 health with atonement buff
