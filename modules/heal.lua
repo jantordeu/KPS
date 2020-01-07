@@ -147,14 +147,14 @@ kps.RaidStatus.prototype.lowestTankInRaid = kps.utils.cachedValue(function()
 end)
 
 --[[[
-@function `heal.lowestCasterInRaid` - Returns the lowest unit which not a tank in the raid
+@function `heal.assistTankInRaid` - Returns the assist tank in the raid
 ]]--
 
-kps.RaidStatus.prototype.lowestCasterInRaid = kps.utils.cachedValue(function()
+kps.RaidStatus.prototype.assistTankInRaid = kps.utils.cachedValue(function()
     local lowestUnit = kps["env"].player
     local lowestHp = 2
     for name,unit in pairs(raidStatus) do
-        if unit.isHealable and not unit.isRaidTank and unit.hp < lowestHp then
+        if unit.isHealable and unit.isRaidTank and unit.hp < lowestHp then
             lowestUnit = unit
             lowestHp = lowestUnit.hp
         end
@@ -165,7 +165,6 @@ end)
 --[[[
 @function `heal.lowestUnitInRaid` - Returns the second lowest unit in the raid
 ]]--
-
 
 kps.RaidStatus.prototype.lowestUnitInRaid = kps.utils.cachedValue(function()
     local lowestUnit = kps.RaidStatus.prototype.lowestInRaid()
@@ -698,12 +697,12 @@ function kpstest()
 --print("|cFFFF0000DMG: ",player.incomingDamage)
 --end
 
-print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"|",kps["env"].heal.lowestTankInRaid.hp)
+print("|cffff8000mainTANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"|",kps["env"].heal.lowestTankInRaid.hp)
+print("|cffff8000assistTANK:|cffffffff", kps["env"].heal.assistTankInRaid.name,"|",kps["env"].heal.assistTankInRaid.hp)
 print("|cff1eff00LOWEST|cffffffff", kps["env"].heal.lowestInRaid.name,"|",kps["env"].heal.lowestInRaid.hp)
 print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"|",kps["env"].heal.lowestUnitInRaid.hp)
---print("|cffff8000CountLossDistance_90:|cffffffff", kps["env"].heal.countLossInDistance(0.90,10))
 print("|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
-print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90))
+print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90),"|cffff8000CountLossDistance_90:|cffffffff", kps["env"].heal.countLossInDistance(0.90,10))
 print("|cff1eff00HealTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
 print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
@@ -728,9 +727,9 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --local critChancePercent = GetCritChance()
 --print("crit:", critChancePercent,"haste:", spellHastePercent)
 
-
+--print("|cffff8000isRaidBoss:|cffffffff", kps["env"].target.isRaidBoss)
+--print("|cffff8000isRaidTank:|cffffffff",kps["env"].target.isRaidTank)
 --print("|cffff8000immuneDamage:|cffffffff", kps["env"].target.immuneDamage,"|cffff8000isAttackable:|cffffffff",kps["env"].target.isAttackable)
---print("|cffff8000isRaidBoss:|cffffffff", kps["env"].target.isRaidBoss,"|cffff8000isRaidTank:|cffffffff",kps["env"].target.isRaidTank)
 --print("|cffff8000isElite:|cffffffff", kps["env"].target.isElite,"|cffff8000enemyTarget:|cffffffff",kps["env"].heal.enemyTarget)
 --print("|cffff8000DurationMax:|cffffffff", kps["env"].target.myDebuffDurationMax(kps.spells.priest.shadowWordPain))
 --print("|cffff8000timeInCombat:|cffffffff", kps["env"].player.timeInCombat)

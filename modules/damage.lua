@@ -145,12 +145,3 @@ kps.env.damage = kps.RaidTarget.new(true)
 -- And use another instance of RaidStatus which returns the functions so we can write
 -- kps.heal.defaultTarget as a target for our rotation tables.
 kps.damage = kps.RaidTarget.new(false)
-
-
-
-function kpstarget()
-    --print(kps["env"].damage.enemyTarget,kps["env"].damage.count)
-    for name, player in pairs(raidTarget) do
-        print("|cffffffffName: ",name,"|Unit: ",player.unit,"|Name: ",player.name)
-    end
-end
