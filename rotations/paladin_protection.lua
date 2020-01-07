@@ -7,7 +7,7 @@ local spells = kps.spells.paladin
 local env = kps.env.paladin
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PALADIN","PROTECTION", "taunt", "Interface\\Icons\\spell_nature_reincarnation", "taunt")
+   kps.gui.addCustomToggle("PALADIN","PROTECTION", "addControl", "Interface\\Icons\\spell_holy_sealofmight", "addControl")
 end)
 
 kps.rotations.register("PALADIN","PROTECTION",
@@ -19,9 +19,9 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
     
-    -- "Hand of Reckoning" -- taunt
-    {spells.handOfReckoning, 'kps.taunt and target.isAttackable and not targettarget.isUnit("player")' , "target" , "taunt" },
-    
+    -- "Hand of Reckoning"
+    {spells.handOfReckoning, 'kps.addControl and target.isAttackable and not targettarget.isUnit("player")' , "target" , "taunt" },
+
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
 
@@ -32,14 +32,17 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"macro"}, 'player.useItem(5512) and player.hpIncoming < 0.55', "/use item:5512" },
     
     -- Interrupts
+    {{"nested"}, 'kps.addControl',{
+    	{spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+    	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+    }},
     {{"nested"}, 'kps.interrupt',{
-        {spells.hammerOfJustice, 'focus.distanceMax <= 10 and focus.isCasting and focus.isInterruptable' , "focus" },
+        {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting ' , "target" },
         {spells.hammerOfJustice, 'target.distanceMax <= 10 and target.isCasting and target.isInterruptable' , "target" },
-        {spells.blindingLight, 'target.distanceMax <= 10 and target.isCasting' , "target" },
-        {spells.blindingLight, 'target.distanceMax <= 10 and player.plateCount > 2' , "target" },
+        {spells.hammerOfJustice, 'focus.distanceMax <= 10 and focus.isCasting and focus.isInterruptable' , "focus" },
         -- " Réprimandes" "Rebuke" -- Interrupts spellcasting and prevents any spell in that school from being cast for 4 sec.
-        {spells.rebuke, 'target.isCasting and target.isInterruptable' , "target" },
-        {spells.rebuke, 'focus.isCasting and focus.isInterruptable' , "focus" },
+        {spells.rebuke, 'target.isCasting and target.isInterruptable and target.castTimeLeft < 2' , "target" },
+        {spells.rebuke, 'focus.isCasting and focus.isInterruptable and focus.castTimeLeft < 2' , "focus" },
     }},
     
     -- TRINKETS -- SLOT 0 /use 13

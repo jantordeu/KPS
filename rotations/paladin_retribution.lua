@@ -8,7 +8,7 @@ local env = kps.env.paladin
 
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PALADIN","RETRIBUTION", "tankhammer", "Interface\\Icons\\spell_holy_sealofmight", "tankhammer")
+   kps.gui.addCustomToggle("PALADIN","RETRIBUTION", "addControl", "Interface\\Icons\\spell_holy_sealofmight", "addControl")
 end)
 
 kps.rotations.register("PALADIN","RETRIBUTION",
@@ -33,21 +33,20 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
     {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.65'}, 
 
-    -- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
-    {spells.handOfHindrance, 'kps.tankhammer and mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
-    {spells.handOfHindrance, 'kps.tankhammer and target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
-    -- Interrupt
-    {spells.hammerOfJustice, 'kps.tankhammer and mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
-    {spells.hammerOfJustice, 'kps.tankhammer and target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+    {{"nested"}, 'kps.addControl',{
+		-- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
+    	{spells.handOfHindrance, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+    	{spells.handOfHindrance, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+    	{spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+    	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+    }},
     {{"nested"}, 'kps.interrupt',{
-        {spells.hammerOfJustice, 'focus.distanceMax <= 10 and focus.isCasting' , "focus" },
-        {spells.hammerOfJustice, 'target.distanceMax <= 10 and target.isCasting ' , "target" },
+        {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting ' , "target" },
+        {spells.hammerOfJustice, 'target.distanceMax <= 10 and target.isCasting and target.isInterruptable' , "target" },
+        {spells.hammerOfJustice, 'focus.distanceMax <= 10 and focus.isCasting and focus.isInterruptable' , "focus" },
         -- " Réprimandes" "Rebuke" -- Interrupts spellcasting and prevents any spell in that school from being cast for 4 sec.
         {spells.rebuke, 'target.isCasting and target.isInterruptable and target.castTimeLeft < 2' , "target" },
         {spells.rebuke, 'focus.isCasting and focus.isInterruptable and focus.castTimeLeft < 2' , "focus" },
-        {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting ' , "target" },
-        -- "Repentir" "Repentance" -- Forces an enemy target to meditate, incapacitating them for 1 min.
-        {spells.repentance, 'player.hasTalent(3,2) and target.isCasting ' , "target" },
     }},
 
     {{"nested"},'kps.cooldowns', {

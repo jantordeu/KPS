@@ -8,7 +8,10 @@ local env = kps.env.paladin
 
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PALADIN","HOLY", "tankhammer", "Interface\\Icons\\spell_holy_sealofmight", "tankhammer")
+   kps.gui.addCustomToggle("PALADIN","HOLY", "addControl", "Interface\\Icons\\spell_holy_sealofmight", "addControl")
+end)
+kps.runAtEnd(function()
+   kps.gui.addCustomToggle("PALADIN","HOLY", "focusTank", "Interface\\Icons\\spell_holy_avengersshield", "focusTank")
 end)
 
 
@@ -60,14 +63,14 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.cleanse, 'heal.isMagicDispellable' , kps.heal.isMagicDispellable },
     }},
     -- Interrupt
-    {spells.hammerOfJustice, 'kps.tankhammer and mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
-    {spells.hammerOfJustice, 'kps.tankhammer and target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+    {{"nested"}, 'kps.addControl',{
+    	{spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+    	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+    }},
     {{"nested"}, 'kps.interrupt' ,{
-        {spells.hammerOfJustice, 'focus.distance <= 10 and focus.isCasting and focus.isAttackable' , "focus" },
-        {spells.hammerOfJustice, 'target.distance <= 10 and target.isCasting and target.isAttackable' , "target" },
-        {spells.hammerOfJustice, 'focustarget.distance <= 10 and focustarget.isCasting and focustarget.isAttackable' , "focustarget" },
-        -- "Repentir" "Repentance" -- Forces an enemy target to meditate, incapacitating them for 1 min.
-        {spells.repentance, 'player.hasTalent(3,2) and target.isCasting and target.isAttackable' , "target" },
+        {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting ' , "target" },
+        {spells.hammerOfJustice, 'target.distanceMax <= 10 and target.isCasting and target.isInterruptable' , "target" },
+        {spells.hammerOfJustice, 'focus.distanceMax <= 10 and focus.isCasting and focus.isInterruptable' , "focus" },
     }},
     -- PVP
     {spells.divineFavor, 'player.isPVP and heal.lowestInRaid.hp < 0.85' },
@@ -114,7 +117,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'mouseover.isHealable and not mouseover.hasBuff(spells.glimmerOfLight)' , "mouseover" , "holyShock_mouseover"},
 
     -- TANK
-    {{"nested"}, 'kps.tankhammer and heal.lowestTankInRaid.hp < 0.85' ,{
+    {{"nested"}, 'kps.focusTank and heal.lowestTankInRaid.hp < 0.85' ,{
         {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestTankInRaid , "holyShock_tank_duration" },
         {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) > 5 and player.myBuffDuration(spells.glimmerOfLight) < 5' , "player" , "holyShock_player_duration" },
         {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) > 5 and heal.lowestInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestInRaid , "holyShock_lowest_duration" },
