@@ -115,19 +115,6 @@ local tanksInRaid = kps.utils.cachedValue(function()
     return _tanksInRaid[_tanksInRaidIdx]
 end)
 
--- Lowest Player in Raid
-kps.RaidStatus.prototype.lowestInRaid = kps.utils.cachedValue(function()
-    local lowestUnit = kps["env"].player
-    local lowestHp = 2
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hp < lowestHp then
-            lowestUnit = unit
-            lowestHp = lowestUnit.hp
-        end
-    end
-    return lowestUnit
-end)
-
 --[[[
 @function `heal.lowestTankInRaid` - Returns the lowest tank in the raid - a tank is either:
     * any group member that has the Group Role `TANK`
@@ -151,10 +138,25 @@ end)
 ]]--
 
 kps.RaidStatus.prototype.assistTankInRaid = kps.utils.cachedValue(function()
+    local lowestUnit = kps.RaidStatus.prototype.lowestTankInRaid()
+    local lowestHp = lowestUnit.hp
+    for name,unit in pairs(raidStatus) do
+        if unit.isHealable and unit.isRaidTank and unit.hp > lowestHp then
+            lowestUnit = unit
+            lowestHp = lowestUnit.hp
+        end
+    end
+    return lowestUnit
+end)
+
+--[[[
+@function `heal.lowestInRaid` - Returns the lowest unit in the raid
+]]--
+kps.RaidStatus.prototype.lowestInRaid = kps.utils.cachedValue(function()
     local lowestUnit = kps["env"].player
     local lowestHp = 2
-    for name,unit in pairs(raidStatus) do
-        if unit.isHealable and unit.isRaidTank and unit.hp < lowestHp then
+    for name, unit in pairs(raidStatus) do
+        if unit.isHealable and unit.hp < lowestHp then
             lowestUnit = unit
             lowestHp = lowestUnit.hp
         end
@@ -710,6 +712,7 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --print("|cffff8000NotBuffAtonementCount_90:|cffffffff", kps["env"].heal.hasNotBuffAtonementCount(0.90))
 --print("|cff1eff00GlimmerLowest|cffffffff", kps["env"].heal.hasBuffGlimmer.name,"|",kps["env"].heal.hasBuffGlimmer.hp)
 --print("|cffff8000GlimmerDuration:|cffffffff", kps["env"].heal.hasBuffGlimmerDuration.name,"|",kps["env"].heal.hasBuffGlimmerDuration.hp)
+print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 
 
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.mindBlast.charges)

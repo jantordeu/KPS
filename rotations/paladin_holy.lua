@@ -10,11 +10,6 @@ local env = kps.env.paladin
 kps.runAtEnd(function()
    kps.gui.addCustomToggle("PALADIN","HOLY", "addControl", "Interface\\Icons\\spell_holy_sealofmight", "addControl")
 end)
-kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PALADIN","HOLY", "focusTank", "Interface\\Icons\\spell_holy_avengersshield", "focusTank")
-end)
-
-
 
 kps.rotations.register("PALADIN","HOLY",
 {
@@ -95,9 +90,9 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw) and heal.lowestInRaid.hpIncoming < 0.85' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.80,10) > 2' },
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.85,10) > 3' },
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.90,10) > 4' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.80,10) >= 2' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.85,10) >= 3' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.90,10) >= 4' },
     {spells.lightOfDawn, 'heal.countLossInRange(0.80) > 2 and target.distance <= 20' },
     {spells.lightOfDawn, 'heal.countLossInRange(0.85) > 3 and target.distance <= 20' },
     {spells.lightOfDawn, 'heal.countLossInRange(0.90) > 4 and target.distance <= 20' },
@@ -111,76 +106,70 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.azerite.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid },
     
     -- APPLY MANUAL "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
+    --{spells.auraMastery, 'heal.countLossInRange(0.80)*2  > heal.countInRange' },
 
     -- MOUSEOVER
     {spells.holyShock, 'mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" , "holyShock_mouseover"},
     {spells.holyShock, 'mouseover.isHealable and not mouseover.hasBuff(spells.glimmerOfLight)' , "mouseover" , "holyShock_mouseover"},
 
-    -- TANK
-    {{"nested"}, 'kps.focusTank and heal.lowestTankInRaid.hp < 0.85' ,{
-        {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestTankInRaid , "holyShock_tank_duration" },
-        {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) > 5 and player.myBuffDuration(spells.glimmerOfLight) < 5' , "player" , "holyShock_player_duration" },
-        {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) > 5 and heal.lowestInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestInRaid , "holyShock_lowest_duration" },
-        {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid },
-        
-        {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.55 and not spells.flashOfLight.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "flash_TANK_infusion" },
-        {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hp < 0.70 and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid , "heal_lowest_infusion" },
-        {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and player.hp < 0.70' , "player" , "heal_player_infusion" },
-
-        {spells.holyAvenger, 'player.hasTalent(5,3) and heal.lowestTankInRaid.hp < 0.40' },
-        {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(6,1) and heal.lowestTankInRaid.hp < 0.40' },
-        {spells.lightOfTheMartyr, 'player.isMoving and player.hp > 0.85 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid , "MARTYR_tank"},
-        {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
-        {spells.holyLight, 'not player.isMoving' , kps.heal.lowestTankInRaid , "heal_tank" },
+    {{"nested"}, 'mouseover.isHealable and mouseover.isRaidTank' ,{
+		{spells.holyShock, 'mouseover.myBuffDuration(spells.glimmerOfLight) < 5' , "mouseover" },
+		{spells.holyShock, 'mouseover.hp < 0.40' , "mouseover"  },
+	 	{spells.flashOfLight, 'player.hasBuff(spells.infusionOfLight) and mouseover.hp < 0.55' , "mouseover" },
+	 	{spells.holyLight, 'player.hasBuff(spells.infusionOfLight) and mouseover.hp < 0.85' , "mouseover" },
+	 	{spells.flashOfLight, 'mouseover.hp < 0.40' , "mouseover" },
+	 	{spells.holyLight, 'mouseover.hp < 0.85' , "mouseover" },
     }},
 
-    -- DAMAGE
+    -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec. 
+    {spells.holyShock, 'not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid , "holyShock_tank" },
+    {spells.holyShock, 'not player.hasBuff(spells.glimmerOfLight)' , "player" , "holyShock_player" },
+    {spells.holyShock, 'not heal.assistTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.assistTankInRaid , "holyShock_assist_tank" },
+    {spells.holyShock, 'heal.lowestInRaid.hpIncoming < 0.85 and not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
+    -- 216411/divine-purpose -- spells.divinePurposeHolyShock -- Divine Purpose Your next Holy Shock costs no mana. 10 seconds remaining
+    -- 216413/divine-purpose -- spells.divinePurposeLightOfDawn -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
+    {{"nested"}, 'heal.lowestInRaid.hp < 0.70 and player.hasBuff(spells.divinePurposeHolyShock)' ,{
+    	{spells.holyShock, 'player.hp < 0.55' , "player" },
+        {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid },
+    	{spells.holyShock, 'heal.lowestInRaid.hp < 0.55' ,  kps.heal.lowestInRaid },
+    	{spells.holyShock, 'not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
+    }},
+
+    -- GLIMMER DAMAGE
+    -- "Jugement de lumière" -- permet aux 25 prochaines attaques réussies contre la cible de rendre (5% of Spell power) points de vie à l’attaquant.
+    {spells.judgment, 'heal.lowestInRaid.hpIncoming > 0.85' , env.damageTarget },
+    {spells.holyShock, 'heal.hasBuffCount(spells.glimmerOfLight) == heal.countInRange and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmd_count" },
+    {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.85 and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmg_health" },
     {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hpIncoming > 0.85' ,{
         {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestTankInRaid , "holyShock_tank_duration" },
         {spells.judgment,  'true' , env.damageTarget },
         {spells.holyShock,  'mouseover.isAttackable and not mouseover.hasDebuff(spells.glimmerOfLight)' , "mouseover" },
         {spells.holyShock,  'true' , env.damageTarget },
-        {spells.holyAvenger, 'player.hasTalent(5,3)' },
+        {spells.holyAvenger, 'kps.cooldowns and player.hasTalent(5,3)' },
         {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(6,1)' },
         {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10' , "target" },
         {spells.consecration, 'not target.isMoving and target.isAttackable and target.distance <= 10' },
     }},
-    
-    -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec. 
-    {spells.holyShock, 'not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid , "holyShock_tank" },
-    {spells.holyShock, 'not player.hasBuff(spells.glimmerOfLight)' , "player" , "holyShock_player" },
-    {spells.holyShock, 'not heal.assistTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.assistTankInRaid , "holyShock_assist_tank" },
-    {spells.holyShock, 'heal.lowestInRaid.hp < 0.70 and not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
-    {spells.holyShock, 'heal.hasNotBuffGlimmer.hp < 0.70 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
-    -- "Jugement de lumière" -- permet aux 25 prochaines attaques réussies contre la cible de rendre (5% of Spell power) points de vie à l’attaquant.
-    {spells.judgment, 'true' , env.damageTarget },
-    -- GLIMMER DAMAGE
-    {spells.holyShock, 'heal.hasBuffCount(spells.glimmerOfLight) == heal.countInRange and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmd_count" },
-    {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.85 and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmg_health" },
-    -- GLIMMER HEAL
-    {{"nested"},' heal.hasBuffCount(spells.glimmerOfLight) < 8', {
-        {spells.holyShock, 'not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
-        {spells.holyShock, 'not heal.lowestUnitInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestUnitInRaid , "holyShock_lowestUnit" },
-        {spells.holyShock, 'not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
-    }},
+
+    {spells.holyShock, 'not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
+    {spells.holyShock, 'not heal.lowestUnitInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestUnitInRaid , "holyShock_lowestUnit" },
+    {spells.holyShock, 'not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
     -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
     -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana.
-    {{"nested"}, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' ,{
-        {spells.holyLight, 'player.hp < 0.55 and player.hp < heal.lowestTankInRaid.hp' , "player" , "heal_player_infusion" },
-        {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.55 and not spells.flashOfLight.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "flash_TANK_infusion" },
-        {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.55 and not spells.flashOfLight.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "flash_LOWEST_infusion" },
-        {spells.holyLight, 'heal.lowestInRaid.hp < 0.90 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid , "heal_lowest_infusion" },
-        {spells.holyLight, 'player.hp < 0.90 and player.hp < heal.lowestTankInRaid.hp' , "player" , "heal_player_infusion" },
-        {spells.holyLight, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid , "heal_tank_infusion" },
+    {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and player.hasBuff(spells.infusionOfLight)' ,{
+        {spells.flashOfLight, 'heal.lowestInRaid.isRaidTank and not spells.flashOfLight.isRecastAt(heal.lowestInRaid.unit)' ,  kps.heal.lowestInRaid , "flash_TANK_infusion" },
+        {spells.flashOfLight, 'not spells.flashOfLight.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "flash_LOWEST_infusion" },
     }},
-    
-    -- 216411/divine-purpose -- Divine Purpose Your next Holy Shock costs no mana. 10 seconds remaining
-    -- 216413/divine-purpose -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
-    {spells.holyShock, 'player.hasBuff(spells.divinePurposeHolyShock) and heal.hasBuffGlimmer.hp < 0.70' , kps.heal.hasBuffGlimmer ,  "holyShock_GLIMMER_BUFFED_health" },
-    {spells.holyShock, 'player.hasBuff(spells.divinePurposeHolyShock) and heal.hasBuffGlimmer.hp < 0.85' , kps.heal.hasBuffGlimmerDuration ,  "holyShock_GLIMMER_BUFFED_duration" },
-    {spells.holyShock, 'heal.lowestInRaid.hp < 0.85 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid },
-    {spells.holyShock, 'player.hp < 0.85 and player.hp < heal.lowestTankInRaid.hp' , "player"  },
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.85' , kps.heal.lowestTankInRaid },
+    {{"nested"}, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hp < 0.85' ,{
+        {spells.holyLight, 'heal.lowestInRaid.hp < 0.85 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid , "heal_lowest_infusion" },
+        {spells.holyLight, 'player.hp < 0.85 and player.hp < heal.lowestTankInRaid.hp' , "player" , "heal_player_infusion" },
+        {spells.holyLight, 'heal.lowestTankInRaid.hp < 0.70' , kps.heal.lowestTankInRaid , "heal_tank_infusion" },
+    }},
+
+    -- GLIMMER HEAL
+    {spells.holyShock, 'heal.lowestInRaid.hp < 0.90 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'player.hp < 0.90 and player.hp < heal.lowestTankInRaid.hp' , "player"  },
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid },
 
     {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
     {spells.avengingWrath, 'player.hasTalent(6,1) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
@@ -213,21 +202,21 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestTankInRaid.hp < 0.70 and player.hp > 0.85 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid , "MARTYR_tank"},
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestInRaid.hp < 0.70 and player.hp > 0.85 and not heal.lowestInRaid.isUnit("player")' , kps.heal.lowestInRaid , "MARTYR_lowest"},
 
-    {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.90' ,{
+    {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.55' ,{
         {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.55 and player.incomingDamage > player.incomingHeal' , "player" , "FLASH_PLAYER"  },
     	{spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.incomingDamage > heal.lowestInRaid.incomingHeal' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
     	{spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
-    	{spells.holyLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.90 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest" },
-    	{spells.holyLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
     }},
 
-    {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.90 and heal.countInRange <= 5 ' ,{
+    {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.70 and heal.countInRange <= 5 ' ,{
         {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.70 and player.incomingDamage > player.incomingHeal' , "player" , "FLASH_PLAYER"  },
         {spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hp < 0.70 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.incomingDamage > heal.lowestInRaid.incomingHeal' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
         {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.70 and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
-        {spells.holyLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.90 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest" },
-        {spells.holyLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
     }},
+
+    {spells.holyLight, 'heal.lowestInRaid.hp < 0.90 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid , "heal_lowest_infusion" },
+    {spells.holyLight, 'player.hp < 0.90 and player.hp < heal.lowestTankInRaid.hp' , "player" , "heal_player_infusion" },
+    {spells.holyLight, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid , "heal_tank_infusion" },
 
     -- DAMAGE
     {spells.judgment, 'true' , env.damageTarget },
