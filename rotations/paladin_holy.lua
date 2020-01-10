@@ -108,6 +108,10 @@ kps.rotations.register("PALADIN","HOLY",
     -- APPLY MANUAL "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
     --{spells.auraMastery, 'heal.countLossInRange(0.80)*2  > heal.countInRange' },
 
+    {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
+    {spells.avengingWrath, 'player.hasTalent(6,1) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
+    {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
+
     -- MOUSEOVER
     {spells.holyShock, 'mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" , "holyShock_mouseover"},
     {spells.holyShock, 'mouseover.isHealable and not mouseover.hasBuff(spells.glimmerOfLight)' , "mouseover" , "holyShock_mouseover"},
@@ -141,7 +145,6 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'heal.hasBuffCount(spells.glimmerOfLight) == heal.countInRange and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmd_count" },
     {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.85 and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmg_health" },
     {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hpIncoming > 0.85' ,{
-        {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestTankInRaid , "holyShock_tank_duration" },
         {spells.judgment,  'true' , env.damageTarget },
         {spells.holyShock,  'mouseover.isAttackable and not mouseover.hasDebuff(spells.glimmerOfLight)' , "mouseover" },
         {spells.holyShock,  'true' , env.damageTarget },
@@ -171,9 +174,6 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'player.hp < 0.90 and player.hp < heal.lowestTankInRaid.hp' , "player"  },
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid },
 
-    {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
-    {spells.avengingWrath, 'player.hasTalent(6,1) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
-    {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
     {{"nested"},'kps.cooldowns', {
         -- "Vengeur sacré" --"Holy Avenger" -- Increases your haste by 30% and your Holy Shock healing by 30% for 20 sec.
         {spells.holyAvenger, 'player.hasTalent(5,3) and heal.lowestInRaid.hp < 0.40 and heal.countInRange <= 5' },

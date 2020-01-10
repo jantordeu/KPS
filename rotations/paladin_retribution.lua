@@ -65,6 +65,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'player.useTrinket(1) and target.debuffStacks(spells.razorCoral) == 0' , "/use 14" },
     --{{"macro"}, 'player.useTrinket(1) and target.debuffStacks(spells.razorCoral) >= 3' , "/use 14" },
     {{"macro"}, 'player.useTrinket(1) and player.hasBuff(spells.avengingWrath)' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.hasBuff(spells.crusade)' , "/use 14" },
 
     -- AZERITE
     -- "Guardian of Azeroth" -- invoque un gardien d’Azeroth pendant 30 sec. 3 min cooldown.
@@ -73,15 +74,19 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     --{spells.azerite.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.avengingWrath) > 15' , "target" },
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.crusade) > 15' , "target" },
-   
-    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 7 and player.holyPower >= 3' , "target" , "inquisition_5" },
-    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 12 and spells.executionSentence.cooldown < 10 and player.holyPower >= 1' , "target" , "inquisition_10" },
-    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 17 and spells.avengingWrath.cooldown < 15 and player.holyPower >= 2' , "target" , "inquisition_15" },
+
     {{"nested"},'kps.cooldowns and player.holyPower >= 2', {
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) > 25 and target.distanceMax <= 10' },
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
     }},
+       
+	{{"nested"},'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 17', {
+    	{spells.inquisition, 'spells.avengingWrath.cooldown < 15 and player.holyPower >= 2' , "target" , "inquisition_15" },
+    	{spells.inquisition, 'player.myBuffDuration(spells.inquisition) < 12 and spells.executionSentence.cooldown < 10 and player.holyPower >= 1' , "target" , "inquisition_10" },
+        {spells.inquisition, 'player.myBuffDuration(spells.inquisition) < 7 and player.holyPower >= 3' , "target" , "inquisition_5" },
+    }},
+
     {spells.executionSentence, 'target.distanceMax <= 20 and spells.avengingWrath.cooldown > 15' , "target" , "executionSentence" },
     {spells.hammerOfWrath, 'player.hasTalent(2,3) and player.holyPower <= 4' , "target" }, -- Generates 1 Holy Power.
     {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
