@@ -44,8 +44,7 @@ kps.rotations.register("WARRIOR","PROTECTION",
     {spells.stoneform, 'player.isDispellable("Poison")' , "player" },
     {spells.stoneform, 'player.isDispellable("Magic")' , "player" },
     {spells.stoneform, 'player.isDispellable("Curse")' , "player" },
-    {spells.stoneform, 'player.incomingDamage > 0' },
-    {spells.shieldWall, 'player.incomingDamage > player.incomingHeal and player.hp < 0.60' },
+    {spells.shieldWall, 'player.hp < 0.60' },
     {spells.lastStand, 'player.hp < 0.40' },
 
     -- TRINKETS

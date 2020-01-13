@@ -87,9 +87,8 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.avengersShield, 'target.distanceMax <= 10 and spells.avengersShield.isUsable and player.myBuffDuration(spells.avengersValor) < 2 and not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "avengersShield_isUsable" },
     -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and spells.shieldOfTheRighteous.charges == 3 ' , "target" , "shieldOfTheRighteous_charges_3"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and player.hpIncoming < 0.90 and player.hasBuff(spells.avengersValor) and spells.shieldOfTheRighteous.charges == 2   ' , "target" , "shieldOfTheRighteous_charges_2"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and player.hpIncoming < 0.80 and spells.shieldOfTheRighteous.charges == 2 ' , "target" , "shieldOfTheRighteous_charges"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.incomingDamage > player.incomingHeal and player.hpIncoming < 0.65' , "target" , "shieldOfTheRighteous_incomingDamage"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and player.hpIncoming < 0.80 and spells.shieldOfTheRighteous.charges == 2 ' , "target" , "shieldOfTheRighteous_charges"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hpIncoming < 0.65' , "target" , "shieldOfTheRighteous_incomingDamage"},
 
     {spells.judgment, 'target.isAttackable and target.distanceMax <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
     {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distanceMax <= 30 and spells.judgment.charges == 2' , "target" },

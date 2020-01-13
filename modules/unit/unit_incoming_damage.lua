@@ -3,7 +3,7 @@ Unit Incoming Damage: Functions which handle incoming damage or healing
 ]]--
 local Unit = kps.Unit.prototype
 
-local incomingTimeRange = 4
+local incomingTimeRange = 3
 local moduleLoaded = false
 
 -- incomingDamage
@@ -164,7 +164,6 @@ end
 function Unit.incomingDamage(self)
     loadOnDemand()
     local totalDamage = 0
-    local incomingTimeRange = 4
     if incomingDamage[self.guid] ~= nil then
         local dataset = incomingDamage[self.guid]
         if GetTime() - dataset[1][1] > incomingTimeRange + 1 then return 0 end
@@ -189,7 +188,6 @@ end
 function Unit.incomingHeal(self)
     loadOnDemand()
     local totalHeal = 0
-    local incomingTimeRange = 4
     if incomingHeal[self.guid] ~= nil then
         local dataset = incomingHeal[self.guid]
         if GetTime() - dataset[1][1] > incomingTimeRange + 1 then return 0 end

@@ -822,6 +822,17 @@ print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.
 --print("|cffff8000TRINKET_0:|cffffffff", kps["env"].player.useTrinket(0))
 --print("|cffff8000TRINKET_1:|cffffffff", kps["env"].player.useTrinket(1))
 
+--local auraName, caster
+--local i = 1
+--local spellname = kps.spells.priest.atonement
+--auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff("player",i)
+--while auraName do
+--   if auraName == spellname.name then print(auraName, caster) end
+--   i = i + 1
+--   auraName, _, count, debuffType, duration, expirationTime, caster, isStealable, _, spellId, _, isBossDebuff, _, _, _, _, _, _ = UnitBuff("player",i)
+--end
+
+
 end
 
 --[[

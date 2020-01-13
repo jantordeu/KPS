@@ -77,7 +77,7 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Beacon of Faith" -- Mark a second target as a Beacon, mimicking the effects of Beacon of Light. Your heals will now heal both of your Beacons, but at 30% reduced effectiveness.
     --{spells.beaconOfFaith, 'player.hasTalent(7,2) and not player.hasBuff(spells.beaconOfFaith) and not player.hasBuff(spells.beaconOfLight)' , "player" },
     -- "Beacon of Virtue" -- Replaces "Beacon of Light"  -- Applique un Guide de lumière sur la cible et 3 allié blessé à moins de 30 mètres pendant 8 sec. Vos soins leur rendent 40% du montant soigné.
-    --{spells.beaconOfVirtue, 'player.hasTalent(7,3) and not heal.lowestTankInRaid.hasBuff(spells.beaconOfVirtue) and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid },
+    --{spells.beaconOfVirtue, 'player.hasTalent(7,3) and not heal.lowestTankInRaid.hasBuff(spells.beaconOfVirtue)' , kps.heal.lowestTankInRaid },
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and target.isAttackable' , "/use 13" },
@@ -85,7 +85,7 @@ kps.rotations.register("PALADIN","HOLY",
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
     -- "Bestow Faith" "Don de foi" -- Récupère (150% of Spell power) points de vie à expiration. -- 12 sec cd
-    {spells.bestowFaith, 'not heal.lowestTankInRaid.hasBuff(spells.bestowFaith) and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid },    
+    {spells.bestowFaith, 'not heal.lowestTankInRaid.hasBuff(spells.bestowFaith)' , kps.heal.lowestTankInRaid },    
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
     {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw) and heal.lowestInRaid.hpIncoming < 0.85' },
@@ -132,7 +132,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'heal.lowestInRaid.hpIncoming < 0.85 and not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
     -- 216411/divine-purpose -- spells.divinePurposeHolyShock -- Divine Purpose Your next Holy Shock costs no mana. 10 seconds remaining
     -- 216413/divine-purpose -- spells.divinePurposeLightOfDawn -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
-    {{"nested"}, 'heal.lowestInRaid.hp < 0.70 and player.hasBuff(spells.divinePurposeHolyShock)' ,{
+    {{"nested"}, 'player.hasBuff(spells.divinePurposeHolyShock)' ,{
     	{spells.holyShock, 'player.hp < 0.55' , "player" },
         {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid },
     	{spells.holyShock, 'heal.lowestInRaid.hp < 0.55' ,  kps.heal.lowestInRaid },
@@ -141,7 +141,7 @@ kps.rotations.register("PALADIN","HOLY",
 
     -- GLIMMER DAMAGE
     -- "Jugement de lumière" -- permet aux 25 prochaines attaques réussies contre la cible de rendre (5% of Spell power) points de vie à l’attaquant.
-    {spells.judgment, 'heal.lowestInRaid.hpIncoming > 0.85' , env.damageTarget },
+    {spells.judgment, 'heal.lowestInRaid.hpIncoming > 0.65' , env.damageTarget },
     {spells.holyShock, 'heal.hasBuffCount(spells.glimmerOfLight) == heal.countInRange and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmd_count" },
     {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.85 and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmg_health" },
     {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hpIncoming > 0.85' ,{
@@ -166,7 +166,7 @@ kps.rotations.register("PALADIN","HOLY",
     {{"nested"}, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hp < 0.85' ,{
         {spells.holyLight, 'heal.lowestInRaid.hp < 0.85 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid , "heal_lowest_infusion" },
         {spells.holyLight, 'player.hp < 0.85 and player.hp < heal.lowestTankInRaid.hp' , "player" , "heal_player_infusion" },
-        {spells.holyLight, 'heal.lowestTankInRaid.hp < 0.70' , kps.heal.lowestTankInRaid , "heal_tank_infusion" },
+        {spells.holyLight, 'heal.lowestTankInRaid.hp < 0.85' , kps.heal.lowestTankInRaid , "heal_tank_infusion" },
     }},
 
     -- GLIMMER HEAL
@@ -203,15 +203,15 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestInRaid.hp < 0.70 and player.hp > 0.85 and not heal.lowestInRaid.isUnit("player")' , kps.heal.lowestInRaid , "MARTYR_lowest"},
 
     {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.55' ,{
-        {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.55 and player.incomingDamage > player.incomingHeal' , "player" , "FLASH_PLAYER"  },
-    	{spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.incomingDamage > heal.lowestInRaid.incomingHeal' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
-    	{spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
+        {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.55' , "player" , "FLASH_PLAYER"  },
+    	{spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.55 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
+    	{spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.55' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
     }},
 
     {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.70 and heal.countInRange <= 5 ' ,{
-        {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.70 and player.incomingDamage > player.incomingHeal' , "player" , "FLASH_PLAYER"  },
-        {spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hp < 0.70 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.incomingDamage > heal.lowestInRaid.incomingHeal' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
-        {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.70 and heal.lowestTankInRaid.incomingDamage > heal.lowestTankInRaid.incomingHeal' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
+        {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.70' , "player" , "FLASH_PLAYER"  },
+        {spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.70 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
+        {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.70' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
     }},
 
     {spells.holyLight, 'heal.lowestInRaid.hp < 0.90 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid , "heal_lowest_infusion" },
