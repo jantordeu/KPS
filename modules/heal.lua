@@ -141,7 +141,7 @@ kps.RaidStatus.prototype.assistTankInRaid = kps.utils.cachedValue(function()
     local lowestUnit = kps.RaidStatus.prototype.lowestTankInRaid()
     local lowestHp = lowestUnit.hp
     for name,unit in pairs(raidStatus) do
-        if unit.isHealable and unit.isRaidTank and unit.hp > lowestHp then
+        if unit.isHealable and unit.isRaidTank and unit.guid ~= lowestUnit.guid then
             lowestUnit = unit
             lowestHp = lowestUnit.hp
         end
@@ -174,7 +174,7 @@ kps.RaidStatus.prototype.lowestUnitInRaid = kps.utils.cachedValue(function()
     local prevUnit = kps["env"].player
     local prevHp = 2
     for name,unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hp < prevHp and unit.hp > lowestHp then
+        if unit.isHealable and unit.hp < prevHp and unit.guid ~= lowestUnit.guid then
             prevUnit = unit
             prevHp = prevUnit.hp
         end

@@ -1,4 +1,4 @@
-## Interface: 80205
+## Interface: 80300
 ## Title: |cffff8000KPS Addon
 ## Notes: Karnofsky Performance System
 ## SavedVariables:

@@ -89,8 +89,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     {spells.executionSentence, 'target.distanceMax <= 20 and spells.avengingWrath.cooldown > 15' , "target" , "executionSentence" },
     {spells.hammerOfWrath, 'player.hasTalent(2,3) and player.holyPower <= 4' , "target" }, -- Generates 1 Holy Power.
-    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
     {spells.judgment, 'target.distanceMax <= 30 and player.holyPower <= 4 and not target.hasMyDebuff(spells.judgment)' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
+    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
     
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm_multitarget" },
     {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
