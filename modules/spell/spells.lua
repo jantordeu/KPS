@@ -186,3 +186,5 @@ kps.spells.azerite.aegisOfTheDeep = kps.Spell.fromId(298168)
 kps.spells.azerite.azerothUndyingGift = kps.Spell.fromId(293019)
 -- "Gardien d’Azeroth" -- "Guardian of Azeroth" -- un gardien d’Azeroth pendant 30 sec. Ce gardien empale votre cible avec des pointes d’azérite toutes les 2 s
 kps.spells.azerite.guardianOfAzeroth = kps.Spell.fromId(295840)
+-- "Reaping Flames" -- Burn your target with a bolt of Azerite, dealing 33385 Fire damage. If the target has less than 20% health, the cooldown is reduced by 30 sec.
+kps.spells.azerite.reapingFlames = kps.Spell.fromId(310690)

@@ -104,6 +104,7 @@ kps.spells.paladin.fistOfJustice = kps.Spell.fromId(198054)
 kps.spells.paladin.flashOfLight = kps.Spell.fromId(19750)
 kps.spells.paladin.focusedHealing = kps.Spell.fromId(200326)
 kps.spells.paladin.forbearantFaithful = kps.Spell.fromId(209376)
+kps.spells.paladin.forbearance = kps.Spell.fromId(25771)
 kps.spells.paladin.fortifyingAuras = kps.Spell.fromId(273134)
 kps.spells.paladin.gallantSteed = kps.Spell.fromId(280189)
 kps.spells.paladin.giftOfTheNaaru = kps.Spell.fromId(59544)
@@ -263,6 +264,9 @@ kps.spells.paladin.wordOfGlory = kps.Spell.fromId(210191)
 kps.spells.paladin.wrathOfTheAshbringer = kps.Spell.fromId(186945)
 kps.spells.paladin.zeal = kps.Spell.fromId(269569)
 kps.spells.paladin.zealotry = kps.Spell.fromId(269262)
+
+
+
 -- AZERITE
 kps.spells.paladin.azerite = kps.spells.azerite
 

@@ -23,15 +23,20 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- "Shield of Vengeance" -- Creates a barrier of holy light that absorbs (30 / 100 * Total health) damage for 15 sec.
     {spells.shieldOfVengeance, 'player.incomingDamage > player.incomingHeal and target.distanceMax <= 10'},
     {spells.greaterBlessingOfKings, 'not player.isInGroup and not player.hasBuff(spells.greaterBlessingOfKings) and player.incomingDamage > player.incomingHeal' , "player" },
-    
+
+    -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
+    {spells.blessingOfProtection, 'player.hp < 0.40' , "player"},
+    {spells.blessingOfProtection, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid },    
+    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid },    
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
-    {spells.divineShield, 'player.hp < 0.30' , "player" },
 
-    {spells.layOnHands, 'player.hp < 0.40', 'player'},
+    {spells.layOnHands, 'player.hp < 0.30', 'player'},
     {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
     {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
     {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.65'}, 
+    
+    {spells.divineShield, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)' , "player" },
 
     {{"nested"}, 'kps.addControl',{
 		-- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
@@ -55,9 +60,6 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     }},
     -- "Pierre de soins" 5512
     {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" },
-    -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
-    {spells.blessingOfProtection, 'player.hp < 0.40' , "player"},
-    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.30' , kps.heal.lowestInRaid },
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 20' , "/use 13" },
@@ -69,7 +71,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     -- AZERITE
     -- "Guardian of Azeroth" -- invoque un gardien d’Azeroth pendant 30 sec. 3 min cooldown.
-    {spells.azerite.guardianOfAzeroth, 'kps.cooldowns and target.isAttackable and spells.avengingWrath.cooldown < 5' , "target" },
+    {spells.azerite.guardianOfAzeroth, 'kps.cooldowns and target.isAttackable' , "target" },
     --{spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
     --{spells.azerite.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.avengingWrath) > 15' , "target" },
@@ -87,7 +89,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.inquisition, 'player.myBuffDuration(spells.inquisition) < 7 and player.holyPower >= 3' , "target" , "inquisition_5" },
     }},
 
-    {spells.executionSentence, 'target.distanceMax <= 20 and spells.avengingWrath.cooldown > 15' , "target" , "executionSentence" },
+    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20 and spells.avengingWrath.cooldown > 15' , "target" , "executionSentence" },
+    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20 and spells.crusade.cooldown > 15' , "target" , "executionSentence" },
     {spells.hammerOfWrath, 'player.hasTalent(2,3) and player.holyPower <= 4' , "target" }, -- Generates 1 Holy Power.
     {spells.judgment, 'target.distanceMax <= 30 and player.holyPower <= 4 and not target.hasMyDebuff(spells.judgment)' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
     {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
