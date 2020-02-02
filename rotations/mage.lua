@@ -89,5 +89,3 @@ function kps.env.mage.FocusMouseoverFire()
     end
     return false
 end
-
-

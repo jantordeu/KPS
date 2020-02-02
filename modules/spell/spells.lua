@@ -112,6 +112,9 @@ kps.spells.ignore.disengage = kps.Spell.fromId(781) -- Disengage
 kps.spells.ignore.iceFloes = kps.Spell.fromId(108839) -- Ice Floes
 kps.spells.ignore.felRush = kps.Spell.fromId(195072) -- Fel Rush
 
+-- Ignore some dispellable debuff
+kps.spells.ignoreDebuff = {}
+kps.spells.ignoreDebuff.vampiricTouch = kps.Spell.fromId(34914)
 
 -- Greater Draenic Flasks
 kps.spells.flask = {}

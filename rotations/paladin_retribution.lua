@@ -44,6 +44,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     	{spells.handOfHindrance, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
     	{spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
     	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+        {spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isCasting' , "mouseover" },
+    	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
     }},
     {{"nested"}, 'kps.interrupt',{
         {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting ' , "target" },
@@ -77,39 +79,35 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.avengingWrath) > 15' , "target" },
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.crusade) > 15' , "target" },
 
-    {{"nested"},'kps.cooldowns and player.holyPower >= 2', {
+    {spells.inquisition, 'player.hasTalent(7,3) and player.hasBuff(spells.inquisition) and player.myBuffDuration(spells.inquisition) < 25 and spells.avengingWrath.cooldown < player.gcd and player.holyPower < 3' , "target" , "inquisition_30" },
+    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 7 and player.holyPower > 2' , "target" , "inquisition_7" },
+    {{"nested"},'kps.cooldowns', {
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) > 25 and target.distanceMax <= 10' },
         {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
     }},
-       
-	{{"nested"},'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 17', {
-    	{spells.inquisition, 'spells.avengingWrath.cooldown < 15 and player.holyPower >= 2' , "target" , "inquisition_15" },
-    	{spells.inquisition, 'player.myBuffDuration(spells.inquisition) < 12 and spells.executionSentence.cooldown < 10 and player.holyPower >= 1' , "target" , "inquisition_10" },
-        {spells.inquisition, 'player.myBuffDuration(spells.inquisition) < 7 and player.holyPower >= 3' , "target" , "inquisition_5" },
-    }},
-
-    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20 and spells.avengingWrath.cooldown > 15' , "target" , "executionSentence" },
-    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20 and spells.crusade.cooldown > 15' , "target" , "executionSentence" },
-    {spells.hammerOfWrath, 'player.hasTalent(2,3) and player.holyPower <= 4' , "target" }, -- Generates 1 Holy Power.
-    {spells.judgment, 'target.distanceMax <= 30 and player.holyPower <= 4 and not target.hasMyDebuff(spells.judgment)' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
-    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
     
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm_multitarget" },
     {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
     {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
+
+    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
+    {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
+    {spells.judgment, 'target.distanceMax <= 30 and not target.hasMyDebuff(spells.judgment)' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
+    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distanceMax <= 10 and spells.avengingWrath.cooldown > 30' , "target" },
+
     {spells.divineStorm, 'player.plateCount >= 3' , "target" , "divineStorm_plateCount" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
 
-    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distanceMax <= 10 and spells.avengingWrath.cooldown > 30' , "target" },
     {spells.judgment, 'target.distanceMax <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
     {spells.consecration, 'player.hasTalent(4,2) and not target.isMoving and target.distanceMax <= 10' }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'target.distanceMax <= 10'}, --Generates 1 Holy Power
 
     -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.
     -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
-    --{{"macro"}, 'true' , "/startattack" },
+    {{"macro"}, 'true' , "/startattack" },
 
 }
 ,"paladin_retribution_bfa")

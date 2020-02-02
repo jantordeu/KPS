@@ -60,16 +60,16 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
     {spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
-    {spells.azerite.memoryOfLucidDreams, 'player.hpIncoming < 0.80 and player.incomingDamage > player.incomingHeal' , "target" },
-    {spells.azerite.aegisOfTheDeep, 'player.incomingDamage > player.incomingHeal'},
-    {spells.azerite.azerothUndyingGift},
+    {spells.azerite.memoryOfLucidDreams, 'player.hpIncoming < 0.65' , "target" },
+    {spells.azerite.aegisOfTheDeep, 'player.hpIncoming < 0.80'},
+    {spells.azerite.azerothUndyingGift, 'player.hpIncoming < 0.80'},
 
+    -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
+    {spells.ardentDefender, 'target.isCasting ' , "ardentDefender_casting" },
+    {spells.ardentDefender, 'player.hpIncoming < 0.65 and spells.handOfTheProtector.cooldown > player.gcd' }, 
+    {spells.ardentDefender, 'player.hpIncoming < 0.65 and spells.lightOfTheProtector.cooldown > player.gcd' },
     -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
     {spells.guardianOfAncientKings, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and spells.ardentDefender.cooldown > player.gcd' },
-    -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
-    {spells.ardentDefender, 'player.hpIncoming < 0.80 and target.isCasting and target.isRaidBoss' }, 
-    {spells.ardentDefender, 'player.hpIncoming < 0.80 and spells.handOfTheProtector.cooldown > player.gcd and spells.shieldOfTheRighteous.charges == 0' }, 
-    {spells.ardentDefender, 'player.hpIncoming < 0.80 and spells.lightOfTheProtector.cooldown > player.gcd and spells.shieldOfTheRighteous.charges == 0' }, 
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
     {spells.blessingOfProtection, 'mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
     {spells.blessingOfProtection, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and not player.hasBuff(spells.guardianOfAncientKings)' , "player"},
@@ -87,8 +87,8 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and player.hpIncoming < 0.80 and spells.shieldOfTheRighteous.charges == 2 ' , "target" , "shieldOfTheRighteous_health_80"},
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and player.hpIncoming < 0.65' , "target" , "shieldOfTheRighteous_health_65"},
     -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
-    {spells.avengersShield, 'target.distanceMax <= 10 and spells.avengersShield.isUsable and target.isCasting' , "target" , "avengersShield_casting" },
-    {spells.avengersShield, 'target.distanceMax <= 10 and spells.avengersShield.isUsable and player.myBuffDuration(spells.avengersValor) < 2 and not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "avengersShield_isUsable" },
+    {spells.avengersShield, 'target.distanceMax <= 10 and target.isCasting and target.castTimeLeft < 2' , "target" , "avengersShield_casting" },
+    {spells.avengersShield, 'target.distanceMax <= 10 and player.myBuffDuration(spells.avengersValor) < 2' , "target" , "avengersShield_isUsable" },
 
     {spells.judgment, 'target.isAttackable and target.distanceMax <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
     {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distanceMax <= 30 and spells.judgment.charges == 2' , "target" },

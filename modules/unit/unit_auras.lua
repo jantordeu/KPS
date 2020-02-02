@@ -493,6 +493,14 @@ end
 --[[[
 @function `<UNIT>.isDispellable(<DISPEL>)` - returns true if the FRIENDLY unit has a dispellable debuff. DISPEL TYPE "Magic", "Poison", "Disease", "Curse". e.g. player.isDispellable("Magic")
 ]]--
+
+local function ignoreDebuff(spellname)
+    for _,spell in pairs(kps.spells.ignoreDebuff) do
+        if spell.name == spellname then return true end
+    end
+    return false
+end
+
 local UnitCanAssist = UnitCanAssist
 local isDebuffDispellable = setmetatable({}, {
     __index = function(t, unit)
@@ -504,7 +512,7 @@ local isDebuffDispellable = setmetatable({}, {
             if dispelType == nil then dispelType = "Magic" end
             while auraName do
                 if debuffType ~= nil and debuffType == dispelType then
-                    return true
+                    if not ignoreDebuff(auraName) then return true end
                 end
                 i = i + 1
                 auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitDebuff(unit,i)
@@ -562,6 +570,7 @@ end
 @function `<UNIT>.immuneHeal` - returns true if the unit has an Immune Healing Debuff
 ]]--
 function Unit.immuneHeal(self)
+    if not UnitCanAssist("player", self.unit) then return false end
     for _,spell in pairs(kps.spells.immuneHeal) do
         if self.hasDebuff(spell) then return true end
     end
@@ -581,6 +590,7 @@ function Unit.hasBossDebuff(self)
 end
 
 function Unit.absorptionHeal(self)
+    if not UnitCanAssist("player", self.unit) then return false end
     for _,spell in pairs(kps.spells.absorptionHeal) do
         if self.hasDebuff(spell) then return true end
     end

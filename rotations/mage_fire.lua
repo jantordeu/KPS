@@ -8,6 +8,7 @@ local env = kps.env.mage
 
 local Meteor = spells.meteor.name
 local Flamestrike = spells.flamestrike.name
+local Pyroblast = spells.pyroblast.name
 
 kps.runAtEnd(function()
    kps.gui.addCustomToggle("MAGE","FIRE", "polymorph", "Interface\\Icons\\spell_nature_polymorph", "polymorph")
@@ -73,45 +74,46 @@ kps.rotations.register("MAGE","FIRE",
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
 
     -- One Rune of Power and one Meteor should always be used with Combustion
-    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 1 and spells.combustion.cooldown > 45 and spells.meteor.cooldown > 9 and spells.fireBlast.charges > 0 and target.isAttackable' , "player" , "runeOfPower_charges_1 " },
+    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 1 and spells.combustion.cooldown > 45 and spells.meteor.cooldown > 9 and target.isAttackable' , "player" , "runeOfPower_charges_1 " },
     {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 2 and spells.combustion.cooldown > 9 and target.isAttackable' , "player" , "runeOfPower_charges_2 " },
     {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges > 0 and spells.combustion.cooldown > 45 and spells.meteor.cooldown < 7 and target.isAttackable' , "player" , "runeOfPower_meteor"},
 
-    {{"macro"}, 'keys.shift and player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and player.hasBuff(spells.runeOfPower)', "/cast [@cursor] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and player.hasBuff(spells.runeOfPower) and target.distanceMax <= 5', "/cast [@player] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and spells.combustion.cooldown > 45 and player.hasBuff(spells.runeOfPower) and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
-
-    {{"nested"}, 'kps.multiTarget and target.isAttackable', {
-        {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and player.hasBuff(spells.combustion)' , "target" },
-        {{"macro"}, 'keys.shift and player.plateCount >= 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
-        {{"macro"}, 'player.plateCount >= 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
-        {{"macro"}, 'player.plateCount >= 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and mouseover.isAttackable' , "/cast [@cursor] "..Flamestrike },
-        {spells.fireBlast, 'player.hasBuff(spells.heatingUp)', "target" },
-        {spells.dragonsBreath, 'target.distanceMax <= 10' , "target" },
-        {spells.livingBomb, 'player.hasTalent(6,3)' , "target" },
-        {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite) and target.distanceMax <= 10  and player.plateCount >= 3' , "target" , "scorch_target_ignite" },
-        {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite) and target.distanceMax <= 10  and player.plateCount >= 3' , "focus" , "scorch_focus_ignite" },
-        {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite) and mouseover.distanceMax <= 10  and player.plateCount >= 3' , "mouseover" , "scorch_mouseover_ignite" },
-        {spells.scorch, 'target.isAttackable and target.distanceMax <= 10 and player.plateCount >= 3' , "target" },
-    }},
-
+    {{"macro"}, 'keys.shift and player.hasTalent(7,3) and spells.meteor.cooldown == 0 ', "/cast [@cursor] "..Meteor },
+    {{"macro"}, 'keys.shift and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
+        
 	{{"nested"}, 'player.hasBuff(spells.combustion) and target.isAttackable', {
-    	{{"macro"}, 'keys.shift and player.hasTalent(7,3) and spells.meteor.cooldown == 0 ', "/cast [@cursor] "..Meteor },
     	{{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
     	{{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
-     	{spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
+        {{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
+        {{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
+        {spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
         {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target" },
         {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus" },
         {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" },
         {spells.scorch, 'target.isAttackable' , "target" },
     }},
+    
+    {{"nested"}, 'kps.multiTarget and target.isAttackable', {
+        {{"macro"}, 'player.plateCount > 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
+        {{"macro"}, 'player.plateCount > 3 and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and mouseover.isAttackable' , "/cast [@cursor] "..Flamestrike },
+        {spells.fireBlast, 'player.hasBuff(spells.heatingUp)', "target" },
+        {spells.dragonsBreath, 'target.distanceMax <= 10' , "target" },
+        {spells.livingBomb, 'player.hasTalent(6,3)' , "target" },
+        {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite) and target.distanceMax <= 10  and player.plateCount > 3' , "target" , "scorch_target_ignite" },
+        {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite) and target.distanceMax <= 10  and player.plateCount > 3' , "focus" , "scorch_focus_ignite" },
+        {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite) and mouseover.distanceMax <= 10  and player.plateCount > 3' , "mouseover" , "scorch_mouseover_ignite" },
+        {spells.scorch, 'target.isAttackable and target.distanceMax <= 10 and player.plateCount > 3' , "target" },
+    }},
  
     -- debuff "Ignite" 12654 -- Scorch & fireball -- spells.ignite
     -- debuff "Conflagration" 226757 -- fireball -- spells.conflagration
-
-    {spells.pyroblast, 'player.hasTalent(7,2) and player.hasBuff(spells.pyroclasm)' , "target" },
+    {{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
+    {{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
+    {spells.pyroblast, 'player.hasTalent(7,2) and player.hasBuff(spells.pyroclasm)' , "target" },
     {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.combustion.cooldown > 17' , "target" },
     {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.combustion.cooldown > 9 and spells.fireBlast.charges > 1' , "target" },
 
@@ -121,7 +123,7 @@ kps.rotations.register("MAGE","FIRE",
 
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 10' , "target" },
     {spells.livingBomb,  'player.hasTalent(6,3)' , "target" },
-    {spells.scorch, 'spells.fireBlast.charges == 0 and target.distanceMax <= 5 and target.isAttackable' , "target" , "scorch_fireBlast.charges" },
+    {spells.scorch, 'target.distanceMax <= 5 and target.isAttackable' , "target" , "scorch_fireBlast.charges" },
     {spells.scorch, 'player.isMoving and target.isAttackable' , "target" },
     {spells.scorch, 'player.isMoving and focus.isAttackable' , "focus" , "scorch_focus" },
 

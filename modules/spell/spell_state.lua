@@ -144,6 +144,13 @@ function Spell.isPrioritySpell(self)
     return self._isPrioritySpell
 end
 
+function Spell.ignorableDebuff(self)
+    if rawget(self,"_ignorableDebuff") == nil then
+        self._ignorableDebuff = self.isOneOf(kps.spells.ignoreDebuff)
+    end
+    return self._ignorableDebuff
+end
+
 
 --[[[
 @function `<SPELL>.canBeCastAt(<UNIT-STRING>)` - returns true if the spell can be cast at the given unit (e.g.: `spell.immolate.canBeCastAt("focus")`). A spell can be cast if the target unit exists, the player has enough resources, the spell is not on cooldown and the target is in range.
