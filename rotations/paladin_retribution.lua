@@ -68,8 +68,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and target.debuffStacks(spells.razorCoral) == 0' , "/use 14" },
     --{{"macro"}, 'player.useTrinket(1) and target.debuffStacks(spells.razorCoral) >= 3' , "/use 14" },
-    {{"macro"}, 'player.useTrinket(1) and player.hasBuff(spells.avengingWrath)' , "/use 14" },
-    {{"macro"}, 'player.useTrinket(1) and player.hasBuff(spells.crusade)' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.buffDuration(spells.avengingWrath) > 20 and kps.timeInCombat > 30' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.buffDuration(spells.crusade) > 20 and kps.timeInCombat > 30' , "/use 14" },
 
     -- AZERITE
     -- "Guardian of Azeroth" -- invoque un gardien d’Azeroth pendant 30 sec. 3 min cooldown.
@@ -79,27 +79,27 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.avengingWrath) > 15' , "target" },
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.crusade) > 15' , "target" },
 
-    {spells.inquisition, 'player.hasTalent(7,3) and player.hasBuff(spells.inquisition) and player.myBuffDuration(spells.inquisition) < 25 and spells.avengingWrath.cooldown < player.gcd and player.holyPower < 3' , "target" , "inquisition_30" },
-    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 7 and player.holyPower > 2' , "target" , "inquisition_7" },
+    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 25 and spells.avengingWrath.cooldown < player.gcd' , "target" , "inquisition_25" },
+    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 7' , "target" , "inquisition_7" },
     {{"nested"},'kps.cooldowns', {
-        {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) > 25 and target.distanceMax <= 10' },
-        {spells.avengingWrath, 'target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
+        {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) > 25 and target.distanceMax <= 10' },
+        {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
     }},
-    
+
+    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
+    {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
+        
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm_multitarget" },
     {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
     {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
-
-    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
-    {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
-    {spells.judgment, 'target.distanceMax <= 30 and not target.hasMyDebuff(spells.judgment)' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
-    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
-    {spells.wakeOfAshes, 'player.holyPower <= 1 and target.distanceMax <= 10 and spells.avengingWrath.cooldown > 30' , "target" },
-
     {spells.divineStorm, 'player.plateCount >= 3' , "target" , "divineStorm_plateCount" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
+
+    {spells.judgment, 'not target.hasMyDebuff(spells.judgment) and target.distanceMax <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
+    {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
+    {spells.wakeOfAshes, 'player.holyPower <= 1 and spells.avengingWrath.cooldown > 30 and target.distanceMax <= 10' , "target" },
 
     {spells.judgment, 'target.distanceMax <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
     {spells.consecration, 'player.hasTalent(4,2) and not target.isMoving and target.distanceMax <= 10' }, -- Generates 1 Holy Power.

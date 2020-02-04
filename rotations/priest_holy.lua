@@ -177,7 +177,7 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.flashHeal, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"FLASH_POM" },
         {spells.flashHeal, 'player.hp < 0.55' , "player" ,"FLASH_POM" },
         {spells.flashHeal, 'heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid ,"FLASH_POM" },
-        {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' , kps.heal.lowestInRaid , "POH" },
+        {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and not player.isInRaid' , kps.heal.lowestInRaid , "POH" },
     }},
 
     {{"nested"}, 'not player.isMoving and mouseover.isHealable' ,{
@@ -187,7 +187,7 @@ kps.rotations.register("PRIEST","HOLY",{
     }},
 
     -- "Prayer of Healing" 596
-    {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' , kps.heal.lowestInRaid , "POH_party" },
+    {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and not player.isInRaid' , kps.heal.lowestInRaid , "POH_party" },
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 2 and heal.countLossInRange(0.90) > 4' , kps.heal.lowestInRaid , "POH" },
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 3 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "POH" },
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 3' , kps.heal.lowestTankInRaid , "POH" },
@@ -200,7 +200,7 @@ kps.rotations.register("PRIEST","HOLY",{
     }},
 
     -- "Soins rapides" 2060 GROUP
-    {{"nested"}, 'heal.countInRange <= 5' ,{
+    {{"nested"}, 'not player.isInRaid' ,{
         {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.65 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
         {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid , "FLASH_TANK" },
         {spells.renew, 'player.hpIncoming < 0.90 and not player.hasBuff(spells.renew)' , "player" },

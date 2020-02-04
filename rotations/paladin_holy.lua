@@ -48,7 +48,7 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
     {spells.divineShield, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)' , "player" },
     {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.30 and not heal.lowestTankInRaid.hasDebuff(spells.forbearance)' , kps.heal.lowestTankInRaid },
-    {spells.divineShield, 'heal.countInRange <= 5 and heal.lowestInRaid.hp < 0.30 and not heal.lowestInRaid.hasDebuff(spells.forbearance)' , kps.heal.lowestInRaid },
+    {spells.divineShield, 'not player.isInRaid and heal.lowestInRaid.hp < 0.30 and not heal.lowestInRaid.hasDebuff(spells.forbearance)' , kps.heal.lowestInRaid },
 
     {{"nested"},'kps.cooldowns', {
         {spells.cleanse, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
@@ -90,7 +90,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw) and heal.lowestInRaid.hpIncoming < 0.85' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
-    {spells.lightOfDawn, 'player.isMoving and heal.countLossInDistance(0.85,10) >= 2' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.85,10) >= 2' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.80,10) >= 2' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.85,10) >= 3' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.90,10) >= 4' },
@@ -110,34 +110,35 @@ kps.rotations.register("PALADIN","HOLY",
     --{spells.auraMastery, 'heal.countLossInRange(0.80)*2  > heal.countInRange' },
 
     {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
-    {spells.avengingWrath, 'player.hasTalent(6,1) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
+    {spells.avengingWrath, 'player.hasTalent(6,1) and not player.hasBuff(spells.avengingWrath) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
     {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80)*2  > heal.countInRange' },
 
     -- MOUSEOVER
     {spells.holyShock, 'mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" , "holyShock_mouseover"},
     {spells.holyShock, 'mouseover.isHealable and not mouseover.hasBuff(spells.glimmerOfLight)' , "mouseover" , "holyShock_mouseover"}, 
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.85 and heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestTankInRaid , "holyShock_tank" },
     {spells.holyShock, 'not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid , "holyShock_tank" },
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65 and heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestTankInRaid , "holyShock_tank" },
     {spells.holyShock, 'heal.lowestInRaid.hpIncoming < 0.65 and not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
     {spells.holyShock, 'not player.hasBuff(spells.glimmerOfLight)' , "player" , "holyShock_player" },
+    {spells.holyShock, 'not heal.assistTankInRaid.hasBuff(spells.glimmerOfLight) and player.isInRaid' , kps.heal.assistTankInRaid , "holyShock_assist_tank" }, 
     
     -- GLIMMER DAMAGE
-    {spells.judgment, 'true' , env.damageTarget },
     {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hpIncoming > 0.85' ,{
         {spells.judgment,  'true' , env.damageTarget },
         {spells.holyShock,  'mouseover.isAttackable and not mouseover.hasDebuff(spells.glimmerOfLight)' , "mouseover" },
         {spells.holyShock,  'true' , env.damageTarget },
         {spells.holyAvenger, 'kps.cooldowns and player.hasTalent(5,3)' },
         {spells.avengingWrath, 'kps.cooldowns and player.hasTalent(6,1)' },
+        {spells.consecration, 'not target.isMoving and not player.isMoving and target.isAttackable and target.distance <= 10' },
         {spells.crusaderStrike, 'target.isAttackable and target.distance <= 10' , "target" },
-        {spells.consecration, 'not target.isMoving and target.isAttackable and target.distance <= 10' },
     }},
-    
+    -- TAB targeting DAMAGE
+    {spells.judgment, 'true' , env.damageTarget },
     {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.85 and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmg_health" },
-    {spells.holyShock, 'heal.hasBuffCount(spells.glimmerOfLight) < 8 and player.isInRaid and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
-    {spells.holyShock, 'heal.hasBuffCount(spells.glimmerOfLight) < heal.countInRange and heal.countInRange <= 5 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
-    {spells.holyShock, 'not heal.assistTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.assistTankInRaid , "holyShock_assist_tank" },
-    {spells.holyShock, 'heal.hasBuffCount(spells.glimmerOfLight) == heal.countInRange and heal.countInRange <= 5 and target.isAttackable and not target.hasDebuff(spells.glimmerOfLight)' , "target" , "dmd_count" },
+    {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.85 and mouseover.isAttackable and not mouseover.hasDebuff(spells.glimmerOfLight)' , "mouseover" , "dmg_health" },
+    -- heal.hasBuffCount(spells.glimmerOfLight) < 8
+    {spells.holyShock, 'player.isInRaid and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
+    {spells.holyShock, 'not player.isInRaid and heal.hasBuffCount(spells.glimmerOfLight) < heal.countInRange and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
 
     {{"nested"}, 'mouseover.isHealable and mouseover.hp < 0.65' ,{
         {spells.holyShock, 'mouseover.hp < 0.55' , "mouseover"  },
@@ -187,17 +188,17 @@ kps.rotations.register("PALADIN","HOLY",
 
     {{"nested"},'kps.cooldowns', {
         -- "Vengeur sacré" --"Holy Avenger" -- Increases your haste by 30% and your Holy Shock healing by 30% for 20 sec.
-        {spells.holyAvenger, 'player.hasTalent(5,3) and heal.lowestInRaid.hp < 0.40 and heal.countInRange <= 5' },
+        {spells.holyAvenger, 'player.hasTalent(5,3) and heal.lowestInRaid.hp < 0.40 and not player.isInRaid' },
         {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80) > 3' },
-        {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
+        {spells.holyAvenger, 'player.hasTalent(5,3) and heal.countLossInRange(0.80) > 2 and not player.isInRaid' },
         -- "Courroux vengeur" --"Avenging Wrath"  -- Damage, healing, and critical strike chance increased by 20%.
-        {spells.avengingWrath, 'player.hasTalent(6,1) and heal.lowestTankInRaid.hp < 0.40 and heal.countInRange <= 5' },
-        {spells.avengingWrath, 'player.hasTalent(6,1) and heal.countLossInRange(0.80) > 3' },
-        {spells.avengingWrath, 'player.hasTalent(6,1) and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
+        {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and player.hasTalent(6,1) and heal.lowestTankInRaid.hp < 0.40 and not player.isInRaid' },
+        {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and player.hasTalent(6,1) and heal.countLossInRange(0.80) > 3' },
+        {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and player.hasTalent(6,1) and heal.countLossInRange(0.80) > 2 and not player.isInRaid' },
         -- "Croisé vengeur --"Avenging Crusader" -- Replaces Avenging Wrath -- 3 nearby allies will be healed for 250% of the damage done. Crusader Strike, Judment damage increased by 30%.
-        {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.lowestTankInRaid.hp < 0.40 and heal.countInRange <= 5' },
+        {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.lowestTankInRaid.hp < 0.40 and not player.isInRaid' },
         {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 3' },
-        {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 2 and heal.countInRange <= 5' },
+        {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 2 and not player.isInRaid' },
     }},
 
     -- "Judgment" -- the target take 30% increased damage from your next Crusader Strike or Holy Shock
@@ -219,7 +220,7 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.55' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
     }},
 
-    {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.65 and heal.countInRange <= 5' ,{
+    {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.65 and not player.isInRaid' ,{
         {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.65' , "player" , "FLASH_PLAYER"  },
         {spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.65 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
         {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.65' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
@@ -232,8 +233,8 @@ kps.rotations.register("PALADIN","HOLY",
     -- DAMAGE
     {spells.judgment, 'true' , env.damageTarget },
     {spells.holyShock, 'true' , env.damageTarget },
+    {spells.consecration, 'not target.isMoving and not player.isMoving and target.isAttackable and target.distance <= 10' },
     {spells.crusaderStrike, 'target.isAttackable and target.distance <= 5' , "target" },
-    {spells.consecration, 'not target.isMoving and target.isAttackable and target.distance <= 10' },
 
     --{{"macro"}, 'true' , "/startattack" },
 
