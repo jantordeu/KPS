@@ -86,8 +86,8 @@ kps.rotations.register("MAGE","FIRE",
 	{{"nested"}, 'player.hasBuff(spells.combustion) and target.isAttackable', {
     	{{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
     	{{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
-        {{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
-        {{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
+        --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
+        --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
         {spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)'},
         {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target" },
@@ -110,8 +110,8 @@ kps.rotations.register("MAGE","FIRE",
  
     -- debuff "Ignite" 12654 -- Scorch & fireball -- spells.ignite
     -- debuff "Conflagration" 226757 -- fireball -- spells.conflagration
-    {{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
-    {{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
+    --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
+    --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
     {spells.pyroblast, 'player.hasTalent(7,2) and player.hasBuff(spells.pyroclasm)' , "target" },
     {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.combustion.cooldown > 17' , "target" },
@@ -126,6 +126,7 @@ kps.rotations.register("MAGE","FIRE",
     {spells.scorch, 'target.distanceMax <= 5 and target.isAttackable' , "target" , "scorch_fireBlast.charges" },
     {spells.scorch, 'player.isMoving and target.isAttackable' , "target" },
     {spells.scorch, 'player.isMoving and focus.isAttackable' , "focus" , "scorch_focus" },
+    {spells.scorch, 'target.hp < 0.30 and target.isAttackable' , "target" },
 
     -- Fireball to generate Heating Up
     {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },

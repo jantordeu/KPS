@@ -517,6 +517,14 @@ kps.RaidStatus.prototype.hasBuffAtonement = kps.utils.cachedValue(function()
 end)
 
 --[[[
+@function `heal.hasBuffGlimmer` - Returns the UNIT with lowest health with Glimmer Buff on raid e.g. heal.hasBuffGlimmer.hp < 0.90
+]]--
+
+kps.RaidStatus.prototype.hasBuffGlimmer = kps.utils.cachedValue(function()
+    return unitHasBuff(kps.spells.paladin.glimmerOfLight)
+end)
+
+--[[[
 @function `heal.hasNotBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasNotBuffAtonement.hp < 0.90
 ]]--
 
@@ -559,45 +567,6 @@ end)
 
 kps.RaidStatus.prototype.hasNotBuffGlimmer = kps.utils.cachedValue(function()
     return unitHasNotBuff(kps.spells.paladin.glimmerOfLight)
-end)
-
---[[[
-@function `heal.hasBuffGlimmer` - Returns the UNIT with lowest health with Glimmer Buff on raid e.g. heal.hasBuffGlimmer.hp < 0.90
-]]--
-
-local unitHasBuff = function(spell)
-    local lowestHp = 2
-    local lowestUnit = kps["env"].player
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hasMyBuff(spell) and unit.hp < lowestHp then
-            lowestHp = unit.hp
-            lowestUnit = unit
-        end
-    end
-    return lowestUnit
-end
-
-kps.RaidStatus.prototype.hasBuffGlimmer = kps.utils.cachedValue(function()
-    return unitHasBuff(kps.spells.paladin.glimmerOfLight)
-end)
-
-local unitHasBuffDuration = function(spell)
-    local lowestDuration = 2
-    local lowestUnit = kps["env"].player
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hasMyBuff(spell) then
-            local buffDuration = unit.myBuffDuration(spell)
-                if buffDuration < lowestDuration then
-                lowestDuration = buffDuration
-                lowestUnit = unit
-            end
-        end
-    end
-    return lowestUnit
-end
-
-kps.RaidStatus.prototype.hasBuffGlimmerDuration = kps.utils.cachedValue(function()
-    return unitHasBuffDuration(kps.spells.paladin.glimmerOfLight)
 end)
 
 --[[[
