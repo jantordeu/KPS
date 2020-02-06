@@ -48,7 +48,6 @@ kps.rotations.register("WARRIOR","FURY",
     {spells.stoneform, 'player.incomingDamage > player.hpMax * 0.10' },
     {spells.intimidatingShout, 'not player.isInGroup and player.plateCount > 3 and not player.hasBuff(spells.recklessness) and spells.recklessness.cooldown > 0' },
     {spells.intimidatingShout, 'not player.isInGroup and player.incomingDamage > player.hpMax * 0.10 and not player.hasBuff(spells.recklessness) and spells.recklessness.cooldown > 0' },
-    --{spells.piercingHowl, 'not player.isInGroup and player.plateCount > 3' },
     
     -- TRINKETS
     -- "Souhait ardent de Kil'jaeden" 144259

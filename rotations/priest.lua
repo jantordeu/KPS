@@ -264,7 +264,7 @@ kps.env.priest.haloMessage = function()
     return haloOnScreen()
 end
 
-kps.env.priest.buff = function()
+kps.env.priest.checkAtonement = function()
     local buff = kps.spells.priest.atonement
     --return kps["env"].player.myBuffDuration(buff)
     return kps["env"].player.hasMyBuff(buff)

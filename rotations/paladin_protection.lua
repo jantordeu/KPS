@@ -98,7 +98,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Hammer of the Righteous" -- "Marteau du vertueux" -- inflige (27% of Attack power)% points de dégâts physiques. -- If you're standing in your Consecration, it also causes a wave of light that hits all nearby enemies for light Holy damage.
     {spells.hammerOfTheRighteous, 'not player.hasTalent(1,3) and player.hasBuff(spells.consecration) and target.distanceMax <= 10', "target" , "hammerOfTheRighteous" },
 
-    {spells.flashOfLight, 'not player.isMoving and not player.isInGroup and player.hpIncoming < 0.40 and target.distanceMax > 10', 'player'},
+    {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.40', 'player'},
 
  }
 ,"paladin_protection_bfa")

@@ -120,7 +120,6 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'not heal.lowestTankInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid , "holyShock_tank" },
     {spells.holyShock, 'heal.lowestInRaid.hpIncoming < 0.65 and not heal.lowestInRaid.hasBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
     {spells.holyShock, 'not player.hasBuff(spells.glimmerOfLight)' , "player" , "holyShock_player" },
-    {spells.holyShock, 'not heal.assistTankInRaid.hasBuff(spells.glimmerOfLight) and player.isInRaid' , kps.heal.assistTankInRaid , "holyShock_assist_tank" }, 
     
     -- GLIMMER DAMAGE
     {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hpIncoming > 0.85' ,{
