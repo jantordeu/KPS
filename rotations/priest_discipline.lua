@@ -101,8 +101,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     -- GROUPHEAL
     -- heal.lossHealthRaid` - Returns the loss Health for all raid members
     -- heal.hasBuffCount(spells.atonement)
-    -- heal.hasNotBuffAtonementCount(0.80) -- count unit below 0.80 health without atonement buff
-    -- heal.hasBuffAtonementCount(0.80) -- count unit below 0.80 health with atonement buff
     -- heal.countLossInRange(0.80) -- count unit below 0.80 health
     -- heal.countInRange -- count unit inrange
     -- heal.hasNotBuffAtonement.hp < 0.90 -- UNIT with lowest health without Atonement Buff on raid -- default "player" 
@@ -126,9 +124,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.powerWordRadiance, 'kps.defensive and not player.isMoving and not player.hasMyBuff(spells.atonement) and not spells.powerWordRadiance.isRecastAt("player")' , "player" , env.checkAtonement },
     {spells.powerWordRadiance, 'kps.defensive and not player.isMoving and not heal.lowestTankInRaid.hasMyBuff(spells.atonement) and not spells.powerWordRadiance.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "radiance_tank" },
     {spells.powerWordRadiance, 'kps.defensive and not player.isMoving and not heal.lowestInRaid.hasMyBuff(spells.atonement) and not spells.powerWordRadiance.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "radiance_lowest" },
-    {spells.powerWordRadiance, 'not player.isMoving and not heal.hasNotBuffAtonement.isUnit("player") and heal.hasNotBuffAtonementCount(0.80) >= 3 and not spells.powerWordRadiance.isRecastAt("heal.hasNotBuffAtonement.unit")' , kps.heal.hasNotBuffAtonement , "radiance_hasNotBuffAtonement" },    
     -- RAPTURE MANUAL
-    {spells.rapture, 'heal.hasNotBuffAtonementCount(0.65) > 3 and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.cooldown > 4' },
     {spells.rapture, 'heal.lowestTankInRaid.hp < 0.40 and spells.painSuppression.cooldown > 0 and spells.penance.cooldown > 4 and spells.schism.cooldown > 4' },
     {spells.rapture, 'player.hp < 0.40 and spells.painSuppression.cooldown > 0 and spells.penance.cooldown > 4 and spells.schism.cooldown > 4' },
     
@@ -181,13 +177,11 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     	{spells.penance, 'true' , env.damageTarget  },
     	{spells.powerWordSolace, 'true' , env.damageTarget  },
     }},
-    {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.65' , env.damageTarget , "hasBuffAtonementCount" },
+    {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.65' , env.damageTarget },
     -- LOWEST
     {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.65 and not spells.shadowMend.isRecastAt(heal.lowestInRaid.unit) and not spells.powerWordRadiance.isRecastAt("heal.lowestInRaid.unit")' , kps.heal.lowestInRaid , "shadowMend_lowest" },    
     {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.65 and not spells.shadowMend.isRecastAt(heal.lowestInRaid.unit) and not spells.powerWordRadiance.isRecastAt("heal.lowestInRaid.unit") and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid , "powerWordShield_lowest" },
-    {spells.shadowMend, 'not player.isMoving and heal.hasNotBuffAtonementCount(0.65) >= 1 and not heal.hasNotBuffAtonement.isUnit("player") and not spells.shadowMend.isRecastAt(heal.hasNotBuffAtonement.unit) and not spells.powerWordRadiance.isRecastAt("heal.hasNotBuffAtonement.unit")' , kps.heal.hasNotBuffAtonement , "shadowMend_hasNotBuffAtonement" },    
-    {spells.powerWordShield, 'heal.hasNotBuffAtonementCount(0.65) >= 1 and not heal.hasNotBuffAtonement.isUnit("player") and not spells.shadowMend.isRecastAt(heal.hasNotBuffAtonement.unit) and not spells.powerWordRadiance.isRecastAt("heal.hasNotBuffAtonement.unit") and not heal.hasNotBuffAtonement.hasDebuff(spells.weakenedSoul)' , kps.heal.hasNotBuffAtonement , "powerWordShield_hasNotBuffAtonement" },
-    
+
     -- EMERGENCY
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55' , "player" , "FLASH_PLAYER"  },
     {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
@@ -202,32 +196,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
 
 }
 ,"priest_discipline_bfa")
-
---    {{"nested"}, 'player.hasBuff(spells.azerite.overchargeMana) and spells.azerite.overchargeMana.cooldown < 23' , {
---        {spells.evangelism, 'spells.powerWordRadiance.lastCasted(7)' },
---        {spells.schism, 'not player.isMoving' , env.damageTarget , "overchargeMana" },
---        {spells.shadowWordPain,'not player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("target")', "target" , "overchargeMana" },
---        {spells.purgeTheWicked,'player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.purgeTheWicked) < 4.8 and not spells.purgeTheWicked.isRecastAt("target")', "target" , "overchargeMana" },
---        {spells.mindbender, 'player.hasTalent(3,2)' , env.damageTarget , "overchargeMana" },
---        {spells.shadowfiend, 'not player.hasTalent(3,2)' , env.damageTarget , "overchargeMana" },
---        {spells.powerWordSolace, 'true' , env.damageTarget , "overchargeMana" },
---        {spells.penance, 'true' , env.damageTarget , "overchargeMana" },
---        {spells.smite, 'not player.isMoving' , env.damageTarget , "overchargeMana" },
---    }},
---    
---    {{"nested"}, 'player.hasBuff(spells.azerite.overchargeMana) and spells.azerite.overchargeMana.cooldown > 23' , {
---        {spells.powerWordShield, 'not heal.lowestTankInRaid.isUnit("player") and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 5 and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid , "powerWordShield_tank_multiTarget" },
---        {spells.powerWordShield, 'player.myBuffDuration(spells.atonement) < 5 and not player.hasDebuff(spells.weakenedSoul)' , "player" , "powerWordShield_player_multiTarget" },
---        {spells.powerWordRadiance, 'not player.isMoving and not heal.lowestTankInRaid.hasMyBuff(spells.atonement) and not heal.lowestTankInRaid.isUnit("player") and not spells.powerWordRadiance.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "radiance_tank_multiTarget" },
---        {spells.powerWordRadiance, 'not player.isMoving and not player.hasMyBuff(spells.atonement) and not spells.powerWordRadiance.isRecastAt("player")' , "player" , "radiance_player_multiTarget" },
---        {spells.powerWordRadiance, 'not player.isMoving and not heal.hasNotBuffAtonement.isUnit("player")' , kps.heal.hasNotBuffAtonement , "radiance_hasNotBuffAtonement_multiTarget" },
---        {spells.powerWordShield, 'heal.hasNotBuffAtonementCount(0.80) > 0 and not heal.hasNotBuffAtonement.hasDebuff(spells.weakenedSoul) and not heal.hasNotBuffAtonement.isUnit("player")' , kps.heal.hasNotBuffAtonement , "powerWordShield_hasNotBuffAtonement_multiTarget" },
---        {spells.evangelism, 'spells.powerWordRadiance.lastCasted(7)' },
---        {spells.shadowWordPain,'not player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8 and not spells.shadowWordPain.isRecastAt("target")', "target" , "multiTarget" },
---        {spells.purgeTheWicked,'player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.purgeTheWicked) < 4.8 and not spells.purgeTheWicked.isRecastAt("target")', "target" , "multiTarget" },
---        {spells.mindbender, 'player.hasTalent(3,2)' , env.damageTarget , "multiTarget" },
---        {spells.shadowfiend, 'not player.hasTalent(3,2)' , env.damageTarget , "multiTarget" },
---    }},
 
 
 -- MACRO --

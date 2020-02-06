@@ -545,6 +545,14 @@ kps.RaidStatus.prototype.hasNotBuffAtonement = kps.utils.cachedValue(function()
 end)
 
 --[[[
+@function `heal.hasNotBuffGlimmer` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
+]]--
+
+kps.RaidStatus.prototype.hasNotBuffGlimmer = kps.utils.cachedValue(function()
+    return unitHasNotBuff(kps.spells.paladin.glimmerOfLight)
+end)
+
+--[[[
 @function `heal.hasNotBuffMending` - Returns the lowest health unit without Prayer of Mending Buff on raid e.g. heal.hasNotBuffMending.hp < 0.90
 ]]--
 
@@ -560,53 +568,6 @@ end)
 kps.RaidStatus.prototype.hasNotBuffRenew = kps.utils.cachedValue(function()
     return unitHasNotBuff(kps.spells.priest.renew)
 end)
-
---[[[
-@function `heal.hasNotBuffGlimmer` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
-]]--
-
-kps.RaidStatus.prototype.hasNotBuffGlimmer = kps.utils.cachedValue(function()
-    return unitHasNotBuff(kps.spells.paladin.glimmerOfLight)
-end)
-
---[[[
-@function `heal.hasBuffAtonementCount` - e.g. heal.hasBuffAtonementCount(0.85) > 3
-]]--
-
-local unitHasBuffHealth = function(health)
-    local maxcount = 0
-    local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hasMyBuff(spell) and unit.hp < health then
-            maxcount = maxcount + 1
-        end
-    end
-    return maxcount
-end
-
-kps.RaidStatus.prototype.hasBuffAtonementCount = kps.utils.cachedValue(function()
-    return unitHasBuffHealth
-end)
-
---[[[
-@function `heal.hasNotBuffAtonementCount` - e.g. heal.hasNotBuffAtonementCount(0.85) > 3
-]]--
-
-local unitHasNotBuffHealth = function(health)
-    local maxcount = 0
-    local spell = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and not unit.hasMyBuff(spell) and unit.hp < health then
-            maxcount = maxcount + 1
-        end
-    end
-    return maxcount
-end
-
-kps.RaidStatus.prototype.hasNotBuffAtonementCount = kps.utils.cachedValue(function()
-    return unitHasNotBuffHealth
-end)
-
 
 --[[[
 @function `heal.enemyTarget` - Returns the enemy target for all raid members
@@ -677,10 +638,9 @@ print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90
 print("|cff1eff00HealTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
 print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
---print("|cffff8000BuffAtonementCount_90:|cffffffff", kps["env"].heal.hasBuffAtonementCount(0.90))
---print("|cffff8000NotBuffAtonementCount_90:|cffffffff", kps["env"].heal.hasNotBuffAtonementCount(0.90))
+
 --print("|cff1eff00GlimmerLowest|cffffffff", kps["env"].heal.hasBuffGlimmer.name,"|",kps["env"].heal.hasBuffGlimmer.hp)
---print("|cffff8000GlimmerDuration:|cffffffff", kps["env"].heal.hasBuffGlimmerDuration.name,"|",kps["env"].heal.hasBuffGlimmerDuration.hp)
+
 print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 
 
@@ -748,8 +708,6 @@ print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.
 
 --local atonement = kps.spells.priest.atonement 
 --print("|cffff8000BuffCount:|cffffffff", kps["env"].heal.hasBuffCount(atonement))
---print("|cffff8000BuffAtonementCount_90:|cffffffff", kps["env"].heal.hasBuffAtonementCount(0.90))
---print("|cffff8000NotBuffAtonementCount_90:|cffffffff", kps["env"].heal.hasNotBuffAtonementCount(0.90))
 
 --local aura = kps.spells.priest.powerWordShield-- kps.spells.paladin.consecration
 --print("myBuffDuration:",kps["env"].player.myBuffDuration(aura))
@@ -768,8 +726,6 @@ print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.
 --print("|cffff8000hasBossDebuff:|cffffffff", kps["env"].player.hasBossDebuff)
 
 --local Atonement = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
---print("|cffff8000AtonementCount:|cffffffff",kps["env"].heal.hasBuffAtonementCount(2))
---print("|cffff8000NotAtonementCount:|cffffffff",kps["env"].heal.hasNotBuffAtonementCount(2))
 --print("|cffff8000AtonementUnit:|cffffffff", kps["env"].heal.hasBuffAtonement.name)
 --print("|cffff8000NotAtonementUnit:|cffffffff", kps["env"].heal.hasNotBuffAtonement.name)
 

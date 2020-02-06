@@ -205,8 +205,6 @@ Members:
  * `heal.hasNotBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasNotBuffAtonement.hp < 0.90
  * `heal.hasNotBuffMending` - Returns the lowest health unit without Prayer of Mending Buff on raid e.g. heal.hasNotBuffMending.hp < 0.90
  * `heal.hasNotBuffRenew` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
- * `heal.hasBuffAtonementCount` - e.g. heal.hasBuffAtonementCount(0.85) > 3
- * `heal.hasNotBuffAtonementCount` - e.g. heal.hasNotBuffAtonementCount(0.85) > 3
  * `heal.atonementHealthRaid` - Returns the loss Health for all raid members with buff atonement
  * `heal.enemyTarget` - Returns the enemy target for all raid members
  * `heal.enemyLowest` - Returns the lowest Health enemy target for all raid members
