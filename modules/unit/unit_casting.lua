@@ -34,7 +34,8 @@ local function isClippingSpell(spellname)
     end
     return false
 end
-function Unit.isCastingClipping(self)
+
+function Unit.isCastingClippingSpell(self)
     local name,_,_,_,endTime,_,_,_,_= UnitCastingInfo(self.unit)
     if endTime == nil then 
         local name,_,_,_,endTime,_,_ = UnitChannelInfo(self.unit)
@@ -46,7 +47,7 @@ function Unit.isCastingClipping(self)
 end
 
 function Unit.isCasting(self)
-    if Unit.isCastingClipping(self) then return false end
+    --if Unit.isCastingClippingSpell(self) then return false end
     if Unit.castTimeLeft(self) > kps.latency or Unit.channelTimeLeft(self) > kps.latency then return true end
     return false
 end

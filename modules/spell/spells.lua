@@ -165,9 +165,13 @@ kps.spells.immuneDamage.antiMagicShell = kps.Spell.fromId(48707)
 kps.spells.immuneDamage.netherwalk = kps.Spell.fromId(196555)
 kps.spells.immuneDamage.greaterFade = kps.Spell.fromId(213602)
 
--- Spells outside gcd or clipping spell cast
+-- Spells Clipping while casting
 kps.spells.clippingSpell = {}
 kps.spells.clippingSpell.mindFlay = kps.Spell.fromId(15407)
+-- Spells Castable while casting other spells
+kps.spells.castableSpell = {}
+kps.spells.castableSpell.fireBlast = kps.Spell.fromId(108853)
+kps.spells.castableSpell.combustion = kps.Spell.fromId(190319)
 
 -- AZERITE ESSENCE
 kps.spells.azerite = {}

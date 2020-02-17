@@ -23,6 +23,7 @@ kps.lastCast = nil
 kps.lastTarget = nil
 kps.lastTargetGUID = nil
 kps.autoAttackEnabled = false
+kps.nextSpell = nil
 
 -- Cast Sequence Settings
 kps.maxCastSequenceLength = 10

@@ -101,6 +101,10 @@ kps.combatStep = function ()
         if type(spell) == "string" then
             return spell
         end
+        -- Castable Spell while casting
+        if spell ~= nil and spell.cast ~= nil and player.isCasting and spell.isCastableSpell then
+            return spell.cast(target,message)
+        end
     end
 end
 

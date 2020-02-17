@@ -144,11 +144,11 @@ function Spell.isPrioritySpell(self)
     return self._isPrioritySpell
 end
 
-function Spell.ignorableDebuff(self)
-    if rawget(self,"_ignorableDebuff") == nil then
-        self._ignorableDebuff = self.isOneOf(kps.spells.ignoreDebuff)
+function Spell.isCastableSpell(self)
+    if rawget(self,"_isCastableSpell") == nil then
+        self._isCastableSpell = self.isOneOf(kps.spells.castableSpell)
     end
-    return self._ignorableDebuff
+    return self._isCastableSpell
 end
 
 

@@ -318,7 +318,8 @@ end
 local myDebuffDurationMax = setmetatable({}, {
     __index = function(t, unit)
         local val = function (spell)
-            return select(5,buffOrDebuff(unit, spell.name, UnitDebuff, true))
+            local count = select(5,buffOrDebuff(unit, spell.name, UnitDebuff, true))
+            if count == nil then return 0 else return count end
         end
         t[unit] = val
         return val
@@ -436,7 +437,8 @@ end
 local debuffStacks = setmetatable({}, {
     __index = function(t, unit)
         local val = function (spell)
-            return select(3,buffOrDebuff(unit, spell.name, UnitDebuff, false))
+            local count = select(3,buffOrDebuff(unit, spell.name, UnitDebuff, false))
+            if count == nil then return 0 else return count end
         end
         t[unit] = val
         return val
