@@ -38,8 +38,8 @@ kps.rotations.register("MAGE","FIRE",
 
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
-        {spells.counterspell, 'target.isInterruptable' , "target" },
-        {spells.counterspell, 'focus.isInterruptable' , "focus" },
+        {spells.counterspell, 'target.isInterruptable and target.castTimeLeft < 2' , "target" },
+        {spells.counterspell, 'focus.isInterruptable and focus.castTimeLeft < 2' , "focus" },
     }},
 
     {{"nested"}, 'kps.defensive', {
@@ -54,28 +54,33 @@ kps.rotations.register("MAGE","FIRE",
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
     {spells.azerite.concentratedFlame, 'not player.hasBuff(spells.combustion)' , "target" },
-    -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
 
+
+    -- One Rune of Power and one Meteor should always be used 40 sec recharge
     {{"nested"},'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and player.hasBuff(spells.runeOfPower)', {
         {{"macro"}, 'keys.shift', "/cast [@cursor] "..Meteor },
         {{"macro"}, 'target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
         {{"macro"}, 'mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
     }},
 
+    -- Memory of Lucid Dreams should be use it before casting Rune of Power
+    -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     {{"nested"},'kps.cooldowns and not player.isMoving and spells.combustion.cooldown < 3 and target.isAttackable', {
-        -- Memory of Lucid Dreams should be use it before casting Rune of Power
         {spells.azerite.memoryOfLucidDreams },
         {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.lastCasted(3)' },
         {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.cooldown > 3' },
-        {spells.combustion, 'spells.runeOfPower.lastCasted(3)' },
+        {spells.combustion, 'player.isCastingSpell(spells.runeOfPower) and player.castTimeLeft < player.gcd' , "player" , "combustion_time" }, 
+        {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion_buff" }
     }},
     -- COMBUSTION
     {{"nested"}, 'player.hasBuff(spells.combustion) and target.isAttackable', {
         {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', "target" , "pyroblast_combustion" },
+        {spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp) and target.isAttackable' , "target" },
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)' , "target" , "fireBlast_combustion" },
         {spells.scorch, 'true' , "target" },
     }},
-    
+    -- "Phoenix Flames" -- Always deals a critical strike. 30 sec cooldown 3 charges
+    {spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp) and target.isAttackable' , "target" },
     -- you can use Fire Blast while casting
     {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.fireBlast.charges == 3' , "target" , "fireBlast_charges" },
     {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.combustion.cooldown > 9' , "target" , "fireBlast_cooldown" },
@@ -90,7 +95,7 @@ kps.rotations.register("MAGE","FIRE",
     
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
-    {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball) and spells.fireBlast.charges > 0' , "/stopcasting" },
+    --{{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCasting and spells.fireBlast.charges > 0' , "/stopcasting" },
 
     {{"macro"}, 'keys.shift and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
     {{"macro"}, 'kps.multiTarget and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
