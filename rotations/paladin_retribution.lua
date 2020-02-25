@@ -85,21 +85,18 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
     }},
 
-    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
     {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
-        
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm_multitarget" },
     {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
     {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },
+    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
     {spells.divineStorm, 'player.plateCount >= 3' , "target" , "divineStorm_plateCount" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
 
-    {spells.judgment, 'not target.hasMyDebuff(spells.judgment) and target.distanceMax <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
+    {spells.judgment, 'target.distanceMax <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
     {spells.bladeOfJustice, 'player.holyPower <= 3 and target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
     {spells.wakeOfAshes, 'player.holyPower <= 1 and spells.avengingWrath.cooldown > 30 and target.distanceMax <= 10' , "target" },
-
-    {spells.judgment, 'target.distanceMax <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
     {spells.consecration, 'player.hasTalent(4,2) and not player.isMoving and not target.isMoving and target.distanceMax <= 10' }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'target.distanceMax <= 10'}, --Generates 1 Holy Power
 
