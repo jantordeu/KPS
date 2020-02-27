@@ -72,12 +72,17 @@ kps.rotations.register("MAGE","FIRE",
         --{spells.combustion, 'spells.meteor.lastCasted(3) ' , "player" , "combustion_meteor" },
         {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion_buff" }
     }},
+    -- STOPCASTING
+    --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
+    --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
+    {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.scorch)' , "/stopcasting" },
+    {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
     -- COMBUSTION
     {{"nested"}, 'player.hasBuff(spells.combustion) and target.isAttackable', {
         {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', "target" , "pyroblast_combustion" },
         {spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp) and target.isAttackable' , "target" },
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)' , "target" , "fireBlast_combustion" },
-        {spells.scorch, 'true' , "target" },
+        {spells.scorch, 'not player.hasBuff(spells.hotStreak)' , "target" },
     }},
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
     {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 2' },
@@ -86,20 +91,19 @@ kps.rotations.register("MAGE","FIRE",
     
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
-    {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
     {{"macro"}, 'keys.shift and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
     {{"macro"}, 'kps.multiTarget and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
-    --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
-    --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)'},
 
-    -- "Phoenix Flames" -- Always deals a critical strike. 30 sec cooldown 3 charges
-    {spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp) and target.isAttackable' , "target" },
-    -- you can use Fire Blast while casting
-    {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.fireBlast.charges == 3' , "target" , "fireBlast_charges" },
-    {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.combustion.cooldown > 9' , "target" , "fireBlast_cooldown" },
-    {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.fireBlast.charges == 2 and not kps.cooldowns' , "target" , "fireBlast_cooldown_2" },
-    {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and spells.fireBlast.charges == 1 and spells.fireBlast.cooldown < 3 and not kps.cooldowns' , "target" , "fireBlast_cooldown_1" },
+    {{"nested"}, 'player.hasBuff(spells.heatingUp) and target.isAttackable', {
+        -- you can use Fire Blast while casting
+        {spells.fireBlast, 'spells.fireBlast.charges == 3' , "target" , "fireBlast_charges" },
+        {spells.fireBlast, 'spells.combustion.cooldown > 9' , "target" , "fireBlast_cooldown" },
+        {spells.fireBlast, 'spells.fireBlast.charges == 2 and not kps.cooldowns' , "target" , "fireBlast_cooldown_2" },
+        {spells.fireBlast, 'spells.fireBlast.charges == 1 and spells.fireBlast.cooldown < 3 and not kps.cooldowns' , "target" , "fireBlast_cooldown_1" },
+        -- "Phoenix Flames" -- Always deals a critical strike. 30 sec cooldown 3 charges
+        {spells.phoenixFlames , 'player.hasTalent(4,3)' , "target" },
+    }},
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and not player.hasBuff(spells.combustion) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },

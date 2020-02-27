@@ -136,27 +136,32 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.judgment, 'heal.lowestInRaid.hpIncoming > 0.85' , env.damageTarget },
     {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.85 and target.isAttackable and not target.hasMyDebuff(spells.glimmerOfLight)' , "target" , "dmg_health" },
 
+
+    {{"nested"}, 'mouseover.isHealable and mouseover.hp < 0.65' ,{
+        {spells.holyShock, 'not player.hasBuff(spells.infusionOfLight)' , "mouseover"  },
+        {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and mouseover.hp < 0.40' , "mouseover" },
+        {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' , "mouseover" },
+        {spells.holyShock, 'true' , "mouseover"  },
+        {spells.flashOfLight, 'not player.isMoving and mouseover.hp < 0.40' , "mouseover" },
+    }},
     {{"nested"}, 'player.hp < 0.65' ,{
+        {spells.holyShock, 'not player.hasBuff(spells.infusionOfLight)' , "player"  },
         {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and player.hp < 0.55' , "player" },
         {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' , "player" },
-        {spells.holyShock, 'player.hp < 0.65' , "player"  },
+        {spells.holyShock, 'true' , "player"  },
         {spells.flashOfLight, 'not player.isMoving and player.hp < 0.40' , "player" },
     }},
     {{"nested"}, 'heal.lowestTankInRaid.hp < 0.65 and not heal.lowestTankInRaid.isUnit("player")' ,{
+        {spells.holyShock, 'not player.hasBuff(spells.infusionOfLight)' , kps.heal.lowestTankInRaid  },
         {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid },
         {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' , kps.heal.lowestTankInRaid },
         {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid  },
         {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid },
     }},
-    {{"nested"}, 'mouseover.isHealable and mouseover.hp < 0.65' ,{
-        {spells.holyShock, 'mouseover.hp < 0.55' , "mouseover"  },
-        {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and mouseover.hp < 0.40' , "mouseover" },
-        {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' , "mouseover" },
-        {spells.flashOfLight, 'not player.isMoving and mouseover.hp < 0.40' , "mouseover" },
-    }},
     {{"nested"}, 'heal.lowestInRaid.hp < 0.65' ,{
-        {spells.holyShock, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid  },
+        {spells.holyShock, 'not player.hasBuff(spells.infusionOfLight)' , kps.heal.lowestInRaid  },
         {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' , kps.heal.lowestInRaid },
+        {spells.holyShock, 'true' , kps.heal.lowestInRaid  },
         {spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid },
     }},
     
