@@ -33,7 +33,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     {spells.layOnHands, 'player.hp < 0.30', 'player'},
     {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
-    {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.80 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
+    {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.70 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
     {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.65'}, 
     
     {spells.divineShield, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)' , "player" },
@@ -44,7 +44,6 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     	{spells.handOfHindrance, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
     	{spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
     	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
-        {spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isCasting' , "mouseover" },
     	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
     }},
     {{"nested"}, 'kps.interrupt',{
@@ -86,6 +85,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     }},
 
     {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
+    {spells.executionSentence, 'kps.multiTarget and player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
     {spells.divineStorm, 'kps.multiTarget' , "target" , "divineStorm_multitarget" },
     {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
     {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },

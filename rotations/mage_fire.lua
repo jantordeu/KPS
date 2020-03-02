@@ -62,16 +62,6 @@ kps.rotations.register("MAGE","FIRE",
         {{"macro"}, 'mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
     }},
 
-    -- Memory of Lucid Dreams should be use it before casting Rune of Power
-    -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
-    {{"nested"},'kps.cooldowns and not player.isMoving and spells.combustion.cooldown < 3 and target.isAttackable', {
-        {spells.azerite.memoryOfLucidDreams },
-        {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.lastCasted(3)' , "player" , "runeOfPower_lastcast" }, 
-        {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.cooldown > 3' , "player" , "runeOfPower_cooldown" }, 
-        --{spells.combustion, 'player.isCastingSpell(spells.runeOfPower) ' , "player" , "combustion_casting" }, 
-        --{spells.combustion, 'spells.meteor.lastCasted(3) ' , "player" , "combustion_meteor" },
-        {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion_buff" }
-    }},
     -- STOPCASTING
     --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
     --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
@@ -84,11 +74,20 @@ kps.rotations.register("MAGE","FIRE",
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp)' , "target" , "fireBlast_combustion" },
         {spells.scorch, 'not player.hasBuff(spells.hotStreak)' , "target" },
     }},
+    -- Memory of Lucid Dreams should be use it before casting Rune of Power
+    -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
+    {{"nested"},'kps.cooldowns and not player.isMoving and spells.combustion.cooldown < 3 and target.isAttackable', {
+        {spells.azerite.memoryOfLucidDreams },
+        {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.lastCasted(3)' , "player" , "runeOfPower_lastcast" }, 
+        {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.cooldown > 3' , "player" , "runeOfPower_cooldown" }, 
+        --{spells.combustion, 'player.isCastingSpell(spells.runeOfPower) ' , "player" , "combustion_casting" }, 
+        --{spells.combustion, 'spells.meteor.lastCasted(3) ' , "player" , "combustion_meteor" },
+        {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion_buff" }
+    }},
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
     {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 2' },
     {spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown > 40' },
     {spells.runeOfPower, 'not player.isMoving and spells.meteor.cooldown < 3 and not kps.cooldowns' },
-    
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
     {{"macro"}, 'keys.shift and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
