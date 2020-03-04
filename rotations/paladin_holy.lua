@@ -47,7 +47,6 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
     {spells.divineShield, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)' , "player" },
     {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.30 and not heal.lowestTankInRaid.hasDebuff(spells.forbearance)' , kps.heal.lowestTankInRaid },
-    {spells.divineShield, 'heal.lowestInRaid.hp < 0.30 and not heal.lowestInRaid.hasDebuff(spells.forbearance)' , kps.heal.lowestInRaid },
 
     {{"nested"},'kps.cooldowns', {
         {spells.cleanse, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
@@ -90,7 +89,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw) and heal.lowestInRaid.hpIncoming < 0.85' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
-    {spells.lightOfDawn, 'player.isMoving and and heal.countLossInDistance(0.85,10) >= 1' },
+    {spells.lightOfDawn, 'player.isMoving and heal.countLossInDistance(0.85,10) >= 1' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.80,10) >= 2' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.85,10) >= 3' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.90,10) >= 4' },
@@ -138,7 +137,6 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.judgment, 'heal.lowestInRaid.hpIncoming > 0.85' , env.damageTarget },
     {spells.holyShock, 'heal.lowestInRaid.hpIncoming > 0.85 and target.isAttackable and not target.hasMyDebuff(spells.glimmerOfLight)' , "target" , "dmg_health" },
 
-
     {{"nested"}, 'mouseover.isHealable and mouseover.hp < 0.65' ,{
         {spells.holyShock, 'not player.hasBuff(spells.infusionOfLight)' , "mouseover"  },
         {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and mouseover.hp < 0.40' , "mouseover" },
@@ -170,7 +168,7 @@ kps.rotations.register("PALADIN","HOLY",
     -- GLIMMER HEAL
     -- 216411/divine-purpose -- spells.divinePurposeHolyShock -- Divine Purpose Your next Holy Shock costs no mana. 10 seconds remaining
     -- 216413/divine-purpose -- spells.divinePurposeLightOfDawn -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
-    {spells.holyShock, 'not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
+    {spells.holyShock, 'heal.hasBuffCount(spells.glimmerOfLight) < 8 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
     {spells.holyShock, 'heal.lowestInRaid.hp < 0.85 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid },
     {spells.holyShock, 'player.hp < 0.85 and player.hp < heal.lowestTankInRaid.hp' , "player"  },
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.85' , kps.heal.lowestTankInRaid },

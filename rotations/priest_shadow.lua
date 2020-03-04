@@ -106,8 +106,8 @@ kps.rotations.register("PRIEST","SHADOW",{
         {{"macro"}, 'spells.shadowCrash.cooldown == 0 and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..ShadowCrash },
         {{"macro"}, 'spells.shadowCrash.cooldown == 0 and mouseover.inCombat and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..ShadowCrash },
         {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 3' , env.damageTarget },
-        {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
         {spells.mindBlast, 'not player.isMoving and player.insanity < 60' , env.damageTarget , "mindBlast_not_voidForm"},
+        {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
     }},
 
     --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
