@@ -71,23 +71,22 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'keys.shift and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
     {{"macro"}, 'kps.multiTarget and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget },
-    {spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp)' , env.damageTarget },
-    {spells.fireBlast, 'player.hasBuff(spells.combustion) and player.hasBuff(spells.heatingUp)' , env.damageTarget },
+    --{spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp)' , env.damageTarget },
+    {spells.fireBlast, 'player.hasBuff(spells.heatingUp)' , env.damageTarget },
     {spells.scorch, 'player.hasBuff(spells.combustion)' , env.damageTarget },
 
     -- Memory of Lucid Dreams should be use it before casting Rune of Power
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     {{"nested"},'kps.cooldowns and not player.isMoving and spells.combustion.cooldown < 3 and target.isAttackable', {
         {spells.azerite.memoryOfLucidDreams },
-        {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.lastCasted(3)' , "player" , "runeOfPower_lastcast" }, 
+        --{spells.combustion, 'player.isCastingSpell(spells.runeOfPower)' , "player" , "combustion_casting" },
+        {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion_buff" },
         {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.cooldown > 3' , "player" , "runeOfPower_cooldown" }, 
-        {spells.combustion, 'player.isCastingSpell(spells.runeOfPower) ' , "player" , "combustion_casting" },
-        {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion_buff" }
     }},
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
     {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 2' },
     {spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown > 40' },
-    {spells.runeOfPower, 'not player.isMoving and spells.meteor.cooldown < 5 and not kps.cooldowns' },
+    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.cooldown < 5 and not kps.cooldowns' },
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
 
@@ -98,7 +97,7 @@ kps.rotations.register("MAGE","FIRE",
         {spells.fireBlast, 'spells.fireBlast.charges == 2 and not kps.cooldowns' , "target" , "fireBlast_charges_2" },
         {spells.fireBlast, 'spells.fireBlast.charges == 1 and spells.fireBlast.cooldown < 3 and not kps.cooldowns' , "target" , "fireBlast_charges_1" },
         -- "Phoenix Flames" -- Always deals a critical strike. 30 sec cooldown 3 charges
-        {spells.phoenixFlames , 'player.hasTalent(4,3)' , "target" },
+        --{spells.phoenixFlames , 'player.hasTalent(4,3)' , "target" },
     }},
 
     -- TRINKETS -- SLOT 0 /use 13
@@ -108,20 +107,16 @@ kps.rotations.register("MAGE","FIRE",
 
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 5' , "target" },
     {spells.livingBomb,  'player.hasTalent(6,3)' , env.damageTarget },
-    {{"nested"}, 'kps.multiTarget', {
+    {{"nested"}, 'player.isMoving', {
         {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target" , "scorch_target_ignite" },
         {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus" , "scorch_focus_ignite" },
         {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" , "scorch_mouseover_ignite" },
-        {spells.scorch, 'target.isAttackable' , "target" },
         {spells.scorch, 'true', env.damageTarget },
     }},
     -- debuff "Ignite" 12654 -- Scorch & fireball -- spells.ignite
     -- debuff "Conflagration" 226757 -- fireball -- spells.conflagration
     {spells.scorch, 'target.hp < 0.30 and target.isAttackable' , "target"  , "scorch_hp" },
-    {spells.scorch, 'player.isMoving and target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target" },
-    {spells.scorch, 'player.isMoving and focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus" },
-    {spells.scorch, 'player.isMoving and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" , "scorch_mouseover_ignite" },
-    {spells.scorch, 'player.isMoving', env.damageTarget },
+    {spells.scorch, 'kps.multiTarget', env.damageTarget },
 
     {spells.fireball, 'not player.isMoving and target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target" },
     {spells.fireball, 'not player.isMoving and focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus" },
