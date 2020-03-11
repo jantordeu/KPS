@@ -24,7 +24,7 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
 
    {spells.arcaneIntellect, 'not player.hasBuff(spells.arcaneIntellect)' , "player" },
-   {spells.blazingBarrier, 'not player.hasBuff(spells.blazingBarrier)'},
+   {spells.blazingBarrier, 'not player.hasBuff(spells.blazingBarrier) and player.incomingDamage > 0'},
    {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
    {spells.spellsteal, 'target.isStealable' , "target" },
 
@@ -35,20 +35,15 @@ kps.rotations.register("MAGE","FIRE",
         {spells.removeCurse, 'heal.lowestInRaid.isDispellable("Curse")' , kps.heal.lowestInRaid },
         {spells.removeCurse, 'heal.isCurseDispellable' , kps.heal.isMagicDispellable },
     }},
-
-    -- interrupts
     {{"nested"}, 'kps.interrupt',{
         {spells.counterspell, 'target.isInterruptable and target.castTimeLeft < 2' , "target" },
         {spells.counterspell, 'focus.isInterruptable and focus.castTimeLeft < 2' , "focus" },
     }},
 
-    {{"nested"}, 'kps.defensive', {
-       {spells.invisibility, 'target.isRaidBoss and player.isTarget'},
-       {spells.blazingBarrier, 'player.isTarget'},
-       {{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
-       {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
-    }},
-    
+    {spells.invisibility, 'target.isRaidBoss and player.isTarget'},
+    {{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
+    {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
+
     {spells.polymorph, 'kps.polymorph and focus.isAttackable and focus.hasMyDebuff(spells.polymorph) and focus.myDebuffDuration(spells.polymorph) < 3' , "focus" },
 
     -- AZERITE
@@ -65,39 +60,45 @@ kps.rotations.register("MAGE","FIRE",
     -- STOPCASTING
     --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/run _JumpOrAscendStart()" },
     --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
-    {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.scorch)' , "/stopcasting" },
-    {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
+    {{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.scorch) and not player.hasBuff(spells.combustion)' , "/stopcasting" },
+    --{{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
     -- COMBUSTION
     {{"macro"}, 'keys.shift and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)' , "/cast [@cursor] "..Flamestrike },
     {{"macro"}, 'kps.multiTarget and spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Flamestrike },
-    {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget },
-    --{spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp)' , env.damageTarget },
-    {spells.fireBlast, 'player.hasBuff(spells.heatingUp)' , env.damageTarget },
-    {spells.scorch, 'player.hasBuff(spells.combustion)' , env.damageTarget },
 
+    {{"nested"}, 'player.hasBuff(spells.combustion)', {
+        {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget },
+        {spells.fireBlast, 'player.hasBuff(spells.heatingUp)' , env.damageTarget },
+        {spells.scorch, 'true' , env.damageTarget },
+    }},
     -- Memory of Lucid Dreams should be use it before casting Rune of Power
     -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     {{"nested"},'kps.cooldowns and not player.isMoving and spells.combustion.cooldown < 3 and target.isAttackable', {
-        {spells.azerite.memoryOfLucidDreams },
-        --{spells.combustion, 'player.isCastingSpell(spells.runeOfPower)' , "player" , "combustion_casting" },
+        {spells.combustion, 'player.isCastingSpell(spells.meteor)' , "player" , "combustion_casting" },
         {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion_buff" },
-        {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.cooldown > 3' , "player" , "runeOfPower_cooldown" }, 
+        {spells.runeOfPower, 'spells.azerite.memoryOfLucidDreams.cooldown > 3' , "player" , "runeOfPower_cooldown" },
+        {spells.azerite.memoryOfLucidDreams },
     }},
+    
+    -- during hotStreak, fireball can proc heatingUp if crit, then pyroblast can proc again hotStreak if crit
+    {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastSentSpell == spells.pyroblast.name', env.damageTarget , "pyroblast_hotStreak_pyroblast"},
+    {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastSentSpell == spells.fireball.name', env.damageTarget , "pyroblast_hotStreak_fireball"},
+    {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastSentSpell == spells.fireBlast.name', env.damageTarget , "pyroblast_hotStreak_fireBlast"},
+    {spells.fireball, 'not player.isMoving and player.hasBuff(spells.hotStreak) and not spells.fireball.isRecastAt("target")', env.damageTarget , "fireball_hotStreak"},
+    {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget , "pyroblast_hotStreak"},
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
-    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 2' },
-    {spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown > 40' },
-    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.cooldown < 5 and not kps.cooldowns' },
+    {spells.runeOfPower, 'not player.isMoving and spells.runeOfPower.charges == 2 and target.isAttackable' },
+    {spells.runeOfPower, 'not player.isMoving and spells.combustion.cooldown > 40 and target.isAttackable' },
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
 
-    {{"nested"}, 'player.hasBuff(spells.heatingUp) and target.isAttackable', {
+    {{"nested"}, 'player.hasBuff(spells.heatingUp) and not player.hasBuff(spells.hotStreak) and target.isAttackable', {
         -- you can use Fire Blast while casting
         {spells.fireBlast, 'spells.fireBlast.charges == 3' , "target" , "fireBlast_charges_3" },
         {spells.fireBlast, 'spells.combustion.cooldown > 9' , "target" , "fireBlast_cooldown" },
         {spells.fireBlast, 'spells.fireBlast.charges == 2 and not kps.cooldowns' , "target" , "fireBlast_charges_2" },
-        {spells.fireBlast, 'spells.fireBlast.charges == 1 and spells.fireBlast.cooldown < 3 and not kps.cooldowns' , "target" , "fireBlast_charges_1" },
         -- "Phoenix Flames" -- Always deals a critical strike. 30 sec cooldown 3 charges
-        --{spells.phoenixFlames , 'player.hasTalent(4,3)' , "target" },
+        {spells.phoenixFlames , 'player.hasTalent(4,3)' , "target" },
     }},
 
     -- TRINKETS -- SLOT 0 /use 13
@@ -108,9 +109,9 @@ kps.rotations.register("MAGE","FIRE",
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 5' , "target" },
     {spells.livingBomb,  'player.hasTalent(6,3)' , env.damageTarget },
     {{"nested"}, 'player.isMoving', {
-        {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target" , "scorch_target_ignite" },
-        {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus" , "scorch_focus_ignite" },
-        {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" , "scorch_mouseover_ignite" },
+        {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target"  },
+        {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus" },
+        {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" },
         {spells.scorch, 'true', env.damageTarget },
     }},
     -- debuff "Ignite" 12654 -- Scorch & fireball -- spells.ignite
@@ -120,7 +121,7 @@ kps.rotations.register("MAGE","FIRE",
 
     {spells.fireball, 'not player.isMoving and target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target" },
     {spells.fireball, 'not player.isMoving and focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus" },
-    {spells.fireball, 'not player.isMoving and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" , "fireball_mouseover_ignite"},
+    {spells.fireball, 'not player.isMoving and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover"},
     {spells.fireball, 'not player.isMoving' , env.damageTarget },
 
 }

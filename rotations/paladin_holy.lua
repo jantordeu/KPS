@@ -57,9 +57,9 @@ kps.rotations.register("PALADIN","HOLY",
     }},
     -- Interrupt
     {{"nested"}, 'kps.addControl',{
-        {spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
-        {spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
-        {spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
+        {spells.hammerOfJustice, 'mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+        {spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+        {spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
     }},
     {{"nested"}, 'kps.interrupt' ,{
         {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting' , "target" },

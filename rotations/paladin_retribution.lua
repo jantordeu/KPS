@@ -47,11 +47,11 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     {{"nested"}, 'kps.addControl',{
 		-- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
-    	{spells.handOfHindrance, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
-    	{spells.handOfHindrance, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
-    	{spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
-    	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
-    	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
+    	{spells.handOfHindrance, 'mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+    	{spells.handOfHindrance, 'target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+    	{spells.hammerOfJustice, 'mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
+    	{spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+    	{spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
     }},
     {{"nested"}, 'kps.interrupt',{
         {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting ' , "target" },
@@ -78,7 +78,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     -- AZERITE
     -- "Guardian of Azeroth" -- invoque un gardien d’Azeroth pendant 30 sec. 3 min cooldown.
-    {spells.azerite.guardianOfAzeroth, 'kps.cooldowns and target.isAttackable' , "target" },
+    {spells.azerite.guardianOfAzeroth, 'target.isAttackable' , "target" },
     --{spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
     --{spells.azerite.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.avengingWrath) > 15' , "target" },
@@ -90,17 +90,18 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
     }},
-    {{"nested"},'kps.multiTarget', {
-        {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
-        {spells.divineStorm, 'true' , "target" , "divineStorm_multitarget" },
+    {{"nested"},'kps.multiTarget and target.isAttackable', {
+        {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" },
+        {spells.divineStorm, 'true' , "target"  },
     }},
+    {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
+    {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },
 
     {spells.consecration, 'player.hasTalent(4,2) and not player.isMoving and not target.isMoving and target.distanceMax <= 10' }, -- Generates 1 Holy Power.
     {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'player.holyPower <= 4 and spells.crusaderStrike.charges == 2 and target.distanceMax <= 10' , "target" }, --Generates 1 Holy Power
+    {spells.judgment, 'player.holyPower <= 4 and target.distanceMax <= 30 and not target.hasMyDebuff(spells.judgment)' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
 
-    {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
-    {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },
     {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
     {spells.divineStorm, 'player.plateCount >= 3' , "target" , "divineStorm_plateCount" },
