@@ -85,10 +85,15 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.crusade) > 15' , "target" },
 
     {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 15 and player.holyPower >= 2' , "target" },
-    {{"nested"},'kps.cooldowns', {
+    {{"nested"},'kps.cooldowns and player.holyPower >= 3', {
         {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) > 25 and target.distanceMax <= 10' },
         {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
+    }},
+    {{"nested"},'kps.cooldowns and spells.crusade.cooldown < player.gcd and player.holyPower < 3', {
+        {spells.judgment, 'true' , "target"  },
+        {spells.bladeOfJustice, 'true' , "target"  },
+        {spells.crusaderStrike, 'true' , "target"  },
     }},
     {{"nested"},'kps.multiTarget and target.isAttackable', {
         {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" },
