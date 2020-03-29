@@ -27,7 +27,7 @@ kps.rotations.register("MAGE","FROST",
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
    {spells.arcaneIntellect, 'not player.hasBuff(spells.arcaneIntellect)' , "player" },
-   {spells.iceBarrier, 'not player.hasBuff(spells.iceBarrier) and player.incomingDamage > 0'},
+   {spells.iceBarrier, 'not player.hasBuff(spells.iceBarrier)'},
    {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
    {spells.spellsteal, 'target.isStealable' , "target" },
 
@@ -57,24 +57,23 @@ kps.rotations.register("MAGE","FROST",
     
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.azerite.concentratedFlame, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
+    {spells.azerite.concentratedFlame, 'true' , env.damageTarget },
 
+    {spells.icyVeins },
+    {spells.frozenOrb, 'true' , "target" },
     {spells.iceFloes, 'player.hasTalent(2,3) and player.isMoving and not player.hasBuff(spells.iceFloes)' },
     {spells.mirrorImage, 'player.hasTalent(3,2)' },
-    {spells.runeOfPower, 'player.hasTalent(3,3)' },
-    {spells.icyVeins },
-    
-    {spells.frostNova, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova) and not spells.frostNova.isRecastAt("target")' , "target" },
-    {spells.frostNova, 'focus.isAttackable and focus.distanceMax <= 10 and not target.hasDebuff(spells.frostNova) and not spells.frostNova.isRecastAt("focus")' , "focus" },
-    {spells.coneOfCold, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova)' , "target" },
-    {spells.coneOfCold, 'focus.isAttackable and focus.distanceMax <= 10 and not focus.hasDebuff(spells.frostNova)' , "focus" },
+    {spells.runeOfPower, 'not player.isMoving and player.hasTalent(3,3)' },
 
+    {spells.frostNova, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova) and not spells.frostNova.isRecastAt("target")' , "target" },
+    {spells.coneOfCold, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova)' , "target" },
+ 
     {{"nested"}, 'kps.multiTarget and target.distanceMax <= 10 and target.isAttackable', {
         {spells.frozenOrb },
         {spells.cometStorm, 'player.hasTalent(6,3)' },
         {spells.iceNova, 'player.hasTalent(1,3)' },
-        {{"macro"}, 'not player.isMoving and spells.blizzard.cooldown == 0', "/cast [@player] "..Blizzard },
     }},
+    {{"macro"}, 'not player.isMoving and spells.blizzard.cooldown == 0 and target.isAttackable and target.distanceMax <= 10', "/cast [@player] "..Blizzard },
     {{"macro"}, 'not player.isMoving and spells.ringOfFrost.cooldown == 0 and not target.hasMyDebuff(spells.frostNova) and target.isAttackable and target.distanceMax <= 10', "/cast [@player] "..RingOfFrost },
 
     -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
@@ -87,7 +86,7 @@ kps.rotations.register("MAGE","FROST",
      -- "Blizzard" -- "Freezing Rain"  Blizzard is instant cast and deals 50% increased damage
     {spells.blizzard, 'player.hasBuff(spells.freezingRain)' },
 
-    {spells.frozenOrb, 'true' , "target" },
+
     {spells.cometStorm, 'player.hasTalent(6,3)' }, 
     {spells.rayOfFrost, 'player.hasTalent(7,2)' },
     {spells.iceNova, 'player.hasTalent(1,3)' },

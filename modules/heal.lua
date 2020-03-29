@@ -658,13 +658,17 @@ print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"
 print("|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
 print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90),"|cffff8000CountLossDistance_90:|cffffffff", kps["env"].heal.countLossInDistance(0.90,10))
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
-
---print("|cffff8000debuffStacks:|cffffffff", kps["env"].target.debuffStacks(kps.spells.paladin.razorCoral))
---print("|cffff8000debuffCount:|cffffffff", kps["env"].target.debuffCount(kps.spells.paladin.razorCoral))
-
 --print("|cff1eff00GlimmerLowest|cffffffff", kps["env"].heal.hasBuffGlimmer.name,"|",kps["env"].heal.hasBuffGlimmer.hp)
 print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 
+
+--print("|cffff8000lastSentSpell:|cffffffff",  kps.lastSentSpell)
+--print("|cffff8000prevCastedSpell:|cffffffff", kps.prevCastedSpell)
+--print("|cffff8000lastCastedSpell:|cffffffff", kps.lastCastedSpell)
+
+
+--print("|cffff8000debuffStacks:|cffffffff", kps["env"].target.debuffStacks(kps.spells.paladin.razorCoral))
+--print("|cffff8000debuffCount:|cffffffff", kps["env"].target.debuffCount(kps.spells.paladin.razorCoral))
 
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.mindBlast.charges)
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.powerWordRadiance.charges)

@@ -250,6 +250,7 @@ end)
 -- UNIT_SPELLCAST_SUCCEEDED -- Fired when a spell is cast successfully. Event is received even if spell is resisted.
 kps.events.register("UNIT_SPELLCAST_SUCCEEDED", function (unit, lineId, spellId)
    if unit == "player" then
+       kps.prevCastedSpell = kps.lastCastedSpell
        kps.lastCastedSpell = select(1, GetSpellInfo(spellId))
    end
 end)
