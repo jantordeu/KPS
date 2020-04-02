@@ -48,7 +48,6 @@ kps.rotations.register("MAGE","FROST",
     {{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
     {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
 
-    {{"macro"}, 'keys.shift', "/cast [@cursor] "..Blizzard },    
     {spells.polymorph, 'kps.polymorph and focus.isAttackable and focus.hasMyDebuff(spells.polymorph) and focus.myDebuffDuration(spells.polymorph) < 3' , "focus" },
     
     -- TRINKETS
@@ -58,9 +57,15 @@ kps.rotations.register("MAGE","FROST",
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
     {spells.azerite.concentratedFlame, 'true' , env.damageTarget },
+    {spells.azerite.guardianOfAzeroth, 'true' , env.damageTarget },
 
     {spells.icyVeins },
     {spells.frozenOrb, 'true' , "target" },
+
+    {{"macro"}, 'keys.shift and spells.blizzard.cooldown == 0' , "/cast [@cursor] "..Blizzard },
+    {{"macro"}, 'player.plateCount >= 5 and spells.blizzard.cooldown == 0 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Blizzard },
+    {{"macro"}, 'spells.blizzard.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Blizzard },
+           
     {spells.iceFloes, 'player.hasTalent(2,3) and player.isMoving and not player.hasBuff(spells.iceFloes)' },
     {spells.mirrorImage, 'player.hasTalent(3,2)' },
     {spells.runeOfPower, 'not player.isMoving and player.hasTalent(3,3)' },
@@ -69,27 +74,19 @@ kps.rotations.register("MAGE","FROST",
     {spells.coneOfCold, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova)' , "target" },
  
     {{"nested"}, 'kps.multiTarget and target.distanceMax <= 10 and target.isAttackable', {
-        {spells.frozenOrb },
         {spells.cometStorm, 'player.hasTalent(6,3)' },
         {spells.iceNova, 'player.hasTalent(1,3)' },
     }},
-    {{"macro"}, 'not player.isMoving and spells.blizzard.cooldown == 0 and target.isAttackable and target.distanceMax <= 10', "/cast [@player] "..Blizzard },
-    {{"macro"}, 'not player.isMoving and spells.ringOfFrost.cooldown == 0 and not target.hasMyDebuff(spells.frostNova) and target.isAttackable and target.distanceMax <= 10', "/cast [@player] "..RingOfFrost },
 
     -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
-    {spells.ebonbolt, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) == 5 and not player.hasBuff(spells.brainFreeze)' , "target" },
+    {spells.ebonbolt, 'not player.isMoving and player.hasTalent(4,3) not player.hasBuff(spells.brainFreeze)' , "target" },
     -- Cast Flurry If you have 5 stacks of Mastery: Icicles after casting Glacial Spike -- Only use Flurry with Brain Freeze
-    {{spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) == 5 and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike_flurry_iceLance" },
-    {{spells.frostbolt,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) < 5 and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_flurry_iceLance" },
+    {{spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) >= 4 and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike_flurry_iceLance" },
+    {{spells.frostbolt,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_flurry_iceLance" },
+    {{spells.glacialSpike}, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) == 5' , "target" , "glacialSpike_flurry_iceLance" },
     
     {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" , "fingersOfFrost" }, 
-     -- "Blizzard" -- "Freezing Rain"  Blizzard is instant cast and deals 50% increased damage
-    {spells.blizzard, 'player.hasBuff(spells.freezingRain)' },
-
-
     {spells.cometStorm, 'player.hasTalent(6,3)' }, 
-    {spells.rayOfFrost, 'player.hasTalent(7,2)' },
-    {spells.iceNova, 'player.hasTalent(1,3)' },
     
     {spells.frostbolt, 'not player.isMoving' },
     {spells.iceLance },

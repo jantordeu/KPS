@@ -95,7 +95,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {{"macro"}, 'player.hasTrinket(1) == 168905 and player.useTrinket(1) and player.hasBuff(spells.voidForm) and target.hasDebuff(spells.shiverVenom)' , "/use 14" },
 
     {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity > 60 and spells.mindBlast.cooldown == 0' , env.damageTarget , "voidEruption_60" },
-    {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity > 70' , env.damageTarget , "voidEruption_60" },
+    {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity > 70' , env.damageTarget , "voidEruption_70" },
     {spells.voidEruption, 'not player.isMoving and not player.hasTalent(7,1) and player.insanity > 90' , env.damageTarget , "voidEruption_90"  },
     {spells.darkAscension, 'player.hasTalent(7,2) and not player.hasBuff(spells.voidForm) and player.insanity < 60', env.damageTarget },
     
@@ -103,9 +103,7 @@ kps.rotations.register("PRIEST","SHADOW",{
         {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
         {spells.darkVoid, 'player.hasTalent(3,3) and not player.hasBuff(spells.voidForm) and not player.isMoving' , env.damageTarget , "darkVoid" },
         {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8' , "target" },
-        {{"macro"}, 'spells.shadowCrash.cooldown == 0 and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..ShadowCrash },
-        {{"macro"}, 'spells.shadowCrash.cooldown == 0 and mouseover.inCombat and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..ShadowCrash },
-        {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount >= 3' , env.damageTarget },
+        {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount > 4' , env.damageTarget },
         {spells.mindBlast, 'not player.isMoving and player.insanity < 60' , env.damageTarget , "mindBlast_not_voidForm"},
         {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
     }},
@@ -116,8 +114,8 @@ kps.rotations.register("PRIEST","SHADOW",{
 
     {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20' , "target" },    
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 15' , env.damageTarget },
-    {{"macro"}, 'spells.shadowCrash.cooldown == 0 and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..ShadowCrash },
-    {{"macro"}, 'spells.shadowCrash.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..ShadowCrash },
+    {{"macro"}, 'player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0 and target.isAttackable and not target.isMoving and target.distanceMax <= 5' , "/cast [@player] "..ShadowCrash },
+    {{"macro"}, 'player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..ShadowCrash },
     
     {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget },
 

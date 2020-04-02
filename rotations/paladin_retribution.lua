@@ -70,9 +70,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" },
 
     -- TRINKETS -- SLOT 0 /use 13
-    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 20' , "/use 13" },
+    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and target.debuffStacks(spells.razorCoral) == 0' , "/use 14" },
     {{"macro"}, 'player.useTrinket(1) and player.buffDuration(spells.avengingWrath) > 20 and kps.timeInCombat > 30' , "/use 14" },
     {{"macro"}, 'player.useTrinket(1) and player.buffDuration(spells.crusade) > 20 and kps.timeInCombat > 30' , "/use 14" },
 
