@@ -27,9 +27,12 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.65' ,"/use item:5512" },
+    --{{"macro"}, 'player.useItem(5512) and player.hp <= 0.65' ,"/use item:5512" },
     -- "Potion de soins abyssale" 169451
-    {{"macro"}, 'player.useItem(169451) and player.hp <= 0.40' ,"/use item:169451" },
+    --{{"macro"}, 'player.useItem(169451) and player.hp <= 0.40' ,"/use item:169451" },
+    
+    -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
+    {spells.divineShield, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)' , "player" },
     
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
     {spells.layOnHands, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)', "player" },
@@ -41,17 +44,13 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.70 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
     {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.65'}, 
-    
-    -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
-    {spells.divineShield, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)' , "player" },
 
     {{"nested"}, 'kps.addControl',{
 		-- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
-    	{spells.handOfHindrance, 'mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
-    	{spells.handOfHindrance, 'target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
-    	{spells.hammerOfJustice, 'mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
-    	{spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
-    	{spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
+    	{spells.handOfHindrance, 'mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving and not mouseover.isControlled' , "mouseover" },
+    	{spells.handOfHindrance, 'target.isAttackable and target.distanceMax <= 10 and target.isMoving and not target.isControlled' , "target" },
+    	{spells.hammerOfJustice, 'mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving and not mouseover.isControlled' , "mouseover" },
+    	{spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isMoving and not target.isControlled' , "target" },
     }},
     {{"nested"}, 'kps.interrupt',{
         {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting ' , "target" },
@@ -66,8 +65,6 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.cleanseToxins, 'heal.isPoisonDispellable' , kps.heal.isPoisonDispellable },
         {spells.cleanseToxins, 'heal.isDiseaseDispellable' , kps.heal.isDiseaseDispellable },
     }},
-    -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" },
 
     -- TRINKETS -- SLOT 0 /use 13
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
@@ -100,13 +97,13 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     }},
     {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
     {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },
+    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
 
     {spells.consecration, 'player.hasTalent(4,2) and not player.isMoving and not target.isMoving and target.distanceMax <= 10' }, -- Generates 1 Holy Power.
     {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
     {spells.crusaderStrike, 'player.holyPower <= 4 and spells.crusaderStrike.charges == 2 and target.distanceMax <= 10' , "target" }, --Generates 1 Holy Power
     {spells.judgment, 'player.holyPower <= 4 and target.distanceMax <= 30 and not target.hasMyDebuff(spells.judgment)' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
 
-    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
     {spells.divineStorm, 'player.plateCount >= 3' , "target" , "divineStorm_plateCount" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },

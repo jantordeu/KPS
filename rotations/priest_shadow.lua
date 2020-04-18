@@ -39,7 +39,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     --"Fade" 586
     {spells.fade, 'player.isTarget and player.isInGroup' },
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp < 0.65', "/use item:5512" },
+    --{{"macro"}, 'player.useItem(5512) and player.hp < 0.65', "/use item:5512" },
     -- "Don des naaru" 59544
     {spells.giftOfTheNaaru, 'player.hp < 0.65', "player" },
      -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
@@ -101,7 +101,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     
     {{"nested"}, 'not player.hasBuff(spells.voidForm)',{
         {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
-        {spells.darkVoid, 'player.hasTalent(3,3) and not player.hasBuff(spells.voidForm) and not player.isMoving' , env.damageTarget , "darkVoid" },
+        {spells.darkVoid, 'player.hasTalent(3,3) and not player.isMoving' , env.damageTarget , "darkVoid" },
         {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8' , "target" },
         {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount > 4' , env.damageTarget },
         {spells.mindBlast, 'not player.isMoving and player.insanity < 60' , env.damageTarget , "mindBlast_not_voidForm"},
@@ -119,11 +119,9 @@ kps.rotations.register("PRIEST","SHADOW",{
     
     {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget },
 
-    --{{spells.vampiricTouch,spells.shadowWordPain}, 'not player.isMoving and not player.hasTalent(3,2) and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and target.myDebuffDuration(spells.shadowWordPain) < 4.8' , "target" },
     {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4.8' , "target" },
     {spells.shadowWordPain, 'player.isMoving and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 16.8' , "target" },
-    --{{spells.vampiricTouch,spells.shadowWordPain}, 'not player.isMoving and not player.hasTalent(3,2) and focus.isAttackable and focus.myDebuffDuration(spells.vampiricTouch) < 6.3 and focus.myDebuffDuration(spells.shadowWordPain) < 4.8' , "focus" },
     {spells.vampiricTouch, 'focus.isAttackable and not player.isMoving and focus.myDebuffDuration(spells.vampiricTouch) < 6.3 and not spells.vampiricTouch.isRecastAt("focus")' , "focus"  },
     {spells.shadowWordPain, 'focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 4.8' , "focus"  },
     {spells.shadowWordPain, 'player.isMoving and focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 16.8' , "focus" },
@@ -136,8 +134,6 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- Pandemic allow DoTs to be refreshed upto 30% -- myDebuffDurationMax(spells.vampiricTouch) == 27.3 -- duration(21) + 30% (6.3) -- 70% (14.7)
     -- Pandemic allow DoTs to be refreshed upto 30% -- myDebuffDurationMax(spells.shadowWordPain) == 20.8 -- duration(16) + 30% (4.8) -- 70% (11.2)
     {spells.shadowWordPain, 'player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 16.8' , "mouseover" },
-    {spells.shadowWordPain, 'player.isMoving and target.myDebuffDuration(spells.shadowWordPain) < 16.8' , "target" },
-    {spells.shadowWordPain, 'player.isMoving and focus.myDebuffDuration(spells.shadowWordPain) < 16.8' , "focus" },
 
     {spells.mindBlast, 'not player.isMoving' , env.damageTarget , "mindBlast_voidForm"},
     {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount > 2' , env.damageTarget },

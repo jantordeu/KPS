@@ -20,7 +20,7 @@ Level 100: Channel Demonfire
 
 kps.rotations.register("WARLOCK","DESTRUCTION",
 {
-    {"/cancelaura " .. spells.burningRush, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
+    {"/cancelaura " .. spells.burningRush.name, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
 
     -- Apply  Havoc if a secondary target is present.
     {{"nested"}, 'not player.hasTalent(7, 1)', {

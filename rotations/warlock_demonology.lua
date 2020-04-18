@@ -30,7 +30,7 @@ local opener = {
 
 kps.rotations.register("WARLOCK","DEMONOLOGY",
 {
-    {"/cancelaura " .. spells.burningRush, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
+    {"/cancelaura "..spells.burningRush.name, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
 
     {opener, "kps.timeInCombat < 15 and kps.env.boss1.exists"},
 

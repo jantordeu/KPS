@@ -50,7 +50,7 @@ kps.spells.mage.blink = kps.Spell.fromId(1953)
 kps.spells.mage.blizzard = kps.Spell.fromId(190356)
 kps.spells.mage.blueFlameSpecial = kps.Spell.fromId(210182)
 kps.spells.mage.boneChilling = kps.Spell.fromId(205027)
-kps.spells.mage.brainFreeze = kps.Spell.fromId(190447)
+kps.spells.mage.brainFreeze = kps.Spell.fromId(190446)
 kps.spells.mage.brainStorm = kps.Spell.fromId(273326)
 kps.spells.mage.burningGaze = kps.Spell.fromId(194312)
 kps.spells.mage.burstOfCold = kps.Spell.fromId(206431)
@@ -277,6 +277,8 @@ kps.spells.mage.wintersReach = kps.Spell.fromId(273346)
 kps.spells.mage.worldInFlames = kps.Spell.fromId(203280)
 -- AZERITE
 kps.spells.mage.azerite = kps.spells.azerite
+-- ITEM
+kps.spells.mage.hyperthreadWristwraps = kps.Spell.Item.fromId(168989)
 
 
 

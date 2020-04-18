@@ -38,7 +38,7 @@ kps.rotations.register("WARRIOR","PROTECTION",
     {spells.intercept, 'kps.defensive and target.isAttackable and target.distance > 10' },
 
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
+    --{{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
     {spells.victoryRush, 'player.hp < 0.90'},
     {spells.stoneform, 'player.isDispellable("Disease")' , "player" },
     {spells.stoneform, 'player.isDispellable("Poison")' , "player" },

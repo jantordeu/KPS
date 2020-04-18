@@ -25,8 +25,8 @@ kps.rotations.register("WARLOCK","AFFLICTION",
 
     { {"macro"}, "player.useTrinket(0)" , "/use 13"},
     { {"macro"}, "player.useTrinket(1)" , "/use 14"},
-        -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" }, 
+    -- "Pierre de soins" 5512
+    --{{"macro"}, 'player.useItem(5512) and player.hp <= 0.72' ,"/use item:5512" }, 
 
     -- Maintain Agony (on up to 3 targets, including Soul Effigy) at all times.
     {spells.agony, 'target.myDebuffDuration(spells.agony) < 7.2'},

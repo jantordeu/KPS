@@ -16,7 +16,25 @@ kps.Spell = {}
 kps.Spell.prototype = {}
 kps.Spell.metatable = {}
 
+kps.Spell.Item = {}
+
 local GetUnitName = GetUnitName
+
+function _CastGroundSpellByName(spell, target)
+  local target = target or "target"
+  secured = false
+  while not secured do
+    RunScript([[
+      for index = 1, 500 do
+        if not issecure() then
+          return
+        end
+      end
+      RunMacroText("/cast [@cursor] ]] .. spell .. [[")
+      secured = true
+    ]])
+  end
+end
 
 local castAt = setmetatable({}, {
     __index = function(t, self)
@@ -31,7 +49,11 @@ local castAt = setmetatable({}, {
             kps.lastTarget = target
             self.lastCast = GetTime()
             
-            return self.name, target, self.needsSelect
+            if self.needsSelect then
+                _CastGroundSpellByName(self.name,target)
+            else
+                _CastSpellByName(self.name,target)
+            end
         end
         t[self] = val
         return val
@@ -71,6 +93,20 @@ function kps.Spell.fromId(spellId)
         local inst = {}
         inst.id = spellId
         local spellname = select(1,GetSpellInfo(spellId))
+        if spellname == nil then spellname = "Unknown Spell-ID:"..spellId end
+        inst.name = tostring(spellname)
+        inst.lastCast = 0
+        setmetatable(inst, kps.Spell.metatable)
+        spellCache[spellId] = inst
+    end
+    return spellCache[spellId]
+end
+
+function kps.Spell.Item.fromId(spellId)
+    if spellCache[spellId] == nil then
+        local inst = {}
+        inst.id = spellId
+        local spellname = select(1,GetItemInfo(spellId))
         if spellname == nil then spellname = "Unknown Spell-ID:"..spellId end
         inst.name = tostring(spellname)
         inst.lastCast = 0

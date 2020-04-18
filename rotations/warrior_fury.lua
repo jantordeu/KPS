@@ -35,7 +35,7 @@ kps.rotations.register("WARRIOR","FURY",
     {spells.pummel, 'kps.interrupt and focus.distance <= 10 and focus.isInterruptable and focus.castTimeLeft < 1' , "focus" },
 
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp < 0.90', "/use item:5512" },
+    --{{"macro"}, 'player.useItem(5512) and player.hp < 0.90', "/use item:5512" },
     {spells.victoryRush, 'player.hp < 0.80' },
     {spells.victoryRush, 'player.myBuffDuration(spells.victoryRush) < 4' },
     {spells.bloodthirst, 'player.hasBuff(spells.enragedRegeneration)' },

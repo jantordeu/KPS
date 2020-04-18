@@ -69,9 +69,8 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.purify, 'heal.lowestInRaid.isDispellable("Magic")' , kps.heal.lowestInRaid},
         {spells.purify, 'heal.isMagicDispellable' , kps.heal.isMagicDispellable },
     }},
-
-    --{spells.fireBlood, 'player.isDispellable("Magic") or player.isDispellable("Disease") or player.isDispellable("Poison") or player.isDispellable("Curse")' , "player" },
-    {{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
+    -- "Pierre de soins" 5512
+    --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
     {spells.giftOfTheNaaru, 'player.hp < 0.70' , "player" },
     {spells.desperatePrayer, 'player.hp < 0.55' , "player" },
     -- "Angelic Feather"

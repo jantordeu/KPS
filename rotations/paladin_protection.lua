@@ -29,7 +29,9 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.cleanseToxins, 'player.isDispellable("Poison")' , "player" },
     
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hpIncoming < 0.55', "/use item:5512" },
+    --{{"macro"}, 'player.useItem(5512) and player.hpIncoming < 0.55', "/use item:5512" },
+    -- "Potion de soins abyssale" 169451
+    --{{"macro"}, 'player.useItem(169451) and player.hp <= 0.40' ,"/use item:169451" },
     
     -- Interrupts
     {{"nested"}, 'kps.addControl',{
@@ -85,7 +87,7 @@ kps.rotations.register("PALADIN","PROTECTION",
 
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and spells.shieldOfTheRighteous.charges == 3 ' , "target" , "shieldOfTheRighteous_charges"},
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and player.hpIncoming < 0.80 and spells.shieldOfTheRighteous.charges == 2 ' , "target" , "shieldOfTheRighteous_health_80"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and player.hpIncoming < 0.65' , "target" , "shieldOfTheRighteous_health_65"},
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hpIncoming < 0.65' , "target" , "shieldOfTheRighteous_health_65"},
     -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
     {spells.avengersShield, 'target.distanceMax <= 10 and target.isCasting and target.castTimeLeft < 2' , "target" , "avengersShield_casting" },
     {spells.avengersShield, 'target.distanceMax <= 10 and player.myBuffDuration(spells.avengersValor) < 2' , "target" , "avengersShield_isUsable" },

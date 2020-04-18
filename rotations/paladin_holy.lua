@@ -25,13 +25,9 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.65' ,"/use item:5512" },
+    --{{"macro"}, 'player.useItem(5512) and player.hp <= 0.65' ,"/use item:5512" },
     -- "Potion de soins abyssale" 169451
     --{{"macro"}, 'player.useItem(169451) and player.hp <= 0.40' ,"/use item:169451" },
-    
-    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
-    {spells.layOnHands, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)', "player" },
-    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
 
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec.
     {spells.divineProtection, 'spells.blessingOfSacrifice.lastCasted(4)' , "player" },
@@ -47,6 +43,10 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
     {spells.divineShield, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)' , "player" },
     {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.30 and not heal.lowestTankInRaid.hasDebuff(spells.forbearance)' , kps.heal.lowestTankInRaid },
+    
+    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
+    {spells.layOnHands, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)', "player" },
+    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
 
     {{"nested"},'kps.cooldowns', {
         {spells.cleanse, 'mouseover.isHealable and mouseover.isDispellable("Magic")' , "mouseover" },
@@ -86,8 +86,7 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Bestow Faith" "Don de foi" -- Récupère (150% of Spell power) points de vie à expiration. -- 12 sec cd
     {spells.bestowFaith, 'player.hasTalent(1,2) and not heal.lowestTankInRaid.hasBuff(spells.bestowFaith)' , kps.heal.lowestTankInRaid },    
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
-    {spells.ruleOfLaw, 'heal.countLossInRange(0.80) > 3 and not player.hasBuff(spells.ruleOfLaw)' },
-    {spells.ruleOfLaw, 'spells.ruleOfLaw.charges == 2 and not player.hasBuff(spells.ruleOfLaw) and heal.lowestInRaid.hpIncoming < 0.85' },
+    {spells.ruleOfLaw, 'heal.countLossInRange(0.80) >= 3 and not player.hasBuff(spells.ruleOfLaw)' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
     {spells.lightOfDawn, 'heal.countLossInDistance(0.85,10) >= 2' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.80,10) >= 3' },

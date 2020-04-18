@@ -26,10 +26,14 @@ kps.rotations.register("MAGE","FROST",
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
-   {spells.arcaneIntellect, 'not player.hasBuff(spells.arcaneIntellect)' , "player" },
-   {spells.iceBarrier, 'not player.hasBuff(spells.iceBarrier)'},
-   {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
-   {spells.spellsteal, 'target.isStealable' , "target" },
+    {spells.arcaneIntellect, 'not player.hasBuff(spells.arcaneIntellect)' , "player" },
+    {spells.iceBarrier, 'not player.hasBuff(spells.iceBarrier)'},
+    {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
+    {spells.invisibility, 'target.isRaidBoss and targettarget.isUnit("player")'},
+    {spells.spellsteal, 'target.isStealable' , "target" },
+    --{{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
+    {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
+    {spells.polymorph, 'kps.polymorph and target.isAttackable and target.myDebuffDuration(spells.polymorph) < 3 and target.hp > 0.95 and not target.isRaidBoss' , "target" },
 
    -- interrupts
     {{"nested"},'kps.cooldowns', {
@@ -44,12 +48,6 @@ kps.rotations.register("MAGE","FROST",
         {spells.counterspell, 'focus.isInterruptable' , "focus" },
     }},
 
-    {spells.invisibility, 'target.isRaidBoss and player.isTarget'},
-    {{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
-    {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
-
-    {spells.polymorph, 'kps.polymorph and focus.isAttackable and focus.hasMyDebuff(spells.polymorph) and focus.myDebuffDuration(spells.polymorph) < 3' , "focus" },
-    
     -- TRINKETS
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(0)' , "/use 13" },
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(1)' , "/use 14" },
@@ -72,6 +70,7 @@ kps.rotations.register("MAGE","FROST",
 
     {spells.frostNova, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova) and not spells.frostNova.isRecastAt("target")' , "target" },
     {spells.coneOfCold, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova)' , "target" },
+    {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" , "fingersOfFrost" }, 
  
     {{"nested"}, 'kps.multiTarget and target.distanceMax <= 10 and target.isAttackable', {
         {spells.cometStorm, 'player.hasTalent(6,3)' },
@@ -79,15 +78,11 @@ kps.rotations.register("MAGE","FROST",
     }},
 
     -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
-    {spells.ebonbolt, 'not player.isMoving and player.hasTalent(4,3) not player.hasBuff(spells.brainFreeze)' , "target" },
+    {spells.ebonbolt, 'not player.isMoving and player.hasTalent(4,3) and player.buffStacks(spells.icicles) == 5 and not player.hasBuff(spells.brainFreeze)' , "target" , "ebonbolt" },
     -- Cast Flurry If you have 5 stacks of Mastery: Icicles after casting Glacial Spike -- Only use Flurry with Brain Freeze
-    {{spells.glacialSpike,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) >= 4 and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike_flurry_iceLance" },
-    {{spells.frostbolt,spells.flurry,spells.iceLance}, 'not player.isMoving and player.hasBuff(spells.brainFreeze)' , "target" , "frostbolt_flurry_iceLance" },
-    {{spells.glacialSpike}, 'not player.isMoving and player.hasTalent(7,3) and player.buffStacks(spells.icicles) == 5' , "target" , "glacialSpike_flurry_iceLance" },
-    
-    {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" , "fingersOfFrost" }, 
-    {spells.cometStorm, 'player.hasTalent(6,3)' }, 
-    
+    {{spells.glacialSpike,spells.flurry}, 'not player.isMoving and player.hasTalent(7,3) and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike_brainFreeze" },
+
+    {{spells.frostbolt,spells.flurry}, 'not player.isMoving and player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) <= 3' },
     {spells.frostbolt, 'not player.isMoving' },
     {spells.iceLance },
 
