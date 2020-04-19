@@ -9,8 +9,8 @@ local env = kps.env.mage
 local Meteor = spells.meteor.name
 local Flamestrike = spells.flamestrike.name
 local Pyroblast = spells.pyroblast.name
-local Wristwraps = spells.hyperthreadWristwraps.name
 local IceBlock = spells.iceBlock.name
+local Wristwraps = spells.item.hyperthreadWristwraps.name
 
 
 kps.runAtEnd(function()
@@ -109,8 +109,8 @@ kps.rotations.register("MAGE","FIRE",
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 5' , "target" },
     {spells.livingBomb,  'player.hasTalent(6,3)' , env.damageTarget },
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
-    {spells.runeOfPower, 'and player.hasTalent(3,3) and not player.isMoving and spells.runeOfPower.charges == 2 and spells.combustion.cooldown > 9 and spells.meteor.cooldown < 5 and target.isAttackable' },
-    {spells.runeOfPower, 'and player.hasTalent(3,3) and not player.isMoving and spells.combustion.cooldown > 45 and spells.meteor.cooldown < 5 and target.isAttackable' },
+    {spells.runeOfPower, 'player.hasTalent(3,3) and not player.isMoving and spells.runeOfPower.charges == 2 and spells.combustion.cooldown > 9 and spells.meteor.cooldown < 5 and target.isAttackable' },
+    {spells.runeOfPower, 'player.hasTalent(3,3) and not player.isMoving and spells.combustion.cooldown > 45 and spells.meteor.cooldown < 5 and target.isAttackable' },
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
 

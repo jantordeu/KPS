@@ -278,7 +278,7 @@ kps.spells.mage.worldInFlames = kps.Spell.fromId(203280)
 -- AZERITE
 kps.spells.mage.azerite = kps.spells.azerite
 -- ITEM
-kps.spells.mage.hyperthreadWristwraps = kps.Spell.Item.fromId(168989)
+kps.spells.mage.item = kps.spells.item
 
 
 

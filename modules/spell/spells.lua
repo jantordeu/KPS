@@ -195,3 +195,6 @@ kps.spells.azerite.azerothUndyingGift = kps.Spell.fromId(293019)
 kps.spells.azerite.guardianOfAzeroth = kps.Spell.fromId(295840)
 -- "Reaping Flames" -- Burn your target with a bolt of Azerite, dealing 33385 Fire damage. If the target has less than 20% health, the cooldown is reduced by 30 sec.
 kps.spells.azerite.reapingFlames = kps.Spell.fromId(310690)
+
+kps.spells.item = {}
+kps.spells.item.hyperthreadWristwraps = kps.Spell.Item.fromId(168989)

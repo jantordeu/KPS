@@ -102,20 +102,6 @@ function kps.Spell.fromId(spellId)
     return spellCache[spellId]
 end
 
-function kps.Spell.Item.fromId(spellId)
-    if spellCache[spellId] == nil then
-        local inst = {}
-        inst.id = spellId
-        local spellname = select(1,GetItemInfo(spellId))
-        if spellname == nil then spellname = "Unknown Spell-ID:"..spellId end
-        inst.name = tostring(spellname)
-        inst.lastCast = 0
-        setmetatable(inst, kps.Spell.metatable)
-        spellCache[spellId] = inst
-    end
-    return spellCache[spellId]
-end
-
 kps.Spell.metatable.__index = function (table, key)
     local fn = kps.Spell.prototype[key]
     if fn == nil then
@@ -128,4 +114,19 @@ kps.Spell.metatable.__tostring = function (table)
 end
 kps.Spell.metatable.__concat = function (lhs, rhs)
     return tostring(lhs) .. tostring(rhs)
+end
+
+
+function kps.Spell.Item.fromId(spellId)
+    if spellCache[spellId] == nil then
+        local inst = {}
+        inst.id = spellId
+        local spellname = select(1,GetItemInfo(spellId))
+        if spellname == nil then spellname = "Unknown Spell-ID:"..spellId end
+        inst.name = tostring(spellname)
+        inst.lastCast = 0
+        setmetatable(inst, kps.Spell.metatable)
+        spellCache[spellId] = inst
+    end
+    return spellCache[spellId]
 end
