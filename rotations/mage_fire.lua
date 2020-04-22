@@ -75,8 +75,7 @@ kps.rotations.register("MAGE","FIRE",
     {{"nested"}, 'player.hasBuff(spells.combustion)', {
         {{"macro"}, 'spells.fireBlast.charges == 0', "/cast "..Wristwraps }, -- player.buffDuration(spells.combustion) < 5
         {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget , "combustion" },
-        {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_combustion" },
-        {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and spells.fireBlast.charges == 3' , env.damageTarget , "fireBlast_combustion" },
+        {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt(damageTarget())' , env.damageTarget , "fireBlast_combustion" },
         {spells.scorch, 'spells.fireBlast.charges == 0 and not player.hasBuff(spells.hotStreak)' , env.damageTarget , "scorch_combustion" },
     }},
     {{"nested"},'kps.cooldowns and not player.isMoving and player.hasTalent(3,3) and spells.combustion.cooldown < 2', {
