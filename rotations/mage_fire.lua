@@ -75,8 +75,8 @@ kps.rotations.register("MAGE","FIRE",
     {{"nested"}, 'player.hasBuff(spells.combustion)', {
         {{"macro"}, 'spells.fireBlast.charges == 0', "/cast "..Wristwraps }, -- player.buffDuration(spells.combustion) < 5
         {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget , "combustion" },
-        {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt(damageTarget())' , env.damageTarget , "fireBlast_combustion" },
         {spells.scorch, 'spells.fireBlast.charges == 0 and not player.hasBuff(spells.hotStreak)' , env.damageTarget , "scorch_combustion" },
+        {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and not spells.fireBlast.isRecastAt(damageTarget())' , env.damageTarget , "fireBlast_combustion" },
     }},
     {{"nested"},'kps.cooldowns and not player.isMoving and player.hasTalent(3,3) and spells.combustion.cooldown < 2', {
 	    {spells.azerite.memoryOfLucidDreams },
@@ -115,7 +115,7 @@ kps.rotations.register("MAGE","FIRE",
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
 
-    {{"nested"}, 'player.hasBuff(spells.heatingUp) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt(damageTarget())', {
+    {{"nested"}, 'player.hasBuff(spells.heatingUp) and not spells.fireBlast.isRecastAt(damageTarget())', {
         -- you can use Fire Blast while casting
         {spells.fireBlast, 'spells.fireBlast.charges == 3' ,  env.damageTarget , "fireBlast_charges" },
         {spells.fireBlast, 'spells.fireBlast.charges == 2 and spells.combustion.cooldown > 17' ,  env.damageTarget , "fireBlast_cooldown_17" },
