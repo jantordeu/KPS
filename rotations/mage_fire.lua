@@ -73,10 +73,11 @@ kps.rotations.register("MAGE","FIRE",
     -- COMBUSTION
 
     {{"nested"}, 'player.hasBuff(spells.combustion)', {
-        {{"macro"}, 'spells.fireBlast.charges == 0', "/cast "..Wristwraps }, -- player.buffDuration(spells.combustion) < 5
+        {{"macro"}, 'IsEquippedItem(168989) and spells.fireBlast.charges == 0', "/cast "..Wristwraps }, -- player.buffDuration(spells.combustion) < 5
         {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget , "combustion" },
         {spells.scorch, 'spells.fireBlast.charges == 0 and not player.hasBuff(spells.hotStreak)' , env.damageTarget , "scorch_combustion" },
         {spells.fireBlast, 'player.hasBuff(spells.heatingUp) and not spells.fireBlast.isRecastAt(damageTarget())' , env.damageTarget , "fireBlast_combustion" },
+        {spells.scorch, 'not player.hasBuff(spells.hotStreak)' , env.damageTarget , "scorch_combustion" },
     }},
     {{"nested"},'kps.cooldowns and not player.isMoving and player.hasTalent(3,3) and spells.combustion.cooldown < 2', {
 	    {spells.azerite.memoryOfLucidDreams },
@@ -99,10 +100,10 @@ kps.rotations.register("MAGE","FIRE",
     -- during hotStreak, fireball can proc heatingUp if crit, then pyroblast can proc again hotStreak if crit
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastSentSpell == spells.pyroblast.name', env.damageTarget , "pyroblast_pyroblast"},
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastCastedSpell == spells.fireball.name', env.damageTarget , "pyroblast_fireball"},
-    {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastSentSpell == spells.fireBlast.name', env.damageTarget , "pyroblast_fireBlast"},
+    --{spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastSentSpell == spells.fireBlast.name', env.damageTarget , "pyroblast_fireBlast"},
 
     --{spells.fireball, 'not player.isMoving and not player.hasBuff(spells.combustion) and player.hasBuff(spells.hotStreak) and not spells.fireball.isRecastAt("target")', env.damageTarget , "fireball_hotStreak"},
-    {spells.fireball, 'not player.isMoving and target.hp > 0.30 and player.hasBuff(spells.hotStreak) and spells.combustion.cooldown > 2 and not spells.fireball.isRecastAt("target")', env.damageTarget , "fireball_hotStreak"},
+    {spells.fireball, 'not player.isMoving and target.hp > 0.30 and player.hasBuff(spells.hotStreak) and spells.combustion.cooldown > 2 and not spells.fireball.isRecastAt("target") and not kps.lastSentSpell == spells.fireBlast.name', env.damageTarget , "fireball_hotStreak"},
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and not player.hasBuff(spells.azerite.memoryOfLucidDreams)', env.damageTarget , "pyroblast_hotStreak"},
     
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 5' , "target" },

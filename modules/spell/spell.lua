@@ -15,7 +15,6 @@ Assuming you want to cast `mySpell`, then `<SPELL>` may be one of:
 kps.Spell = {}
 kps.Spell.prototype = {}
 kps.Spell.metatable = {}
-
 kps.Spell.Item = {}
 
 local GetUnitName = GetUnitName
