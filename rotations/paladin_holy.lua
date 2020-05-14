@@ -19,8 +19,8 @@ kps.rotations.register("PALADIN","HOLY",
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     
     -- ShouldInterruptCasting,
-    --{{"macro"}, 'spells.holyLight.shouldInterrupt(0.95,kps.defensive)' , "/stopcasting" },
-    {{"macro"}, 'spells.flashOfLight.shouldInterrupt(0.90,kps.defensive)' , "/stopcasting" },
+    {{"macro"}, 'spells.holyLight.shouldInterrupt(0.95,kps.defensive)' , "/stopcasting" },
+    {{"macro"}, 'spells.flashOfLight.shouldInterrupt(0.85,kps.defensive)' , "/stopcasting" },
     
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
@@ -86,7 +86,7 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Bestow Faith" "Don de foi" -- Récupère (150% of Spell power) points de vie à expiration. -- 12 sec cd
     {spells.bestowFaith, 'player.hasTalent(1,2) and not heal.lowestTankInRaid.hasBuff(spells.bestowFaith)' , kps.heal.lowestTankInRaid },    
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
-    {spells.ruleOfLaw, 'heal.countLossInRange(0.80) >= 3 and not player.hasBuff(spells.ruleOfLaw)' },
+    {spells.ruleOfLaw, 'heal.countLossInRange(0.85) >= 4 and heal.countLossInRange(0.85,10) <= 2 and not player.hasBuff(spells.ruleOfLaw)' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
     {spells.lightOfDawn, 'heal.countLossInDistance(0.85,10) >= 2' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.80,10) >= 3' },

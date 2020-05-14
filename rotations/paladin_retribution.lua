@@ -86,7 +86,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
     }},
-    {{"nested"},'kps.cooldowns and spells.crusade.cooldown < player.gcd and player.holyPower < 3', {
+    {{"nested"},'kps.cooldowns and spells.crusade.cooldown < 2 and player.holyPower < 3', {
         {spells.judgment, 'true' , "target"  },
         {spells.bladeOfJustice, 'true' , "target"  },
         {spells.crusaderStrike, 'true' , "target"  },

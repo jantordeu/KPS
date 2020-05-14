@@ -47,7 +47,7 @@ function Unit.isCastingClippingSpell(self)
 end
 
 function Unit.isCasting(self)
-    --if Unit.isCastingClippingSpell(self) then return false end
+    if Unit.isCastingClippingSpell(self) then return false end
     if Unit.castTimeLeft(self) > kps.latency or Unit.channelTimeLeft(self) > kps.latency then return true end
     return false
 end
