@@ -661,6 +661,7 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 --print("|cff1eff00GlimmerLowest|cffffffff", kps["env"].heal.hasBuffGlimmer.name,"|",kps["env"].heal.hasBuffGlimmer.hp)
 print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 
+--print("|cffff8000GCD:|cffffffff", kps["env"].player.gcd)
 
 --print("|cffff8000lastSentSpell:|cffffffff",  kps.lastSentSpell)
 --print("|cffff8000lastCastedSpell:|cffffffff", kps.lastCastedSpell)
@@ -668,7 +669,6 @@ print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.
 --print("|cffff8000countCharge:|cffffffff", kps.spells.mage.fireBlast.charges)
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.mindBlast.charges)
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.powerWordRadiance.charges)
---print("|cffff8000buffDuration:|cffffffff", kps["env"].player.myBuffDuration(kps.spells.priest.atonement),"hasBuff:", kps["env"].player.hasMyBuff(kps.spells.priest.atonement) )
 
 -- CR_CRIT_SPELL = 11;
 -- CR_HASTE_SPELL = 20;
@@ -676,7 +676,7 @@ print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.
 --bonusCRIT = GetCombatRatingBonus(11)
 --bonusHASTE = GetCombatRatingBonus(20)
 --print("crit:",bonusCRIT,"haste:", bonusHASTE)
---
+
 --local spellHastePercent = UnitSpellHaste("player")
 --local critChancePercent = GetCritChance()
 --print("crit:", critChancePercent,"haste:", spellHastePercent)

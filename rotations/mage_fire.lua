@@ -79,7 +79,7 @@ kps.rotations.register("MAGE","FIRE",
     -- COMBUSTION
     {spells.fireBlast, 'player.hasBuff(spells.combustion) and kps.lastSentSpell == spells.pyroblast.name and not spells.fireBlast.isRecastAt("target")' , "target" , "fireBlast_combustion_last" },
     {spells.pyroblast, 'player.hasBuff(spells.combustion) and player.hasBuff(spells.hotStreak)', "target" , "pyroblast_combustion" },
-    {spells.pyroblast, 'player.hasBuff(spells.combustion) and kps.lastSentSpell == spells.fireBlast.name', "target" , "pyroblast_combustion_last" },
+    {spells.pyroblast, 'player.myBuffDuration(spells.combustion) > 2.6 and kps.lastSentSpell == spells.fireBlast.name', "target" , "pyroblast_combustion_last" },
     {{"macro"}, 'player.hasBuff(spells.combustion) and IsEquippedItem(168989) and spells.fireBlast.charges == 0', "/cast "..Wristwraps },
     {spells.fireBlast, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , "target" , env.checkfireBlast },
     {spells.scorch, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak)' , "target" , "scorch_combustion" },
@@ -113,7 +113,7 @@ kps.rotations.register("MAGE","FIRE",
     {spells.livingBomb,  'player.hasTalent(6,3) and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.livingBomb)' , "mouseover" },
     {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 5' , "target" },
 
-    {{spells.fireball,spells.pyroblast},'player.hasBuff(spells.hotStreak) and not player.isMoving and not player.hasBuff(spells.combustion) and target.hp > 0.30 and not spells.fireball.isRecastAt("target")', env.damageTarget , "fireball_hotStreak"},
+    {spells.fireball,'player.hasBuff(spells.hotStreak) and not player.isMoving and not player.hasBuff(spells.combustion) and spells.combustion.cooldown > 2 and target.hp > 0.30 and not spells.fireball.isRecastAt("target")', env.damageTarget , "fireball_hotStreak"},
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget , "pyroblast_hotStreak"},
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
@@ -124,6 +124,7 @@ kps.rotations.register("MAGE","FIRE",
     -- Bonne série -- Hot Streak -- Your next Pyroblast or Flamestrike spell is instant cast, and causes double the normal Ignite damage.
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
 
+    {spells.fireBlast, 'spells.fireBlast.charges == 3 and not player.hasBuff(spells.hotStreak) and spells.combustion.cooldown > 25' , "target", "fireBlast_charges_3" },
     {{"nested"}, 'player.hasBuff(spells.heatingUp) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")', {
         {spells.fireBlast, 'spells.fireBlast.charges == 3 and not kps.cooldowns' , "target", "fireBlast_charges" },
         {spells.fireBlast, 'spells.fireBlast.charges == 3 and spells.combustion.cooldown > 8' , "target" , "fireBlast_cooldown_8" },
@@ -133,16 +134,11 @@ kps.rotations.register("MAGE","FIRE",
     -- "Phoenix Flames" -- Always deals a critical strike. 30 sec cooldown 3 charges
     {spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp)' ,  env.damageTarget },
 
-    {{"nested"}, 'player.isMoving', {
-        {spells.scorch, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" },
-        {spells.scorch, 'target.isAttackable and not target.hasMyDebuff(spells.ignite)' , "target"  },
-        {spells.scorch, 'focus.isAttackable and not focus.hasMyDebuff(spells.ignite)' , "focus" },
-        {spells.scorch, 'true', env.damageTarget },
-    }},
-
+    {spells.scorch, 'player.isMoving and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" },
+    {spells.scorch, 'player.isMoving', env.damageTarget },
+ 
+    {spells.scorch, 'target.hp < 0.30 and target.isAttackable' , "target"  , "scorch_target" }, 
     {spells.scorch, 'mouseover.hp < 0.30 and mouseover.isAttackable' , "mouseover"  , "scorch_mouseover" },
-    {spells.scorch, 'target.hp < 0.30 and target.isAttackable' , "target"  , "scorch_target" },
-    {spells.scorch, 'focus.hp < 0.30 and focus.isAttackable' , "focus"  , "scorch_focus" },
 
     -- debuff "Conflagration" 226757 -- fireball -- spells.conflagration
     -- debuff "Ignite" 12654 -- Scorch & fireball -- spells.ignite

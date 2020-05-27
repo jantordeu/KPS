@@ -11,7 +11,6 @@ local Blizzard = spells.blizzard.name
 local RingOfFrost  = spells.ringOfFrost.name
 local IceBlock = spells.iceBlock.name
 
-
 kps.runAtEnd(function()
    kps.gui.addCustomToggle("MAGE","FROST", "polymorph", "Interface\\Icons\\spell_nature_polymorph", "polymorph")
 end)
