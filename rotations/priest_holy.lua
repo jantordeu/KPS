@@ -60,8 +60,8 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.holyWordSerenity, 'player.hp < 0.65' , "player"},
     {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid},
     {spells.holyWordSerenity, 'mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" },
-    {spells.holyWordSerenity, 'heal.countLossInRange(0.85) > 2 and heal.lowestTankInRaid.hp < 0.80' , kps.heal.lowestTankInRaid , "POH_holyWordSerenity" },
-    {spells.holyWordSerenity, 'heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid , "POH_holyWordSerenity" },
+    {spells.holyWordSerenity, 'heal.countLossInRange(0.85) > 2 and heal.lowestTankInRaid.hp < 0.80' , kps.heal.lowestTankInRaid },
+    {spells.holyWordSerenity, 'heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid },
     {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid},
     -- "Surge Of Light"
 --    {{"nested"}, 'player.hasBuff(spells.surgeOfLight)' , {
@@ -119,16 +119,15 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.levitate, 'player.IsFallingSince(1.4) and not player.hasBuff(spells.levitate)' , "player" },
     
     --AZERITE
-    {spells.azerite.concentratedFlame, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
-    -- "Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
-    -- player.buffValue(spells.azerite.theWellOfExistence) > 19000
+    --"Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
+    --{spells.azerite.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2'},
+    --"Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
+    --{spells.azerite.overchargeMana, 'heal.countLossInRange(0.85)*2 > heal.countInRange' }, -- MANUAL
+    --"Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
     {spells.azerite.refreshment, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid },
     {spells.azerite.refreshment, 'heal.lowestTankInRaid.hp < 0.80' , kps.heal.lowestTankInRaid },
     {spells.azerite.refreshment, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
-    -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
-    {spells.azerite.memoryOfLucidDreams, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
-    -- "Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
-    -- {spells.azerite.overchargeMana, 'heal.countLossInRange(0.85)*2 > heal.countInRange' }, -- MANUAL
+    {spells.azerite.concentratedFlame, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and heal.countLossInRange(0.85) > 2' , "/use 13" },

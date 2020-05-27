@@ -193,15 +193,15 @@ end)
 ]]--
 kps.RaidStatus.prototype.defaultTarget = kps.utils.cachedValue(function()
     -- If we're below 30% - always heal us first!
-    if kps.env.player.hp < 0.40 then return kps["env"].player end
+    if kps.env.player.hp < 0.55 then return kps["env"].player end
     -- If the focus target is below 50% - take it (must be some reason there is a focus after all...)
     -- focus.isFriend coz isHealable (e.g. UnitInRange) is only available for members of the player's group.
-    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.40 then return kps["env"].focus end
+    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.55 then return kps["env"].focus end
     -- MAYBE we also focused an enemy so we can heal it's target...
-    if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.40 then return kps["env"].focustarget end
+    if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.55 then return kps["env"].focustarget end
     -- Now do the same for target...
-    if kps["env"].target.isHealable and kps["env"].target.hp < 0.40 then return kps["env"].target end
-    if not kps["env"].target.isHealable and kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.40 then return kps["env"].targettarget end
+    if kps["env"].target.isHealable and kps["env"].target.hp < 0.55 then return kps["env"].target end
+    if not kps["env"].target.isHealable and kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.55 then return kps["env"].targettarget end
     -- Nothing selected - get lowest raid member
     return kps.RaidStatus.prototype.lowestInRaid()
 end)
@@ -216,15 +216,15 @@ end)
 ]]--
 kps.RaidStatus.prototype.defaultTank = kps.utils.cachedValue(function()
     -- If we're below 30% - always heal us first!
-    if kps.env.player.hp < 0.40 then return kps["env"].player end
+    if kps.env.player.hp < 0.55 then return kps["env"].player end
     -- If the focus target is below 50% - take it (must be some reason there is a focus after all...) 
     -- focus.isFriend coz isHealable (e.g. UnitInRange) is only available for members of the player's group.
-    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.40 then return kps["env"].focus end
+    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.55 then return kps["env"].focus end
     -- MAYBE we also focused an enemy so we can heal it's target...
-    if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.40 then return kps["env"].focustarget end
+    if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.55 then return kps["env"].focustarget end
     -- Now do the same for target...
-    if kps["env"].target.isHealable and kps["env"].target.hp < 0.40 then return kps["env"].target end
-    if not kps["env"].target.isHealable and kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.40 then return kps["env"].targettarget end
+    if kps["env"].target.isHealable and kps["env"].target.hp < 0.55 then return kps["env"].target end
+    if not kps["env"].target.isHealable and kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.55 then return kps["env"].targettarget end
     -- Nothing selected - get lowest Tank if it is NOT the player and lower than 50%
     return kps.RaidStatus.prototype.lowestTankInRaid()
 end)
@@ -479,7 +479,7 @@ kps.RaidStatus.prototype.hasBossDebuff = kps.utils.cachedValue(function()
 end)
 
 --[[[
-@function `heal.hasBuffCount(<BUFF>)` - Returns the count for a specific Buff on raid e.g. heal.hasBuffCount(spells.atonement) > 3
+@function `heal.hasBuffCount(<BUFF>)` - Returns the buff count for a specific Buff on raid e.g. heal.hasBuffCount(spells.atonement) > 3
 ]]--
 
 local unitBuffCount = function(spell)
@@ -663,13 +663,9 @@ print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.
 
 
 --print("|cffff8000lastSentSpell:|cffffffff",  kps.lastSentSpell)
---print("|cffff8000prevCastedSpell:|cffffffff", kps.prevCastedSpell)
 --print("|cffff8000lastCastedSpell:|cffffffff", kps.lastCastedSpell)
 
-
---print("|cffff8000debuffStacks:|cffffffff", kps["env"].target.debuffStacks(kps.spells.paladin.razorCoral))
---print("|cffff8000debuffCount:|cffffffff", kps["env"].target.debuffCount(kps.spells.paladin.razorCoral))
-
+--print("|cffff8000countCharge:|cffffffff", kps.spells.mage.fireBlast.charges)
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.mindBlast.charges)
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.powerWordRadiance.charges)
 --print("|cffff8000buffDuration:|cffffffff", kps["env"].player.myBuffDuration(kps.spells.priest.atonement),"hasBuff:", kps["env"].player.hasMyBuff(kps.spells.priest.atonement) )

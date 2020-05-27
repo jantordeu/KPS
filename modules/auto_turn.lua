@@ -25,21 +25,3 @@ kps.events.register("UNIT_SPELLCAST_START", function(...)
          end
       end
 end)
-
---[[
-"UNIT_SPELLCAST_SENT" Fired when an event is sent to the server
-"UNIT_SPELLCAST_START" Fired when a unit begins casting
-"UNIT_SPELLCAST_SUCCEEDED" Fired when a spell is cast successfully
-]]--
-
-function removeBagItems()
-    for bag = 0,4,1 do
-        for slot = 1, GetContainerNumSlots(bag), 1 do
-            local name = GetContainerItemLink(bag,slot)
-            if name and string.find(name,"ff9d9d9d") then 
-                PickupContainerItem(bag,slot)
-                DeleteCursorItem()
-            end
-        end 
-    end
-end

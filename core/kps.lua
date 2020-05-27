@@ -19,14 +19,6 @@ kps.useItem = function(itemId)
     end
 end
 
-kps.runMacro = function(macroText)
-    RunMacroText(macroText)
-end
-
-kps.stopCasting = function()
-    SpellStopCasting()
-end
-
 local combatStarted = -1
 kps.timeInCombat = 0
 
@@ -70,7 +62,7 @@ kps.combatStep = function ()
         activeRotation.checkTalents()
         local spell, target, message = activeRotation.getSpell()
         -- Castable Spell while casting
-        if spell ~= nil and spell.cast ~= nil and player.isCasting and spell.isCastableSpell then
+        if spell ~= nil and spell.isCastableSpell and player.isCasting  then
             return spell.cast(target,message)
         end
         -- Spell Object
@@ -94,7 +86,7 @@ kps.combatStep = function ()
             end
         end
         -- Cast Sequence Table
-        if type(spell) == "table" and spell.cast == nil then
+        if type(spell) == "table" and spell.cast == nil and not player.isCasting then
             LOG.debug("Starting Cast-Sequence...")
             castSequenceIndex = 1
             castSequence = spell
@@ -103,7 +95,11 @@ kps.combatStep = function ()
         end
         -- Macro
         if type(spell) == "string" then
-            return spell
+            if not player.isCasting then
+            	return spell
+            elseif player.isCasting and string.find(spell,"/stopcasting") ~= nil then
+            	return "/stopcasting"
+            end
         end
     end
 end
@@ -128,4 +124,3 @@ end)
 kps.lastCastedSpell = nil
 kps.lastSentSpell = nil
 kps.lastStartedSpell = nil
-kps.prevCastedSpell = nil

@@ -248,10 +248,19 @@ kps.events.register("UNIT_SPELLCAST_START", function (unit, lineId, spellId)
 end)
 
 -- UNIT_SPELLCAST_SUCCEEDED -- Fired when a spell is cast successfully. Event is received even if spell is resisted.
+local count = 0
 kps.events.register("UNIT_SPELLCAST_SUCCEEDED", function (unit, lineId, spellId)
    if unit == "player" then
-       kps.prevCastedSpell = kps.lastCastedSpell
        kps.lastCastedSpell = select(1, GetSpellInfo(spellId))
+       local lastCastedSpellID = select(3, GetSpellInfo(spellId))
+       -- Fishing
+       if lastCastedSpellID == 136245 then
+            count = count + 1
+            if count > 100 then 
+                removeBagItems()
+                count = 0
+            end
+       end
    end
 end)
 

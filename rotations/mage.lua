@@ -37,7 +37,6 @@ function kps.env.mage.pyroChain()
     if not pyroChain then
         return false
     else
-        -- actions=stop_pyro_chain,if=prev_off_gcd.combustion
         pyroChain = kps.env.player.mana > 0.35
     end
     return pyroChain
@@ -80,17 +79,19 @@ function kps.env.mage.FocusMouseoverFire()
     local focus = kps.env.focus
     if not focus.exists and not UnitIsUnit("target","mouseover") and mouseover.isAttackable and mouseover.inCombat then
         if not mouseover.hasMyDebuff(kps.spells.mage.ignite) then
-            --kps.runMacro("/focus mouseover")
             return true
         else
-            --kps.runMacro("/focus mouseover")
             return true
         end
     elseif focus.exists and not UnitIsUnit("target","mouseover") and not UnitIsUnit("focus","mouseover") and focus.myDebuffDuration(kps.spells.mage.ignite) > 2 then
         if not mouseover.hasMyDebuff(kps.spells.mage.ignite) and mouseover.isAttackable and mouseover.inCombat then
-            --kps.runMacro("/focus mouseover")
             return true
         end
     end
     return false
+end
+
+kps.env.mage.checkfireBlast = function()
+	local charges = kps.spells.mage.fireBlast.charges
+    return "fireBlast_charges:"..charges
 end

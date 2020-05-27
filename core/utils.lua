@@ -109,3 +109,15 @@ function kps.utils.createMessage(message)
     msg:SetFont(STANDARD_TEXT_FONT, 25, "OUTLINE")
     msg:AddMessage(message,1,0,0,1)
 end
+
+function removeBagItems()
+    for bag = 0,4,1 do
+        for slot = 1, GetContainerNumSlots(bag), 1 do
+            local name = GetContainerItemLink(bag,slot)
+            if name and string.find(name,"ff9d9d9d") then 
+                PickupContainerItem(bag,slot)
+                DeleteCursorItem()
+            end
+        end 
+    end
+end

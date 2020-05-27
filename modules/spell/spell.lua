@@ -19,22 +19,6 @@ kps.Spell.Item = {}
 
 local GetUnitName = GetUnitName
 
-function _CastGroundSpellByName(spell, target)
-  local target = target or "target"
-  secured = false
-  while not secured do
-    RunScript([[
-      for index = 1, 500 do
-        if not issecure() then
-          return
-        end
-      end
-      RunMacroText("/cast [@cursor] ]] .. spell .. [[")
-      secured = true
-    ]])
-  end
-end
-
 local castAt = setmetatable({}, {
     __index = function(t, self)
         local val = function (target,message)
@@ -48,11 +32,7 @@ local castAt = setmetatable({}, {
             kps.lastTarget = target
             self.lastCast = GetTime()
             
-            if self.needsSelect then
-                _CastGroundSpellByName(self.name,target)
-            else
-                _CastSpellByName(self.name,target)
-            end
+            return self.name, target, self.needsSelect
         end
         t[self] = val
         return val

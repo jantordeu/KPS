@@ -27,19 +27,19 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
     -- "Pierre de soins" 5512
-    --{{"macro"}, 'player.useItem(5512) and player.hp <= 0.65' ,"/use item:5512" },
+    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.65' ,"/use item:5512" },
     -- "Potion de soins abyssale" 169451
     --{{"macro"}, 'player.useItem(169451) and player.hp <= 0.40' ,"/use item:169451" },
     
     -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
-    {spells.divineShield, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)' , "player" },
+    {spells.divineShield, 'player.hp < 0.30' , "player" },
     
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
-    {spells.layOnHands, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)', "player" },
+    {spells.layOnHands, 'player.hp < 0.30', "player" },
     {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
 
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
-    {spells.blessingOfProtection, 'player.hp < 0.30 and not player.hasDebuff(spells.forbearance)' , "player" },
+    {spells.blessingOfProtection, 'player.hp < 0.30' , "player" },
     {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.30 and not heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },  
 
     {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.70 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
@@ -74,11 +74,17 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 
     -- AZERITE
     -- "Guardian of Azeroth" -- invoque un gardien d’Azeroth pendant 30 sec. 3 min cooldown.
-    {spells.azerite.guardianOfAzeroth, 'target.isAttackable' , "target" },
+    --{spells.azerite.guardianOfAzeroth, 'target.isAttackable' , "target" },
     --{spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
     --{spells.azerite.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
-    {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.avengingWrath) > 15' , "target" },
-    {spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.crusade) > 15' , "target" },
+    --{spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.avengingWrath) > 15' , "target" },
+    --{spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.crusade) > 15' , "target" },
+    
+    {{"nested"},'kps.cooldowns and player.holyPower < 3', {
+        {spells.judgment, 'target.distanceMax <= 30' , "target"  }, -- Generates 1 Holy Power. 10 sec cd 
+        {spells.bladeOfJustice, 'target.distanceMax <= 10' , "target"  }, -- Generates 2 Holy Power. 10 sec cd
+        {spells.crusaderStrike, 'spells.crusaderStrike.charges == 2 and target.distanceMax <= 10' , "target"  }, -- Generates 1 Holy Power
+    }},
 
     {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 15 and player.holyPower >= 2' , "target" },
     {{"nested"},'kps.cooldowns and player.holyPower >= 3', {
@@ -86,33 +92,27 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
         {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
     }},
-    {{"nested"},'kps.cooldowns and spells.crusade.cooldown < 2 and player.holyPower < 3', {
-        {spells.judgment, 'true' , "target"  },
-        {spells.bladeOfJustice, 'true' , "target"  },
-        {spells.crusaderStrike, 'true' , "target"  },
-    }},
+
+    {spells.wakeOfAshes, 'not player.hasTalent(7,2) and spells.avengingWrath.cooldown > 30 and target.distanceMax <= 10 and player.holyPower < 2' , "target" },
+    {spells.wakeOfAshes, 'player.hasTalent(7,2) and spells.crusade.cooldown > 30 and target.distanceMax <= 10 and player.holyPower < 2' , "target" },
+    {spells.consecration, 'player.hasTalent(4,2) and not player.isMoving and not target.isMoving and target.distanceMax <= 5 and player.holyPower < 5' }, -- Generates 1 Holy Power.
     {{"nested"},'kps.multiTarget and target.isAttackable', {
         {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" },
         {spells.divineStorm, 'true' , "target"  },
+        {spells.wakeOfAshes, 'target.distanceMax <= 10' , "target" },
     }},
+    {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
     {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
     {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },
-    {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" , "executionSentence" },
-
-    {spells.consecration, 'player.hasTalent(4,2) and not player.isMoving and not target.isMoving and target.distanceMax <= 10' }, -- Generates 1 Holy Power.
-    {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
-    {spells.crusaderStrike, 'player.holyPower <= 4 and spells.crusaderStrike.charges == 2 and target.distanceMax <= 10' , "target" }, --Generates 1 Holy Power
-    {spells.judgment, 'player.holyPower <= 4 and target.distanceMax <= 30 and not target.hasMyDebuff(spells.judgment)' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
-
+    {spells.executionSentence, 'player.hasTalent(1,3) and player.hasTalent(7,2) and target.distanceMax <= 20 and spells.crusade.cooldown > 20 ' , "target" , "executionSentence" },
+    {spells.executionSentence, 'player.hasTalent(1,3) and not player.hasTalent(7,2) and target.distanceMax <= 20 and spells.avengingWrath.cooldown > 20 ' , "target" , "executionSentence" },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
     {spells.divineStorm, 'player.plateCount >= 3' , "target" , "divineStorm_plateCount" },
     {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
 
-    {spells.bladeOfJustice, 'target.distanceMax <= 10' , "target" },   -- Generates 2 Holy Power. 10 sec cd
-    {spells.judgment, 'target.distanceMax <= 30' , "target" }, -- 10 sec cd -- Generates 1 Holy Power
-    {spells.wakeOfAshes, 'spells.avengingWrath.cooldown > 30 and target.distanceMax <= 10' , "target" },
-    {spells.wakeOfAshes, 'spells.crusade.cooldown > 30 and target.distanceMax <= 10' , "target" },
-    {spells.crusaderStrike, 'target.distanceMax <= 10' , "target" }, --Generates 1 Holy Power
+    {spells.judgment, 'target.distanceMax <= 30' , "target" }, 
+    {spells.bladeOfJustice, 'target.distanceMax <= 10' , "target" },  
+    {spells.crusaderStrike, 'target.distanceMax <= 10' , "target" }, 
 
     -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.
     -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
