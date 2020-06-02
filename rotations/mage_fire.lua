@@ -26,6 +26,29 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     --{{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
+    -- One Rune of Power and one Meteor should always be used 40 sec recharge
+    {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and kps.lastSentSpell == spells.runeOfPower.name', "/cast [@cursor] "..Meteor },    
+    -- COMBUSTION
+    {{"macro"}, 'player.hasBuff(spells.combustion) and player.useItem(168989) and spells.fireBlast.charges == 0', "/cast "..Wristwraps },
+    {spells.fireBlast, 'player.hasBuff(spells.combustion) and kps.lastSentSpell == spells.pyroblast.name and not spells.fireBlast.isRecastAt("target")' , "target" , "fireBlast_combustion_last" },
+    {spells.pyroblast, 'player.hasBuff(spells.combustion) and player.hasBuff(spells.hotStreak)', "target" , "pyroblast_combustion" },
+    {spells.fireBlast, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , "target" , env.checkfireBlast },
+    {spells.scorch, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak)' , "target" , "scorch_combustion" },
+
+    {{"nested"},'kps.cooldowns and not player.isMoving and player.hasTalent(3,3) and spells.combustion.cooldown < 2', {
+        {spells.azerite.memoryOfLucidDreams },
+        {spells.combustion, 'player.hasBuff(spells.runeOfPower) and player.hasBuff(spells.hotStreak)' , "player" , "combustion" },
+        {spells.runeOfPower },
+        {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp" },
+        {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion" },
+    }},
+    {{"nested"},'kps.cooldowns and not player.isMoving and player.hasTalent(3,1) and spells.combustion.cooldown < 2', {
+        {spells.azerite.memoryOfLucidDreams },
+        {spells.combustion, 'player.hasBuff(spells.hotStreak)' , "player" , "combustion" },
+        {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp" },
+        {spells.combustion, 'true' , "player" , "combustion" },
+    }},
+
     {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
     {{"macro"}, 'player.hasBuff(spells.iceBlock) and player.hp > 0.90' , "/cancelaura "..IceBlock },
     {spells.arcaneIntellect, 'not player.hasBuff(spells.arcaneIntellect)' , "player" },
@@ -60,7 +83,6 @@ kps.rotations.register("MAGE","FIRE",
     --{spells.azerite.concentratedFlame, 'not player.hasBuff(spells.combustion)' , "target" },
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
-    {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and kps.lastSentSpell == spells.runeOfPower.name', "/cast [@cursor] "..Meteor },
     {{"nested"},'player.hasTalent(7,3) and player.hasTalent(3,3) and spells.meteor.cooldown == 0 and player.hasBuff(spells.runeOfPower)', {
         {{"macro"}, 'keys.shift', "/cast [@cursor] "..Meteor },
         {{"macro"}, 'mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
@@ -77,47 +99,25 @@ kps.rotations.register("MAGE","FIRE",
     --{{"macro"}, 'player.hasBuff(spells.hotStreak)' , "/cast "..Pyroblast },
     --{{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.scorch) and not player.hasBuff(spells.combustion)' , "/stopcasting" },
     --{{"macro"}, 'player.hasBuff(spells.hotStreak) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
-    -- COMBUSTION
-    {{"macro"}, 'player.hasBuff(spells.combustion) and IsEquippedItem(168989) and spells.fireBlast.charges == 0', "/cast "..Wristwraps },
-    {spells.fireBlast, 'player.hasBuff(spells.combustion) and kps.lastSentSpell == spells.pyroblast.name and not spells.fireBlast.isRecastAt("target")' , "target" , "fireBlast_combustion_last" },
-    {spells.fireBlast, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , "target" , env.checkfireBlast },
-    {spells.pyroblast, 'player.hasBuff(spells.combustion) and player.hasBuff(spells.hotStreak)', "target" , "pyroblast_combustion" },
-    {spells.pyroblast, 'player.hasBuff(spells.combustion) and kps.lastSentSpell == spells.fireBlast.name', "target" , "pyroblast_combustion_last" },
-    {spells.scorch, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak)' , "target" , "scorch_combustion" },
-    {{"macro"}, 'player.hasBuff(spells.combustion) and player.isCastingSpell(spells.pyroblast)' , "/stopcasting" },
-    {{"macro"}, 'player.hasBuff(spells.combustion) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
 
-    {{"nested"},'kps.cooldowns and not player.isMoving and player.hasTalent(3,3) and spells.combustion.cooldown < 2', {
-        {spells.azerite.memoryOfLucidDreams },
-        {spells.runeOfPower },
-        {spells.combustion, 'player.hasBuff(spells.runeOfPower) and player.hasBuff(spells.hotStreak)' , "player" , "combustion" },
-        {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and spells.fireBlast.charges == 3 and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp" },
-        {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion" },
-    }},
-    {{"nested"},'kps.cooldowns and not player.isMoving and player.hasTalent(3,1) and spells.combustion.cooldown < 2', {
-        {spells.azerite.memoryOfLucidDreams },
-        {spells.combustion, 'player.hasBuff(spells.hotStreak)' , "player" , "combustion" },
-        {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and spells.fireBlast.charges == 3 and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp" },
-        {spells.combustion, 'true' , "player" , "combustion" },
-    }},
-
-    {{"nested"},'spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak)', {
+    {{"nested"},'spells.flamestrike.cooldown == 0 and player.hasBuff(spells.hotStreak) and not player.hasBuff(spells.combustion)', {
         {{"macro"}, 'keys.shift' , "/cast [@cursor] "..Flamestrike },
         {{"macro"}, 'kps.multiTarget and player.plateCount >= 4 and target.isAttackable and target.distanceMax <= 5' , "/cast [@cursor] "..Flamestrike },
         {{"macro"}, 'kps.multiTarget and player.plateCount >= 4 and target.isAttackable' , "/cast [@cursor] "..Flamestrike },
     }},
-    -- during hotStreak, fireball can proc heatingUp if crit, then pyroblast can proc again hotStreak if crit
+
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastSentSpell == spells.pyroblast.name', env.damageTarget , "pyroblast_pyroblast"},
-    {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastSentSpell == spells.fireBlast.name', env.damageTarget , "pyroblast_fireBlast"},
+    {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastSentSpell == spells.fireBlast.name', "target" , "pyroblast_fireBlast"},
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastCastedSpell == spells.fireball.name', env.damageTarget , "pyroblast_fireball"},
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak) and kps.lastCastedSpell == spells.scorch.name', env.damageTarget , "pyroblast_scorch"},
-
-    {spells.fireball,'player.hasBuff(spells.hotStreak) and not player.isMoving and not player.hasBuff(spells.combustion) and spells.combustion.cooldown > 2 and target.hp > 0.30', env.damageTarget , "fireball_hotStreak"},
+    -- during hotStreak, fireball can proc heatingUp if crit, then pyroblast can proc again hotStreak if crit
+    {{"macro"}, 'player.hasBuff(spells.combustion) and player.isCastingSpell(spells.fireball)' , "/stopcasting" },
+    {spells.fireball,'player.hasBuff(spells.hotStreak) and not player.isMoving and not player.hasBuff(spells.combustion) and target.hp > 0.30 and not spells.fireball.isRecastAt("target")', "target" , "fireball_hotStreak"},
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget , "pyroblast_hotStreak"},
     
-    {spells.livingBomb,  'player.hasTalent(6,3) and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.livingBomb) and mouseover.hp > 0.90' , "mouseover" },
-    {spells.livingBomb,  'player.hasTalent(6,3) and target.isAttackable and not target.hasMyDebuff(spells.livingBomb)' , "target" },
-    {spells.dragonsBreath, 'target.isAttackable and target.distanceMax <= 5' , "target" },
+    {spells.livingBomb,  'player.hasTalent(6,3) and not player.hasBuff(spells.combustion) and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.livingBomb) and mouseover.hp > 0.90' , "mouseover" },
+    {spells.livingBomb,  'player.hasTalent(6,3) and not player.hasBuff(spells.combustion) and target.isAttackable and not target.hasMyDebuff(spells.livingBomb) and target.hp > 0.30' , "target" },
+    {spells.dragonsBreath, 'not player.hasBuff(spells.combustion) and target.isAttackable and target.distanceMax <= 5' , "target" },
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
     {spells.runeOfPower, 'player.hasTalent(7,3) and player.hasTalent(3,3) and not player.isMoving and spells.runeOfPower.charges == 2 and spells.combustion.cooldown > 10 and spells.meteor.cooldown < 5 and target.isAttackable' },
@@ -137,14 +137,13 @@ kps.rotations.register("MAGE","FIRE",
     -- "Phoenix Flames" -- Always deals a critical strike. 30 sec cooldown 3 charges
     {spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp)' ,  env.damageTarget },
 
-    {spells.scorch, 'player.isMoving and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.ignite)' , "mouseover" },
     {spells.scorch, 'player.isMoving', env.damageTarget },
     {spells.scorch, 'target.hp < 0.30 and target.isAttackable' , "target"  , "scorch_target" }, 
     {spells.scorch, 'mouseover.hp < 0.30 and mouseover.isAttackable' , "mouseover"  , "scorch_mouseover" },
 
     -- debuff "Conflagration" 226757 -- fireball -- spells.conflagration
     -- debuff "Ignite" 12654 -- Scorch & fireball -- spells.ignite
-    {spells.fireball, 'not player.isMoving and not player.hasBuff(spells.combustion)' , env.damageTarget , "fireball" },
+    {spells.fireball, 'not player.isMoving and not player.hasBuff(spells.combustion)' , env.damageTarget },
 
 }
 ,"mage_fire")

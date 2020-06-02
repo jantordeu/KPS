@@ -231,9 +231,9 @@ end
 local itemCooldown = function(item)
     if item == nil then return 999 end
     local start,duration,enable = GetItemCooldown(item) -- GetItemCooldown(ItemID) you MUST pass in the itemID.
-    local usable = select(1,IsUsableItem(item))
     local itemName,_ = GetItemSpell(item) -- Useful for determining whether an item is usable.
-    if not usable then return 999 end
+    local equipped = IsEquippedItem(item)
+    if not equipped then return 999 end
     if not itemName then return 999 end
     if enable == 0 then return 999 end
     local cd = start+duration-GetTime()

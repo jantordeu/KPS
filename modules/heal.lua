@@ -134,22 +134,6 @@ kps.RaidStatus.prototype.lowestTankInRaid = kps.utils.cachedValue(function()
 end)
 
 --[[[
-@function `heal.assistTankInRaid` - Returns the assist tank in the raid
-]]--
-
-kps.RaidStatus.prototype.assistTankInRaid = kps.utils.cachedValue(function()
-    local lowestUnit = kps.RaidStatus.prototype.lowestTankInRaid()
-    local lowestHp = lowestUnit.hp
-    for name,unit in pairs(raidStatus) do
-        if unit.isHealable and unit.isRaidTank and unit.guid ~= lowestUnit.guid then
-            lowestUnit = unit
-            lowestHp = lowestUnit.hp
-        end
-    end
-    return lowestUnit
-end)
-
---[[[
 @function `heal.lowestInRaid` - Returns the lowest unit in the raid
 ]]--
 kps.RaidStatus.prototype.lowestInRaid = kps.utils.cachedValue(function()
@@ -652,7 +636,6 @@ function kpstest()
 --print("|cff1eff00HealTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
 --print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000mainTANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"|",kps["env"].heal.lowestTankInRaid.hp)
-print("|cffff8000assistTANK:|cffffffff", kps["env"].heal.assistTankInRaid.name,"|",kps["env"].heal.assistTankInRaid.hp)
 print("|cff1eff00LOWEST|cffffffff", kps["env"].heal.lowestInRaid.name,"|",kps["env"].heal.lowestInRaid.hp)
 print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"|",kps["env"].heal.lowestUnitInRaid.hp)
 print("|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
@@ -662,6 +645,8 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 
 --print("|cffff8000GCD:|cffffffff", kps["env"].player.gcd)
+--print("|cffff8000useItem:|cffffffff", kps["env"].player.useItem(168989))
+--print("|cffff8000GetItemCooldown:|cffffffff", select(1,GetItemCooldown(168989)))
 
 --print("|cffff8000lastSentSpell:|cffffffff",  kps.lastSentSpell)
 --print("|cffff8000lastCastedSpell:|cffffffff", kps.lastCastedSpell)
