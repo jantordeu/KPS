@@ -27,6 +27,7 @@ kps.rotations.register("MAGE","FIRE",
     --{{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
+    {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and kps.lastSentSpell == spells.combustion.name', "/cast [@cursor] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and kps.lastSentSpell == spells.runeOfPower.name', "/cast [@cursor] "..Meteor },    
     -- COMBUSTION
     {spells.pyroblast, 'player.hasBuff(spells.combustion) and player.hasBuff(spells.hotStreak)', "target" , "pyroblast_combustion" },
@@ -42,12 +43,6 @@ kps.rotations.register("MAGE","FIRE",
         {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and spells.fireBlast.charges == 3 and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp" },
         {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion" },
     }},
-    {{"nested"},'kps.cooldowns and not player.isMoving and player.hasTalent(3,1) and spells.combustion.cooldown < 2', {
-        {spells.azerite.memoryOfLucidDreams },
-        {spells.combustion, 'player.hasBuff(spells.hotStreak)' , "player" , "combustion" },
-        {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and spells.fireBlast.charges == 3 and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp" },
-        {spells.combustion, 'true' , "player" , "combustion" },
-    }},
 
     {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
     {{"macro"}, 'player.hasBuff(spells.iceBlock) and player.hp > 0.90' , "/cancelaura "..IceBlock },
@@ -57,7 +52,6 @@ kps.rotations.register("MAGE","FIRE",
     {spells.invisibility, 'target.isRaidBoss and targettarget.isUnit("player")'},
     {spells.invisibility, 'player.isTarget and player.hp < 0.40'},
     {spells.spellsteal, 'target.isStealable' , "target" },
-    {{"macro"}, 'player.useItem(5512) and player.hp < 0.65', "/use item:5512" },
 
     {spells.polymorph, 'kps.polymorph and mouseover.isAttackable and not mouseover.hasDebuff(spells.polymorph)' , "mouseover" },
     {{"nested"},'kps.cooldowns', {
@@ -80,18 +74,13 @@ kps.rotations.register("MAGE","FIRE",
 
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    --{spells.azerite.concentratedFlame, 'not player.hasBuff(spells.combustion)' , "target" },
+    {spells.azerite.concentratedFlame, 'not player.hasBuff(spells.combustion)' , "target" },
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
     {{"nested"},'player.hasTalent(7,3) and player.hasTalent(3,3) and spells.meteor.cooldown == 0 and player.hasBuff(spells.runeOfPower)', {
         {{"macro"}, 'keys.shift', "/cast [@cursor] "..Meteor },
         {{"macro"}, 'mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
         {{"macro"}, 'target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
-    }},
-    {{"nested"},'player.hasTalent(7,3) and player.hasTalent(3,1) and spells.meteor.cooldown == 0 and player.buffStacks(spells.incantersFlow) > 2', {
-        {{"macro"}, 'keys.shift', "/cast [@cursor] "..Meteor },
-        {{"macro"}, 'target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
-        {{"macro"}, 'mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
     }},
 
     -- STOPCASTING -- JUMP

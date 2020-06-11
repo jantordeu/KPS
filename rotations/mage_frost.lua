@@ -28,7 +28,6 @@ kps.rotations.register("MAGE","FROST",
     {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
     {spells.invisibility, 'target.isRaidBoss and targettarget.isUnit("player")'},
     {spells.spellsteal, 'target.isStealable' , "target" },
-    --{{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
     {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
     {{"macro"}, 'player.hasBuff(spells.iceBlock) and player.hp > 0.90' , "/cancelaura "..IceBlock },
 
@@ -57,14 +56,13 @@ kps.rotations.register("MAGE","FROST",
 
     {spells.icyVeins },
     {spells.frozenOrb, 'true' , "target" },
-    -- Only use Flurry with Brain Freeze
     -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
     {spells.cometStorm, 'player.hasTalent(6,3)' },
     {spells.glacialSpike, 'not player.isMoving and player.hasTalent(7,3) and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike" },
     {spells.ebonbolt, 'not player.isMoving and player.hasTalent(4,3) and not player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) == 5' , "target" , "ebonbolt_5" },
-    -- flurry consomme gel mental -- between 0-3 Icicles use Flurry 
-    {{spells.flurry,spells.iceLance}, 'player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) < 4' , "target" , "flurry" },
     {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" },
+    -- flurry consomme gel mental -- between 0-3 Icicles use Flurry -- Only use Flurry with Brain Freeze
+    {spells.flurry, 'player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) < 4' , "target" , "flurry" },
 
     {{"macro"}, 'keys.shift and spells.blizzard.cooldown == 0' , "/cast [@cursor] "..Blizzard },
     {{"macro"}, 'spells.blizzard.cooldown == 0 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Blizzard },

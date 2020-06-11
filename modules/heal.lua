@@ -645,8 +645,21 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 
 --print("|cffff8000GCD:|cffffffff", kps["env"].player.gcd)
---print("|cffff8000useItem:|cffffffff", kps["env"].player.useItem(168989))
---print("|cffff8000GetItemCooldown:|cffffffff", select(1,GetItemCooldown(168989)))
+
+--print("|cffff8000useTrinket:|cffffffff", kps["env"].player.useItem(173944))
+--print("|cffff8000useTrinket:|cffffffff", GetItemSpell(173944))
+--print("|cffff8000useTrinket:|cffffffff", kps["env"].player.useTrinket(0))
+--
+--print("|cffff8000useItem:|cffffffff", kps["env"].player.useItem(168654))
+--print("|cffff8000useItem:|cffffffff", GetItemSpell(168654))
+--
+--print("|cffff8000useWrist:|cffffffff", kps["env"].player.useItem(168989))
+--print("|cffff8000useWrist:|cffffffff", GetItemSpell(168989))
+
+
+
+
+
 
 --print("|cffff8000lastSentSpell:|cffffffff",  kps.lastSentSpell)
 --print("|cffff8000lastCastedSpell:|cffffffff", kps.lastCastedSpell)

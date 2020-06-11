@@ -25,9 +25,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.65' ,"/use item:5512" },
     -- "Potion de soins abyssale" 169451
-    --{{"macro"}, 'player.useItem(169451) and player.hp <= 0.40' ,"/use item:169451" },
 
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec.
     {spells.divineProtection, 'spells.blessingOfSacrifice.lastCasted(4)' , "player" },
@@ -102,7 +100,7 @@ kps.rotations.register("PALADIN","HOLY",
     --{spells.azerite.overchargeMana, 'heal.countLossInRange(0.85)*2 > heal.countInRange' }, -- MANUAL
     --"Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
     --{spells.azerite.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid },
-    {spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30 and spells.avengingWrath.cooldown > 20' , "target" },
+    {spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
     
     --APPLY MANUAL "Maîtrise des auras" -- Renforce l’aura choisie et porte son rayon d’effet à 40 mètres pendant 8 sec.
     --{spells.auraMastery, 'heal.countLossInRange(0.80)*2  > heal.countInRange' },
@@ -151,9 +149,13 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' , "mouseover" },
         {spells.flashOfLight, 'not player.isMoving and mouseover.hp < 0.55' , "mouseover" },
     }},
+    -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.
+    {spells.holyShock, 'heal.lowestInRaid.hp < 0.65 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'player.hp < 0.65 and player.hp < heal.lowestTankInRaid.hp' , "player"  },
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid },
 
     -- GLIMMER DAMAGE
-    {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hp > 0.85' ,{
+    {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hp > 0.90' ,{
         {spells.judgment,  'true' , env.damageTarget },
         {spells.holyShock,  'true' , env.damageTarget },
         {spells.holyAvenger, 'kps.cooldowns and player.hasTalent(5,3)' },
@@ -165,9 +167,9 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cast time of your next Holy Light by 1.5 sec or increases the healing of your next Flash of Light by 40%.
     -- "Révélations divines" "Divine Revelations" -- Healing an ally with Holy Light while empowered by Infusion of Light refunds 320 mana. 
     {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hp < 0.90 and player.hasBuff(spells.infusionOfLight)' ,{
-        {spells.flashOfLight, 'player.hp < 0.45 and not spells.flashOfLight.isRecastAt("player")' , "player" , "flash_player_infusion" },
-        {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.45 and not spells.flashOfLight.isRecastAt(heal.lowestTankInRaid.unit)' ,  kps.heal.lowestTankInRaid , "flash_tank_infusion" },
-        {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.45 and not spells.flashOfLight.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "flash_lowest_infusion" },
+        {spells.flashOfLight, 'player.hp < 0.55 and not spells.flashOfLight.isRecastAt("player")' , "player" , "flash_player_infusion" },
+        {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.55 and not spells.flashOfLight.isRecastAt(heal.lowestTankInRaid.unit)' ,  kps.heal.lowestTankInRaid , "flash_tank_infusion" },
+        {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.55 and not spells.flashOfLight.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "flash_lowest_infusion" },
         {spells.holyLight, 'heal.lowestInRaid.hp < 0.90 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid , "heal_lowest_infusion" },
         {spells.holyLight, 'player.hp < 0.90 and player.hp < heal.lowestTankInRaid.hp' , "player" , "heal_player_infusion" },
         {spells.holyLight, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid , "heal_tank_infusion" },
@@ -175,11 +177,7 @@ kps.rotations.register("PALADIN","HOLY",
 
     -- "Puissance du croisé -- Frappe du croisé diminue talented (1,1) diminue le temps de recharge de Horion sacré et de Lumière de l’aube de 1.5 s.
     {spells.crusaderStrike, 'player.hasTalent(1,1) and target.isAttackable and target.distance <= 5' , "target" },
-    {spells.consecration, 'not target.isMoving and not player.isMoving and target.isAttackable and target.distance <= 5' }, 
-    -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.
-    {spells.holyShock, 'heal.lowestInRaid.hp < 0.85 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid },
-    {spells.holyShock, 'player.hp < 0.85 and player.hp < heal.lowestTankInRaid.hp' , "player"  },
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.85' , kps.heal.lowestTankInRaid },
+    {spells.consecration, 'not target.isMoving and not player.isMoving and target.isAttackable and target.distance <= 5' },
 
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestTankInRaid.hp < 0.85 and player.hp > 0.85 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid , "MARTYR_tank"},
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestInRaid.hp < 0.85 and player.hp > 0.85 and not heal.lowestInRaid.isUnit("player")' , kps.heal.lowestInRaid , "MARTYR_lowest"},

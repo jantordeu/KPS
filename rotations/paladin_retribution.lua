@@ -27,7 +27,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.useItem(5512) and player.hp <= 0.65' ,"/use item:5512" },
+    --{{"macro"}, 'player.useItem(5512) and player.hp <= 0.65' ,"/use item:5512" },
     -- "Potion de soins abyssale" 169451
     --{{"macro"}, 'player.useItem(169451) and player.hp <= 0.40' ,"/use item:169451" },
     
