@@ -119,24 +119,10 @@ kps.rotations.register("PALADIN","HOLY",
         -- "Croisé vengeur --"Avenging Crusader" -- Replaces Avenging Wrath -- 3 nearby allies will be healed for 250% of the damage done. Crusader Strike, Judment damage increased by 30%.
         --{spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.80) > 3' },
     }},
-
-    -- GLIMMER
-    -- 216411/divine-purpose -- spells.divinePurposeHolyShock -- Divine Purpose Your next Holy Shock costs no mana. 10 seconds remaining
-    -- 216413/divine-purpose -- spells.divinePurposeLightOfDawn -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
-    {spells.holyShock, 'mouseover.isHealable and not mouseover.hasMyBuff(spells.glimmerOfLight)' , "mouseover" , "holyShock_mouseover"}, 
-    {spells.holyShock, 'not heal.lowestTankInRaid.hasMyBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid , "holyShock_tank" },
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65 and heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestTankInRaid , "holyShock_tank" },
-    {spells.holyShock, 'targettarget.isFriend and not targettarget.hasMyBuff(spells.glimmerOfLight)' , "targettarget" , "holyShock_targettarget" },
-    {spells.holyShock, 'not player.hasMyBuff(spells.glimmerOfLight)' , "player" , "holyShock_player" },
-    {spells.holyShock, 'heal.lowestInRaid.hp < 0.85 and not heal.lowestInRaid.hasMyBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
-
-    -- "Judgment" -- the target take 30% increased damage from your next Crusader Strike or Holy Shock
-    {spells.judgment, 'target.isAttackable and heal.lowestInRaid.hp > 0.65' , env.damageTarget },
-    {spells.holyShock, 'player.isInRaid and heal.hasBuffCount(spells.glimmerOfLight) < 8 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
-    {spells.holyShock, 'player.isInGroup and heal.hasBuffCount(spells.glimmerOfLight) < 5 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
-    {spells.holyShock, 'heal.lowestInRaid.hp > 0.85 and target.isAttackable and not target.hasMyDebuff(spells.glimmerOfLight)' , "target" , "dmg_health" },
+    
     -- MOUSEOVER
     {{"nested"}, 'mouseover.isHealable and mouseover.hp < 0.65' ,{
+        {spells.holyShock, 'mouseover.isHealable and not mouseover.hasMyBuff(spells.glimmerOfLight)' , "mouseover" , "holyShock_mouseover"}, 
         {spells.holyShock, 'not player.hasBuff(spells.infusionOfLight)' , "mouseover"  },
         {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and mouseover.hp < 0.55' , "mouseover" },
         {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' , "mouseover" },
@@ -144,17 +130,37 @@ kps.rotations.register("PALADIN","HOLY",
     }},
     -- TANK
     {{"nested"}, 'mouseover.isRaidTank and mouseover.hp < 0.85' ,{
+        {spells.holyShock, 'mouseover.isHealable and not mouseover.hasMyBuff(spells.glimmerOfLight)' , "mouseover" , "holyShock_mouseover"}, 
         {spells.holyShock, 'not player.hasBuff(spells.infusionOfLight)' , "mouseover"  },
         {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and mouseover.hp < 0.55' , "mouseover" },
         {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight)' , "mouseover" },
         {spells.flashOfLight, 'not player.isMoving and mouseover.hp < 0.55' , "mouseover" },
     }},
+
+    -- GLIMMER
+    -- 216411/divine-purpose -- spells.divinePurposeHolyShock -- Divine Purpose Your next Holy Shock costs no mana. 10 seconds remaining
+    -- 216413/divine-purpose -- spells.divinePurposeLightOfDawn -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
+    {spells.holyShock, 'mouseover.isHealable and not mouseover.hasMyBuff(spells.glimmerOfLight)' , "mouseover" , "holyShock_mouseover"}, 
+    {spells.holyShock, 'not heal.lowestTankInRaid.hasMyBuff(spells.glimmerOfLight)' , kps.heal.lowestTankInRaid , "holyShock_tank" },
+    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65 and heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 5' , kps.heal.lowestTankInRaid , "holyShock_tank" },
+    {spells.holyShock, 'not player.hasMyBuff(spells.glimmerOfLight)' , "player" , "holyShock_player" },
+    {spells.holyShock, 'heal.lowestInRaid.hp < 0.85 and not heal.lowestInRaid.hasMyBuff(spells.glimmerOfLight)' , kps.heal.lowestInRaid , "holyShock_lowest" },
+
+    -- "Puissance du croisé -- Frappe du croisé diminue talented (1,1) diminue le temps de recharge de Horion sacré et de Lumière de l’aube de 1.5 s.
+    {spells.crusaderStrike, 'player.hasTalent(1,1) and target.isAttackable and target.distance <= 5' , "target" },
+    -- "Judgment" -- the target take 30% increased damage from your next Crusader Strike or Holy Shock
+    {spells.judgment, 'target.isAttackable and heal.lowestInRaid.hp > 0.65' , env.damageTarget },
+    {spells.holyShock, 'player.isInRaid and heal.hasBuffCount(spells.glimmerOfLight) < 8 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
+    {spells.holyShock, 'player.isInGroup and heal.hasBuffCount(spells.glimmerOfLight) < 5 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
+    {spells.holyShock, 'heal.lowestInRaid.hp > 0.85 and target.isAttackable and not target.hasMyDebuff(spells.glimmerOfLight)' , "target" , "dmg_health" },
+
     -- "Horion sacré" "Holy Shock" -- Holy damage to an enemy. healing to an ally -- "Glimmer of Light" -- Holy Shock leaves a Glimmer of Light on the target for 30 sec.
     {spells.holyShock, 'heal.lowestInRaid.hp < 0.65 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid },
     {spells.holyShock, 'player.hp < 0.65 and player.hp < heal.lowestTankInRaid.hp' , "player"  },
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid },
 
     -- GLIMMER DAMAGE
+    {spells.consecration, 'not target.isMoving and not player.isMoving and target.isAttackable and target.distance <= 5' },
     {{"nested"}, 'kps.multiTarget and heal.lowestInRaid.hp > 0.90' ,{
         {spells.judgment,  'true' , env.damageTarget },
         {spells.holyShock,  'true' , env.damageTarget },
@@ -175,10 +181,6 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.holyLight, 'heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid , "heal_tank_infusion" },
     }},
 
-    -- "Puissance du croisé -- Frappe du croisé diminue talented (1,1) diminue le temps de recharge de Horion sacré et de Lumière de l’aube de 1.5 s.
-    {spells.crusaderStrike, 'player.hasTalent(1,1) and target.isAttackable and target.distance <= 5' , "target" },
-    {spells.consecration, 'not target.isMoving and not player.isMoving and target.isAttackable and target.distance <= 5' },
-
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestTankInRaid.hp < 0.85 and player.hp > 0.85 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid , "MARTYR_tank"},
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestInRaid.hp < 0.85 and player.hp > 0.85 and not heal.lowestInRaid.isUnit("player")' , kps.heal.lowestInRaid , "MARTYR_lowest"},
 
@@ -197,7 +199,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyLight, 'not player.isMoving and player.hp < 0.90 and player.hp < heal.lowestTankInRaid.hp' , "player" , "heal_player" },
     {spells.holyLight, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.90' , kps.heal.lowestTankInRaid , "heal_tank" },
 
-    --{{"macro"}, 'true' , "/startattack" },
+    {{"macro"}, 'true' , "/startattack" },
 
 }
 ,"holy_paladin_bfa")

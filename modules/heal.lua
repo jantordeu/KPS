@@ -108,7 +108,8 @@ local tanksInRaid = kps.utils.cachedValue(function()
     table.wipe(_tanksInRaid[_tanksInRaidIdx])
     for name,player in pairs(raidStatus) do
         if UnitGroupRolesAssigned(player.unit) == "TANK"
-            or player.guid == kps["env"].focus.guid then
+            or player.guid == kps["env"].focus.guid 
+            or player.guid == kps["env"].targettarget.guid then
             table.insert(_tanksInRaid[_tanksInRaidIdx], player)
         end
     end
