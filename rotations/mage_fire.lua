@@ -27,7 +27,6 @@ kps.rotations.register("MAGE","FIRE",
     --{{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
-    {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and kps.lastSentSpell == spells.combustion.name', "/cast [@cursor] "..Meteor },
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and kps.lastSentSpell == spells.runeOfPower.name', "/cast [@cursor] "..Meteor },    
     -- COMBUSTION
     {spells.pyroblast, 'player.hasBuff(spells.combustion) and player.hasBuff(spells.hotStreak)', "target" , "pyroblast_combustion" },
@@ -36,11 +35,12 @@ kps.rotations.register("MAGE","FIRE",
     {spells.fireBlast, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , "target" , env.checkfireBlast },
     {spells.scorch, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak)' , "target" , "scorch_combustion" },
 
+    {spells.fireBlast, 'spells.fireBlast.charges == 3 and not player.hasBuff(spells.heatingUp) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp_precombustion" },
     {{"nested"},'kps.cooldowns and not player.isMoving and player.hasTalent(3,3) and spells.combustion.cooldown < 2', {
         {spells.azerite.memoryOfLucidDreams },
         {spells.combustion, 'player.hasBuff(spells.runeOfPower) and player.hasBuff(spells.hotStreak)' , "player" , "combustion" },
         {spells.runeOfPower },
-        {spells.fireBlast, 'not player.hasBuff(spells.hotStreak) and spells.fireBlast.charges == 3 and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp" },
+        {spells.fireBlast, 'spells.fireBlast.charges == 3 and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp" },
         {spells.combustion, 'player.hasBuff(spells.runeOfPower)' , "player" , "combustion" },
     }},
 

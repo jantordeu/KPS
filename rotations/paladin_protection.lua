@@ -79,12 +79,9 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.divineShield, 'player.hpIncoming < 0.30' },
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
     {spells.layOnHands, 'player.hpIncoming < 0.40' },
-
-    {spells.consecration, 'not player.isMoving and not player.hasBuff(spells.consecration) and target.distanceMax <= 5' , "player" , "consecration_player" },   
+    
     -- Séraphin augmente votre hâte, vos chances de coup critique, votre Maîtrise et votre polyvalence de 1007.
     {spells.seraphim, 'player.hasTalent(7,3) and not player.hasBuff(spells.seraphim)' },
-    {spells.judgment, 'target.isAttackable and target.distanceMax <= 30 and target.myDebuffDuration(spells.judgment) < 2' , "target" },
-    {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distanceMax <= 30 and spells.judgment.charges == 2' , "target" },
 
     -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and spells.shieldOfTheRighteous.charges >= 2 ' , "target" , "shieldOfTheRighteous_charges"},
@@ -93,10 +90,13 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.avengersShield, 'target.distanceMax <= 10 and target.isCasting and target.castTimeLeft < 2' , "target" , "avengersShield_casting" },
     {spells.avengersShield, 'target.distanceMax <= 10 and player.myBuffDuration(spells.avengersValor) < 2' , "target" , "avengersShield_isUsable" },
 
+    {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distanceMax <= 30 and spells.judgment.charges == 2' , "target" },
+	{spells.consecration, 'not player.isMoving and not player.hasBuff(spells.consecration) and target.distanceMax <= 5' , "player" , "consecration_player" },
     -- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant de 12% les dégâts de leur prochaine attaque automatique contre vous.
-    {spells.blessedHammer, 'player.hasTalent(1,3) and target.myDebuffDuration(spells.blessedHammer) < 2 and target.distanceMax <= 10' , "target" , "blessedHammer" },
+    {spells.blessedHammer, 'player.hasTalent(1,3) and target.myDebuffDuration(spells.blessedHammer) < 5 and target.distanceMax <= 10' , "target" , "blessedHammer" },
     -- "Hammer of the Righteous" -- "Marteau du vertueux" -- inflige (27% of Attack power)% points de dégâts physiques. -- If you're standing in your Consecration, it also causes a wave of light that hits all nearby enemies for light Holy damage.
     {spells.hammerOfTheRighteous, 'not player.hasTalent(1,3) and player.hasBuff(spells.consecration) and target.distanceMax <= 10', "target" , "hammerOfTheRighteous" },
+    {spells.judgment, 'target.isAttackable and target.distanceMax <= 30' , "target" },
 
     {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.40', 'player'},
     
