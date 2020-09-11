@@ -97,7 +97,6 @@ function kps.RaidStatus.prototype.type(self)
     return raidType
 end
 
-
 local _tanksInRaid = {}
 _tanksInRaid[1] = {}
 _tanksInRaid[2] = {}
@@ -120,6 +119,7 @@ end)
 @function `heal.lowestTankInRaid` - Returns the lowest tank in the raid - a tank is either:
     * any group member that has the Group Role `TANK`
     * is `focus` target
+    * `targettarget` if neither Group Role nor `focus` are set
     * `player` if neither Group Role nor `focus` are set
 ]]--
 kps.RaidStatus.prototype.lowestTankInRaid = kps.utils.cachedValue(function()
@@ -284,13 +284,13 @@ end)
 ]]--
 
 kps.RaidStatus.prototype.countInRange = kps.utils.cachedValue(function()
-    local maxcount = 0
+    local count = 0
     for name, unit in pairs(raidStatus) do
         if unit.isHealable then
-            maxcount = maxcount + 1
+            count = count + 1
         end
     end
-    return maxcount
+    return count
 end)
 
 --[[[
@@ -312,6 +312,11 @@ end
 kps.RaidStatus.prototype.countLossInDistance = kps.utils.cachedValue(function()
     return countInDistance
 end)
+
+
+--------------------------------------------------------------------------------------------
+------------------------------- RAID TANK
+--------------------------------------------------------------------------------------------
 
 --[[[
 @function `heal.aggroTankTarget` - Returns the tank with highest aggro on the current target (*not* the unit with the highest aggro!). If there is no tank in the target thread list, the `heal.defaultTank` is returned instead.
@@ -439,35 +444,16 @@ kps.RaidStatus.prototype.isCurseDispellable = kps.utils.cachedValue(function()
     return lowestUnit
 end)
 
---[[[
-@function `heal.hasAbsorptionHeal` - Returns the raid unit with an absorption Debuff
-]]--
 
-kps.RaidStatus.prototype.hasAbsorptionHeal = kps.utils.cachedValue(function()
-    local lowestUnit = false
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.absorptionHeal then lowestUnit = unit end
-    end
-    return lowestUnit
-end)
-
---[[[
-@function `heal.hasBossDebuff` - Returns the raid unit with a Boss Debuff
-]]--
-
-kps.RaidStatus.prototype.hasBossDebuff = kps.utils.cachedValue(function()
-    local lowestUnit = false
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hasBossDebuff then lowestUnit = unit end
-    end
-    return lowestUnit
-end)
+--------------------------------------------------------------------------------------------
+------------------------------- RAID BUFF COUNT
+--------------------------------------------------------------------------------------------
 
 --[[[
 @function `heal.hasBuffCount(<BUFF>)` - Returns the buff count for a specific Buff on raid e.g. heal.hasBuffCount(spells.atonement) > 3
 ]]--
 
-local unitBuffCount = function(spell)
+local countUnitBuff = function(spell)
     local count = 0
     for name, unit in pairs(raidStatus) do
         if unit.isHealable and unit.hasMyBuff(spell) then
@@ -478,56 +464,31 @@ local unitBuffCount = function(spell)
 end
 
 kps.RaidStatus.prototype.hasBuffCount = kps.utils.cachedValue(function()
-    return unitBuffCount
+    return countUnitBuff
 end)
 
-
 --[[[
-@function `heal.hasNotBuffCount(<BUFF>)` - Returns the count for a specific Buff absent on raid e.g. heal.hasBuffCount(spells.atonement) > 3
+@function `heal.countLossAtonementInRange(<PCT>)` - Returns the count for all raid members below threshold health with Atonement Buff e.g. heal.countLossAtonementInRange(0.90)
 ]]--
 
-local unitNotBuffCount = function(spell)
+local countBuffInRange = function(health)
+    if health == nil then health = 2 end
     local count = 0
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and not unit.hasMyBuff(spell) then
+        if unit.isHealable and unit.hp < health and unit.hasMyBuff(kps.spells.priest.atonement) then
             count = count + 1
         end
     end
     return count
 end
 
-kps.RaidStatus.prototype.hasNotBuffCount = kps.utils.cachedValue(function()
-    return unitNotBuffCount
+kps.RaidStatus.prototype.countLossAtonementInRange = kps.utils.cachedValue(function() 
+    return countBuffInRange
 end)
 
-
---[[[
-@function `heal.hasBuffAtonement` - Returns the UNIT with lowest health with Atonement Buff on raid e.g. heal.hasBuffAtonement.hp < 0.90
-]]--
-
-local unitHasBuff = function(spell)
-    local lowestHp = 2
-    local lowestUnit = kps["env"].player
-    for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hasMyBuff(spell) and unit.hp < lowestHp then
-            lowestHp = unit.hp
-            lowestUnit = unit
-        end
-    end
-    return lowestUnit
-end
-
-kps.RaidStatus.prototype.hasBuffAtonement = kps.utils.cachedValue(function()
-    return unitHasBuff(kps.spells.priest.atonement)
-end)
-
---[[[
-@function `heal.hasBuffGlimmer` - Returns the UNIT with lowest health with Glimmer Buff on raid e.g. heal.hasBuffGlimmer.hp < 0.90
-]]--
-
-kps.RaidStatus.prototype.hasBuffGlimmer = kps.utils.cachedValue(function()
-    return unitHasBuff(kps.spells.paladin.glimmerOfLight)
-end)
+--------------------------------------------------------------------------------------------
+------------------------------- UNIT BUFF
+--------------------------------------------------------------------------------------------
 
 --[[[
 @function `heal.hasNotBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasNotBuffAtonement.hp < 0.90
@@ -563,6 +524,14 @@ end)
 
 kps.RaidStatus.prototype.hasNotBuffMending = kps.utils.cachedValue(function()
     return unitHasNotBuff(kps.spells.priest.prayerOfMending)
+end)
+
+--[[[
+@function `heal.hasNotBuffShield` - Returns the lowest health unit without Prayer of Mending Buff on raid e.g. heal.hasNotBuffMending.hp < 0.90
+]]--
+
+kps.RaidStatus.prototype.hasNotBuffShield = kps.utils.cachedValue(function()
+    return unitHasNotBuff(kps.spells.priest.powerWordShield)
 end)
 
 
@@ -642,8 +611,9 @@ print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"
 print("|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
 print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90),"|cffff8000CountLossDistance_90:|cffffffff", kps["env"].heal.countLossInDistance(0.90,10))
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
---print("|cff1eff00GlimmerLowest|cffffffff", kps["env"].heal.hasBuffGlimmer.name,"|",kps["env"].heal.hasBuffGlimmer.hp)
-print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
+print("|cffff8000glimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
+print("|cffff8000atonementCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.priest.atonement))
+print("|cffff8000atonementCountLoss:|cffffffff", kps["env"].heal.countLossAtonementInRange (2))
 
 --print("|cffff8000GCD:|cffffffff", kps["env"].player.gcd)
 
@@ -656,11 +626,6 @@ print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.
 --
 --print("|cffff8000useWrist:|cffffffff", kps["env"].player.useItem(168989))
 --print("|cffff8000useWrist:|cffffffff", GetItemSpell(168989))
-
-
-
-
-
 
 --print("|cffff8000lastSentSpell:|cffffffff",  kps.lastSentSpell)
 --print("|cffff8000lastCastedSpell:|cffffffff", kps.lastCastedSpell)
@@ -745,10 +710,6 @@ print("|cffff8000BuffglimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.
 --print("|cffff8000isBuffDispellable:|cffffffff", kps["env"].target.isBuffDispellable)
 --print("|cffff8000isDispellable:|cffffffff", kps["env"].player.isDispellable("Magic"))
 --print("|cffff8000hasBossDebuff:|cffffffff", kps["env"].player.hasBossDebuff)
-
---local Atonement = kps.spells.priest.atonement -- kps.Spell.fromId(81749)
---print("|cffff8000AtonementUnit:|cffffffff", kps["env"].heal.hasBuffAtonement.name)
---print("|cffff8000NotAtonementUnit:|cffffffff", kps["env"].heal.hasNotBuffAtonement.name)
 
 --for _,unit in ipairs(tanksInRaid()) do
 --print("TANKS",unit.name)

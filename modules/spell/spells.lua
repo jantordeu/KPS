@@ -197,6 +197,8 @@ kps.spells.azerite.guardianOfAzeroth = kps.Spell.fromId(295840)
 kps.spells.azerite.reapingFlames = kps.Spell.fromId(310690)
 -- Purifying Blast
 kps.spells.azerite.purifyingBlast = kps.Spell.fromId(295337)
+-- Focused Azerite Beam
+kps.spells.azerite.focusedazeriteBeam = kps.Spell.fromId(295258)
 
 
 kps.spells.item = {}

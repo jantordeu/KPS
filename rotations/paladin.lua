@@ -27,7 +27,3 @@ function kps.env.paladin.damageTarget()
     else return kps.env.heal.enemyLowest -- kps.env.heal.enemyTarget
     end
 end
-
-function kps.env.paladin.checkGlimmer()
-    return kps["env"].heal.hasBuffGlimmer.hp
-end

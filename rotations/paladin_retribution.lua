@@ -75,7 +75,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- AZERITE
     -- "Guardian of Azeroth" -- invoque un gardien d’Azeroth pendant 30 sec. 3 min cooldown.
     --{spells.azerite.guardianOfAzeroth, 'target.isAttackable' , "target" },
-    --{spells.azerite.concentratedFlame, 'target.isAttackable and target.distanceMax <= 30' , "target" },
+    {spells.azerite.concentratedFlame, 'target.isAttackable' , "target" },
     --{spells.azerite.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
     --{spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.avengingWrath) > 15' , "target" },
     --{spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.crusade) > 15' , "target" },

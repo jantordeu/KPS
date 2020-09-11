@@ -259,11 +259,6 @@ kps.env.priest.haloMessage = function()
     return haloOnScreen()
 end
 
-kps.env.priest.checkAtonement = function()
-    local buff = kps.spells.priest.atonement
-    return kps["env"].player.hasMyBuff(buff)
-end
-
 -- SendChatMessage("msg" [, "chatType" [, languageIndex [, "channel"]]])
 -- Sends a chat message of the specified in 'msg' (ex. "Hey!"), to the system specified in 'chatType' ("SAY", "WHISPER", "EMOTE", "CHANNEL", "PARTY", "INSTANCE_CHAT", "GUILD", "OFFICER", "YELL", "RAID", "RAID_WARNING", "AFK", "DND"),
 -- in the language specified in 'languageID', to the player or channel specified in 'channel'(ex. "1", "Bob").

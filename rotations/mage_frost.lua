@@ -27,7 +27,7 @@ kps.rotations.register("MAGE","FROST",
     {spells.iceBarrier, 'not player.hasBuff(spells.iceBarrier)'},
     {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
     {spells.invisibility, 'target.isRaidBoss and targettarget.isUnit("player")'},
-    {spells.spellsteal, 'target.isStealable' , "target" },
+    --{spells.spellsteal, 'target.isStealable' , "target" },
     {spells.iceBlock, 'player.hp < 0.15 or player.hpIncoming < 0.25'},
     {{"macro"}, 'player.hasBuff(spells.iceBlock) and player.hp > 0.90' , "/cancelaura "..IceBlock },
 
@@ -51,18 +51,20 @@ kps.rotations.register("MAGE","FROST",
     
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.azerite.concentratedFlame, 'true' , env.damageTarget },
-    {spells.azerite.guardianOfAzeroth, 'true' , env.damageTarget },
+    {spells.azerite.concentratedFlame, 'kps.multitarget and target.isAttackable' , env.damageTarget },
+    {spells.azerite.guardianOfAzeroth, 'kps.multitarget and target.isAttackable' , env.damageTarget },
+    {spells.azerite.focusedazeriteBeam, 'kps.multitarget and target.isAttackable' , env.damageTarget },
 
     {spells.icyVeins },
-    {spells.frozenOrb, 'true' , "target" },
-    -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
+    {spells.frozenOrb, 'target.isAttackable' , "target" },
     {spells.cometStorm, 'player.hasTalent(6,3)' },
+
     {spells.glacialSpike, 'not player.isMoving and player.hasTalent(7,3) and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike" },
+    -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
     {spells.ebonbolt, 'not player.isMoving and player.hasTalent(4,3) and not player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) == 5' , "target" , "ebonbolt_5" },
-    {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" },
     -- flurry consomme gel mental -- between 0-3 Icicles use Flurry -- Only use Flurry with Brain Freeze
     {spells.flurry, 'player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) < 4' , "target" , "flurry" },
+    {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" }, 
 
     {{"macro"}, 'keys.shift and spells.blizzard.cooldown == 0' , "/cast [@cursor] "..Blizzard },
     {{"macro"}, 'spells.blizzard.cooldown == 0 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Blizzard },
@@ -75,7 +77,7 @@ kps.rotations.register("MAGE","FROST",
     {spells.frostNova, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova) and not spells.frostNova.isRecastAt("target")' , "target" },
     {spells.coneOfCold, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova)' , "target" },
     {spells.iceNova, 'player.hasTalent(1,3) and target.distanceMax <= 10 and target.isAttackable' , "target" },
- 
+
     {spells.frostbolt, 'not player.isMoving' },
     {spells.iceLance },
 

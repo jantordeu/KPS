@@ -276,4 +276,8 @@ kps.spells.priest.azerite = kps.spells.azerite
 -- Use: Freeze the Shiver Venom on your target, consuming it to deal [3081 * (1 + Versatility)] Frost damage per stack to all nearby enemies. (1 Min Cooldown)
 kps.spells.priest.shiverVenom = kps.Spell.fromId(301624)
 
+-- RACIAL
+kps.spells.priest.rocketBarrage = kps.Spell.fromId(69041)
+
+
 
