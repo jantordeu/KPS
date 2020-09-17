@@ -14,6 +14,8 @@ end)
 kps.rotations.register("WARLOCK","AFFLICTION",
 {
 
+    {"/cancelaura " .. spells.burningRush.name, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
+
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not focus.exists and mouseover.isAttackable and mouseover.inCombat and not mouseover.isUnit("target")' , "/focus mouseover" },

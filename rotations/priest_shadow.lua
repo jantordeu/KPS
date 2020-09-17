@@ -64,7 +64,7 @@ kps.rotations.register("PRIEST","SHADOW",{
         --{spells.arcaneTorrent, 'player.timeInCombat > 30 and target.isAttackable and target.distance <= 10' , "target" },
     }},
     
-    -- {spells.psyfiend },
+    -- {spells.psyfiend},
 
     -- "Purify Disease" 213634
     {{"nested"}, 'kps.cooldowns',{
