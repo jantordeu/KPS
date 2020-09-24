@@ -27,7 +27,7 @@ kps.rotations.register("PRIEST","HOLY",{
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     env.holyWordSanctifyMessage,
     env.haloMessage,
-    --env.ShouldInterruptCasting,
+    -- ShouldInterruptCasting
     {{"macro"}, 'spells.heal.shouldInterrupt(0.95, kps.defensive and spells.holyWordSerenity.cooldown < 6)' , "/stopcasting" },
     {{"macro"}, 'spells.flashHeal.shouldInterrupt(0.85, kps.defensive)' , "/stopcasting" },
     {{"macro"}, 'spells.prayerOfHealing.shouldInterrupt(heal.countLossInRange(0.85), kps.defensive)' , "/stopcasting" },
@@ -114,17 +114,14 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.levitate, 'player.IsFallingSince(1.4) and not player.hasBuff(spells.levitate)' , "player" },
     
     --AZERITE
-    --"Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
-    --{spells.azerite.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2'},
-    --"Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
-    --{spells.azerite.overchargeMana, 'heal.countLossInRange(0.85)*2 > heal.countInRange' }, -- MANUAL
+    -- "Vitality Conduit"
+    {spells.azerite.vitalityConduit, 'heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },
     --"Refreshment" -- Release all healing stored in The Well of Existence into an ally. This healing is amplified by 20%.
-    {spells.azerite.refreshment, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid },
-    {spells.azerite.refreshment, 'heal.lowestTankInRaid.hp < 0.80' , kps.heal.lowestTankInRaid },
-    {spells.azerite.refreshment, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    {spells.azerite.refreshment, 'heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },
     {spells.azerite.concentratedFlame, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
-    {spells.azerite.concentratedFlame, 'heal.lowestInRaid.hp > 0.95 and target.isAttackable' , "target" },
-   
+    -- "Concentrated Flame"
+    {spells.azerite.concentratedFlame, 'heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },
+    {spells.azerite.concentratedFlame, 'target.isAttackable' , "target" },
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and heal.countLossInRange(0.85) > 2' , "/use 13" },
@@ -140,7 +137,6 @@ kps.rotations.register("PRIEST","HOLY",{
 
     -- "Pierre de soins" 5512
     --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
-    {spells.giftOfTheNaaru, 'player.hp < 0.70' , "player" },
     {spells.desperatePrayer, 'player.hp < 0.55' , "player" },
     {spells.renew, 'player.hpIncoming < 0.70 and not player.hasBuff(spells.renew)' , "player" },    
     -- "Renew" 139

@@ -25,7 +25,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use Pierre de soins" },
+    --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
     -- "Potion de soins abyssale" 169451
 
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec.

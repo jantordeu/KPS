@@ -9,10 +9,14 @@ do
     if (GetLocale() == "frFR") then
         kps.locale = setmetatable({
             ["Dummy"] ="Mannequin",
+            ["Consumable"] ="Consommable",
+            ["Armor"] ="Armure",
         } , {__index = function(t, index) return index end})
     elseif (GetLocale() == "deDE") then
         kps.locale = setmetatable({
             ["Dummy"] ="Trainingsattrappe",
+            ["Consumable"] ="Verbrauchbar",
+            ["Armor"] ="Rüstung",
         } , {__index = function(t, index) return index end})
     else
         kps.locale = setmetatable({}, {__index = function(t, index) return index end})

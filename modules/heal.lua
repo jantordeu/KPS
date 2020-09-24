@@ -620,10 +620,10 @@ print("|cffff8000atonementCountLoss:|cffffffff", kps["env"].heal.countLossAtonem
 --print("|cffff8000useTrinket:|cffffffff", kps["env"].player.useItem(173944))
 --print("|cffff8000useTrinket:|cffffffff", GetItemSpell(173944))
 --print("|cffff8000useTrinket:|cffffffff", kps["env"].player.useTrinket(0))
---
+
 --print("|cffff8000useItem:|cffffffff", kps["env"].player.useItem(168654))
---print("|cffff8000useItem:|cffffffff", GetItemSpell(168654))
---
+--print("|cffff8000usePierre:|cffffffff", kps["env"].player.useItem(5512))
+
 --print("|cffff8000useWrist:|cffffffff", kps["env"].player.useItem(168989))
 --print("|cffff8000useWrist:|cffffffff", GetItemSpell(168989))
 

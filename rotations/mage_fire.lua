@@ -49,12 +49,14 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'player.hasBuff(spells.iceBlock) and player.hp > 0.90' , "/cancelaura "..IceBlock },
     {spells.arcaneIntellect, 'not player.hasBuff(spells.arcaneIntellect)' , "player" },
     {spells.blazingBarrier, 'not player.hasBuff(spells.blazingBarrier) and not player.hasBuff(spells.combustion)'},
+    -- "Don des naaru" 59544
+    {spells.giftOfTheNaaru, 'player.hp < 0.65', "player" },
     {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
     {spells.invisibility, 'target.isRaidBoss and targettarget.isUnit("player")'},
     {spells.invisibility, 'player.isTarget and player.hp < 0.40'},
+    {spells.polymorph, 'kps.polymorph and focus.isAttackable and not focus.hasDebuff(spells.polymorph)' , "focus" },
     --{spells.spellsteal, 'target.isStealable' , "target" },
-
-    {spells.polymorph, 'kps.polymorph and mouseover.isAttackable and not mouseover.hasDebuff(spells.polymorph)' , "mouseover" },
+    
     {{"nested"},'kps.cooldowns', {
         {spells.removeCurse, 'mouseover.isHealable and mouseover.isDispellable("Curse")' , "mouseover" },
         {spells.removeCurse, 'player.isDispellable("Curse")' , "player" },
@@ -74,8 +76,8 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'player.useTrinket(1) and not player.hasBuff(spells.combustion) and player.timeInCombat > 9 and target.isAttackable' , "/use 14" },
 
     -- AZERITE
-    -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.azerite.concentratedFlame, 'not player.hasBuff(spells.combustion) and target.isAttackable' , "target" },
+    -- "Concentrated Flame"
+    --{spells.azerite.concentratedFlame, 'not player.hasBuff(spells.combustion) and target.isAttackable' , "target" },
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
     {{"nested"},'player.hasTalent(7,3) and player.hasTalent(3,3) and spells.meteor.cooldown == 0 and player.hasBuff(spells.runeOfPower)', {

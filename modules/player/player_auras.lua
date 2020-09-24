@@ -228,13 +228,30 @@ end
 --[[[
 @function `player.useItem(<ITEMID>)` - returns true if the player has the given item and cooldown == 0
 ]]--
+-- Bag functions
+local function lookupBag(item)
+    for bagID = 0, NUM_BAG_SLOTS do
+        for slot = 1, GetContainerNumSlots(bagID) do
+            local itemID = GetContainerItemID(bagID,slot)
+            if itemID then
+                if itemID == item  then -- itemType == kps.locale["Armor"] -- itemType == kps.locale["Consumable"] 
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
 local itemCooldown = function(item)
-    if item == nil then return 999 end
-    local start,duration,enable = GetItemCooldown(item) -- GetItemCooldown(ItemID) you MUST pass in the itemID.
     local itemName,_ = GetItemSpell(item) -- Useful for determining whether an item is usable.
-    local equipped = IsEquippedItem(item)
-    if not equipped then return 999 end
     if not itemName then return 999 end
+    local bagItem = lookupBag(item)
+    local itemType = select(6, GetItemInfo(item))
+    local equipped = IsEquippedItem(item)
+    if itemType == kps.locale["Armor"] and not equipped then return 999 end
+    if itemType == kps.locale["Consumable"] and not bagItem then return 999 end
+    local start,duration,enable = GetItemCooldown(item) -- GetItemCooldown(ItemID) you MUST pass in the itemID.
     if enable == 0 then return 999 end
     local cd = start+duration-GetTime()
     if cd < 0 then return 0 end
