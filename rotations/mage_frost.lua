@@ -54,32 +54,35 @@ kps.rotations.register("MAGE","FROST",
     
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.azerite.concentratedFlame, 'kps.multitarget and target.isAttackable' , env.damageTarget },
-    {spells.azerite.guardianOfAzeroth, 'kps.multitarget and target.isAttackable' , env.damageTarget },
-    {spells.azerite.focusedazeriteBeam, 'kps.multitarget and target.isAttackable' , env.damageTarget },
+    {spells.azerite.concentratedFlame, 'kps.multiTarget and target.isAttackable' , env.damageTarget },
+    {spells.azerite.guardianOfAzeroth, 'kps.multiTarget and target.isAttackable' , env.damageTarget },
+    {spells.azerite.focusedazeriteBeam, 'kps.multiTarget and target.isAttackable' , env.damageTarget },
 
     {spells.icyVeins },
     {spells.frozenOrb, 'target.isAttackable' , "target" },
-    {spells.cometStorm, 'player.hasTalent(6,3)' },
-
-    {spells.glacialSpike, 'not player.isMoving and player.hasTalent(7,3) and player.hasBuff(spells.brainFreeze)' , "target" , "glacialSpike" },
-    -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
-    {spells.ebonbolt, 'not player.isMoving and player.hasTalent(4,3) and not player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) == 5' , "target" , "ebonbolt_5" },
-    -- flurry consomme gel mental -- between 0-3 Icicles use Flurry -- Only use Flurry with Brain Freeze
-    {spells.flurry, 'player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) < 4' , "target" , "flurry" },
-    {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" }, 
-
-    {{"macro"}, 'keys.shift and spells.blizzard.cooldown == 0' , "/cast [@cursor] "..Blizzard },
-    {{"macro"}, 'spells.blizzard.cooldown == 0 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Blizzard },
-    {{"macro"}, 'spells.blizzard.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Blizzard },
-
-    {spells.iceFloes, 'player.hasTalent(2,3) and player.isMoving and not player.hasBuff(spells.iceFloes)' },
-    {spells.mirrorImage, 'player.hasTalent(3,2)' },
+    {spells.cometStorm, 'player.hasTalent(6,3) and target.isAttackable' , "target" },
     {spells.runeOfPower, 'not player.isMoving and player.hasTalent(3,3)' },
 
+    {spells.frostbolt, 'not player.isMoving and player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) == 4' },
+    {spells.glacialSpike, 'not player.isMoving and player.hasTalent(7,3) and target.hasMyDebuff(spells.wintersChill)' , "target" , "glacialSpike_wintersChill" },
+    {spells.iceLance, 'target.hasMyDebuff(spells.wintersChill)' , "target" , "iceLance_wintersChill" },
+    -- flurry consomme gel mental -- Only use Flurry with Brain Freeze
+    {spells.flurry, 'player.hasBuff(spells.brainFreeze)' , "target" , "flurry" },
+    -- if you do have Glacial Spike enabled you will always save Ebonbolt to generate a Brain Freeze proc for Glacial Spike
+    {spells.ebonbolt, 'not player.isMoving and player.hasTalent(4,3) and not player.hasBuff(spells.brainFreeze) and player.buffStacks(spells.icicles) == 5' , "target" , "ebonbolt_5" },
+    -- If you have both Fingers of Frost and Brain Freeze, prioritize using the Brain Freeze proc
+    {spells.iceLance, 'player.hasBuff(spells.fingersOfFrost)' , "target" , "iceLance_fingersOfFrost" },
+
+    {{"macro"}, 'keys.shift and spells.blizzard.cooldown == 0' , "/cast [@cursor] "..Blizzard },
+    {{"macro"}, 'spells.blizzard.cooldown == 0 and mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Blizzard },
+    {{"macro"}, 'spells.ringOfFrost.cooldown == 0 and target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..spells.ringOfFrost.name },
+
+    --{spells.iceFloes, 'player.hasTalent(2,3) and player.isMoving and not player.hasBuff(spells.iceFloes)' },
+    {spells.mirrorImage, 'target.isAttackable' , "target" },
+    {spells.summonWaterElemental , 'not player.hasTalent(1,2)' },
     {spells.frostNova, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova) and not spells.frostNova.isRecastAt("target")' , "target" },
     {spells.coneOfCold, 'target.isAttackable and target.distanceMax <= 10 and not target.hasDebuff(spells.frostNova)' , "target" },
-    {spells.iceNova, 'player.hasTalent(1,3) and target.distanceMax <= 10 and target.isAttackable' , "target" },
+    {spells.iceNova, 'player.hasTalent(1,3) and target.isAttackable' , "target" },
 
     {spells.frostbolt, 'not player.isMoving' },
     {spells.iceLance },

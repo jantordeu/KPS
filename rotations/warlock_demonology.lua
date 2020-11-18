@@ -6,33 +6,8 @@
 local spells = kps.spells.warlock
 local env = kps.env.warlock
 
-local opener = {
-    spells.doom,
-    spells.handOfGuldan,
-    spells.shadowBolt,
-    spells.shadowBolt,
-    spells.shadowBolt,
-    spells.implosion,
-    spells.grimoireFelguard,
-    spells.summonVilefiend,
-    spells.callDreadstalkers,
-    spells.shadowBolt,
-    spells.shadowBolt,
-    spells.shadowBolt,
-    spells.shadowBolt,
-    spells.shadowBolt,
-    spells.handOfGuldan,
-    spells.handOfGuldan,
-    spells.demonicStrength,
-    spells.summonDemonicTyrant
-}
-
-
 kps.rotations.register("WARLOCK","DEMONOLOGY",
 {
-    {"/cancelaura "..spells.burningRush.name, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
-
-    {opener, "kps.timeInCombat < 15 and kps.env.boss1.exists"},
 
     {spells.summonDemonicTyrant, 'kps.lastCastedSpell == spells.summonVilefiend.name'},
 
@@ -64,5 +39,5 @@ kps.rotations.register("WARLOCK","DEMONOLOGY",
     {spells.handOfGuldan, 'player.soulShards >= 3'},
     {spells.shadowBolt},
 }
-,"IcyVeins", {3,3,0,3,0,3,3})
+,"IcyVeins")
 

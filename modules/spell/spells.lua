@@ -172,6 +172,7 @@ kps.spells.clippingSpell.mindFlay = kps.Spell.fromId(15407)
 kps.spells.castableSpell = {}
 kps.spells.castableSpell.fireBlast = kps.Spell.fromId(108853)
 kps.spells.castableSpell.combustion = kps.Spell.fromId(190319)
+kps.spells.castableSpell.searingNightmare = kps.Spell.fromId(341385)
 
 -- AZERITE ESSENCE
 kps.spells.azerite = {}

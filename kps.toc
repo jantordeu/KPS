@@ -1,6 +1,6 @@
 ## Interface: 90001
 ## Title: |cffff8000KPS Addon
-## Notes: Karnofsky Performance System
+## Notes: KPS Keymoon Unlocker
 ## SavedVariables:
 ## Dependencies:
 ## SavedVariablesPerCharacter: KPS_SETTINGS

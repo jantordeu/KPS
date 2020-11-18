@@ -44,7 +44,7 @@ kps.rotations.register("HUNTER","BEASTMASTERY",
         }},
     }},
 
-    -- multitarget
+    -- multiTarget
     {{"nested"}, 'kps.multiTarget', {
         {spells.volley, 'not player.hasBuff(spells.volley)'},
 

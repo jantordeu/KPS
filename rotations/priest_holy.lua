@@ -141,6 +141,7 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.renew, 'player.hpIncoming < 0.70 and not player.hasBuff(spells.renew)' , "player" },    
     -- "Renew" 139
     {{"nested"}, 'player.isMoving' ,{
+        {spells.prayerOfMending, 'true' , kps.heal.hasNotBuffMending , "POM" },
         {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.70' , kps.heal.lowestTankInRaid},
         {spells.holyWordSerenity, 'player.hp < 0.70' , "player"},
         {spells.renew, 'heal.lowestTankInRaid.hpIncoming < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
@@ -150,6 +151,9 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.holyNova, 'heal.countLossInDistance(0.90,10) > 2' , "target" },
         {spells.renew, 'heal.lowestInRaid.hpIncoming < 0.90 and not heal.lowestInRaid.hasBuff(spells.renew)' , kps.heal.lowestInRaid, "RENEW_LOWEST" },
     }},
+    -- "Prayer of Mending" (Tank only)
+    {spells.prayerOfMending, 'not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending)' , kps.heal.lowestTankInRaid },
+    {spells.prayerOfMending, 'true' , kps.heal.hasNotBuffMending , "POM" },
     
     -- "Soins rapides" 2060 Important Unit
     {{"nested"}, 'not player.isMoving and spells.prayerOfHealing.lastCasted(3.4)' ,{
@@ -165,9 +169,6 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.flashHeal, 'heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid ,"FLASH_POM" },
         {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid , "POH" },
     }},
-    -- "Prayer of Mending" (Tank only)
-    {spells.prayerOfMending, 'not player.isMoving and not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending)' , kps.heal.lowestTankInRaid },
-    {spells.prayerOfMending, 'not player.isMoving' , kps.heal.hasNotBuffMending , "POM" },
 
     -- MOUSEOVER
     {spells.flashHeal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55 and not spells.flashHeal.isRecastAt("mouseover")' , "mouseover" , "FLASH_mouseover" },

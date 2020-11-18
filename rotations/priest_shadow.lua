@@ -1,7 +1,7 @@
 --[[[
 @module Priest Shadow Rotation
 @author htordeux
-@version 8.1
+@version 9.0.1
 ]]--
 
 local spells = kps.spells.priest
@@ -25,6 +25,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {{"macro"}, 'FocusMouseoverShadow()' , "/focus mouseover" },
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
 
+    {spells.desperatePrayer, 'player.hp < 0.55' , "player" },
     -- "Dissipation de masse" 32375
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0 ', "/cast [@cursor] "..MassDispel },
     -- "Dispersion" 47585
@@ -44,7 +45,6 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },   
     -- "Levitate" 1706
     {spells.levitate, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.levitate)' , "player" },
-   
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
         -- "Silence" 15487 -- debuff same ID
@@ -60,7 +60,6 @@ kps.rotations.register("PRIEST","SHADOW",{
         {spells.dispelMagic, 'mouseover.isAttackable and mouseover.isBuffDispellable and not spells.dispelMagic.lastCasted(6)' , "mouseover" },
         --{spells.arcaneTorrent, 'player.timeInCombat > 30 and target.isAttackable and target.distance <= 10' , "target" },
     }},
-
     -- "Purify Disease" 213634
     {{"nested"}, 'kps.cooldowns',{
         {spells.purifyDisease, 'mouseover.isDispellable("Disease")' , "mouseover" },
@@ -79,29 +78,24 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- The Unbound Force -- causing shards of spells.azerite to strike your target for [(341 * (7.06061) + 341)] Fire damage over 2 sec. This damage is increased by 300% if it critically strikes
     {spells.azerite.theUnboundForce, 'player.hasBuff(spells.voidForm) and target.isAttackable and player.buffStacks(spells.voidForm) < 15' , env.damageTarget },
 
-    {spells.darkVoid, 'player.hasTalent(3,3) and not player.isMoving and not player.hasBuff(spells.voidForm)' , env.damageTarget , "darkVoid" },    
-    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5' , "target" },
-    {spells.shadowWordPain, 'player.isMoving and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 16' , "target" },
-    
-    --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
-    --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
-    {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
-    {spells.voidEruption, 'not player.isMoving and player.hasTalent(7,1) and player.insanity > 70' , env.damageTarget , "voidEruption_70" },
-    {spells.voidEruption, 'not player.isMoving and not player.hasTalent(7,1) and player.insanity > 90' , env.damageTarget , "voidEruption_90"  },
-    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget },
-
-    -- Pandemic allow DoTs to be refreshed upto 30% -- myDebuffDurationMax(spells.vampiricTouch) == 27.3 -- duration(21) + 30% (6.3) -- 70% (14.7)
-    -- Pandemic allow DoTs to be refreshed upto 30% -- myDebuffDurationMax(spells.shadowWordPain) == 20.8 -- duration(16) + 30% (4.8) -- 70% (11.2)
+    {spells.shadowWordDeath, 'mouseover.inCombat and mouseover.isAttackable and mouseover.hp < 0.20' , "mouseover" , "shadowWordDeath" },
+    {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20' , "target" , "shadowWordDeath" },
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5' , "mouseover" },
-    {spells.shadowWordPain, 'player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 16' , "mouseover" },
-    {spells.vampiricTouch, 'not player.isMoving and focus.isAttackable and focus.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("focus")' , "focus" },
-    {spells.shadowWordPain, 'focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 5' , "focus" },
-    {spells.shadowWordPain, 'player.isMoving and focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 16' , "focus" },
+    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5' , "target" },
 
-    {spells.shadowfiend, 'player.hasBuff(spells.voidForm) and player.buffStacks(spells.voidForm) > 15' , env.damageTarget },
-    {spells.shadowWordDeath, 'player.hasTalent(5,2) and target.hp < 0.20' , "target" },
+    {spells.voidEruption, 'not player.isMoving and player.insanity > 40' , env.damageTarget , "voidEruption"  },
+    {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
+    {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
+    {spells.devouringPlague, 'spells.voidEruption.cooldown > 6 and target.isAttackable and not target.hasMyDebuff(spells.devouringPlague) and not spells.devouringPlague.isRecastAt("target")' , "target" },
+    {spells.searingNightmare, 'player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
+    {spells.shadowfiend, 'true' , env.damageTarget },
+    {spells.mindbender, 'true' , env.damageTarget },
+
+    {spells.vampiricTouch , 'player.hasBuff(spells.unfurlingDarkness)' , env.damageTarget , "vampiricTouch_unfurlingDarkness" },    
+    {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
+    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
     {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
     {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount > 2' , env.damageTarget },
     {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },

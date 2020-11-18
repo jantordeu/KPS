@@ -124,6 +124,7 @@ kps.rotations.register("MAGE","FIRE",
    }},
     -- "Phoenix Flames" -- Always deals a critical strike. 30 sec cooldown 3 charges
     {spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp)' ,  env.damageTarget },
+    {spells.mirrorImage, 'target.isAttackable' , "target" },
 
     {spells.scorch, 'player.isMoving', env.damageTarget },
     {spells.scorch, 'target.hp < 0.30 and target.isAttackable' , "target"  , "scorch_target" }, 

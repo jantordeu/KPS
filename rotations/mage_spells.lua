@@ -275,6 +275,7 @@ kps.spells.mage.whiteout = kps.Spell.fromId(278541)
 kps.spells.mage.wingsOfFlame = kps.Spell.fromId(221844)
 kps.spells.mage.wintersReach = kps.Spell.fromId(273346)
 kps.spells.mage.worldInFlames = kps.Spell.fromId(203280)
+kps.spells.mage.wintersChill = kps.Spell.fromId(228358)
 -- AZERITE
 kps.spells.mage.azerite = kps.spells.azerite
 -- ITEM

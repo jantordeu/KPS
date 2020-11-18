@@ -605,15 +605,14 @@ function kpstest()
 
 --print("|cff1eff00HealTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingHeal)
 --print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
-print("|cffff8000mainTANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"|",kps["env"].heal.lowestTankInRaid.hp)
+print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"|",kps["env"].heal.lowestTankInRaid.hp)
 print("|cff1eff00LOWEST|cffffffff", kps["env"].heal.lowestInRaid.name,"|",kps["env"].heal.lowestInRaid.hp)
 print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"|",kps["env"].heal.lowestUnitInRaid.hp)
-print("|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange)
-print("|cffff8000CountLoss_90:|cffffffff", kps["env"].heal.countLossInRange(0.90),"|cffff8000CountLossDistance_90:|cffffffff", kps["env"].heal.countLossInDistance(0.90,10))
+print("|cffff8000countInRange:|cffffffff",kps["env"].heal.countInRange,"|cffff8000CountLossDistance:|cffffffff",kps["env"].heal.countLossInRange(0.85))
+print("|cffff8000CountLossDistance:|cffffffff", kps["env"].heal.countLossInDistance(0.85,10))
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
-print("|cffff8000glimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
-print("|cffff8000atonementCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.priest.atonement))
-print("|cffff8000atonementCountLoss:|cffffffff", kps["env"].heal.countLossAtonementInRange (2))
+print("|cffff8000atonementCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.priest.atonement),"|cffff8000atonementCountLoss:|cffffffff", kps["env"].heal.countLossAtonementInRange (2))
+--print("|cffff8000glimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 
 --print("|cffff8000GCD:|cffffffff", kps["env"].player.gcd)
 
@@ -671,7 +670,7 @@ print("|cffff8000atonementCountLoss:|cffffffff", kps["env"].heal.countLossAtonem
 --end
 
 --local mindFlay =  kps.spells.priest.mindFlay
---print("mindFlayCD:",mindFlay.cooldown, "mindFlayCDtotal:",mindFlay.cooldownTotal)
+--print("left:",mindFlay.castTimeLeft("player"),"cd:",mindFlay.cooldown, "cdtotal:",mindFlay.cooldownTotal)
 --local mindSear =  kps.spells.priest.mindSear
 --print("left:",mindSear.castTimeLeft("player"),"cd:",mindSear.cooldown, "cdtotal:",mindSear.cooldownTotal)
 --local mindBlast =  kps.spells.priest.mindBlast

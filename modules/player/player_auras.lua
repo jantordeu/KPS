@@ -121,15 +121,14 @@ function kps.Player.prototype.isInterrupt(self)
 end
 
 
--- locType, spellID, text, iconTexture, startTime, timeRemaining, duration, lockoutSchool, priority, displayType = C_LossOfControl.GetEventInfo(eventIndex)
--- eventIndex Number - index of the loss-of-control effect currently affecting your character to return information about, ascending from 1. 
+-- https://wow.gamepedia.com/API_C_LossOfControl.GetActiveLossOfControlData
 -- locType = { "STUN_MECHANIC", "STUN", "PACIFYSILENCE", "SILENCE", "FEAR", "CHARM", "PACIFY", "CONFUSE", "POSSESS", "SCHOOL_INTERRUPT", "DISARM", "ROOT" }
 
 lossOfControlType = { ["STUN_MECHANIC"]=false, ["STUN"]=false, ["PACIFYSILENCE"]=true, ["SILENCE"]=true, ["FEAR"]=true, ["CHARM"]=true, ["PACIFY"]=true, ["CONFUSE"]=true, ["POSSESS"]=true, ["SCHOOL_INTERRUPT"]=false, ["DISARM"]=false, ["ROOT"]=false }
 
 kps.events.register("LOSS_OF_CONTROL_UPDATE", function ()
-    local i = C_LossOfControl.GetNumEvents()
-    local locType, spellID, _, _, _, _, duration,lockoutSchool,_,_ = C_LossOfControl.GetEventInfo(i)
+    local i = C_LossOfControl.GetActiveLossOfControlDataCountByUnit("player")
+    local locType, spellID, _, _, _, _, duration,lockoutSchool,_,_ = C_LossOfControl.GetActiveLossOfControlDataByUnit("player",i) 
     if spellID and duration then
         if duration > 0 then
             if string.find(locType,"INTERRUPT") ~= nil then
@@ -149,27 +148,24 @@ kps.events.register("LOSS_OF_CONTROL_UPDATE", function ()
 end)
 
 kps.events.register("LOSS_OF_CONTROL_ADDED", function ()
-    local i = C_LossOfControl.GetNumEvents()
-    while i > 0 do
-        local locType, spellID, _, _, _, _, duration,lockoutSchool,_,_ = C_LossOfControl.GetEventInfo(i)
-        if spellID and duration then
-            if duration > 0 then
-                if string.find(locType,"INTERRUPT") ~= nil then
-                    if kps.timers.check("Interrupt") == 0 then kps.timers.create("Interrupt",duration) end
-                end
-                if string.find(locType,"STUN") ~= nil then
-                    if kps.timers.check("Stun") == 0 then kps.timers.create("Stun",duration) end
-                end
-                if locType == "ROOT" then
-                    if kps.timers.check("Root") == 0 then kps.timers.create("Root",duration) end
-                end
-                if lossOfControlType[loctype] == true then
-                    if kps.timers.check("LossOfControl") == 0 then kps.timers.create("LossOfControl",duration) end
-                end
-            end
-        end
-        i = i - 1
-    end
+    local i = C_LossOfControl.GetActiveLossOfControlDataCountByUnit("player")
+	local locType, spellID, _, _, _, _, duration,lockoutSchool,_,_ = C_LossOfControl.GetActiveLossOfControlDataByUnit("player",i)
+	if spellID and duration then
+		if duration > 0 then
+			if string.find(locType,"INTERRUPT") ~= nil then
+				if kps.timers.check("Interrupt") == 0 then kps.timers.create("Interrupt",duration) end
+			end
+			if string.find(locType,"STUN") ~= nil then
+				if kps.timers.check("Stun") == 0 then kps.timers.create("Stun",duration) end
+			end
+			if locType == "ROOT" then
+				if kps.timers.check("Root") == 0 then kps.timers.create("Root",duration) end
+			end
+			if lossOfControlType[loctype] == true then
+				if kps.timers.check("LossOfControl") == 0 then kps.timers.create("LossOfControl",duration) end
+			end
+		end
+	end
 end)
 
 --[[[

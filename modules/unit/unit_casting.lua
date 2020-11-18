@@ -30,7 +30,7 @@ end
 ]]--
 local function isClippingSpell(spellname)
     for _,spell in pairs(kps.spells.clippingSpell) do
-        if spell.name == spellname then return true end
+        if spell.name == spellname and spell.cooldown == 0 then return true end
     end
     return false
 end

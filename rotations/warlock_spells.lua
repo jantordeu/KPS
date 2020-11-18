@@ -244,3 +244,8 @@ kps.spells.warlock.wrackingBrilliance = kps.Spell.fromId(272891)
 kps.spells.warlock.wrathOfConsumption = kps.Spell.fromId(199472)
 kps.spells.warlock.wrathstorm = kps.Spell.fromId(115831)
 kps.spells.warlock.writheInAgony = kps.Spell.fromId(196102)
+
+-- Shadowlands
+kps.spells.warlock.shadowEmbrace = kps.Spell.fromId(32388)
+kps.spells.warlock.maleficRapture = kps.Spell.fromId(324536)
+

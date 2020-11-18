@@ -247,7 +247,7 @@ kps.spells.priest.voidShield = kps.Spell.fromId(280749)
 kps.spells.priest.voidShift = kps.Spell.fromId(108968)
 kps.spells.priest.voidSiphon = kps.Spell.fromId(215322)
 kps.spells.priest.voidTorrent = kps.Spell.fromId(205065)
-kps.spells.priest.voidForm = kps.Spell.fromId(185916)
+kps.spells.priest.voidForm = kps.Spell.fromId(194249)
 kps.spells.priest.wealAndWoe = kps.Spell.fromId(273307)
 kps.spells.priest.whispersOfTheDamned = kps.Spell.fromId(275722)
 kps.spells.priest.willOfTheConclave = kps.Spell.fromId(241148)
@@ -278,6 +278,15 @@ kps.spells.priest.shiverVenom = kps.Spell.fromId(301624)
 
 -- RACIAL
 kps.spells.priest.rocketBarrage = kps.Spell.fromId(69041)
+
+-- SHADOWLANDS
+kps.spells.priest.searingNightmare = kps.Spell.fromId(341385)
+kps.spells.priest.unfurlingDarkness = kps.Spell.fromId(341282)
+kps.spells.priest.darkThoughts = kps.Spell.fromId(341205)
+kps.spells.priest.devouringPlague = kps.Spell.fromId(335467)
+
+
+
 
 
 

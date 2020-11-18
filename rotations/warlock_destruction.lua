@@ -20,8 +20,6 @@ Level 100: Channel Demonfire
 
 kps.rotations.register("WARLOCK","DESTRUCTION",
 {
-    {"/cancelaura " .. spells.burningRush.name, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
-
     -- Apply  Havoc if a secondary target is present.
     {{"nested"}, 'not player.hasTalent(7, 1)', {
         {spells.havoc, 'isHavocUnit("mouseover") and keys.ctrl', "mouseover" },
@@ -63,4 +61,4 @@ kps.rotations.register("WARLOCK","DESTRUCTION",
     -- Cast Conflagrate to generate Soul Shards.
     {spells.incinerate},
 }
-,"Destruction 8.0.1", {0,0,0,0,0,2,0})
+,"Destruction")
