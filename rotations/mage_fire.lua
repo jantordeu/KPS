@@ -14,7 +14,7 @@ local Wristwraps = spells.item.hyperthreadWristwraps.name
 
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("MAGE","FIRE", "polymorph", "Interface\\Icons\\spell_nature_polymorph", "polymorph")
+   kps.gui.addCustomToggle("MAGE","FIRE", "combustion", "Interface\\Icons\\spell_fire_sealoffire", "combustion")
 end)
 
 kps.rotations.register("MAGE","FIRE",
@@ -36,7 +36,7 @@ kps.rotations.register("MAGE","FIRE",
     {spells.fireBlast, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , "target" , env.checkfireBlast },
     {spells.scorch, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak)' , "target" , "scorch_combustion" },
 
-    {{"nested"},'kps.multiTarget and not player.isMoving and player.hasTalent(3,3) and spells.combustion.cooldown < 2', {
+    {{"nested"},'kps.combustion and not player.isMoving and player.hasTalent(3,3) and spells.combustion.cooldown < 2', {
         {spells.azerite.memoryOfLucidDreams },
         {spells.combustion, 'player.hasBuff(spells.runeOfPower) and player.hasBuff(spells.hotStreak)' , "player" , "combustion" },
         {spells.fireBlast, 'spells.fireBlast.charges == 3 and not player.hasBuff(spells.heatingUp) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp_precombustion" },
@@ -54,7 +54,6 @@ kps.rotations.register("MAGE","FIRE",
     {spells.slowFall, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.slowFall)' , "player" },
     {spells.invisibility, 'target.isRaidBoss and targettarget.isUnit("player")'},
     {spells.invisibility, 'player.isTarget and player.hp < 0.40'},
-    {spells.polymorph, 'kps.polymorph and focus.isAttackable and not focus.hasDebuff(spells.polymorph)' , "focus" },
     --{spells.spellsteal, 'target.isStealable' , "target" },
     
     {{"nested"},'kps.cooldowns', {
@@ -104,7 +103,8 @@ kps.rotations.register("MAGE","FIRE",
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget , "pyroblast_hotStreak"},
     
     {spells.livingBomb,  'player.hasTalent(6,3) and not player.hasBuff(spells.combustion) and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.livingBomb) and mouseover.hp > 0.30' , "mouseover" },
-    {spells.livingBomb,  'player.hasTalent(6,3) and not player.hasBuff(spells.combustion) and target.isAttackable and not target.hasMyDebuff(spells.livingBomb) and target.hp > 0.30' , "target" },
+    {spells.phoenixFlames , 'kps.multiTarget and player.hasBuff(spells.heatingUp)' ,  env.damageTarget },
+    {spells.mirrorImage, 'target.isAttackable' , "target" },
     {spells.dragonsBreath, 'not player.hasBuff(spells.combustion) and target.isAttackable and target.distanceMax <= 5' , "target" },
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
@@ -117,14 +117,11 @@ kps.rotations.register("MAGE","FIRE",
     -- Réchauffement -- Heating Up -- Vous avez réussi un sort critique. Si le suivant est également critique, l’incantation de votre prochain sort Explosion pyrotechnique ou Choc de flammes sera instantanée et il infligera le double de dégâts avec Enflammer.
     --{spells.fireBlast, 'spells.fireBlast.charges == 3 and not player.hasBuff(spells.hotStreak) and spells.combustion.cooldown > 25 and not spells.fireBlast.isRecastAt("target")' , "target", "fireBlast_charges_3" },
     {{"nested"}, 'player.hasBuff(spells.heatingUp) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")', {
-        {spells.fireBlast, 'spells.fireBlast.charges == 3 and not kps.multiTarget' , "target", "fireBlast_charges" },
+        {spells.fireBlast, 'spells.fireBlast.charges == 3 and not kps.combustion' , "target", "fireBlast_charges" },
         {spells.fireBlast, 'spells.fireBlast.charges == 3 and spells.combustion.cooldown > 8' , "target" , "fireBlast_cooldown_8" },
         {spells.fireBlast, 'spells.fireBlast.charges == 2 and spells.combustion.cooldown > 17' , "target" , "fireBlast_cooldown_17" },
         {spells.fireBlast, 'spells.combustion.cooldown > 25' ,  "target" , "fireBlast_cooldown_25" },
    }},
-    -- "Phoenix Flames" -- Always deals a critical strike. 30 sec cooldown 3 charges
-    {spells.phoenixFlames , 'player.hasTalent(4,3) and player.hasBuff(spells.heatingUp)' ,  env.damageTarget },
-    {spells.mirrorImage, 'target.isAttackable' , "target" },
 
     {spells.scorch, 'player.isMoving', env.damageTarget },
     {spells.scorch, 'target.hp < 0.30 and target.isAttackable' , "target"  , "scorch_target" }, 

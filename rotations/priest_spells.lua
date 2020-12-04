@@ -284,6 +284,16 @@ kps.spells.priest.searingNightmare = kps.Spell.fromId(341385)
 kps.spells.priest.unfurlingDarkness = kps.Spell.fromId(341282)
 kps.spells.priest.darkThoughts = kps.Spell.fromId(341205)
 kps.spells.priest.devouringPlague = kps.Spell.fromId(335467)
+kps.spells.priest.voidTorrent = kps.Spell.fromId(263165)
+kps.spells.priest.powerInfusion = kps.Spell.fromId(10060)
+
+-- COVENANT ABILITIES
+kps.spells.priest.mindgames = kps.Spell.fromId(323673)
+kps.spells.priest.doorOfShadows = kps.Spell.fromId(300728)
+
+
+
+
 
 
 

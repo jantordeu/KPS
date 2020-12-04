@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: |cffff8000KPS Addon
 ## Notes: KPS Keymoon Unlocker
 ## SavedVariables:
