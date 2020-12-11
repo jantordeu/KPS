@@ -286,6 +286,7 @@ kps.spells.priest.darkThoughts = kps.Spell.fromId(341205)
 kps.spells.priest.devouringPlague = kps.Spell.fromId(335467)
 kps.spells.priest.voidTorrent = kps.Spell.fromId(263165)
 kps.spells.priest.powerInfusion = kps.Spell.fromId(10060)
+kps.spells.priest.spiritShell = kps.Spell.fromId(109964)
 
 -- COVENANT ABILITIES
 kps.spells.priest.mindgames = kps.Spell.fromId(323673)

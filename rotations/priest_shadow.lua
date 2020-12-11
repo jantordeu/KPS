@@ -1,7 +1,7 @@
 --[[[
 @module Priest Shadow Rotation
 @author htordeux
-@version 9.0.1
+@version 9.0.2
 ]]--
 
 local spells = kps.spells.priest
@@ -10,6 +10,7 @@ local env = kps.env.priest
 local Dispersion = spells.dispersion.name
 local MassDispel = spells.massDispel.name
 local ShadowCrash = spells.shadowCrash.name
+local DoorOfShadows = spells.doorOfShadows.name
 
 kps.runAtEnd(function()
    kps.gui.addCustomToggle("PRIEST","SHADOW", "mindSear", "Interface\\Icons\\spell_shadow_mindshear", "mindSear")
@@ -24,17 +25,23 @@ kps.rotations.register("PRIEST","SHADOW",{
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'FocusMouseoverShadow()' , "/focus mouseover" },
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
-
-    {spells.desperatePrayer, 'player.hp < 0.55' , "player" },
+    
+    -- "Door of Shadows" 
+    {{"macro"}, 'not player.isMoving and keys.alt', "/cast [@cursor] "..DoorOfShadows},
     -- "Dissipation de masse" 32375
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0 ', "/cast [@cursor] "..MassDispel },
+    -- "Shadow Crash"
+    {{"macro"}, 'keys.shift and spells.ShadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
+    
+
     -- "Dispersion" 47585
-    {spells.dispersion, 'player.hp < 0.30' },
-    {{"macro"}, 'player.hasBuff(spells.dispersion) and player.hp > 0.995' , "/cancelaura "..Dispersion },
+    {{"macro"}, 'player.hasBuff(spells.dispersion) and player.hp > 0.95' , "/cancelaura "..Dispersion },
+    {spells.dispersion, 'player.hp < 0.35' },
     --"Fade" 586
     {spells.fade, 'player.isTarget and player.isInGroup' },
     -- "Pierre de soins" 5512
-    --{{"macro"}, 'player.useItem(5512) and player.hp < 0.65', "/use item:5512" },
+    --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
+    {spells.desperatePrayer, 'player.hp < 0.65' , "player" },
     -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
     {spells.vampiricEmbrace, 'heal.lowestInRaid.hp < 0.55' },
     -- "Power Word: Shield" 17 -- "Body and Soul"
@@ -45,6 +52,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },   
     -- "Levitate" 1706
     {spells.levitate, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.levitate)' , "player" },
+
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
         -- "Silence" 15487 -- debuff same ID
@@ -66,7 +74,7 @@ kps.rotations.register("PRIEST","SHADOW",{
         {spells.purifyDisease, 'player.isDispellable("Disease")' , "player" },
         {spells.purifyDisease, 'heal.isDiseaseDispellable' , kps.heal.isDiseaseDispellable},
     }},
-    
+
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and target.isAttackable and not player.hasBuff(spells.voidForm)' , "/use 13" },
 
@@ -85,23 +93,24 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.voidEruption, 'not player.isMoving and player.insanity > 40 and target.isElite' , env.damageTarget , "voidEruption"  },
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
     {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
-    {spells.powerInfusion, 'target.hp > 0.50 or target.isElite' , env.damageTarget },
+    {spells.powerInfusion, 'target.hp > 0.50' , env.damageTarget },
+    {spells.powerInfusion, 'target.isElite and target.hp > 0.20' , env.damageTarget },
 
-
-    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
-    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5' , "mouseover" },
     {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5' , "target" },     
-    {spells.vampiricTouch, 'not player.isMoving and focus.isAttackable and focus.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("focus")' , "focus" },
-    {spells.shadowWordPain, 'focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 5' , "focus" },
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5' , "target" },
 
-    {spells.mindgames, 'true' , env.damageTarget }, 
-    {spells.devouringPlague, 'not kps.mindSear and spells.voidEruption.cooldown > 6 and target.isAttackable and not target.hasMyDebuff(spells.devouringPlague)' , "target" },
-    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and not spells.searingNightmare.isRecastAt("target")' , "target" , "searingNightmare" },
-
+    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and not spells.searingNightmare.isRecastAt("target")' , "target" , "searingNightmare" },   
+    {spells.devouringPlague, 'target.isAttackable and not target.hasMyDebuff(spells.devouringPlague)' , "target" },
+    {spells.mindgames, 'not player.isMoving and not player.hasBuff(spells.voidForm)' , env.damageTarget }, 
+    
     {spells.vampiricTouch , 'player.hasBuff(spells.unfurlingDarkness)' , env.damageTarget , "vampiricTouch_unfurlingDarkness" },    
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
     {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
+    
+    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
+    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5' , "mouseover" },
+    {spells.vampiricTouch, 'not player.isMoving and focus.isAttackable and focus.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("focus")' , "focus" },
+    {spells.shadowWordPain, 'focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 5' , "focus" },
 
     {spells.voidTorrent, 'target.hp > 0.20' , env.damageTarget },
     {spells.shadowfiend, 'target.hp > 0.20' , env.damageTarget },
@@ -111,7 +120,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount > 2' , env.damageTarget },
     {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
 
-},"priest_shadow_bfa")
+},"priest_shadow_shadowlands")
 
 
 -- MACRO --

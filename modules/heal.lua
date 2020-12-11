@@ -186,7 +186,7 @@ kps.RaidStatus.prototype.defaultTarget = kps.utils.cachedValue(function()
     if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.55 then return kps["env"].focustarget end
     -- Now do the same for target...
     if kps["env"].target.isHealable and kps["env"].target.hp < 0.55 then return kps["env"].target end
-    if not kps["env"].target.isHealable and kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.55 then return kps["env"].targettarget end
+    if kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.55 then return kps["env"].targettarget end
     -- Nothing selected - get lowest raid member
     return kps.RaidStatus.prototype.lowestInRaid()
 end)
@@ -209,7 +209,7 @@ kps.RaidStatus.prototype.defaultTank = kps.utils.cachedValue(function()
     if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.55 then return kps["env"].focustarget end
     -- Now do the same for target...
     if kps["env"].target.isHealable and kps["env"].target.hp < 0.55 then return kps["env"].target end
-    if not kps["env"].target.isHealable and kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.55 then return kps["env"].targettarget end
+    if kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.55 then return kps["env"].targettarget end
     -- Nothing selected - get lowest Tank if it is NOT the player and lower than 50%
     return kps.RaidStatus.prototype.lowestTankInRaid()
 end)

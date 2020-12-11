@@ -202,13 +202,13 @@ kps.env.priest.ShouldInterruptCasting = function()
 end
 
 -- usage in Rotation -- env.FindUnitWithNoRenew,
-local ArenaRBGFriends = { "player", "raid1", "raid2", "raid3", "raid4", "raid5", "raid6", "raid7", "raid8", "raid9", "raid10", "party1", "party2", "party3", "party4"}
+local battlegroundFriends = { "player", "raid1", "raid2", "raid3", "raid4", "raid5", "raid6", "raid7", "raid8", "raid9", "raid10", "party1", "party2", "party3", "party4"}
 kps.env.priest.FindUnitWithNoRenew = function()
     local renewUnit = nil
     local buff = kps.spells.priest.renew
-    for i=1,#ArenaRBGFriends do
-        local unit = ArenaRBGFriends[i]
-        if UnitExists(unit) and not UnitBuff(unit,buff.name) then
+    for i=1,#battlegroundFriends do
+        local unit = battlegroundFriends[i]
+        if UnitExists(unit) and not UnitHasBuff(unit,buff.name) then
             renewUnit = unit
         end
     end
@@ -216,29 +216,12 @@ kps.env.priest.FindUnitWithNoRenew = function()
     return buff, renewUnit
 end
 
-local LifeSwapList = {"player", "raid1", "raid2", "raid3", "raid4", "raid5", "raid6", "raid7", "raid8", "raid9", "raid10", "party1", "party2", "party3", "party4"}
-kps.env.priest.HighestInRaidStatus = function()
-    local swapUnit = nil
-    local highestHP = 0
-    for i=1,#LifeSwapList do
-        local unit = LifeSwapList[i]
-        local unitHP = UnitHealth(unit) / UnitHealthMax(unit)
-        if UnitExists(unit) then
-            if unitHP > highestHP then
-                highestHP = unitHP
-                swapUnit = unit
-            end
-        end
-    end
-    return swapUnit
-end
-
 --------------------------------------------------------------------------------------------
 ------------------------------- MESSAGE ON SCREEN
 --------------------------------------------------------------------------------------------
 
 local function holyWordSanctifyOnScreen()
-    if kps.spells.priest.holyWordSanctify.cooldown < kps["env"].player.gcd and kps.timers.check("holyWordSanctify") < 1 then
+    if kps.spells.priest.holyWordSanctify.cooldown < kps["env"].player.gcd and kps.timers.check("holyWordSanctify") < 2 then
         kps.timers.create("holyWordSanctify", 10 )
         kps.utils.createMessage("holyWordSanctify Ready")
     end
@@ -248,16 +231,6 @@ kps.env.priest.holyWordSanctifyMessage = function()
     return holyWordSanctifyOnScreen()
 end
 
-local function haloOnScreen()
-    if kps.spells.priest.halo.cooldown < kps["env"].player.gcd  and kps.timers.check("halo") < 1 then
-        kps.timers.create("halo", 10 )
-        kps.utils.createMessage("halo Ready")
-    end
-end
-
-kps.env.priest.haloMessage = function()
-    return haloOnScreen()
-end
 
 -- SendChatMessage("msg" [, "chatType" [, languageIndex [, "channel"]]])
 -- Sends a chat message of the specified in 'msg' (ex. "Hey!"), to the system specified in 'chatType' ("SAY", "WHISPER", "EMOTE", "CHANNEL", "PARTY", "INSTANCE_CHAT", "GUILD", "OFFICER", "YELL", "RAID", "RAID_WARNING", "AFK", "DND"),
