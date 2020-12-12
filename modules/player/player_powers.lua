@@ -91,6 +91,12 @@ function Player.soulShards(self)
     return UnitPower("player", 7)
 end
 --[[[
+@function `player.soulShards` - Soul Shards
+]]--
+function Player.soulFragments(self)
+    return UnitPower("player", 7, true)
+end
+--[[[
 @function `player.astralPower` - Astral Power (Druid)
 ]]--
 function Player.astralPower(self)

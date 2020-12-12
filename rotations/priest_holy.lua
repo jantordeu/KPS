@@ -40,7 +40,7 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.prayerOfMending, 'true' , kps.heal.lowestInRaid},
         {spells.circleOfHealing, 'true' , kps.heal.lowestInRaid},
         {spells.halo, 'true' , kps.heal.lowestInRaid},
-        {spells.flashHeal, 'heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid},
+        {spells.flashHeal, 'heal.lowestInRaid.hp < 0.50' , kps.heal.lowestInRaid},
         {spells.prayerOfHealing, 'heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid},
     }},
     
@@ -57,8 +57,7 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.holyWordSerenity, 'player.hp < 0.65' , "player"},
     {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid},
     {spells.holyWordSerenity, 'mouseover.isHealable and mouseover.hp < 0.65' , "mouseover" },
-    {spells.holyWordSerenity, 'heal.countLossInRange(0.80) > 2 and heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
-    {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid},
+    {spells.holyWordSerenity, 'heal.countLossInRange(0.80) > 2 and heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },
 
     -- "Dissipation de masse" 32375
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@cursor] "..MassDispel },
@@ -126,10 +125,9 @@ kps.rotations.register("PRIEST","HOLY",{
     --{{"macro"}, 'player.hasTrinket(1) == 160649 and player.useTrinket(1) and targettarget.exists and targettarget.isHealable' , "/use [@targettarget] 14" },
     --{{"macro"}, 'player.hasTrinket(1) == 165569 and player.useTrinket(1) and player.hp < 0.65' , "/use [@player] 14" },
 
-    {spells.holyNova, 'kps.holyNova and target.distance <= 10' , "target" },
     {spells.circleOfHealing, 'heal.lowestInRaid.hp < 0.90' , kps.heal.lowestInRaid },
-    {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid },
-    {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.90) > 4' , kps.heal.lowestInRaid },
+    {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.85) > 2' },
+    {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.90) > 4' },
     {spells.mindgames, 'not player.isMoving and heal.lowestInRaid.hp < 0.85' , env.damageTarget },
 
     {{"nested"}, 'player.isMoving' ,{
@@ -138,41 +136,40 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.holyWordSerenity, 'player.hp < 0.70' , "player"},
         {spells.renew, 'heal.lowestTankInRaid.hpIncoming < 0.85 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid, "RENEW_TANK" },
         {spells.circleOfHealing, 'heal.lowestInRaid.hpIncoming < 0.90' , kps.heal.lowestInRaid  },
-        {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.50 and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid },
-        {spells.renew, 'player.hpIncoming < 0.85 and not player.hasBuff(spells.renew)' , "player" },
-        {spells.renew, 'mouseover.isHealable and mouseover.hpIncoming < 0.85 and not mouseover.hasBuff(spells.renew)' , "mouseover" },
+        {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.55 and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid },
+        {spells.renew, 'player.hpIncoming < 0.70 and not player.hasBuff(spells.renew)' , "player" },
+        {spells.renew, 'mouseover.isHealable and mouseover.hpIncoming < 0.70 and not mouseover.hasBuff(spells.renew)' , "mouseover" },
         {spells.holyNova, 'heal.countLossInDistance(0.90,10) > 2' , "target" },
-        {spells.renew, 'heal.lowestInRaid.hpIncoming < 0.85 and not heal.lowestInRaid.hasBuff(spells.renew)' , kps.heal.lowestInRaid, "RENEW_LOWEST" },
+        {spells.renew, 'heal.lowestInRaid.hpIncoming < 0.70 and not heal.lowestInRaid.hasBuff(spells.renew)' , kps.heal.lowestInRaid, "RENEW_LOWEST" },
     }},
     -- "Prayer of Mending" (Tank only)
     {spells.prayerOfMending, 'not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending)' , kps.heal.lowestTankInRaid },
     {spells.prayerOfMending, 'true' , kps.heal.hasNotBuffMending },
     
     -- "Soins rapides" 2060 Important Unit
-    {{"nested"}, 'not player.isMoving and spells.prayerOfHealing.lastCasted(3.4)' ,{
+    {{"nested"}, 'not player.isMoving and spells.prayerOfHealing.lastCasted(4)' ,{
         {spells.flashHeal, 'player.hp < 0.55' , "player" ,"FLASH_POH" },
         {spells.flashHeal, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"FLASH_POH" },
         {spells.flashHeal, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid ,"FLASH_POH" },
     }},
-    {{"nested"}, 'not player.isMoving and spells.prayerOfMending.lastCasted(3.4)' ,{
-        {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 3 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "POH" },
-        {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 3' , kps.heal.lowestTankInRaid , "POH" },
+    {{"nested"}, 'not player.isMoving and spells.prayerOfMending.lastCasted(4)' ,{
+        {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 3 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "POH_POM" },
+        {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 3' , kps.heal.lowestTankInRaid , "POH_POM" },
         {spells.flashHeal, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"FLASH_POM" },
         {spells.flashHeal, 'player.hp < 0.55' , "player" ,"FLASH_POM" },
         {spells.flashHeal, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid ,"FLASH_POM" },
-        {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid , "POH" },
+        {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and not player.isInRaid' , kps.heal.lowestInRaid , "POH_POM" },
     }},
 
     -- MOUSEOVER
-    {spells.flashHeal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.50 and not spells.flashHeal.isRecastAt("mouseover")' , "mouseover" , "FLASH_mouseover" },
-    {spells.flashHeal, 'not player.isMoving and player.hp < 0.50 and not spells.flashHeal.isRecastAt("player")' , "player" ,"FLASH_player" },
-    {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.50 and not spells.flashHeal.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid ,"FLASH_tank" },
-    {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.50 and not spells.flashHeal.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid ,"FLASH_lowest" },
+    {spells.flashHeal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55 and not spells.flashHeal.isRecastAt("mouseover")' , "mouseover" , "FLASH_mouseover" },
+    {spells.flashHeal, 'not player.isMoving and player.hp < 0.55 and not spells.flashHeal.isRecastAt("player")' , "player" ,"FLASH_player" },
+    {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55 and not spells.flashHeal.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid ,"FLASH_tank" },
+    {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and not spells.flashHeal.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid ,"FLASH_lowest" },
 
     -- "Prayer of Healing" 596
-    {spells.prayerOfHealing, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.80 and heal.countLossInRange(0.80) > 2' , "mouseover" ,"POH_mouseover" },
-    {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and player.isInGroup' , kps.heal.lowestInRaid , "POH_party" },
-    {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and heal.countLossInRange(0.90) > 4' , kps.heal.lowestInRaid , "POH" },
+    {spells.prayerOfHealing, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.85 and heal.countLossInRange(0.85) > 2' , "mouseover" ,"POH_mouseover" },
+    {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and not player.isInRaid' , kps.heal.lowestInRaid , "POH" },
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 3 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "POH" },
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 3' , kps.heal.lowestTankInRaid , "POH" },
 
@@ -186,9 +183,11 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.powerInfusion, 'target.isElite and target.hp > 0.20' , env.damageTarget },
         {spells.holyWordChastise, 'true' , env.damageTarget },
         {spells.holyFire, 'not player.isMoving' , env.damageTarget },
-        {spells.halo, 'not player.isMoving and player.hasTalent(6,3)' },
+        {spells.divineStar, 'player.hasTalent(6,2)' , env.damageTarget },
         {spells.mindgames, 'not player.isMoving' , env.damageTarget },
+        {spells.powerWordShield, 'not player.isInRaid and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid },
         {spells.smite, 'not player.isMoving' , env.damageTarget },
+        {spells.holyNova, 'target.distance <= 10' , "target" },
     }},
 
     -- "Soins rapides" 2060 RAID
