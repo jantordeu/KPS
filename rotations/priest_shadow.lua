@@ -31,7 +31,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- "Dissipation de masse" 32375
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0 ', "/cast [@cursor] "..MassDispel },
     -- "Shadow Crash"
-    {{"macro"}, 'keys.shift and spells.ShadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
+    {{"macro"}, 'keys.shift and player.hasTalent(3,3) and spells.ShadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
     
 
     -- "Dispersion" 47585
@@ -40,7 +40,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     --"Fade" 586
     {spells.fade, 'player.isTarget and player.isInGroup' },
     -- "Pierre de soins" 5512
-    --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
+    {{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
     {spells.desperatePrayer, 'player.hp < 0.65' , "player" },
     -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
     {spells.vampiricEmbrace, 'heal.lowestInRaid.hp < 0.55' },
@@ -76,7 +76,10 @@ kps.rotations.register("PRIEST","SHADOW",{
     }},
 
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and target.isAttackable and not player.hasBuff(spells.voidForm)' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and not player.isMoving' , "/use [@player] 13" },
+    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use 13" },
+    -- PVP
+    {spells.psyfiend, 'player.isPVP' , "player" },
 
     -- AZERITE
     -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
@@ -101,7 +104,7 @@ kps.rotations.register("PRIEST","SHADOW",{
 
     {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and not spells.searingNightmare.isRecastAt("target")' , "target" , "searingNightmare" },   
     {spells.devouringPlague, 'target.isAttackable and not target.hasMyDebuff(spells.devouringPlague)' , "target" },
-    {spells.mindgames, 'not player.isMoving and not player.hasBuff(spells.voidForm)' , env.damageTarget }, 
+    {spells.mindgames, 'not player.isMoving' , env.damageTarget }, 
     
     {spells.vampiricTouch , 'player.hasBuff(spells.unfurlingDarkness)' , env.damageTarget , "vampiricTouch_unfurlingDarkness" },    
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
@@ -112,7 +115,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.vampiricTouch, 'not player.isMoving and focus.isAttackable and focus.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("focus")' , "focus" },
     {spells.shadowWordPain, 'focus.isAttackable and focus.myDebuffDuration(spells.shadowWordPain) < 5' , "focus" },
 
-    {spells.voidTorrent, 'target.hp > 0.20' , env.damageTarget },
+    {spells.voidTorrent, 'target.hp > 0.20 and not player.hasBuff(spells.voidForm) and player.insanity < 40' , env.damageTarget },
     {spells.shadowfiend, 'target.hp > 0.20' , env.damageTarget },
     {spells.mindbender, 'target.hp > 0.20' , env.damageTarget },
 

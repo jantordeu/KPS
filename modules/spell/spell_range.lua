@@ -31,8 +31,7 @@ end
 
 local function spellHasRange(spell)
     local hasRange = SpellHasRange(spell.name)
-
-    if hasRange == 1 then return true end
+    if hasRange then return true end
     return SpellHasRange(spell.spellbookIndex, spell.spellbookType)==1
 end
 

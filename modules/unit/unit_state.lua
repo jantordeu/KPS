@@ -8,7 +8,7 @@ local Unit = kps.Unit.prototype
 @function `<UNIT>.isPVP` - returns true if the given unit is in PVP.
 ]]--
 function Unit.isPVP(self)
-    return UnitIsPVP(self.unit) == 1
+    return UnitIsPVP(self.unit)
 end
 
 --[[[

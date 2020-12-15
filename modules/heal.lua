@@ -614,7 +614,9 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 print("|cffff8000atonementCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.priest.atonement),"|cffff8000atonementCountLoss:|cffffffff", kps["env"].heal.countLossAtonementInRange (2))
 --print("|cffff8000glimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 
+--print("|cffff8000PVP:|cffffffff", kps["env"].player.isPVP)
 --print("|cffff8000GCD:|cffffffff", kps["env"].player.gcd)
+--print("|cffff8000Equipped:|cffffffff", IsEquippedItem(173249))
 
 --print("|cffff8000useTrinket:|cffffffff", kps["env"].player.useItem(173944))
 --print("|cffff8000useTrinket:|cffffffff", GetItemSpell(173944))

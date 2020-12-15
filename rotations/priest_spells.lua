@@ -292,6 +292,10 @@ kps.spells.priest.spiritShell = kps.Spell.fromId(109964)
 kps.spells.priest.mindgames = kps.Spell.fromId(323673)
 kps.spells.priest.doorOfShadows = kps.Spell.fromId(300728)
 
+-- LEGENDAIRE
+kps.spells.priest.flashConcentration = kps.Spell.fromId(336267)
+
+
 
 
 
