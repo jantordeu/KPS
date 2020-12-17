@@ -217,7 +217,7 @@ kps.spells.priest.sphereOfInsanity = kps.Spell.fromId(194179)
 kps.spells.priest.spiritOfRedemption = kps.Spell.fromId(20711)
 kps.spells.priest.spitefulApparitions = kps.Spell.fromId(277682)
 kps.spells.priest.strengthOfSoul = kps.Spell.fromId(197535)
-kps.spells.priest.surgeOfLight = kps.Spell.fromId(109186)
+--kps.spells.priest.surgeOfLight = kps.Spell.fromId(109186)
 kps.spells.priest.surrenderToMadness = kps.Spell.fromId(193223)
 kps.spells.priest.symbolOfHope = kps.Spell.fromId(64901)
 kps.spells.priest.tamingTheShadows = kps.Spell.fromId(197779)
@@ -287,6 +287,8 @@ kps.spells.priest.devouringPlague = kps.Spell.fromId(335467)
 kps.spells.priest.voidTorrent = kps.Spell.fromId(263165)
 kps.spells.priest.powerInfusion = kps.Spell.fromId(10060)
 kps.spells.priest.spiritShell = kps.Spell.fromId(109964)
+kps.spells.priest.surgeOfLight = kps.Spell.fromId(114255)
+
 
 -- COVENANT ABILITIES
 kps.spells.priest.mindgames = kps.Spell.fromId(323673)

@@ -118,7 +118,6 @@ function kps.env.priest.damageTarget()
     elseif UnitIsAttackable("targettarget") then return "targettarget"
     elseif UnitIsAttackable("focus") then return "focus"
     elseif UnitIsAttackable("focustarget") then return "focustarget"
-    else return kps.env.heal.enemyLowest -- kps.env.heal.enemyTarget
     end
 end
 

@@ -24,6 +24,5 @@ function kps.env.paladin.damageTarget()
     elseif UnitIsAttackable("focustarget") then return "focustarget"
     elseif UnitIsAttackable("mouseovertarget") then return "mouseovertarget"
     elseif UnitIsAttackable("mouseover") then return "mouseover"
-    else return kps.env.heal.enemyLowest -- kps.env.heal.enemyTarget
     end
 end

@@ -40,7 +40,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     --"Fade" 586
     {spells.fade, 'player.isTarget and player.isInGroup' },
     -- "Pierre de soins" 5512
-    {{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
+    --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
     {spells.desperatePrayer, 'player.hp < 0.65' , "player" },
     -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
     {spells.vampiricEmbrace, 'heal.lowestInRaid.hp < 0.55' },
