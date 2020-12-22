@@ -125,8 +125,6 @@ end
 ------------------------------- SHADOW PRIEST
 --------------------------------------------------------------------------------------------
 
-local MindFlay = kps.spells.priest.mindFlay.name
-local VoidForm = kps.spells.priest.voidForm.name
 local ShadowWordPain = kps.spells.priest.shadowWordPain.name
 local VampiricTouch = kps.spells.priest.vampiricTouch.name
 

@@ -154,8 +154,6 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.crusaderStrike, 'player.hasTalent(1,1) and target.distance <= 5' , env.damageTarget },
     }},
 
-    {spells.holyShock, 'player.isInGroup and heal.hasBuffCount(spells.glimmerOfLight) < 5 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
-    {spells.holyShock, 'player.isInRaid and heal.hasBuffCount(spells.glimmerOfLight) < 8 and not heal.hasNotBuffGlimmer.isUnit("player")' , kps.heal.hasNotBuffGlimmer , "holyShock_GLIMMER" },
     {spells.holyShock, 'player.hp < 0.65' , "player" , "holyShock_player" },
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid },
     {spells.holyShock, 'heal.lowestInRaid.hp < 0.65' , kps.heal.lowestInRaid },

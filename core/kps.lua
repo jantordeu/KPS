@@ -62,31 +62,31 @@ kps.combatStep = function ()
         activeRotation.checkTalents()
         local spell, target, message = activeRotation.getSpell()
         -- Castable Spell while casting
-        if spell ~= nil and spell.isCastableSpell and player.isCasting  then
+        if spell ~= nil and spell.isCastableSpell and player.isCasting then
             return spell.cast(target,message)
         end
         -- Spell Object
-        if spell ~= nil and spell.cast ~= nil and not player.isCasting then
+        if spell ~= nil and spell.cast ~= nil then
             if priorityAction ~= nil then
                 priorityAction()
                 priorityAction = nil
             elseif prioritySpell ~= nil then
                 if prioritySpell.canBeCastAt("target") then
                     local action = prioritySpell.cast(target)
-                    LOG.warn("Priority Spell %s was casted.", prioritySpell)
-                    prioritySpell = nil
+                    if prioritySpell.cooldownTotal < 3 and not prioritySpell.needsSelect then prioritySpell = nil end
+                    --LOG.warn("Priority Spell %s was casted.", prioritySpell)
                     return action
                 else
                     if prioritySpell.cooldown > 3 then prioritySpell = nil end
-                    return spell.cast(target,message)
+                    if not player.isCasting then return spell.cast(target,message) end
                 end
             else
                 LOG.debug("Casting %s for next cast.", spell.name)
-                return spell.cast(target,message)
+                if not player.isCasting then return spell.cast(target,message) end
             end
         end
         -- Cast Sequence Table
-        if type(spell) == "table" and spell.cast == nil and not player.isCasting then
+        if type(spell) == "table" and spell.cast == nil then
             LOG.debug("Starting Cast-Sequence...")
             castSequenceIndex = 1
             castSequence = spell
@@ -96,9 +96,9 @@ kps.combatStep = function ()
         -- Macro
         if type(spell) == "string" then
             if not player.isCasting then
-            	return spell
+                return spell
             elseif player.isCasting and string.find(spell,"/stopcasting") ~= nil then
-            	return "/stopcasting"
+                return "/stopcasting"
             end
         end
     end

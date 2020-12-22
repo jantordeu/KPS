@@ -200,7 +200,6 @@ Members:
  * `heal.isCurseDispellable` - Returns the raid unit with curse debuff to dispel
  * `heal.hasAbsorptionHeal` - Returns the raid unit with an absorption Debuff
  * `heal.hasBossDebuff` - Returns the raid unit with a Boss Debuff
- * `heal.hasBuffCount(<BUFF>)` - Returns the buff count for a specific Buff on raid e.g. heal.hasBuffCount(spells.atonement) > 3
  * `heal.hasNotBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasNotBuffAtonement.hp < 0.90
  * `heal.hasNotBuffMending` - Returns the lowest health unit without Prayer of Mending Buff on raid e.g. heal.hasNotBuffMending.hp < 0.90
  * `heal.hasNotBuffRenew` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
@@ -241,7 +240,6 @@ Members:
  * `player.hasGlyph(<GLYPH>)` - returns true if the player has the given gylph - glyphs can be accessed via the spells (e.g.: `player.hasGlyph(spells.glyphOfDeathGrip)`).
  * `player.useItem(<ITEMID>)` - returns true if the player has the given item and cooldown == 0
  * `player.useTrinket(<SLOT>)` - returns true if the player has the given trinket and cooldown == 0
- * `player.hasTrinket(<SLOT>)` - returns true if the player has the given trinket ID e.g. 'player.hasTrinket(1) == 147007 and player.useTrinket(1)'
  * `player.lastEmpowermentCast` - returns the time of the last cast of Demonic Empowerment
  * `player.demons` - returns the number of active demons
  * `player.empoweredDemons` - returns the number of empowered demons

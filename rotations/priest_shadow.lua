@@ -76,8 +76,10 @@ kps.rotations.register("PRIEST","SHADOW",{
     }},
 
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
-    {{"macro"}, 'player.useTrinket(0) and not player.isMoving' , "/use [@player] 13" },
+    {{"macro"}, 'player.useTrinket(0) and not player.isMoving' , "/use 13" },
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(1) and not player.isMoving' , "/use 14" },
+
     -- PVP
     {spells.psyfiend, 'player.isPVP' , "player" },
 
@@ -89,9 +91,11 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- The Unbound Force -- causing shards of spells.azerite to strike your target for [(341 * (7.06061) + 341)] Fire damage over 2 sec. This damage is increased by 300% if it critically strikes
     --{spells.azerite.theUnboundForce, 'player.hasBuff(spells.voidForm) and target.isAttackable and player.buffStacks(spells.voidForm) < 15' , env.damageTarget },
     
-    {spells.shadowWordDeath, 'mouseover.inCombat and mouseover.isAttackable and mouseover.hp < 0.20' , "mouseover" , "shadowWordDeath" },
-    {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20' , "target" , "shadowWordDeath" },
-    
+    {spells.shadowWordDeath, 'mouseover.inCombat and mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.50' , "mouseover" , "shadowWordDeath" },
+    {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.50' , "target" , "shadowWordDeath" },
+    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
+    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5' , "mouseover" },
+
     {spells.voidEruption, 'not player.isMoving and player.insanity > 40 and target.hp > 0.20' , env.damageTarget , "voidEruption"  },
     {spells.voidEruption, 'not player.isMoving and player.insanity > 40 and target.isElite' , env.damageTarget , "voidEruption"  },
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
