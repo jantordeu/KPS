@@ -218,6 +218,9 @@ local shouldInterrupt = setmetatable({}, {
             elseif self.name == kps.spells.priest.powerWordRadiance.name and breakpoint < 3 then
                 DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING powerWordRadiance ".." countLossInRange: "..breakpoint, 0, 0.5, 0.8)
                 return true
+            elseif self.name == kps.spells.priest.shadowMend.name and targetHealth > breakpoint then
+                DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING shadowMend ".. target .." health: "..targetHealth, 0, 0.5, 0.8)
+                return true
             elseif self.name == kps.spells.priest.flashHeal.name and targetHealth > breakpoint then
                 DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING flashHeal ".. target .." health: "..targetHealth, 0, 0.5, 0.8)
                 return true
