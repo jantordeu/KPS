@@ -50,10 +50,19 @@ end
 --[[[
 @function `<UNIT>.isElite` - returns true if the unit is a elite mob
 ]]--
--- "worldboss", "rareelite", "elite", "rare", "normal"
+
 function Unit.isElite(self)
     if not Unit.exists(self) then return false end
     if string.find(UnitClassification(self.unit),"elite") then
+        return true
+    end
+    return false
+end
+
+
+function Unit.isBoss(self)
+    if not Unit.exists(self) then return false end
+    if UnitEffectiveLevel(self.unit) == -1 then
         return true
     end
     return false
