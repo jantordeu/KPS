@@ -219,9 +219,11 @@ kps.rotations.register("PRIEST","HOLY",{
     	{spells.heal, 'heal.lowestInRaid.hpIncoming  < 0.80 and heal.lowestInRaid.hpIncoming  < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest_Concentration" },
     	{spells.heal, 'heal.lowestTankInRaid.hpIncoming  < 0.80' , kps.heal.lowestTankInRaid , "heal_tank_Concentration"  },
     }},
-    -- "Soins rapides" PARTY
+    -- "Soins rapides"
     {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.55 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "flashHeal_lowest" },
     {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.55' , kps.heal.lowestTankInRaid , "flashHeal_tank"  },
+    {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.65 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming and not player.isInRaid' , kps.heal.lowestInRaid , "flashHeal_lowest" },
+    {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.65 and not player.isInRaid' , kps.heal.lowestTankInRaid , "flashHeal_tank"  },
     -- "Soins"
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.85 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest" },
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.85' , kps.heal.lowestTankInRaid , "heal_tank" },
