@@ -52,7 +52,7 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.2) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
     {spells.powerWordShield, 'player.hp < 0.65 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
-    {spells.shadowMend, 'not player.isInRaid and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" },
+    {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },  
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.40 and not player.hasBuff(spells.vampiricEmbrace)' , "player" }, 
     -- "Levitate" 1706
@@ -97,12 +97,13 @@ kps.rotations.register("PRIEST","SHADOW",{
     --{spells.azerite.theUnboundForce, 'player.hasBuff(spells.voidForm) and target.isAttackable and player.buffStacks(spells.voidForm) < 15' , env.damageTarget },
 
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
+    --{{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindFlay)' , "/stopcasting" },
     {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
     {spells.voidEruption, 'not player.isMoving and player.insanity > 40 and target.hp > 0.20' , env.damageTarget , "voidEruption"  },
     {spells.voidEruption, 'not player.isMoving and player.insanity > 40 and target.isElite' , env.damageTarget , "voidEruption"  },
  
-    {spells.powerInfusion, 'target.hp > 0.50' , env.damageTarget },
-    {spells.powerInfusion, 'target.isElite and target.hp > 0.20' , env.damageTarget },
+    {spells.powerInfusion, 'kps.multiTarget and target.hp > 0.50' , env.damageTarget },
+    {spells.powerInfusion, 'kps.multiTarget and target.isElite and target.hp > 0.20' , env.damageTarget },
     {spells.shadowfiend, 'target.hp > 0.20 and spells.voidEruption.cooldown < 3' , env.damageTarget },
     {spells.mindbender, 'target.hp > 0.20 and spells.voidEruption.cooldown < 3' , env.damageTarget },
 
