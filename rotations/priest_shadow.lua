@@ -109,23 +109,23 @@ kps.rotations.register("PRIEST","SHADOW",{
 
     {spells.shadowWordDeath, 'mouseover.inCombat and mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.65' , "mouseover" , "shadowWordDeath" },
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.65' , "target" , "shadowWordDeath" },
+
+    {spells.vampiricTouch, 'player.hasBuff(spells.unfurlingDarkness) and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7' , "mouseover" },
     {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5' , "target" },
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5' , "mouseover" },
 
+    {spells.devouringPlague, 'target.isAttackable and not target.hasMyDebuff(spells.devouringPlague)' , "target" },
     {spells.voidTorrent, 'not player.hasBuff(spells.voidForm) and player.insanity < 40' , env.damageTarget },   
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
     {spells.mindBlast, 'not player.isMoving and spells.mindBlast.charges == 2' , env.damageTarget },
-    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and not spells.searingNightmare.lastCasted(7)' , "target" , "searingNightmare" },   
-    {spells.devouringPlague, 'target.isAttackable and not target.hasMyDebuff(spells.devouringPlague)' , "target" },
     {spells.mindgames, 'not player.isMoving' , env.damageTarget }, 
-    {spells.vampiricTouch , 'player.hasBuff(spells.unfurlingDarkness)' , env.damageTarget , "vampiricTouch_unfurlingDarkness" },    
-    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
+    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and not spells.searingNightmare.lastCasted(7)' , "target" , "searingNightmare" }, 
+    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" }, 
 
     {spells.shadowWordPain, 'player.isMoving' , env.damageTarget },
     {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
-    {spells.mindSear, 'kps.multiTarget and not player.isMoving and player.plateCount > 2' , env.damageTarget },
     {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
 
 },"priest_shadow_shadowlands")

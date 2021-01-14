@@ -96,9 +96,10 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.shadowMend, 'not player.isMoving and player.hp < 0.80 and player.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("player")' , "player" },
         {spells.powerWordShield, 'not player.hasMyBuff(spells.atonement) and not spells.shadowMend.isRecastAt("player") and not player.hasDebuff(spells.weakenedSoul)' , "player"  },
         {spells.rapture, 'player.hp < 0.40 and spells.painSuppression.cooldown > 0' },
-        {spells.shadowMend, 'not player.isMoving and player.hp < 0.65' , "player" , "shadowMend_player"  },
+        {spells.shadowMend, 'not player.isMoving and player.hp < 0.65 and not spells.shadowMend.isRecastAt("player")' , "player" , "shadowMend_player"  },
         {spells.shadowMend, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.80 and targettarget.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("targettarget")' , "targettarget" , "shadowMend_targettarget" },
         {spells.powerWordShield, 'targettarget.isFriend and not targettarget.hasMyBuff(spells.atonement) and not spells.shadowMend.isRecastAt("targettarget") and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" , "shield_targettarget" },
+        {spells.shadowMend, 'not player.isMoving and player.hp < 0.40' , "player" , "shadowMend_player"  },
     }},
     -- DAMAGE
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.65' , "target" },
