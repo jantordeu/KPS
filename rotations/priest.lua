@@ -151,67 +151,10 @@ function kps.env.priest.FocusMouseoverShadow()
 end
 
 --------------------------------------------------------------------------------------------
-------------------------------- AVOID OVERHEALING
+------------------------------- FUNCTIONS
 --------------------------------------------------------------------------------------------
 
-local UnitCastingInfo = UnitCastingInfo
--- name, text, texture, startTimeMS, endTimeMS, isTradeSkill, castID, notInterruptible, spellId = UnitCastingInfo("unit")
--- name, text, texture, startTimeMS, endTimeMS, isTradeSkill, notInterruptible = UnitChannelInfo(self.unit)
 
-local overHealTableUpdate = function()
-    -- kps.defensive in case I want to heal with mouseover (e.g. debuff absorb heal)
-    local overHealTable = { {kps.spells.priest.flashHeal.name, 0.855 , kps.defensive}, {kps.spells.priest.heal.name, 0.955 , kps.defensive}, {kps.spells.priest.prayerOfHealing.name, 3 , kps.defensive} }
-    return  overHealTable
-end
-
-local ShouldInterruptCasting = function (interruptTable, countLossInRange)
-    if kps.lastTargetGUID == nil then return false end
-    local spellCasting, _, _, _, endTime, _, _, _, _ = UnitCastingInfo("player")
-    if spellCasting == nil then return false end
-    if endTime == nil then return false end
-    local target = kps.lastTarget
-    local targetHealth = UnitHealth(target) / UnitHealthMax(target)
-    if type(targetHealth) ~= "number" then return false end
-
-    for key, healSpellTable in pairs(interruptTable) do
-        local breakpoint = healSpellTable[2]
-        local spellName = healSpellTable[1]
-        if spellName == spellCasting then
-            if spellName == kps.spells.priest.prayerOfHealing.name and healSpellTable[3] == true and countLossInRange < breakpoint then
-                SpellStopCasting()
-                DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING OverHeal "..spellName.."|".." countLossInRange: "..countLossInRange, 0, 0.5, 0.8)
-            elseif spellName == kps.spells.priest.flashHeal.name and healSpellTable[3] == true and targetHealth > breakpoint  then
-                SpellStopCasting()
-                DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING OverHeal "..spellName.."|"..target.." health: "..targetHealth, 0, 0.5, 0.8)
-            elseif spellName == kps.spells.priest.heal.name and healSpellTable[3] == true and targetHealth > breakpoint then
-                SpellStopCasting()
-                DEFAULT_CHAT_FRAME:AddMessage("STOPCASTING OverHeal "..spellName.."|"..target.." health: "..targetHealth, 0, 0.5, 0.8)
-            end
-        end
-    end
-    return nil, nil
-end
-
-kps.env.priest.ShouldInterruptCasting = function()
-    local countLossInRange = kps["env"].heal.countLossInRange(0.85)
-    local interruptTable = overHealTableUpdate()
-    return ShouldInterruptCasting(interruptTable, countLossInRange)
-end
-
--- usage in Rotation -- env.FindUnitWithNoRenew,
-local battlegroundFriends = { "player", "raid1", "raid2", "raid3", "raid4", "raid5", "raid6", "raid7", "raid8", "raid9", "raid10", "party1", "party2", "party3", "party4"}
-kps.env.priest.FindUnitWithNoRenew = function()
-    local renewUnit = nil
-    local buff = kps.spells.priest.renew
-    for i=1,#battlegroundFriends do
-        local unit = battlegroundFriends[i]
-        if UnitExists(unit) and not UnitHasBuff(unit,buff.name) then
-            renewUnit = unit
-        end
-    end
-    if renewUnit == nil then return nil, nil end
-    return buff, renewUnit
-end
 
 --------------------------------------------------------------------------------------------
 ------------------------------- MESSAGE ON SCREEN
