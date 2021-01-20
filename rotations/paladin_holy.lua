@@ -90,12 +90,12 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Bestow Faith" "Don de foi" -- Récupère (150% of Spell power) points de vie à expiration. -- 12 sec cd
     {spells.bestowFaith, 'player.hasTalent(1,2) and not heal.lowestTankInRaid.hasBuff(spells.bestowFaith)' , kps.heal.lowestTankInRaid },    
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
-    {spells.ruleOfLaw, 'player.hasTalent(2,3) and heal.countLossInRange(0.85) > heal.countLossInDistance(0.85,15) and not player.hasBuff(spells.ruleOfLaw)' },
+    {spells.ruleOfLaw, 'player.hasTalent(2,3) and heal.countLossInRange(0.85) > heal.countLossInDistance(0.85) and not player.hasBuff(spells.ruleOfLaw)' },
     -- "Lumière de l’aube" -- "Light of Dawn" -- healing up to 5 injured allies within a 15 yd frontal cone
-    {spells.lightOfDawn, 'player.isMoving and spells.holyShock.cooldown > 2 and heal.countLossInDistance(0.85,15) > 0' },
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.85,15) >= 2' },
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.80,15) >= 3' },
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.90,15) >= 4' },
+    {spells.lightOfDawn, 'player.isMoving and spells.holyShock.cooldown > 2 and heal.countLossInDistance(0.85) > 0' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.85) >= 2' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.80) >= 3' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.90) >= 4' },
     {spells.lightOfDawn, 'heal.countLossInRange(0.85) >= 2 and player.hasBuff(spells.ruleOfLaw)' },
     {spells.lightOfDawn, 'heal.countLossInRange(0.80) >= 3 and player.hasBuff(spells.ruleOfLaw)' },
     {spells.lightOfDawn, 'heal.countLossInRange(0.90) >= 4 and player.hasBuff(spells.ruleOfLaw)' },

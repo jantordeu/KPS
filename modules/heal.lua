@@ -294,15 +294,13 @@ kps.RaidStatus.prototype.countInRange = kps.utils.cachedValue(function()
 end)
 
 --[[[
-@function `heal.countLossInDistance(<PCT>,<DIST>)` - Returns the count for all raid members below threshold health (default countInRange) in a distance (default 10 yards) e.g. heal.countLossInRange(0.90)
+@function `heal.countLossInDistance(<PCT>)` - Returns the count for all raid members below threshold health (default countInRange) in a distance (default 10 yards) e.g. heal.countLossInRange(0.90)
 ]]--
 
-local countInDistance = function(health,distance)
-    if distance == nil then distance = 10 end
-    if health == nil then health = 2 end
+local countInDistance = function(health)
     local count = 0
     for name, unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hp < health and unit.distanceMax <= distance then
+        if unit.isHealable and unit.hp < health and unit.distanceMax <= 10 then
             count = count + 1
         end
     end
@@ -465,6 +463,23 @@ end
 
 kps.RaidStatus.prototype.hasBuffAtonementCount = kps.utils.cachedValue(function()
     return countUnitBuff(kps.spells.priest.atonement)
+end)
+
+--------------------------------------------------------------------------------------------
+------------------------------- RAID PRIEST
+--------------------------------------------------------------------------------------------
+
+
+kps.RaidStatus.prototype.priestConcentration = kps.utils.cachedValue(function()
+    local lowestHp = 2
+    local lowestUnit = kps["env"].player
+    for name, player in pairs(raidStatus) do
+        if player.isHealable and not kps.spells.priest.heal.isRecastAt(player.unit) and player.hp < lowestHp then
+            lowestHp = player.hp
+            lowestUnit = player
+        end
+    end
+    return lowestUnit
 end)
 
 --------------------------------------------------------------------------------------------

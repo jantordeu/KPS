@@ -187,7 +187,7 @@ Members:
  * `heal.lossHealthRaid` - Returns the loss Health for all raid members
  * `heal.incomingHealthRaid` - Returns the incoming Health for all raid members
  * `heal.countLossInRange(<PCT>)` - Returns the count for all raid members below threshold health e.g. heal.countLossInRange(0.90)
- * `heal.countLossInDistance(<PCT>,<DIST>)` - Returns the count for all raid members below threshold health (default countInRange) in a distance (default 10 yards) e.g. heal.countLossInRange(0.90)
+ * `heal.countLossInDistance(<PCT>)` - Returns the count for all raid members below threshold health (default countInRange) in a distance (default 10 yards) e.g. heal.countLossInRange(0.90)
  * `heal.aggroTankTarget` - Returns the tank with highest aggro on the current target (*not* the unit with the highest aggro!). If there is no tank in the target thread list, the `heal.defaultTank` is returned instead.
     When used as a _target_ in your rotation, you *must* write `kps.heal.aggroTankTarget`!
  * `heal.aggroTankFocus` - Returns the tank with highest aggro on the current focus (*not* the unit with the highest aggro!). If there is no tank in the focus thread list, the `heal.defaultTank` is returned instead.
