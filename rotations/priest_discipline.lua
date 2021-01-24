@@ -20,6 +20,8 @@ end)
 
 kps.rotations.register("PRIEST","DISCIPLINE",{
 
+    {{"macro"}, 'spells.mindControl.shouldInterrupt(heal.countLossInRange(0.85), kps.defensive)' , "/stopcasting" },
+
     {spells.powerWordFortitude, 'not player.isInGroup and not player.hasBuff(spells.powerWordFortitude)', "player" },
 
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
@@ -81,16 +83,16 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     -- "Levitate" 1706
     {spells.levitate, 'player.IsFallingSince(1.4) and not player.hasBuff(spells.levitate)' , "player" },
     -- "Body and Soul"
-    {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.6) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" },
+    {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.0) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" },
     -- PVP
-    {spells.darkArchangel, 'player.isPVP and heal.hasBuffAtonementCount > 2' , "player" }, 
+    {spells.darkArchangel, 'player.isPVP and heal.hasBuffAtonementCount > 1' , "player" }, 
 
     -- TRINKETS -- SLOT 0 /use 13
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use 13" },
-    {{"macro"}, 'player.useTrinket(0) and not player.isMoving and player.timeInCombat > 9' , "/use [@player] 13" },
+    {{"macro"}, 'player.useTrinket(0) and player.hp < 0.6' , "/use [@player] 13" },
     -- TRINKETS -- SLOT 1 /use 14
     --{{"macro"}, 'player.useTrinket(1) and targettarget.isHealable' , "/use [@targettarget] 14" },
-    {{"macro"}, 'player.useTrinket(1) and not player.isMoving and player.timeInCombat > 5' , "/use 14" },
+    --{{"macro"}, 'player.useTrinket(1) and not player.isMoving and player.timeInCombat > 5' , "/use 14" },
 
     {{"nested"},'kps.multiTarget and kps.groupSize() == 1', {
         {spells.rapture, 'player.hp < 0.40 and spells.painSuppression.cooldown > 0' },
@@ -115,7 +117,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.powerInfusion, 'target.isElite and kps.groupSize() == 1' },
         {spells.mindbender, 'player.hasTalent(3,2) and target.isElite' , env.damageTarget },
         {spells.shadowfiend, 'target.isElite' , env.damageTarget },
-        {spells.mindgames, 'not player.isMoving and target.hasMyDebuff(spells.schism)' , env.damageTarget },
+        {spells.mindgames, 'not player.isMoving' , env.damageTarget },
         {spells.schism, 'not player.isMoving' , env.damageTarget },
         {spells.powerWordSolace, 'true' , env.damageTarget  },
         {spells.penance, 'true' , env.damageTarget  },
@@ -141,7 +143,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     }},    
     {{"nested"},'kps.rampUp and player.hasTalent(7,2)', {
         {spells.spiritShell, 'player.hasTalent(7,2)' },
-        {spells.mindgames, 'not player.isMoving and spells.schism.lastCasted(9)' , env.damageTarget },
+        {spells.mindgames, 'not player.isMoving' , env.damageTarget },
         {spells.schism, 'not player.isMoving' , env.damageTarget },
         {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
         {spells.powerWordSolace, 'true' , env.damageTarget  },
@@ -167,7 +169,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     -- DAMAGE
     {spells.mindbender, 'player.hasTalent(3,2) and spells.schism.lastCasted(9)' , env.damageTarget },
     {spells.shadowfiend, 'spells.schism.lastCasted(9)' , env.damageTarget },
-    {spells.mindgames, 'not player.isMoving and spells.schism.lastCasted(9)' , env.damageTarget },
+    {spells.mindgames, 'not player.isMoving' , env.damageTarget },
     {spells.schism, 'not player.isMoving and heal.lowestTankInRaid.myBuffDuration(spells.atonement) > 2 and heal.lowestInRaid.myBuffDuration(spells.atonement) > 2 and heal.lowestInRaid.hp < 0.80' , env.damageTarget },
     {spells.mindBlast, 'not player.isMoving and heal.lowestTankInRaid.myBuffDuration(spells.atonement) > 2 and heal.lowestTankInRaid.hp < 0.85' , env.damageTarget },
     {spells.mindBlast, 'not player.isMoving and heal.lowestInRaid.myBuffDuration(spells.atonement) > 2 and heal.lowestInRaid.hp < 0.85' , env.damageTarget },
