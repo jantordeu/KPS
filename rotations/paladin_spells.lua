@@ -98,6 +98,7 @@ kps.spells.paladin.eyeOfTyr = kps.Spell.fromId(209202)
 kps.spells.paladin.faithsArmor = kps.Spell.fromId(209225)
 kps.spells.paladin.ferocityOfTheSilverHand = kps.Spell.fromId(241147)
 kps.spells.paladin.finalStand = kps.Spell.fromId(204077)
+kps.spells.paladin.finalReckoning = kps.Spell.fromId(343721)
 kps.spells.paladin.firesOfJustice = kps.Spell.fromId(203316)
 kps.spells.paladin.firstAvenger = kps.Spell.fromId(203776)
 kps.spells.paladin.fistOfJustice = kps.Spell.fromId(198054)
@@ -287,6 +288,7 @@ kps.spells.paladin.razorCoral = kps.Spell.fromId(303568)
 -- 216413/divine-purpose -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
 kps.spells.paladin.divinePurposeHolyShock = kps.Spell.fromId(216411)
 kps.spells.paladin.divinePurposeLightOfDawn = kps.Spell.fromId(216413)
-
-
+kps.spells.paladin.doorOfShadows = kps.Spell.fromId(300728)
+kps.spells.paladin.finalReckoning = kps.Spell.fromID(343721)
+kps.spells.paladin.divineToll = kps.Spell.fromID(304971)
 
