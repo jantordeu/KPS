@@ -384,8 +384,8 @@ end)
 
 local dispelDebuffRaid = function (dispelType)
     local lowestUnit = false
-    for name, player in pairs(raidStatus) do
-        if player.isHealable and player.isDispellable(dispelType) then lowestUnit = player end
+    for name, unit in pairs(raidStatus) do
+        if unit.isHealable and unit.isDispellable(dispelType) then lowestUnit = unit end
     end
     return lowestUnit
 end
@@ -466,26 +466,28 @@ kps.RaidStatus.prototype.hasBuffAtonementCount = kps.utils.cachedValue(function(
 end)
 
 --------------------------------------------------------------------------------------------
-------------------------------- RAID PRIEST
+------------------------------- RAID DEBUFF UNIT
 --------------------------------------------------------------------------------------------
 
-
-kps.RaidStatus.prototype.priestConcentration = kps.utils.cachedValue(function()
+local unitHasDebuff = function(spell)
     local lowestHp = 2
     local lowestUnit = kps["env"].player
-    for name, player in pairs(raidStatus) do
-        if player.isHealable and not kps.spells.priest.heal.isRecastAt(player.unit) and player.hp < lowestHp then
-            lowestHp = player.hp
-            lowestUnit = player
+    for name, unit in pairs(raidStatus) do
+        if unit.hasDebuff(spell) and unit.hp < lowestHp then
+            lowestHp = unit.hp
+            lowestUnit = unit
         end
     end
     return lowestUnit
+end
+
+kps.RaidStatus.prototype.hasDebuffMiasma = kps.utils.cachedValue(function()
+    return unitHasDebuff(kps.spells.immuneHeal.gluttonousMiasma)
 end)
 
 --------------------------------------------------------------------------------------------
 ------------------------------- RAID BUFF UNIT
 --------------------------------------------------------------------------------------------
-
 
 local unitHasBuff = function(spell)
     local lowestHp = 2

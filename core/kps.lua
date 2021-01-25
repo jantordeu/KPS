@@ -72,10 +72,10 @@ kps.combatStep = function ()
                 priorityAction = nil
             elseif prioritySpell ~= nil then
                 if prioritySpell.canBeCastAt("target") then
-                    local action = prioritySpell.cast(target)
-                    if prioritySpell.cooldownTotal < 3 and not prioritySpell.needsSelect then prioritySpell = nil end
-                    --LOG.warn("Priority Spell %s was casted.", prioritySpell)
-                    return action
+                    local action,b,c = prioritySpell.cast(target)
+                    prioritySpell = nil
+                    LOG.warn("Priority Spell %s was casted.", prioritySpell)
+                    return action,b,c
                 else
                     if prioritySpell.cooldown > 3 then prioritySpell = nil end
                     if not player.isCasting then return spell.cast(target,message) end

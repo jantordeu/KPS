@@ -28,8 +28,8 @@ local castAt = setmetatable({}, {
             kps.gui.updateSpellTexture(self)
 
             kps.lastCast = self
-            kps.lastTarget = target
             kps.lastTargetGUID = UnitGUID(target)
+            kps.lastTarget = target
             self.lastCast = GetTime()
             
             return self.name, target, self.needsSelect
