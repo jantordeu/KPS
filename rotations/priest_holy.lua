@@ -152,10 +152,10 @@ kps.rotations.register("PRIEST","HOLY",{
     -- MOUSEOVER
     {spells.heal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.80 and player.hasBuff(spells.flashConcentration)' , "mouseover" , "heal_mouseover" },
     {spells.flashHeal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" , "flashHeal_mouseover" },
+    {spells.flashHeal, 'not player.isInRaid and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55' , "mouseover" , "flashHeal_mouseover" },
     {spells.prayerOfHealing, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.80 and heal.countLossInRange(0.80) > 4 and spells.holyWordSanctify.cooldown > 30' , "mouseover" , "prayerOfHealing_mouseover" },
     {spells.prayerOfHealing, 'not player.isInRaid and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.80 and heal.countLossInRange(0.80) > 2 and spells.holyWordSanctify.cooldown > 30' , "mouseover" , "prayerOfHealing_mouseover" },
-    {spells.heal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.80 and mouseover.isRaidTank' , "mouseover" , "heal_mouseover_tank" },
-    {spells.heal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.80 and mouseover.isRaidHealer' , "mouseover" , "heal_mouseover_healer" },
+    {spells.heal, 'not player.isInRaid and not player.isMoving and mouseover.isHealable and mouseover.hp < 0.80' , "mouseover" , "heal_mouseover" },
 
     -- "Prayer of Healing" LASTCAST
     {{"nested"}, 'not player.isMoving and spells.prayerOfHealing.lastCasted(4) and player.hasBuff(spells.flashConcentration)' ,{
@@ -180,9 +180,11 @@ kps.rotations.register("PRIEST","HOLY",{
         {spells.flashHeal, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid ,"flashHeal_POM" },
     }},
     -- "Flash Concentration" -- Reduces the cast time of your Heal by 0.2 sec and increases its healing by 3%. 15 seconds remaining -- IsEquippedItem(173249)
-    {spells.heal, 'not player.isMoving and heal.lowestInRaid.hpIncoming  < 0.65 and heal.lowestInRaid.hpIncoming  < heal.lowestTankInRaid.hpIncoming and player.hasBuff(spells.flashConcentration)' , kps.heal.lowestInRaid , "heal_lowest_Concentration" },
-    {spells.heal, 'not player.isMoving and player.hp < 0.65 and player.hpIncoming < heal.lowestTankInRaid.hpIncoming and player.hasBuff(spells.flashConcentration)' , "player" , "heal_player_Concentration"  },
-    {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming  < 0.65 and player.hasBuff(spells.flashConcentration)' , kps.heal.lowestTankInRaid , "heal_tank_Concentration"  },
+    {{"nested"}, 'not player.isMoving and player.hasBuff(spells.flashConcentration)' ,{
+        {spells.heal, 'heal.lowestInRaid.hpIncoming  < 0.65 and heal.lowestInRaid.hpIncoming  < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest_Concentration" },
+        {spells.heal, 'player.hp < 0.65 and player.hpIncoming < heal.lowestTankInRaid.hpIncoming' , "player" , "heal_player_Concentration"  },
+        {spells.heal, 'heal.lowestTankInRaid.hpIncoming  < 0.65' , kps.heal.lowestTankInRaid , "heal_tank_Concentration"  },
+    }},      
     -- "Prayer of Healing"
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 4 and spells.holyWordSanctify.cooldown > 30' , kps.heal.lowestTankInRaid , "POH" },
     {spells.prayerOfHealing, 'not player.isInRaid and not player.isMoving and heal.countLossInRange(0.80) > 2 and spells.holyWordSanctify.cooldown > 30' , kps.heal.lowestInRaid , "POH" },
@@ -219,7 +221,6 @@ kps.rotations.register("PRIEST","HOLY",{
     -- "Soins"
     {spells.heal, 'kps.concentration and not player.isMoving and heal.lowestInRaid.hpIncoming < 0.80 and heal.lowestInRaid.hpIncoming < heal.lowestTankInRaid.hpIncoming' , kps.heal.lowestInRaid , "heal_lowest" },
     {spells.heal, 'kps.concentration and not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.80' , kps.heal.lowestTankInRaid , "heal_tank" },
-
     -- Damage
     {spells.smite, 'not player.isMoving', env.damageTarget },
     {spells.holyNova, 'player.isMoving and target.distance <= 10' },
