@@ -85,6 +85,19 @@ function Player.isInGroup(self)
 end
 
 --[[[
+@function `player.groupSize` - returns the size of the players party or raid. If the player is in an instance group the
+instance group size is returned instead.
+]]--
+function Player.groupSize(self)
+    local groupSize = GetNumGroupMembers(LE_PARTY_CATEGORY_INSTANCE)
+    if groupSize == 0 then
+        groupSize = GetNumGroupMembers(LE_PARTY_CATEGORY_HOME)
+    end
+    if groupSize == 0 then groupSize = 1 end
+    return groupSize
+end
+
+--[[[
 @function `player.isControlled` - Checks whether you are controlled over your character (you are feared, etc).
 ]]--
 

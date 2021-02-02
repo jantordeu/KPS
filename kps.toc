@@ -52,6 +52,7 @@ modules\player\player_stagger.lua
 modules\player\player_target_orientation.lua
 modules\player\player_wild_imps.lua
 modules\auto_turn.lua
+modules\hekili.lua
 modules\totem.lua
 modules\spell_id.lua
 modules\unlock\basic.lua

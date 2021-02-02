@@ -15,19 +15,7 @@ function Unit.hp(self)
 end
 
 --[[[
-@function `<UNIT>.hpRange` - returns the unit hp (in a range between 0.0 and 1.0).
-]]--
 
-local healthRange = function(min,max)
-	local health = UnitHealth(self.unit) / UnitHealthMax(self.unit)
-	if health > min and health < max then return true end
-	return false
-end
-function Unit.hpRange(self)
-    return healthRange
-end
-
---[[[
 @function `<UNIT>.hpTotal` - returns the current hp as an absolute value.
 ]]--
 function Unit.hpTotal(self)

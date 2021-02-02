@@ -49,6 +49,25 @@ function SlashCmdList.KPS(cmd, editbox)
         kps.write("/kps help - Show this help text.")
     elseif msg == "pew" then
         kps.combatStep()
+    elseif msg == "instances" or msg == "inst" or msg == "instance" then
+        local runHistory = C_MythicPlus.GetRunHistory(false, true);
+        if #runHistory > 0 then
+            local comparison = function(entry1, entry2)
+                if ( entry1.level == entry2.level ) then
+                    return entry1.mapChallengeModeID < entry2.mapChallengeModeID;
+                else
+                    return entry1.level > entry2.level;
+                end
+            end
+            table.sort(runHistory, comparison);
+            for i = 1, #runHistory do
+                local runInfo = runHistory[i];
+                local name = C_ChallengeMode.GetMapUIInfo(runInfo.mapChallengeModeID);
+                kps.write(string.format(WEEKLY_REWARDS_MYTHIC_RUN_INFO, runInfo.level, name))
+            end
+        else
+            kps.write("No instances finished this week!")
+        end
     else
         if kps.enabled then
             kps.write("KPS Enabled")

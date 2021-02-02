@@ -138,7 +138,7 @@ local function getHarmfulSpell()
                 HarmSpell = spell
             end
         end
-    end 
+    end
     if HarmSpell ~= nil then
         return kps.Spell.fromId(HarmSpell)
     else

@@ -202,7 +202,7 @@ end
 
 local function fnParseCastSequence(spellList)
     local parsedSpellList = {}
-    for _, spell in ipairs(spellList) do
+    for _, spell in pairs(spellList) do
         table.insert(parsedSpellList, fnParseSpell(spell))
     end
     return function ()
