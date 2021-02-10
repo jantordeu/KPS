@@ -1,7 +1,7 @@
 --[[[
 @module Druid Restoration Rotation
 @author Kirk24788.xvir.subzrk
-@version 7.0.3
+@version 8.0.1
 ]]--
 local spells = kps.spells.druid
 local env = kps.env.druid
@@ -11,8 +11,7 @@ kps.rotations.register("DRUID","RESTORATION",
     -- Cooldowns
     {{"nested"}, 'kps.cooldowns and not player.isMoving', {
         {spells.innervate, 'player.mana < 0.5'},
-        {spells.essenceOfGhanir, 'player.mana < 0.6'},
-        {spells.tranquility, 'not player.isMoving and heal.averageHealthRaid < 0.7'},
+        {spells.tranquility, 'not player.isMoving and heal.averageHpIncoming < 0.7'},
     }},
 
     -- Def CD's
@@ -32,7 +31,6 @@ kps.rotations.register("DRUID","RESTORATION",
         {spells.regrowth, 'heal.defaultTarget.hp < 0.8', kps.heal.defaultTarget},
     }},
 
-    {spells.cenarionWard, 'true', kps.heal.defaultTank},
 
     -- Have Soul Of The Forest Buff
     --{{"nested"}, 'player.hasBuff(spells.soulOfTheForest)', {
@@ -42,7 +40,6 @@ kps.rotations.register("DRUID","RESTORATION",
     --}},
 
     {spells.wildGrowth, 'keys.shift or kps.multiTarget and heal.defaultTarget.hpIncoming < 0.9 and heal.defaultTarget.hp < 1', kps.heal.defaultTarget},
-    {spells.healingTouch, 'heal.defaultTarget.hp < 0.9 and not player.isMoving', kps.heal.defaultTarget},
 
     {spells.swiftmend, 'heal.defaultTank.hp < 0.6', kps.heal.defaultTank},
     {spells.swiftmend, 'heal.lowestInRaid.hp < 0.6', kps.heal.lowestInRaid},

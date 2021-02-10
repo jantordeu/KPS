@@ -102,3 +102,17 @@ function Unit.timeToDie(self)
     local timeToDie = calcTimeToDie(self.guid, self.hpTotal)
     if timeToDie ~= nil then return math.ceil(timeToDie) else return 666 end
 end
+
+
+
+--[[
+@function `<UNIT>.guessedTimeToDieT23(<AVERAGE_DPS>)` - Guessed Time To Die if the DD's average on the given dps.
+]]--
+function Unit.guessedTimeToDie(self)
+    return function (dps)
+        return self.hpTotal / (kps.groupSizeDDs() * dps)
+    end
+end
+
+
+

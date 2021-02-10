@@ -245,7 +245,10 @@ kps.spells.warlock.wrathOfConsumption = kps.Spell.fromId(199472)
 kps.spells.warlock.wrathstorm = kps.Spell.fromId(115831)
 kps.spells.warlock.writheInAgony = kps.Spell.fromId(196102)
 
--- Shadowlands
-kps.spells.warlock.shadowEmbrace = kps.Spell.fromId(32388)
-kps.spells.warlock.maleficRapture = kps.Spell.fromId(324536)
+kps.spells.warlock.concentratedFlame = kps.Spell.fromId(295373)
+kps.spells.warlock.guardianOfAzeroth = kps.Spell.fromId(295840)
+kps.spells.warlock.reapingFlames = kps.Spell.fromId(310690)
+
+kps.spells.warlock.shiverVenom = kps.Spell.fromId(301624)
+kps.spells.warlock.soulRot = kps.Spell.fromId(325640)
 

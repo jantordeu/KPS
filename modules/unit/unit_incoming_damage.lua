@@ -3,7 +3,7 @@ Unit Incoming Damage: Functions which handle incoming damage or healing
 ]]--
 local Unit = kps.Unit.prototype
 
-local incomingTimeRange = 3
+local incomingTimeRange = 2
 local moduleLoaded = false
 
 -- incomingDamage

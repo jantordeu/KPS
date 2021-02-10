@@ -108,3 +108,10 @@ end
 kps.Spell.metatable.__concat = function (lhs, rhs)
     return tostring(lhs) .. tostring(rhs)
 end
+
+kps.stopCasting = {}
+kps.stopCasting.id = 0
+kps.stopCasting.name = "-stop-"
+kps.stopCasting.canBeCastAt = function ( ... )
+    return true
+end

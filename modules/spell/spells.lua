@@ -42,6 +42,8 @@ kps.spells.ae.starfall = kps.Spell.fromId(191034) -- Starfall
 kps.spells.ae.efflorescence = kps.Spell.fromId(145205) -- Efflorescence
 kps.spells.ae.infernalStrike = kps.Spell.fromId(189110) -- Infernal Strike
 kps.spells.ae.bilescourgeBombers = kps.Spell.fromId(267211) -- Bilescourge Bombers
+kps.spells.ae.elysianDecree = kps.Spell.fromId(306830) -- Elysian Decree
+kps.spells.ae.metamorphosis = kps.Spell.fromId(191427) -- Metamorphosis
 
 
 -- Crowd Control Spells
@@ -123,6 +125,9 @@ kps.spells.flask.greaterDraenicIntellectFlask = kps.Spell.fromId(156079) -- Grea
 kps.spells.flask.greaterDraenicStrengthFlask = kps.Spell.fromId(156572) -- Greater Draenic Strength Flask
 kps.spells.flask.greaterDraenicStaminaFlask = kps.Spell.fromId(156576) -- Greater Draenic Stamina Flask
 
+-- Mythic+ Dungeions
+kps.spells.mplus = {}
+kps.spells.mplus.quake = kps.Spell.fromId(240447) -- Quake
 
 -- Battle Rez
 kps.spells.battlerez = {}

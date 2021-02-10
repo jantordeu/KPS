@@ -21,6 +21,7 @@ local function updateRaidStatus()
     table.wipe(_raidStatus[_raidStatusIdx])
     local newRaidStatusSize = 0
     local healTargets = nil
+    local unit = nil
 
     if IsInRaid() then
         healTargets = raidHealTargets
@@ -326,7 +327,7 @@ local function aggroTankOfUnit(targetUnit)
     local highestThreat = 0
     local aggroTank = nil
 
-    for name, possibleTank in pairs(allTanks) do
+    for _, possibleTank in pairs(allTanks) do
         local unitThreat = UnitThreatSituation(possibleTank.unit, targetUnit)
         if unitThreat and unitThreat > highestThreat then
             highestThreat = unitThreat
@@ -358,7 +359,7 @@ end)
 @function `heal.aggroTank` - Returns the tank or unit if overnuked with highest aggro and lowest health Without otherunit specified.
 ]]--
 local tsort = table.sort
-kps.RaidStatus.prototype.lowestAggroTank = kps.utils.cachedValue(function()
+kps.RaidStatus.prototype.aggroTank = kps.utils.cachedValue(function()
     local TankUnit = tanksInRaid()
     for name, player in pairs(raidStatus) do
         local unitThreat = UnitThreatSituation(player.unit)
@@ -384,8 +385,8 @@ end)
 
 local dispelDebuffRaid = function (dispelType)
     local lowestUnit = false
-    for name, player in pairs(raidStatus) do
-        if player.isHealable and player.isDispellable(dispelType) then lowestUnit = player end
+    for name, unit in pairs(raidStatus) do
+        if unit.isHealable and unit.isDispellable(dispelType) then lowestUnit = unit end
     end
     return lowestUnit
 end
@@ -466,26 +467,28 @@ kps.RaidStatus.prototype.hasBuffAtonementCount = kps.utils.cachedValue(function(
 end)
 
 --------------------------------------------------------------------------------------------
-------------------------------- RAID PRIEST
+------------------------------- RAID DEBUFF UNIT
 --------------------------------------------------------------------------------------------
 
-
-kps.RaidStatus.prototype.priestConcentration = kps.utils.cachedValue(function()
+local unitHasDebuff = function(spell)
     local lowestHp = 2
     local lowestUnit = kps["env"].player
-    for name, player in pairs(raidStatus) do
-        if player.isHealable and not kps.spells.priest.heal.isRecastAt(player.unit) and player.hp < lowestHp then
-            lowestHp = player.hp
-            lowestUnit = player
+    for name, unit in pairs(raidStatus) do
+        if unit.hasDebuff(spell) and unit.hp < lowestHp then
+            lowestHp = unit.hp
+            lowestUnit = unit
         end
     end
     return lowestUnit
+end
+
+kps.RaidStatus.prototype.hasDebuffMiasma = kps.utils.cachedValue(function()
+    return unitHasDebuff(kps.spells.immuneHeal.gluttonousMiasma)
 end)
 
 --------------------------------------------------------------------------------------------
 ------------------------------- RAID BUFF UNIT
 --------------------------------------------------------------------------------------------
-
 
 local unitHasBuff = function(spell)
     local lowestHp = 2
@@ -642,6 +645,9 @@ print("|cffff8000", "---------------------------------")
 --print("|cffff8000cooldownTotal:|cffffffff", kps.spells.priest.powerWordRadiance.cooldownTotal)
 --print("|cffff8000cooldown:|cffffffff", kps.spells.priest.holyNova.cooldown)
 --print("|cffff8000cooldownTotal:|cffffffff", kps.spells.priest.holyNova.cooldownTotal)
+
+--print("|cffff8000cooldownTotal:|cffffffff", kps.spells.priest.mindFlay.cooldownTotal)
+--print("|cffff8000cooldown:|cffffffff", kps.spells.priest.mindFlay.cooldown)
 
 
 --print("|cffff8000PVP:|cffffffff", kps["env"].player.isPVP)
