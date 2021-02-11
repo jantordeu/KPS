@@ -125,14 +125,13 @@ kps.spells.flask.greaterDraenicIntellectFlask = kps.Spell.fromId(156079) -- Grea
 kps.spells.flask.greaterDraenicStrengthFlask = kps.Spell.fromId(156572) -- Greater Draenic Strength Flask
 kps.spells.flask.greaterDraenicStaminaFlask = kps.Spell.fromId(156576) -- Greater Draenic Stamina Flask
 
+-- Mythic+ Dungeions
+kps.spells.mplus = {}
+kps.spells.mplus.quake = kps.Spell.fromId(240447) -- Quake
 
 -- Battle Rez
 kps.spells.battlerez = {}
 kps.spells.battlerez.rebirth = kps.Spell.fromId(20484) -- Rebirth
-
--- Mythic+ Dungeions
-kps.spells.mplus = {}
-kps.spells.mplus.quake = kps.Spell.fromId(240447) -- Quake
 kps.spells.battlerez.raiseAlly = kps.Spell.fromId(61999) -- Raise Ally
 kps.spells.battlerez.soulstone = kps.Spell.fromId(20707) -- Soulstone
 kps.spells.battlerez.eternalGuardian = kps.Spell.fromId(126393) -- Eternal Guardian

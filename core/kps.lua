@@ -43,18 +43,18 @@ kps.combatStep = function ()
 
     -- No combat if mounted (except if overriden by config), dead or drinking
     if (player.isMounted and not kps.config.dismountInCombat) or player.isDead or player.isDrinking then return end
-    
+
     local activeRotation = kps.rotations.getActive()
-        if not activeRotation then return end
-        activeRotation.checkTalents()
-        local spell, target, message = activeRotation.getSpell()
-        -- Castable Spell while casting
-        if spell ~= nil and spell.isCastableSpell and player.isCasting then
-            return spell.cast(target,message)
-        end
-        if spell ~= nil and spell.id == 0 then
-            return "-stop-", "target", false
-    	end
+	if not activeRotation then return end
+	activeRotation.checkTalents()
+	local spell, target, message = activeRotation.getSpell()
+	-- Castable Spell while casting
+	if spell ~= nil and spell.isCastableSpell and player.isCasting then
+		return spell.cast(target,message)
+	end
+	if spell ~= nil and spell.id == 0 then
+		return "-stop-", "target", false
+	end
 
     if castSequence ~= nil then
         if castSequence[castSequenceIndex] ~= nil and (castSequenceStartTime + kps.maxCastSequenceLength > GetTime()) then
@@ -82,7 +82,7 @@ kps.combatStep = function ()
                     return a, b, c
                 else
                     if prioritySpell.cooldown > 3 then prioritySpell = nil end
-                     return spell.cast(target,message)
+                    return spell.cast(target,message)
                 end
             else
                 LOG.debug("Casting %s[id=%s] for next cast.", spell.name)

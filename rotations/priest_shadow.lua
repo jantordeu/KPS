@@ -88,14 +88,6 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- PVP
     {spells.psyfiend, 'player.isPVP' , "player" },
 
-    -- AZERITE
-    -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    --{spells.azerite.concentratedFlame, 'player.hasBuff(spells.voidForm) and target.isAttackable' , env.damageTarget },
-    -- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
-    --{spells.azerite.memoryOfLucidDreams, 'player.hasBuff(spells.voidForm) and target.isAttackable and player.buffStacks(spells.voidForm) > 17 and player.insanity > 39' , env.damageTarget },
-    -- The Unbound Force -- causing shards of spells.azerite to strike your target for [(341 * (7.06061) + 341)] Fire damage over 2 sec. This damage is increased by 300% if it critically strikes
-    --{spells.azerite.theUnboundForce, 'player.hasBuff(spells.voidForm) and target.isAttackable and player.buffStacks(spells.voidForm) < 15' , env.damageTarget },
-
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindSear) and spells.mindSear.cooldown == 0' , "/stopcasting" },
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
@@ -104,7 +96,7 @@ kps.rotations.register("PRIEST","SHADOW",{
  
     {spells.powerInfusion, 'kps.cooldowns and target.hp > 0.80 or target.isElite' },
     {spells.shadowfiend, 'target.hp > 0.20 and spells.voidEruption.cooldown < 3' , env.damageTarget },
-    {spells.mindbender, 'target.hp > 0.20 and spells.voidEruption.cooldown < 3' , env.damageTarget },
+    {spells.mindBlast, 'not player.isMoving and target.hasMyDebuff(spells.devouringPlague)' , env.damageTarget },
 
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.15 and player.hp > 0.70' , "target" },
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.70 and not target.isElite' , "target" },
@@ -116,12 +108,14 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4' , "mouseover" },
 
+    {spells.devouringPlague, 'target.isAttackable and player.insanity > 90' , "target" },
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
     {spells.mindBlast, 'not player.isMoving and spells.mindBlast.charges == 2' , env.damageTarget },
-    {spells.devouringPlague, 'target.isAttackable and player.insanity > 90' , "target" },
-    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and not spells.searingNightmare.lastCasted(5)' , "target" , "searingNightmare" }, 
-    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
+
+    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and not spells.searingNightmare.lastCasted(5)' , "target" , "searingNightmare" },
     {spells.devouringPlague, 'target.isAttackable and not target.hasMyDebuff(spells.devouringPlague)' , "target" },
+    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
+
     {spells.voidTorrent, 'not player.hasBuff(spells.voidForm) and player.insanity < 40' , env.damageTarget },   
     {spells.mindgames, 'not player.isMoving' , env.damageTarget }, 
 
@@ -149,3 +143,11 @@ kps.rotations.register("PRIEST","SHADOW",{
 /cast [@mouseover,exists,nodead,harm][@target] Mot de l’ombre : Douleur
 
 ––]]
+
+-- AZERITE
+-- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
+--{spells.azerite.concentratedFlame, 'player.hasBuff(spells.voidForm) and target.isAttackable' , env.damageTarget },
+-- "Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
+--{spells.azerite.memoryOfLucidDreams, 'player.hasBuff(spells.voidForm) and target.isAttackable and player.buffStacks(spells.voidForm) > 17 and player.insanity > 39' , env.damageTarget },
+-- The Unbound Force -- causing shards of spells.azerite to strike your target for [(341 * (7.06061) + 341)] Fire damage over 2 sec. This damage is increased by 300% if it critically strikes
+--{spells.azerite.theUnboundForce, 'player.hasBuff(spells.voidForm) and target.isAttackable and player.buffStacks(spells.voidForm) < 15' , env.damageTarget },
