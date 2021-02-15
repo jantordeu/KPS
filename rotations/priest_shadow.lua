@@ -40,17 +40,19 @@ kps.rotations.register("PRIEST","SHADOW",{
 
     -- "Dispersion" 47585
     {{"macro"}, 'player.hasBuff(spells.dispersion) and player.hp > 0.95' , "/cancelaura "..Dispersion },
-    {spells.dispersion, 'player.hp < 0.35' },
+    {spells.dispersion, 'player.hp < 0.30' },
     --"Fade" 586
     {spells.fade, 'player.isTarget and player.isInGroup' },
+    -- PVP
+    {spells.psyfiend, 'player.isTarget and player.isPVP' , "player" },
     -- "Pierre de soins" 5512
     --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
-    {spells.desperatePrayer, 'player.hp < 0.65' , "player" },
+    {spells.desperatePrayer, 'player.hp < 0.70' , "player" },
     -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
     {spells.vampiricEmbrace, 'heal.lowestInRaid.hp < 0.55' },
     -- "Power Word: Shield" 17 -- "Body and Soul"
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.2) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
-    {spells.powerWordShield, 'player.hp < 0.65 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
+    {spells.powerWordShield, 'player.hp < 0.55 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },  
@@ -61,10 +63,10 @@ kps.rotations.register("PRIEST","SHADOW",{
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
         -- "Silence" 15487 -- debuff same ID
-        {spells.psychicHorror, 'player.hasTalent(4,3) and mouseover.isInterruptable and mouseover.castTimeLeft < 3' , "mouseover" },
-        {spells.silence, 'mouseover.isInterruptable and mouseover.castTimeLeft < 3' , "mouseover" },
-        {spells.psychicHorror, 'player.hasTalent(4,3) and target.isInterruptable and target.castTimeLeft < 3' , "target" },
-        {spells.silence, 'target.isInterruptable and target.castTimeLeft < 3' , "target" },
+        {spells.psychicHorror, 'player.hasTalent(4,3) and mouseover.isInterruptable and mouseover.castTimeLeft < 2' , "mouseover" },
+        {spells.silence, 'mouseover.isInterruptable and mouseover.castTimeLeft < 2' , "mouseover" },
+        {spells.psychicHorror, 'player.hasTalent(4,3) and target.isInterruptable and target.castTimeLeft < 2' , "target" },
+        {spells.silence, 'target.isInterruptable and target.castTimeLeft < 2' , "target" },
         {spells.psychicScream, 'kps.groupSize() == 1 and not player.hasTalent(4,2) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
         -- "Mind Bomb" 205369 -- 30 yd range -- debuff "Explosion mentale" 226943 -- replace cri Psychic Scream
         {spells.mindBomb, 'player.hasTalent(4,2) and player.isTarget and target.distance <= 30 and target.isCasting' , "target" },
@@ -81,12 +83,9 @@ kps.rotations.register("PRIEST","SHADOW",{
     }},
 
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
-    {{"macro"}, 'player.useTrinket(0) and not player.isMoving' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and not player.isMoving and player.timeInCombat > 9' , "/use 13" },
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use 13" },
-    {{"macro"}, 'player.useTrinket(1) and not player.isMoving' , "/use 14" },
-
-    -- PVP
-    {spells.psyfiend, 'player.isPVP' , "player" },
+    {{"macro"}, 'player.useTrinket(1) and not player.isMoving and player.timeInCombat > 5' , "/use 14" },
 
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindSear) and spells.mindSear.cooldown == 0' , "/stopcasting" },
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
@@ -94,9 +93,11 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.voidEruption, 'not player.isMoving and player.insanity > 40 and target.hp > 0.20' , env.damageTarget , "voidEruption"  },
     {spells.voidEruption, 'not player.isMoving and player.insanity > 40 and target.isElite' , env.damageTarget , "voidEruption"  },
  
-    {spells.powerInfusion, 'kps.cooldowns and target.hp > 0.80 or target.isElite' },
+    {spells.powerInfusion, 'kps.cooldowns and (target.hp > 0.80 or target.isElite) and spells.voidEruption.cooldown < 5' },
     {spells.shadowfiend, 'target.hp > 0.20 and spells.voidEruption.cooldown < 3' , env.damageTarget },
-    {spells.mindBlast, 'not player.isMoving and target.hasMyDebuff(spells.devouringPlague)' , env.damageTarget },
+    {{"macro"}, 'spells.mindBlast.cooldown == 0 and target.myDebuffDuration(spells.devouringPlague) > 2 and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
+    --{spells.mindBlast, 'not player.isMoving and IsEquippedItem(173246) and target.hasMyDebuff(spells.devouringPlague)' , env.damageTarget , "mindBlast_talbadar" },
+    {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.talbadarStratagem)' , env.damageTarget , "mindBlast_talbadar" },
 
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.15 and player.hp > 0.70' , "target" },
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.70 and not target.isElite' , "target" },
@@ -108,19 +109,17 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4' , "mouseover" },
 
-    {spells.devouringPlague, 'target.isAttackable and player.insanity > 90' , "target" },
-    {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
-    {spells.mindBlast, 'not player.isMoving and spells.mindBlast.charges == 2' , env.damageTarget },
-
+    {spells.devouringPlague, 'not kps.mindSear and target.isAttackable and target.myDebuffDuration(spells.devouringPlague) < 2' , "target" },
     {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and not spells.searingNightmare.lastCasted(5)' , "target" , "searingNightmare" },
     {spells.devouringPlague, 'target.isAttackable and not target.hasMyDebuff(spells.devouringPlague)' , "target" },
     {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
 
+    {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
     {spells.voidTorrent, 'not player.hasBuff(spells.voidForm) and player.insanity < 40' , env.damageTarget },   
     {spells.mindgames, 'not player.isMoving' , env.damageTarget }, 
 
     {spells.shadowWordPain, 'player.isMoving' , env.damageTarget },
-    {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
+    {spells.mindBlast, 'not player.isMoving' , env.damageTarget , },
     {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
 
 },"priest_shadow_shadowlands")

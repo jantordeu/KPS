@@ -296,6 +296,8 @@ kps.spells.priest.doorOfShadows = kps.Spell.fromId(300728)
 
 -- LEGENDAIRE
 kps.spells.priest.flashConcentration = kps.Spell.fromId(336267)
+kps.spells.priest.talbadarStratagem = kps.Spell.fromId(342416)
+
 
 
 
