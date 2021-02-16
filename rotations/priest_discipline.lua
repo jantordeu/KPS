@@ -48,9 +48,9 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     
     {{"nested"}, 'player.hasBuff(spells.rapture)' , {
         {spells.powerWordShield, 'mouseover.isHealable and not mouseover.hasBuff(spells.powerWordShield)' , "mouseover" }, 
-        {spells.powerWordShield, 'not heal.lowestTankInRaid.hasBuff(spells.powerWordShield)' , kps.heal.lowestTankInRaid },
-        {spells.powerWordShield, 'not player.hasBuff(spells.powerWordShield)' , "player" },
         {spells.powerWordShield, 'not heal.lowestInRaid.hasBuff(spells.powerWordShield)' , kps.heal.lowestInRaid },
+        {spells.powerWordShield, 'not player.hasBuff(spells.powerWordShield)' , "player" },
+        {spells.powerWordShield, 'not heal.lowestTankInRaid.hasBuff(spells.powerWordShield)' , kps.heal.lowestTankInRaid },
         {spells.powerWordShield, 'not heal.hasNotBuffShield.isUnit("player")' , kps.heal.hasNotBuffShield },
     }},
     
@@ -156,6 +156,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.evangelism, 'not player.isInRaid and player.hasTalent(7,3) and heal.hasBuffAtonementCount > 4 and spells.powerWordRadiance.lastCasted(9) and target.isBoss' },
 
     -- RADIANCE
+    {spells.rapture, 'not player.hasTalent(7,2) and heal.countLossInRange(0.80) > 4 and IsEquippedItem(173241)' },
     {spells.powerWordRadiance, 'not player.isMoving and heal.countLossInRange(0.80) > 4 and not spells.powerWordRadiance.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "radiance_lowest_count" },
     {spells.powerWordRadiance, 'not player.isInRaid and not player.isMoving and heal.countLossInRange(0.80) > 2 and not spells.powerWordRadiance.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "radiance_lowest_count" },
     --{spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.85) > 2' },
@@ -167,8 +168,8 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.powerWordShield, 'mouseover.isHealable and mouseover.hp < 0.30 and not mouseover.hasDebuff(spells.weakenedSoul)' , "mouseover" , "shield_mouseover_urg" },  
     -- DAMAGE
     {spells.mindgames, 'not player.isMoving and spells.schism.lastCasted(9)' , env.damageTarget },
-    {spells.schism, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.70 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) > 2' , env.damageTarget },
-    {spells.mindBlast, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.80 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) > 2' , env.damageTarget },
+    {spells.schism, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.70 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) > 2 and heal.lowestInRaid.myBuffDuration(spells.atonement) > 2' , env.damageTarget },
+    {spells.mindBlast, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.80 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) > 2 and heal.lowestInRaid.myBuffDuration(spells.atonement) > 2' , env.damageTarget },
     {spells.powerWordSolace, 'heal.hasBuffAtonement.hp < 1 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) > 2' , env.damageTarget  },
     {spells.penance, 'heal.hasBuffAtonement.hp < 1 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) > 2' , env.damageTarget },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.myBuffDuration(spells.atonement) > 2 and heal.lowestInRaid.hp > 0.55' , env.damageTarget },

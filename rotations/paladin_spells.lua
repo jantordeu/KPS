@@ -287,7 +287,11 @@ kps.spells.paladin.razorCoral = kps.Spell.fromId(303568)
 -- 216413/divine-purpose -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
 kps.spells.paladin.divinePurposeHolyShock = kps.Spell.fromId(216411)
 kps.spells.paladin.divinePurposeLightOfDawn = kps.Spell.fromId(216413)
-kps.spells.paladin.shiningLight = kps.Spell.fromId(321136)
+kps.spells.paladin.shiningLight = kps.Spell.fromId(327510)
+
+-- Kirian
+kps.spells.paladin.divineToll = kps.Spell.fromId(304971)
+
 
 
 

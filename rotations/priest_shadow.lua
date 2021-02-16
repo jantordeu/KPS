@@ -95,8 +95,7 @@ kps.rotations.register("PRIEST","SHADOW",{
  
     {spells.powerInfusion, 'kps.cooldowns and (target.hp > 0.80 or target.isElite) and spells.voidEruption.cooldown < 5' },
     {spells.shadowfiend, 'target.hp > 0.20 and spells.voidEruption.cooldown < 3' , env.damageTarget },
-    {{"macro"}, 'spells.mindBlast.cooldown == 0 and target.myDebuffDuration(spells.devouringPlague) > 2 and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
-    --{spells.mindBlast, 'not player.isMoving and IsEquippedItem(173246) and target.hasMyDebuff(spells.devouringPlague)' , env.damageTarget , "mindBlast_talbadar" },
+    {{"macro"}, 'spells.mindBlast.cooldown == 0 and player.hasBuff(spells.talbadarStratagem) and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.talbadarStratagem)' , env.damageTarget , "mindBlast_talbadar" },
 
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.15 and player.hp > 0.70' , "target" },
@@ -109,10 +108,10 @@ kps.rotations.register("PRIEST","SHADOW",{
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4' , "mouseover" },
 
-    {spells.devouringPlague, 'not kps.mindSear and target.isAttackable and target.myDebuffDuration(spells.devouringPlague) < 2' , "target" },
-    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and not spells.searingNightmare.lastCasted(5)' , "target" , "searingNightmare" },
+    {spells.devouringPlague, 'target.isAttackable and not target.hasMyDebuff(spells.devouringPlague) and player.insanity > 80' , "target" },
+    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
+    {spells.mindSear, 'kps.mindSear and not player.isMoving and player.insanity > 30' , env.damageTarget , "mindSear_mindSear" },
     {spells.devouringPlague, 'target.isAttackable and not target.hasMyDebuff(spells.devouringPlague)' , "target" },
-    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
 
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
     {spells.voidTorrent, 'not player.hasBuff(spells.voidForm) and player.insanity < 40' , env.damageTarget },   

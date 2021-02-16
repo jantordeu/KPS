@@ -111,8 +111,8 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.prayerOfMending, 'true' , kps.heal.hasNotBuffMending },
     
     {spells.circleOfHealing, 'heal.lowestInRaid.hp < 0.90' , kps.heal.lowestInRaid },
-    {spells.mindgames, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.70' , env.damageTarget },
-    {spells.halo, 'player.isInRaid and not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.85) > 2' },
+    {spells.mindgames, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.90' , env.damageTarget },
+    {spells.halo, 'player.isInRaid and not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.80) > 2' },
     {spells.divineStar, 'player.hasTalent(6,2) and target.distance <= 30 and target.isAttackable' },
     
     -- TRINKETS -- SLOT 0 /use 13
@@ -173,8 +173,8 @@ kps.rotations.register("PRIEST","HOLY",{
     {spells.heal, 'not player.isMoving and spells.prayerOfMending.lastCasted(4) and player.hasBuff(spells.flashConcentration) and heal.lowestInRaid.hp < 0.70' , kps.heal.lowestInRaid , "heal_POM_Concentration" },
     {spells.flashHeal, 'not player.isMoving and spells.prayerOfMending.lastCasted(4) and heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid ,"flashHeal_POM" },
 
-    -- "Prayer of Healing"
-    {{"nested"}, 'not player.isMoving and not spells.prayerOfHealing.lastCasted(4) and spells.holyWordSanctify.cooldown > 9' ,{
+    -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
+    {{"nested"}, 'not player.isMoving and not spells.prayerOfHealing.lastCasted(5) and spells.holyWordSanctify.cooldown > 6' ,{
         {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.80) > 4' , kps.heal.lowestTankInRaid , "POH" },
         {spells.prayerOfHealing, 'not player.isInRaid and not player.isMoving and heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid , "POH" },
     }},
