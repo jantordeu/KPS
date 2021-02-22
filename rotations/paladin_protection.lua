@@ -47,51 +47,48 @@ kps.rotations.register("PALADIN","PROTECTION",
         {spells.rebuke, 'focus.isCasting and focus.isInterruptable and focus.castTimeLeft < 2' , "focus" },
     }},
     
-    -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
-    -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
-    
-    -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
-    {spells.avengingWrath, 'player.hp < 0.55' },
-    -- Séraphin -- 3 charges
-    {spells.seraphim, 'player.hasTalent(5,3) and not player.hasBuff(spells.seraphim)' },
-
-    {spells.wordOfGlory , 'player.hp < 0.55'}, 
-    {spells.wordOfGlory , 'player.hp < 0.80 and player.hasBuff(spells.shiningLight)'},
-    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
-    {spells.layOnHands, 'player.hpIncoming < 0.30' },
-    -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 
-    {spells.divineShield, 'player.hpIncoming < 0.30' },
-
-    -- "Bouclier du vengeur" -- "Avenger's Shield"
-    {spells.avengersShield, 'target.distanceMax <= 10' , "target" },
-    -- "Bouclier du vertueux" -- "Shield of the Righteous"
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous_charges"},
-    {spells.shieldOfTheRighteous, 'and player.holyPower == 5' , "target" , "shieldOfTheRighteous_health"},
-    -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
-    {spells.divineToll, 'player.holyPower < 5' , "target" },
-
-    -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
-    {spells.ardentDefender, 'player.hpIncoming < 0.55' },
     -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
     {spells.guardianOfAncientKings, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender)' },
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
     {spells.blessingOfProtection, 'mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
     {spells.blessingOfProtection, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and not player.hasBuff(spells.guardianOfAncientKings)' , "player"},
-
-    -- "Hammer of Wrath" -- Only usable on enemies that have less than 20% health
-    {spells.hammerOfWrath, 'target.isAttackable and target.hp < 0.20' , "target" },
+    
+    -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
+    {spells.ardentDefender, 'player.hpIncoming < 0.70 and not and player.hasBuff(spells.shiningLight)' },
+    {spells.wordOfGlory , 'player.hp < 0.55'}, 
+    {spells.wordOfGlory , 'player.hp < 0.70 and player.hasBuff(spells.shiningLight)'},
+    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
+    {spells.layOnHands, 'player.hpIncoming < 0.30' },
+    -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 
+    {spells.divineShield, 'player.hpIncoming < 0.30' },
+    -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
+    {spells.avengingWrath, 'player.hp < 0.55' },
+    
+    -- TRINKETS -- SLOT 0 /use 13
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
+    -- TRINKETS -- SLOT 1 /use 14
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
+    
     {spells.judgment, 'target.isAttackable' , "target" },
 	{spells.consecration, 'not player.isMoving and not player.hasBuff(spells.consecration) and target.distanceMax <= 5' , "player" , "consecration_player" },
- 	-- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant les dégâts de leur prochaine attaque automatique contre vous.
-    {spells.blessedHammer, 'player.hasTalent(1,3) and target.myDebuffDuration(spells.blessedHammer) < 3 and target.distanceMax <= 10' , "target" , "blessedHammer" },
+    -- "Bouclier du vengeur" -- "Avenger's Shield"
+    {spells.avengersShield, 'target.distanceMax <= 10' , "target" },
+    -- "Bouclier du vertueux" -- "Shield of the Righteous"
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous_charges"},
+    {spells.shieldOfTheRighteous, 'player.holyPower == 5' , "target" , "shieldOfTheRighteous_health"},
+    -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
+    {spells.divineToll, 'player.holyPower < 5' , "target" },
+
+    -- "Hammer of Wrath" -- Only usable on enemies that have less than 20% health
+    {spells.hammerOfWrath, 'target.isAttackable' , "target" },
+    -- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant les dégâts de leur prochaine attaque automatique contre vous.
+    {spells.blessedHammer, 'player.hasTalent(1,3) and target.distanceMax <= 10' , "target" , "blessedHammer" },
     -- "Hammer of the Righteous" -- "Marteau du vertueux" -- If you're standing in your Consecration, it also causes a wave of light that hits all nearby enemies for light Holy damage.
     {spells.hammerOfTheRighteous, 'player.hasBuff(spells.consecration) and target.distanceMax <= 10', "target" , "hammerOfTheRighteous" },
 
     {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.30', 'player'},
     
-    {{"macro"}, 'true' , "/startattack" },
+    {{"macro"}, 'target.isAttackable and target.distanceMax <= 5' , "/startattack" },
 
  }
 ,"paladin_protection_bfa")

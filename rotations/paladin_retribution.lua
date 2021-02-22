@@ -6,6 +6,8 @@
 local spells = kps.spells.paladin
 local env = kps.env.paladin
 
+local FinalReckoning = spells.finalReckoning.name
+
 
 kps.runAtEnd(function()
    kps.gui.addCustomToggle("PALADIN","RETRIBUTION", "addControl", "Interface\\Icons\\spell_holy_sealofmight", "addControl")
@@ -43,7 +45,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.30 and not heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },  
 
     {spells.flashOfLight, 'player.hasTalent(6,1) and player.hp < 0.70 and player.buffStacks(spells.selflessHealer) >= 3', "player" },
-    {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.65'}, 
+    {spells.wordOfGlory , 'player.hasTalent(6,3) and player.hp < 0.55'}, 
 
     {{"nested"}, 'kps.addControl',{
 		-- "Main d’entrave" -- Movement speed reduced by 70%. 10 seconds remaining
@@ -69,54 +71,13 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- TRINKETS -- SLOT 0 /use 13
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.buffDuration(spells.avengingWrath) > 20 and kps.timeInCombat > 30' , "/use 14" },
-    {{"macro"}, 'player.useTrinket(1) and player.buffDuration(spells.crusade) > 20 and kps.timeInCombat > 30' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and kps.timeInCombat > 5' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and kps.timeInCombat > 9' , "/use 14" },
 
-    -- AZERITE
-    -- "Guardian of Azeroth" -- invoque un gardien d’Azeroth pendant 30 sec. 3 min cooldown.
-    --{spells.azerite.guardianOfAzeroth, 'target.isAttackable' , "target" },
-    {spells.azerite.concentratedFlame, 'target.isAttackable' , "target" },
-    --{spells.azerite.theUnboundForce, 'target.isAttackable and target.distanceMax <= 30' , "target" },
-    --{spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.avengingWrath) > 15' , "target" },
-    --{spells.azerite.memoryOfLucidDreams, 'target.isAttackable and player.myBuffDuration(spells.crusade) > 15' , "target" },
+    {{"macro"}, 'target.distanceMax <= 5 and spells.finalReckoning.cooldown == 0' , "/cast [@player] "..FinalReckoning },
     
-    {{"nested"},'kps.cooldowns and player.holyPower < 3', {
-        {spells.judgment, 'target.distanceMax <= 30' , "target"  }, -- Generates 1 Holy Power. 10 sec cd 
-        {spells.bladeOfJustice, 'target.distanceMax <= 10' , "target"  }, -- Generates 2 Holy Power. 10 sec cd
-        {spells.crusaderStrike, 'spells.crusaderStrike.charges == 2 and target.distanceMax <= 10' , "target"  }, -- Generates 1 Holy Power
-    }},
-
-    {spells.inquisition, 'player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) < 15 and player.holyPower >= 2' , "target" },
-    {{"nested"},'kps.cooldowns and player.holyPower >= 3', {
-        {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and target.isAttackable and player.hasTalent(7,3) and player.myBuffDuration(spells.inquisition) > 25 and target.distanceMax <= 10' },
-        {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and target.isAttackable and player.hasTalent(7,1) and target.distanceMax <= 10' },
-        {spells.crusade, 'target.isAttackable and player.hasTalent(7,2) and target.distanceMax <= 10' },
-    }},
-
-    {spells.wakeOfAshes, 'not player.hasTalent(7,2) and spells.avengingWrath.cooldown > 30 and target.distanceMax <= 10 and player.holyPower < 2' , "target" },
-    {spells.wakeOfAshes, 'player.hasTalent(7,2) and spells.crusade.cooldown > 30 and target.distanceMax <= 10 and player.holyPower < 2' , "target" },
-    {spells.consecration, 'player.hasTalent(4,2) and not player.isMoving and not target.isMoving and target.distanceMax <= 5 and player.holyPower < 5' }, -- Generates 1 Holy Power.
-    {{"nested"},'kps.multiTarget and target.isAttackable', {
-        {spells.executionSentence, 'player.hasTalent(1,3) and target.distanceMax <= 20' , "target" },
-        {spells.divineStorm, 'true' , "target"  },
-        {spells.wakeOfAshes, 'target.distanceMax <= 10' , "target" },
-    }},
-    {spells.hammerOfWrath, 'player.hasTalent(2,3)' , "target" }, -- Generates 1 Holy Power.
-    {spells.templarsVerdict, 'player.hasBuff(spells.righteousVerdict)' , "target" , "templarsVerdict_righteousVerdict" },
-    {spells.templarsVerdict, 'target.hasMyDebuff(spells.judgment)' , "target" , "templarsVerdict_judgment" },
-    {spells.executionSentence, 'player.hasTalent(1,3) and player.hasTalent(7,2) and target.distanceMax <= 20 and spells.crusade.cooldown > 20 ' , "target" , "executionSentence" },
-    {spells.executionSentence, 'player.hasTalent(1,3) and not player.hasTalent(7,2) and target.distanceMax <= 20 and spells.avengingWrath.cooldown > 20 ' , "target" , "executionSentence" },
-    {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , "target" , "divineStorm_empyreanPower" },
-    {spells.divineStorm, 'player.plateCount >= 3' , "target" , "divineStorm_plateCount" },
-    {spells.templarsVerdict, 'true' , "target" , "templarsVerdict" },
-
-    {spells.judgment, 'target.distanceMax <= 30' , "target" }, 
-    {spells.bladeOfJustice, 'target.distanceMax <= 10' , "target" },  
-    {spells.crusaderStrike, 'target.distanceMax <= 10' , "target" }, 
-
-    -- "Empyrean Power" 286393 -- buff -- Your next Divine Storm is free and deals 0 additional damage.
-    -- "Blade of Wrath" 281178 -- buff -- Your next Blade of Justice deals 25% increased damage.
-    {{"macro"}, 'true' , "/startattack" },
+    {kps.hekili({}), 'true'},
+    {{"macro"}, 'target.isAttackable and target.distanceMax <= 5' , "/startattack" },
 
 }
 ,"paladin_retribution_bfa")
