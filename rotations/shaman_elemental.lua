@@ -7,17 +7,9 @@ local spells = kps.spells.shaman
 local env = kps.env.shaman
 
 
-kps.rotations.register("SHAMAN","ELEMENTAL", {
-    {{"nested"}, 'kps.defensive', {
-        {spells.astralShift, 'player.hp < 0.5'},
-        {spells.healingSurge, 'player.hp < 0.7'},
-    }},
-    {spells.flameShock, 'not target.hasMyDebuff(spells.flameShock)'},
-    {spells.earthElemental, 'kps.cooldowns'},
-    {spells.fireElemental, 'kps.cooldowns'},
-    {spells.earthShock, 'player.maelstrom >= 60'},
-    {spells.frostShock, 'player.isMoving'},
-    {spells.lavaBurst,  'target.hasMyDebuff(spells.flameShock)'},
-    {spells.lightningBolt},
+kps.rotations.register("SHAMAN","ELEMENTAL",
+{
+    {kps.hekili({
+    })}
 }
-,"Icy Veins Easy Mode")
+,"Hekili")

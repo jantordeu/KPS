@@ -37,47 +37,6 @@ function immolate(target, time, unstableAfflictionTime, siphonLifeTime)
 end
 
 
-local singleTarget = {
-    -- Avoid Cap
-    {spells.chaosBolt, 'player.soulFragments >= 43'},
-    {spells.chaosBolt, 'focus.hasMyDebuff(spells.havoc) or mouseover.hasMyDebuff(spells.havoc)'},
-    immolate('target', 5.0),
-    immolate('focus', 5.0),
-
-    {{"nested"}, 'player.infernalDuration > 4', {
-        { spells.darkSoulInstability, 'player.infernalDuration > 18' },
-        { spells.chaosBolt },
-    }},
-
-    {{"nested"}, 'kps.cooldowns and ((IsInRaid() and kps.env.boss1.exists) or not IsInRaid())', {
-        { spells.summonInfernal, 'keys.shift and spells.darkSoulInstability.cooldown < 8'},
-    }},
-
-    -- Cast Conflagrate to generate Soul Shards.
-    {spells.conflagrate},
-    -- Cast Incinerate to generate Soul Shards.
-    {spells.incinerate},
-}
-
-
-local multiTarget = {
-    -- Avoid Cap
-    {spells.chaosBolt, 'player.soulFragments >= 48'},
-    {spells.immolate, 'target.myDebuffDuration(spells.immolate) <= 5.0 and not spells.immolate.isRecastAt("target")'},
-    immolate('target', 5.0),
-    immolate('focus', 5.0),
-    -- Avoid Cap
-    {spells.chaosBolt, 'focus.hasMyDebuff(spells.havoc) or mouseover.hasMyDebuff(spells.havoc)'},
-    {spells.channelDemonfire},
-    -- Cast Cataclysm when available.
-    {spells.rainOfFire, 'keys.shift'},
-
-    -- Cast Conflagrate to generate Soul Shards.
-    {spells.conflagrate},
-    -- Cast Incinerate to generate Soul Shards.
-    {spells.incinerate},
-}
-
 local rotation = {
     -- Curses, if enabled
     {spells.curseOfTongues, 'kps.curseOfTongues and not target.hasDebuff(spells.curseOfTongues)'},
@@ -85,7 +44,6 @@ local rotation = {
 
     -- Fear
     {{"nested"}, 'kps.fear', {
-        {spells.fear, 'not mouseover.hasDebuff(spells.fear) and keys.ctrl', "mouseover" },
         {spells.fear, 'not focus.hasDebuff(spells.fear)', "focus" },
     }},
 
@@ -99,6 +57,10 @@ local rotation = {
         {spells.soulRot, useCooldowns},
 
 
+        -- Cataclysm
+        {{"nested"}, 'keys.shift', {
+            {spells.cataclysm},
+        }},
         -- Havoc
         {{"nested"}, 'focus.hasMyDebuff(spells.havoc) or mouseover.hasMyDebuff(spells.havoc)', {
             {spells.conflagrate, 'spells.conflagrate.charges > 0 and player.soulFragments <= 44'},
@@ -106,7 +68,7 @@ local rotation = {
             immolate('target', 5.0),
         }},
         -- Rain of Fire!
-        {{"nested"}, 'keys.shift', {
+        {{"nested"}, 'keys.ctrl', {
             {spells.summonInfernal},
             {spells.rainOfFire, 'not spells.rainOfFire.lastCasted(6.5)'},
         }},
@@ -116,7 +78,7 @@ local rotation = {
             {spells.chaosBolt},
         }},
         -- Trigger Havoc (if neither doing aoe or fear)
-        {{"nested"}, 'not keys.shift and not kps.fear', {
+        {{"nested"}, 'not keys.ctrl and not kps.fear', {
             {spells.havoc, 'player.soulFragments >= 30 and isHavocUnit("mouseover") and keys.ctrl', "mouseover" },
             {spells.havoc, 'player.soulFragments >= 30 and isHavocUnit("focus")', "focus" },
         }},
@@ -144,3 +106,40 @@ kps.rotations.register("WARLOCK","DESTRUCTION",
     {{"nested"}, 'not player.hasDebuff(kps.spells.mplus.quake)', rotation},
 }
 ,"Destruction 9.0.1 M+", {0,0,0,0,0,2,0})
+
+kps.rotations.register("WARLOCK","DESTRUCTION",
+{
+    {"/cancelaura " .. spells.burningRush, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
+
+    {{"nested"}, 'player.hasDebuff(kps.spells.mplus.quake)',
+        { kps.stopCasting, "player.castTimeLeft >= player.debuffDuration(kps.spells.mplus.quake)" },
+        { kps.stopCasting, "player.channelTimeLeft >= player.debuffDuration(kps.spells.mplus.quake) and player.debuffDuration(kps.spells.mplus.quake) < 0.3" },
+    },
+
+    -- Curses, if enabled
+    {spells.curseOfTongues, 'kps.curseOfTongues and not target.hasDebuff(spells.curseOfTongues)'},
+    {spells.curseOfWeakness, 'kps.curseOfWeakness and not target.hasDebuff(spells.curseOfWeakness)'},
+
+    -- Fear
+    {{"nested"}, 'kps.fear', {
+        {spells.fear, 'not mouseover.hasDebuff(spells.fear) and keys.ctrl', "mouseover" },
+        {spells.fear, 'not focus.hasDebuff(spells.fear)', "focus" },
+    }},
+    -- Trigger Havoc (if neither doing aoe or fear)
+    {{"nested"}, 'not keys.shift and not kps.fear', {
+        {spells.havoc, 'player.soulFragments >= 30 and isHavocUnit("mouseover") and keys.ctrl', "mouseover" },
+        {spells.havoc, 'player.soulFragments >= 30 and isHavocUnit("focus")', "focus" },
+    }},
+    {{"nested"}, 'not spells.havoc.lastCasted(12.0)', {
+        immolate('focus', 5.0),
+    }},
+
+    {kps.hekili(), 'keys.shift'},
+    {kps.hekili({
+        spells.summonInfernal,
+        spells.rainOfFire,
+        spells.cataclysm,
+        spells.havoc
+    })}
+}
+,"Hekili", {0,0,0,0,0,2,0})

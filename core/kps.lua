@@ -77,8 +77,8 @@ kps.combatStep = function ()
             elseif prioritySpell ~= nil then
                 if prioritySpell.canBeCastAt("target") then
                     local a, b, c = prioritySpell.cast(target)
-                    prioritySpell = nil
                     LOG.warn("Priority Spell %s was casted.", prioritySpell)
+                    prioritySpell = nil
                     return a, b, c
                 else
                     if prioritySpell.cooldown > 3 then prioritySpell = nil end

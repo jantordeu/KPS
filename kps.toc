@@ -41,7 +41,6 @@ modules\unit\unit_range.lua
 modules\unit\unit_state.lua
 modules\unit\unit_timetodie.lua
 modules\player\player.lua
-modules\player\player_state.lua
 modules\player\player_auras.lua
 modules\player\player_eclipse.lua
 modules\player\player_powers.lua
@@ -49,10 +48,12 @@ modules\player\player_procs.lua
 modules\player\player_runes.lua
 modules\player\player_seals.lua
 modules\player\player_stagger.lua
+modules\player\player_state.lua
 modules\player\player_target_orientation.lua
 modules\player\player_wild_imps.lua
 modules\auto_turn.lua
 modules\hekili.lua
+modules\interrupt.lua
 modules\totem.lua
 modules\spell_id.lua
 modules\unlock\basic.lua

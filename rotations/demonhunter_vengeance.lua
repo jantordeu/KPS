@@ -19,7 +19,18 @@ kps.rotations.register("DEMONHUNTER","VENGEANCE",
     {spells.infernalStrike, 'keys.shift and not spells.infernalStrike.isRecastAt("target")'},
 
     {kps.hekili({
-        spells.infernalStrike.id
+        spells.disrupt,
+        spells.infernalStrike
+    }), 'keys.ctrl'},
+
+
+    {kps.hekili({
+        spells.disrupt,
+        spells.felDevastation,
+        spells.infernalStrike
     })}
+
+
+
 }
 ,"Hekili")

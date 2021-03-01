@@ -88,7 +88,7 @@ kps.spells.paladin.divineTempest = kps.Spell.fromId(186773)
 kps.spells.paladin.divineVision = kps.Spell.fromId(199324)
 kps.spells.paladin.echoOfTheHighlord = kps.Spell.fromId(186788)
 kps.spells.paladin.embraceTheLight = kps.Spell.fromId(186934)
-kps.spells.paladin.empyreanPower = kps.Spell.fromId(286393) -- Your next Divine Storm is free and deals 0 additional damage.
+kps.spells.paladin.empyreanPower = kps.Spell.fromId(286393)
 kps.spells.paladin.endlessResolve = kps.Spell.fromId(185086)
 kps.spells.paladin.executionSentence = kps.Spell.fromId(267798)
 kps.spells.paladin.expelTheDarkness = kps.Spell.fromId(200296)
@@ -217,12 +217,12 @@ kps.spells.paladin.seraphim = kps.Spell.fromId(152262)
 kps.spells.paladin.seraphimsBlessing = kps.Spell.fromId(204927)
 kps.spells.paladin.shareTheBurden = kps.Spell.fromId(278075)
 kps.spells.paladin.sharpenedEdge = kps.Spell.fromId(184759)
-kps.spells.paladin.shieldOfTheRighteous = kps.Spell.fromId(53600) -- buff 132403/shield-of-the-righteous
+kps.spells.paladin.shieldOfTheRighteous = kps.Spell.fromId(53600) 
 kps.spells.paladin.shieldOfVengeance = kps.Spell.fromId(184662)
 kps.spells.paladin.shieldOfVirtue = kps.Spell.fromId(215652)
 kps.spells.paladin.shockTreatment = kps.Spell.fromId(200315)
 kps.spells.paladin.silverTouch = kps.Spell.fromId(214923)
-kps.spells.paladin.soaringShield = kps.Spell.fromId(278951) -- 278954/soaring-shield
+kps.spells.paladin.soaringShield = kps.Spell.fromId(278951) 
 kps.spells.paladin.spreadingTheWord = kps.Spell.fromId(199456)
 kps.spells.paladin.stalwartProtector = kps.Spell.fromId(274391)
 kps.spells.paladin.steedOfGlory = kps.Spell.fromId(199542)
@@ -260,7 +260,7 @@ kps.spells.paladin.vindicator = kps.Spell.fromId(200373)
 kps.spells.paladin.virtuesOfTheLight = kps.Spell.fromId(222648)
 kps.spells.paladin.wakeOfAshes = kps.Spell.fromId(255937)
 kps.spells.paladin.warriorOfLight = kps.Spell.fromId(210341)
-kps.spells.paladin.wordOfGlory = kps.Spell.fromId(210191)
+kps.spells.paladin.wordOfGlory = kps.Spell.fromId(85673)
 kps.spells.paladin.wrathOfTheAshbringer = kps.Spell.fromId(186945)
 kps.spells.paladin.zeal = kps.Spell.fromId(269569)
 kps.spells.paladin.zealotry = kps.Spell.fromId(269262)
@@ -287,6 +287,12 @@ kps.spells.paladin.razorCoral = kps.Spell.fromId(303568)
 -- 216413/divine-purpose -- Divine Purpose Your next Light of Dawn costs no mana. 10 seconds remaining
 kps.spells.paladin.divinePurposeHolyShock = kps.Spell.fromId(216411)
 kps.spells.paladin.divinePurposeLightOfDawn = kps.Spell.fromId(216413)
+kps.spells.paladin.shiningLight = kps.Spell.fromId(327510)
+
+-- Kirian
+kps.spells.paladin.divineToll = kps.Spell.fromId(304971)
+kps.spells.paladin.finalReckoning = kps.Spell.fromId(343721)
+
 
 
 

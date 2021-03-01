@@ -85,7 +85,7 @@ local regularRotation = {
 
 
     -- DoTs at target
-    dots('target', 5.4, 4.2, 6.3, 4.5),
+    dots('target', 7.4, 4.2, 6.3, 4.5),
 
     -- Second Level CD's
     {{"nested"}, useCooldowns, {
@@ -95,7 +95,7 @@ local regularRotation = {
     }},
 
     -- DoT's at focus
-    dots('focus', 5.4, 4.2, 0.0, 4.5),
+    dots('focus', 7.4, 4.2, 0.0, 4.5),
     -- DoT's at mouseover
     dots('mouseover', 5.4, 4.2, 0.0, 4.5),
 
@@ -132,4 +132,16 @@ kps.rotations.register("WARLOCK","AFFLICTION",
     {{"nested"}, 'not player.isMoving', regularRotation},
 }
 ,"Loox", {0,3,0,2,0,2,3})
+
+
+
+kps.rotations.register("WARLOCK","AFFLICTION",
+{
+    -- Take care of burning rush...
+    {"/cancelaura " .. spells.burningRush, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
+
+    {kps.hekili({
+    })}
+}
+,"Hekili")
 

@@ -16,12 +16,3 @@ function kps.env.warlock.isHavocUnit(unit)
     if UnitIsUnit("target",unit) then return false end
     return true
 end
-
-local function UnitIsAttackable(unit)
-    if UnitIsDeadOrGhost(unit) then return false end
-    if not UnitExists(unit) then return false end
-    if (string.match(GetUnitName(unit), kps.locale["Dummy"])) then return true end
-    if UnitCanAttack("player",unit) == false then return false end
-    if not kps.env.harmSpell.inRange(unit) then return false end
-    return true
-end

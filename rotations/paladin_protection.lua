@@ -18,9 +18,6 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"macro"}, 'not focus.exists and mouseover.isAttackable and mouseover.inCombat and not mouseover.isUnit("target")' , "/focus mouseover" },
     {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
     {{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
-    
-    -- "Hand of Reckoning"
-    {spells.handOfReckoning, 'kps.addControl and target.isAttackable and not targettarget.isUnit("player")' , "target" , "taunt" },
 
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
@@ -35,10 +32,13 @@ kps.rotations.register("PALADIN","PROTECTION",
     
     -- Interrupts
     {{"nested"}, 'kps.addControl',{
-    	{spells.hammerOfJustice, 'mouseover.distance <= 10 and mouseover.isAttackable and mouseover.distanceMax <= 10 and mouseover.isMoving' , "mouseover" },
-    	{spells.hammerOfJustice, 'target.distance <= 10 and target.isAttackable and target.distanceMax <= 10 and target.isMoving' , "target" },
+        {spells.handOfReckoning, 'target.isAttackable and not targettarget.isUnit("player")' , "target" , "taunt" },
+        {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous_charges"},
+        {spells.ardentDefender },
+        --{spells.guardianOfAncientKings, 'player.hpIncoming < 0.55 and not player.hasBuff(spells.ardentDefender)' },
     }},
     {{"nested"}, 'kps.interrupt',{
+        {spells.avengersShield, 'target.distanceMax <= 10 and target.isCasting' , "target" , "avengersShield_casting" },
         {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting ' , "target" },
         {spells.hammerOfJustice, 'target.distanceMax <= 10 and target.isCasting and target.isInterruptable' , "target" },
         {spells.hammerOfJustice, 'focus.distanceMax <= 10 and focus.isCasting and focus.isInterruptable' , "focus" },
@@ -47,58 +47,48 @@ kps.rotations.register("PALADIN","PROTECTION",
         {spells.rebuke, 'focus.isCasting and focus.isInterruptable and focus.castTimeLeft < 2' , "focus" },
     }},
     
+    -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
+    {spells.guardianOfAncientKings, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender)' },
+    -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
+    {spells.blessingOfProtection, 'mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
+    {spells.blessingOfProtection, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and not player.hasBuff(spells.guardianOfAncientKings)' , "player"},
+    
+    -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
+    {spells.ardentDefender, 'player.hpIncoming < 0.70 and not and player.hasBuff(spells.shiningLight)' },
+    {spells.wordOfGlory , 'player.hp < 0.55'}, 
+    {spells.wordOfGlory , 'player.hp < 0.70 and player.hasBuff(spells.shiningLight)'},
+    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
+    {spells.layOnHands, 'player.hpIncoming < 0.30' },
+    -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 
+    {spells.divineShield, 'player.hpIncoming < 0.30' },
+    -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
+    {spells.avengingWrath, 'player.hp < 0.55' },
+    
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
-
-    -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
-    {spells.avengingWrath, 'player.hp < 0.65 and spells.handOfTheProtector.cooldown < player.gcd' },
-    {spells.avengingWrath, 'player.hp < 0.65 and spells.lightOfTheProtector.cooldown < player.gcd' },
-    -- "Main du protecteur" talent replace "Lumière du protecteur"
-    {spells.handOfTheProtector, 'player.hasTalent(5,3) and player.hp < 0.65' },
-    {spells.lightOfTheProtector, 'not player.hasTalent(5,3) and player.hp < 0.65' },
     
-    -- AZERITE
-    -- Each cast of Concentrated Flame deals 100% increased damage or healing. This bonus resets after every third cast.
-    {spells.azerite.concentratedFlame, 'target.isAttackable' , "target" },
-    {spells.azerite.memoryOfLucidDreams, 'player.hpIncoming < 0.65' , "target" },
-    {spells.azerite.aegisOfTheDeep, 'player.hpIncoming < 0.85'},
-    {spells.azerite.azerothUndyingGift, 'player.hpIncoming < 0.85'},
-
-    -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
-    {spells.ardentDefender, 'target.isCasting ' , "ardentDefender_casting" },
-    {spells.ardentDefender, 'player.hpIncoming < 0.65 and spells.handOfTheProtector.cooldown > player.gcd' }, 
-    {spells.ardentDefender, 'player.hpIncoming < 0.65 and spells.lightOfTheProtector.cooldown > player.gcd' },
-    -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
-    {spells.guardianOfAncientKings, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and spells.ardentDefender.cooldown > player.gcd' },
-    -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
-    {spells.blessingOfProtection, 'mouseover.hp < 0.40 and mouseover.isHealable' , "mouseover"},
-    {spells.blessingOfProtection, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and not player.hasBuff(spells.guardianOfAncientKings)' , "player"},
-    -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 
-    {spells.divineShield, 'player.hpIncoming < 0.30' },
-    -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
-    {spells.layOnHands, 'player.hpIncoming < 0.40' },
-
-    -- Séraphin augmente votre hâte, vos chances de coup critique, votre Maîtrise et votre polyvalence de 1007.
-    {spells.seraphim, 'player.hasTalent(7,3) and not player.hasBuff(spells.seraphim)' },
-    {spells.judgment, 'player.hasTalent(2,2) and target.isAttackable and target.distanceMax <= 30 and spells.judgment.charges == 2' , "target" },
+    {spells.judgment, 'target.isAttackable' , "target" },
 	{spells.consecration, 'not player.isMoving and not player.hasBuff(spells.consecration) and target.distanceMax <= 5' , "player" , "consecration_player" },
- 	-- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant de 12% les dégâts de leur prochaine attaque automatique contre vous.
-    {spells.blessedHammer, 'player.hasTalent(1,3) and target.myDebuffDuration(spells.blessedHammer) < 5 and target.distanceMax <= 10' , "target" , "blessedHammer" },
-    -- "Hammer of the Righteous" -- "Marteau du vertueux" -- inflige (27% of Attack power)% points de dégâts physiques. -- If you're standing in your Consecration, it also causes a wave of light that hits all nearby enemies for light Holy damage.
-    {spells.hammerOfTheRighteous, 'not player.hasTalent(1,3) and player.hasBuff(spells.consecration) and target.distanceMax <= 10', "target" , "hammerOfTheRighteous" },
-    -- "Bouclier du vengeur" -- "Avenger's Shield" -- Buff "Avenger's Valor" "Vaillance du vengeur". The effects of your next Shield of the Righteous are increased by 20% -- Debuff "Bouclier du vengeur" "Avenger's Shield". Silence 3 seconds
-    {spells.avengersShield, 'target.distanceMax <= 10 and target.isCasting and target.castTimeLeft < 2' , "target" , "avengersShield_casting" },
-    {spells.avengersShield, 'target.distanceMax <= 10 and player.myBuffDuration(spells.avengersValor) < 2' , "target" , "avengersShield_isUsable" },
-    -- "Bouclier du vertueux" -- "Shield of the Righteous" -- causing (33% of Attack power) Holy damage and increasing your Armor by (150 * Strength / 100) for 4.5 sec. 18 sec recharge
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hasBuff(spells.avengersValor) and spells.shieldOfTheRighteous.charges > 1 ' , "target" , "shieldOfTheRighteous_charges"},
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous) and player.hpIncoming < 0.85' , "target" , "shieldOfTheRighteous_health"},
+    -- "Bouclier du vengeur" -- "Avenger's Shield"
+    {spells.avengersShield, 'target.distanceMax <= 10' , "target" },
+    -- "Bouclier du vertueux" -- "Shield of the Righteous"
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous_charges"},
+    {spells.shieldOfTheRighteous, 'player.holyPower == 5' , "target" , "shieldOfTheRighteous_health"},
+    -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
+    {spells.divineToll, 'player.holyPower < 5' , "target" },
 
-	{spells.judgment, 'target.isAttackable and target.distanceMax <= 30' , "target" },
-    {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.40', 'player'},
+    -- "Hammer of Wrath" -- Only usable on enemies that have less than 20% health
+    {spells.hammerOfWrath, 'target.isAttackable' , "target" },
+    -- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant les dégâts de leur prochaine attaque automatique contre vous.
+    {spells.blessedHammer, 'player.hasTalent(1,3) and target.distanceMax <= 10' , "target" , "blessedHammer" },
+    -- "Hammer of the Righteous" -- "Marteau du vertueux" -- If you're standing in your Consecration, it also causes a wave of light that hits all nearby enemies for light Holy damage.
+    {spells.hammerOfTheRighteous, 'player.hasBuff(spells.consecration) and target.distanceMax <= 10', "target" , "hammerOfTheRighteous" },
+
+    {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.30', 'player'},
     
-    {{"macro"}, 'true' , "/startattack" },
+    {{"macro"}, 'target.isAttackable and target.distanceMax <= 5' , "/startattack" },
 
  }
 ,"paladin_protection_bfa")

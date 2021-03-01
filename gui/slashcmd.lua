@@ -32,6 +32,8 @@ function SlashCmdList.KPS(cmd, editbox)
     elseif msg == "interrupt" or msg == "int" then
         kps.interrupt = not kps.interrupt
         kps.gui.updateToggleStates()
+    elseif msg == "kick" then
+        kps.kick()
     elseif msg == "defensive" or msg == "def" then
         kps.defensive = not kps.defensive
         kps.gui.updateToggleStates()
@@ -44,6 +46,8 @@ function SlashCmdList.KPS(cmd, editbox)
         kps.write("/kps cooldowns/cds - Toggle use of cooldowns.")
         kps.write("/kps pew - Spammable macro to do your best moves, if for some reason you don't want it fully automated.")
         kps.write("/kps interrupt/int - Toggle interrupting.")
+        kps.write("/kps instances/instance/inst - List M+ instances.")
+        kps.write("/kps kick - Interrupt current target, focus or mouseover if possible.")
         kps.write("/kps multitarget/multi/aoe - Toggle manual MultiTarget mode.")
         kps.write("/kps defensive/def - Toggle use of defensive cooldowns.")
         kps.write("/kps help - Show this help text.")
