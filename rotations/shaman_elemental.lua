@@ -1,7 +1,7 @@
 --[[[
 @module Shaman Elemental Rotation
-@author kirk24788
-@version 8.0.1
+@author Kirk24788
+@version Hekili
 ]]--
 local spells = kps.spells.shaman
 local env = kps.env.shaman

@@ -1,7 +1,7 @@
 --[[[
 @module Warlock Demonology Rotation
 @author Kirk24788
-@version 7.0.3
+@version Hekili
 ]]--
 local spells = kps.spells.warlock
 local env = kps.env.warlock

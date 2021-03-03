@@ -93,7 +93,7 @@ kps.rotations.register("PALADIN","HOLY",
     -- "Bestow Faith" "Don de foi" -- Récupère (150% of Spell power) points de vie à expiration. -- 12 sec cd
     {spells.bestowFaith, 'player.hasTalent(1,2) and not heal.lowestTankInRaid.hasBuff(spells.bestowFaith)' , kps.heal.lowestTankInRaid },    
     -- "Règne de la loi" -- Vous augmentez de 50% la portée de vos soins
-    {spells.ruleOfLaw, 'player.hasTalent(4,3) and heal.countLossInRange(0.85) > heal.countLossInDistance(0.85) and not player.hasBuff(spells.ruleOfLaw)' },
+    {spells.ruleOfLaw, 'player.hasTalent(4,3) and heal.countLossInRange(0.80) > heal.countLossInDistance(0.80) and not player.hasBuff(spells.ruleOfLaw)' },
     -- "Word of Glory" -- 3 charges de puissance sacrée	
     {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid },
     -- "Lumière de l’aube" -- "Light of Dawn" -- 3 charges de puissance sacrée	
@@ -121,7 +121,10 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.divineToll, 'true' , "target" },
     -- Beacon of Light - Although this does not generate Holy Power directly, you can cast a Flash of Light or Holy Light on the target affected by Beacon of Light to generate one Holy Power.
     {spells.flashOfLight, 'not player.isMoving and player.holyPower < 3 and player.hasBuff(spells.infusionOfLight) and heal.lowestTankInRaid.hpIncoming < 0.55' ,  kps.heal.lowestTankInRaid },
-    
+    -- "Imprégnation de lumière" "Infusion of Light" 
+    -- reduit le coût de votre prochain Éclair lumineux de 30% ou augmentent les soins prodigués par votre prochain sort Lumière sacrée de 30%.
+    {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hpIncoming < 0.80' , "player" , kps.heal.lowestInRaid , "FLASH_LOWEST" },
+
     -- DAMAGE
     {{"nested"}, 'kps.damage and target.isAttackable',{
         {spells.avengingWrath },
@@ -136,6 +139,7 @@ kps.rotations.register("PALADIN","HOLY",
     }},
 
     {spells.holyShock, 'target.isAttackable' , env.damageTarget },
+    {spells.holyShock, 'target.hasMyDebuff(spells.holyShock) and mouseover.inCombat and and mouseover.isAttackable' , "mouseover" },
     {spells.crusaderStrike, 'player.hasTalent(1,1) and target.isAttackable and target.distance <= 5' , "target" },
     {spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 5' },
 
@@ -144,10 +148,10 @@ kps.rotations.register("PALADIN","HOLY",
 
     -- "Imprégnation de lumière" "Infusion of Light" 
     -- reduit le coût de votre prochain Éclair lumineux de 30% ou augmentent les soins prodigués par votre prochain sort Lumière sacrée de 30%.
-    {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.55' ,{
-        {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.55' , "player" , "FLASH_PLAYER"  },
-        {spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.55 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
-        {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.55' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
+    {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.65' ,{
+        {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.65' , "player" , "FLASH_PLAYER"  },
+        {spells.flashOfLight, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.65 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid , "FLASH_LOWEST" },
+        {spells.flashOfLight, 'not player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.65' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
     }},
     {{"nested"}, 'not player.isMoving and heal.lowestInRaid.hp < 0.80' ,{
         {spells.holyLight, 'not player.isMoving and heal.lowestInRaid.hp < 0.80 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and heal.lowestInRaid.hp < player.hp' , kps.heal.lowestInRaid , "heal_lowest" },

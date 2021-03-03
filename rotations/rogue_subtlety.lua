@@ -1,7 +1,7 @@
 --[[[
 @module Rogue Subtlety Rotation
-@generated_from rogue_subtlety.simc
-@version 7.0.3
+@author Kirk24788
+@version Hekili
 ]]--
 local spells = kps.spells.rogue
 local env = kps.env.rogue

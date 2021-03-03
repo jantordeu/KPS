@@ -76,15 +76,14 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Bouclier du vertueux" -- "Shield of the Righteous"
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous_charges"},
     {spells.shieldOfTheRighteous, 'player.holyPower == 5' , "target" , "shieldOfTheRighteous_health"},
-    -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
-    {spells.divineToll, 'player.holyPower < 5' , "target" },
-
-    -- "Hammer of Wrath" -- Only usable on enemies that have less than 20% health
+	-- "Hammer of Wrath" -- Only usable on enemies that have less than 20% health
     {spells.hammerOfWrath, 'target.isAttackable' , "target" },
     -- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant les dégâts de leur prochaine attaque automatique contre vous.
     {spells.blessedHammer, 'player.hasTalent(1,3) and target.distanceMax <= 10' , "target" , "blessedHammer" },
     -- "Hammer of the Righteous" -- "Marteau du vertueux" -- If you're standing in your Consecration, it also causes a wave of light that hits all nearby enemies for light Holy damage.
     {spells.hammerOfTheRighteous, 'player.hasBuff(spells.consecration) and target.distanceMax <= 10', "target" , "hammerOfTheRighteous" },
+    -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
+    {spells.divineToll, 'player.holyPower < 5' , "target" },
 
     {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.30', 'player'},
     
