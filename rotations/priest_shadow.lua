@@ -96,26 +96,25 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.shadowfiend, 'player.hasBuff(spells.powerInfusion)' , env.damageTarget },
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
     {spells.voidEruption, 'kps.multiTarget and not player.isMoving and player.insanity > 40' , env.damageTarget , "voidEruption"  },
-
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindSear) and spells.mindSear.cooldown == 0' , "/stopcasting" },
     {{"macro"}, 'player.hasBuff(spells.voidForm) and spells.voidBolt.cooldown == 0 and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
+    
+    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4' , "target" },
+    {spells.devouringPlague, 'target.isAttackable and target.myDebuffDuration(spells.devouringPlague) < 2' , "target" },
     {{"macro"}, 'spells.mindBlast.cooldown == 0 and player.hasBuff(spells.talbadarStratagem) and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.talbadarStratagem)' , env.damageTarget , "mindBlast_talbadar" },
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
+
+    {spells.vampiricTouch, 'player.hasBuff(spells.unfurlingDarkness) and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4' , "mouseover" },
+    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
+    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4' , "mouseover" },
 
     {spells.voidTorrent, 'not player.hasBuff(spells.voidForm) and player.insanity < 40' , env.damageTarget }, 
     {spells.mindgames, 'not player.isMoving' , env.damageTarget }, 
     {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
     {spells.mindSear, 'kps.mindSear and not player.isMoving and player.insanity > 30' , env.damageTarget , "mindSear_mindSear" },
-
-    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4' , "target" },
-    {spells.devouringPlague, 'target.isAttackable and target.myDebuffDuration(spells.devouringPlague) < 2' , "target" },
-
-    {spells.vampiricTouch, 'player.hasBuff(spells.unfurlingDarkness) and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4' , "mouseover" },
-    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
-    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4' , "mouseover" },
 
     {spells.shadowWordPain, 'player.isMoving' , env.damageTarget },
     {spells.mindBlast, 'not player.isMoving' , env.damageTarget , },

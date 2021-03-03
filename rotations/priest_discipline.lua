@@ -195,7 +195,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.mindBlast, 'not player.isMoving and heal.hasBuffAtonement.hp < 1' , env.damageTarget },
     {spells.powerWordSolace, 'heal.hasBuffAtonement.hp < 1' , env.damageTarget  },
     {spells.penance, 'heal.hasBuffAtonement.hp < 1' , env.damageTarget },
-    {spells.smite, 'not player.isMoving and heal.lowestInRaid.myBuffDuration(spells.atonement) > 2 heal.lowestInRaid.hp > 0.40' , env.damageTarget },
+    {spells.smite, 'not player.isMoving and heal.lowestInRaid.myBuffDuration(spells.atonement) > 2 and heal.lowestInRaid.hp > 0.40' , env.damageTarget },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.80' , env.damageTarget },
     -- RAPTURE
     {spells.rapture, 'not player.hasTalent(7,2) and heal.countLossInRange(0.80) > 4 and IsEquippedItem(173241)' },
