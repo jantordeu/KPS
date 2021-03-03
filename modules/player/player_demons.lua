@@ -153,3 +153,22 @@ function Player.empoweredDemonsDuration(self)
         return lowestDuration
     end
 end
+
+function Player.infernalActive(self)
+    local hasTotem, totemName, startTime, duration = GetTotemInfo(1)
+    if hasTotem and totemName == "Infernal" then
+        return true
+    else
+        return false
+    end
+end
+
+function Player.infernalDuration(self)
+    local hasTotem, totemName, startTime, duration = GetTotemInfo(1)
+    if hasTotem then
+        local timeActive = GetTime() - startTime
+        return duration - timeActive
+    else
+        return 0
+    end
+end
