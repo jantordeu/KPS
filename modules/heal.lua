@@ -640,6 +640,9 @@ print("|cffff8000atonementCount:|cffffffff", kps["env"].heal.hasBuffAtonementCou
 --print("|cffff8000glimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 print("|cffff8000", "---------------------------------")
 
+--print("|cffff8000cooldown:|cffffffff", kps.spells.priest.voidBolt.cooldown)
+--print("|cffff8000cooldown:|cffffffff", kps.spells.priest.voidEruption.cooldown)
+
 
 --print("|cffff8000cooldown:|cffffffff", kps.spells.priest.powerWordRadiance.cooldown)
 --print("|cffff8000cooldownTotal:|cffffffff", kps.spells.priest.powerWordRadiance.cooldownTotal)
