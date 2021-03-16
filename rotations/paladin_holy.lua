@@ -106,7 +106,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'player.hp < 0.80 and player.hp < heal.lowestTankInRaid.hp' , "player"  },
     {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.80' , kps.heal.lowestTankInRaid },
     {spells.holyShock, 'target.isAttackable' , env.damageTarget },
-    {spells.holyShock, 'target.hasMyDebuff(spells.holyShock) and mouseover.inCombat and and mouseover.isAttackable' , "mouseover" },
+    {spells.holyShock, 'target.hasMyDebuff(spells.holyShock) and mouseover.inCombat and mouseover.isAttackable' , "mouseover" },
     
     {spells.crusaderStrike, 'player.hasTalent(1,1) and target.isAttackable and target.distance <= 5' , "target" },
     {spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 5' },

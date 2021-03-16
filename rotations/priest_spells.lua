@@ -288,6 +288,7 @@ kps.spells.priest.voidTorrent = kps.Spell.fromId(263165)
 kps.spells.priest.powerInfusion = kps.Spell.fromId(10060)
 kps.spells.priest.spiritShell = kps.Spell.fromId(109964)
 kps.spells.priest.surgeOfLight = kps.Spell.fromId(114255)
+kps.spells.priest.damnation = kps.Spell.fromId(341374)
 
 
 -- COVENANT ABILITIES
