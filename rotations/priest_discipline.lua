@@ -89,9 +89,9 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     }},
  
     -- TRINKETS -- SLOT 0 /use 13
-    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use 13" },
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use [@player] 13" },
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.82' , "/use [@targettarget] 13" },
+    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.82' , "/use [@targettarget] 13" },
     -- TRINKETS -- SLOT 1 /use 14
     --{{"macro"}, 'player.useTrinket(1) and targettarget.isHealable' , "/use [@targettarget] 14" },
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" },
@@ -172,6 +172,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
 
     -- RADIANCE mini RAMP
     {spells.powerWordRadiance, 'not player.isInRaid and not player.isMoving and heal.countLossInRange(0.82) > 2 and not spells.powerWordRadiance.lastCasted(9)' , kps.heal.lowestInRaid , "radiance_lowest" },
+    {spells.powerWordRadiance, 'not player.isMoving and heal.countLossInRange(0.82) > 2 and mouseover.hp < 0.82 and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.powerWordRadiance.isRecastAt("mouseover")' , "mouseover" , "radiance_mouseover" },
     {{"nested"},'not player.isMoving and heal.countLossInRange(0.82) > 4 and not spells.powerWordRadiance.lastCasted(9)', {
         {spells.powerWordRadiance, 'heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 9', kps.heal.lowestTankInRaid , "radiance_tank" },
         {spells.powerWordRadiance, 'player.myBuffDuration(spells.atonement) < 9', "player"  , "radiance_player" },
