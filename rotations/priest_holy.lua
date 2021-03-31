@@ -84,7 +84,7 @@ kps.rotations.register("PRIEST","HOLY",
     -- "Angelic Feather"
     {{"macro"},'player.hasTalent(2,3) and not player.isSwimming and player.isMovingSince(1.6) and not player.hasBuff(spells.angelicFeather)' , "/cast [@player] "..AngelicFeather },
     -- "Levitate" 1706
-    {spells.levitate, 'player.IsFallingSince(1.4) and not player.hasBuff(spells.levitate)' , "player" },
+    --{spells.levitate, 'player.IsFallingSince(1.4) and not player.hasBuff(spells.levitate)' , "player" },
 
     -- "Dispel" "Purifier" 527
     {{"nested"},'kps.cooldowns', {
@@ -120,10 +120,10 @@ kps.rotations.register("PRIEST","HOLY",
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and heal.countLossInRange(0.82) > 2' , "/use 13" },
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.82' , "/use [@targettarget] 13" },
+    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.82' , "/use [@targettarget] 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    --{{"macro"}, 'player.useTrinket(1) and targettarget.isHealable' , "/use [@targettarget] 14" },
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and focus.isHealable' , "/use [@focus] 14" },
+    --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" },
 
     -- PVP
     {{"nested"}, 'player.isPVP' ,{
@@ -140,59 +140,61 @@ kps.rotations.register("PRIEST","HOLY",
         {spells.prayerOfHealing, 'heal.countLossInRange(0.72) > 2' , kps.heal.lowestInRaid , "POH_apotheosis" },
         {spells.heal, 'heal.lowestInRaid.hp < 0.72' , kps.heal.lowestInRaid , "flashHeal_lowest_apotheosis" },
     }},
-    {spells.apotheosis, 'player.hasTalent(7,2) and heal.lowestTankInRaid.hp < 0.55 and spells.holyWordSerenity.cooldown > 6' },
+    {spells.apotheosis, 'player.hasTalent(7,2) and heal.lowestTankInRaid.hp < 0.40 and spells.holyWordSerenity.cooldown > 6' },
     {spells.apotheosis, 'player.hasTalent(7,2) and heal.lowestInRaid.hp < 0.55 and heal.countLossInRange(0.72) > 2' },
     {spells.apotheosis, 'player.hasTalent(7,2) and heal.countLossInRange(0.55) > 2' },
 
-    {spells.powerInfusion, 'heal.lowestInRaid.hp < 0.55 and heal.countLossInRange(0.72) > 4' },
-    {spells.powerInfusion, 'not player.isInRaid and heal.lowestInRaid.hp < 0.55 and heal.countLossInRange(0.72) > 2' },
-    {spells.powerInfusion, 'heal.countLossInRange(0.55) > 3' },
+    {spells.powerInfusion, 'heal.lowestInRaid.hp < 0.40 and heal.countLossInRange(0.72) > 4' , "player" },
+    {spells.powerInfusion, 'not player.isInRaid and heal.lowestInRaid.hp < 0.40 and heal.countLossInRange(0.72) > 2' , "player" },
+    {spells.powerInfusion, 'mouseover.isHealable and mouseover.isRaidDamager and mouseover.isClassDistance', "mouseover" },
 
     -- MOUSEOVER
+    {spells.flashHeal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and player.hasBuff(spells.flashConcentration) and player.buffStacks(spells.flashConcentration) < 3' , "mouseover" , "flashHeal_mouseover" },
     {spells.heal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.82 and player.hasBuff(spells.flashConcentration)' , "mouseover" , "heal_mouseover" },
     {spells.flashHeal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.55' , "mouseover" , "flashHeal_mouseover" },
     {spells.heal, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.82' , "mouseover" , "heal_mouseover" },
     -- top health an unit (tank)
-    {spells.flashHeal, 'kps.concentration and not player.isMoving and player.hp < 0.55 and player.hasBuff(spells.flashConcentration) and player.buffStacks(spells.flashConcentration) < 3', "player", "flash_player_Concentration"  },
-    {spells.heal, 'kps.concentration and not player.isMoving and player.hp < 0.55 and player.hasBuff(spells.flashConcentration)', "player", "heal_player_Concentration"  },
-    {spells.flashHeal, 'kps.concentration and not player.isMoving and heal.lowestInRaid.hp < 0.55 and player.hasBuff(spells.flashConcentration) and player.buffStacks(spells.flashConcentration) < 3', kps.heal.lowestInRaid, "flash_lowest_Concentration"  },
-    {spells.heal, 'kps.concentration and not player.isMoving and heal.lowestInRaid.hp < 0.55 and player.hasBuff(spells.flashConcentration)', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
-        
+    {spells.flashHeal, 'not player.isMoving and player.hasBuff(spells.flashConcentration) and player.hp < 0.40 and player.buffStacks(spells.flashConcentration) < 3', "player", "flash_player_Concentration"  },
+    {spells.heal, 'not player.isMoving and player.hasBuff(spells.flashConcentration) and player.hp < 0.55', "player", "heal_player_Concentration"  },
+    {spells.flashHeal, 'not player.isMoving and player.hasBuff(spells.flashConcentration) and heal.lowestTankInRaid.hp < 0.40 and player.buffStacks(spells.flashConcentration) < 3', kps.heal.lowestTankInRaid, "flash_tank_Concentration"  },
+    {spells.heal, 'heal.lowestTankInRaid.hp < 0.55', kps.heal.lowestTankInRaid, "heal_tank_Concentration"  },
+    {spells.flashHeal, 'not player.isMoving and player.hasBuff(spells.flashConcentration) and heal.lowestInRaid.hp < 0.40 and player.buffStacks(spells.flashConcentration) < 3', kps.heal.lowestInRaid, "flash_lowest_Concentration"  },
+    {spells.heal, 'heal.lowestInRaid.hp < 0.55', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
     {{"nested"}, 'kps.concentration' ,{
+        {spells.holyWordSerenity, 'target.isFriend and target.hp < 0.65' , "target" },
+        {spells.heal, 'not player.isMoving and target.isFriend and target.hp < 0.82 and player.hasBuff(spells.flashConcentration)' , "target" },
+        {spells.renew, 'player.isMoving and target.isFriend and target.hp < 0.90 and not target.hasBuff(spells.renew)' , "target" },
         {spells.holyWordSerenity, 'focus.isFriend and focus.hp < 0.65' , "focus" },
-        {spells.heal, 'focus.isFriend and not player.isMoving and focus.hp < 0.82 and player.hasBuff(spells.flashConcentration)' , "focus" },
-        {spells.flashHeal, 'focus.isFriend and not player.isMoving and focus.hp < 0.55' , "focus" },
-        {spells.renew, 'player.isMoving and focus.isFriend and not focus.hasBuff(spells.renew)' , "focus" },
+        {spells.heal, 'not player.isMoving and focus.isFriend and focus.hp < 0.82 and player.hasBuff(spells.flashConcentration)' , "focus" },
+        {spells.renew, 'player.isMoving and focus.isFriend and focus.hp < 0.90 and not focus.hasBuff(spells.renew)' , "focus" },
         {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid},
         {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.82 and player.hasBuff(spells.flashConcentration)' , kps.heal.lowestTankInRaid  },
-        {spells.flashHeal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid  },
-        {spells.renew, 'player.isMoving and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid },
+        {spells.renew, 'player.isMoving and heal.lowestTankInRaid.hp < 0.90 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid },
     }},
-    {spells.smite, 'kps.concentration and not player.isMoving and heal.lowestInRaid.hp > 0.72' , env.damageTarget },
-    -- PARTY
-    {spells.flashHeal, 'not player.isInRaid and not player.isMoving and heal.lowestInRaid.hp < 0.72 and heal.countLossInRange(0.82) > 2 and player.hasBuff(spells.flashConcentration) and player.buffStacks(spells.flashConcentration) < 3', kps.heal.lowestInRaid, "flash_lowest_Concentration"  },
-    {spells.flashHeal, 'not player.isInRaid and not player.isMoving and heal.lowestInRaid.hp < 0.55 and player.hasBuff(spells.flashConcentration) and player.buffStacks(spells.flashConcentration) < 3', kps.heal.lowestInRaid, "flash_lowest_Concentration"  },
-    {spells.heal, 'not player.isInRaid and not player.isMoving and heal.lowestInRaid.hp < 0.82 and player.hasBuff(spells.flashConcentration)' , kps.heal.lowestInRaid },
-
-    -- "Prayer of Healing" LASTCAST
-    {spells.heal, 'not player.isMoving and spells.prayerOfHealing.lastCasted(5) and player.hasBuff(spells.flashConcentration) and heal.lowestInRaid.hp < 0.72' , kps.heal.lowestInRaid , "heal_POH_Concentration" },
-    {spells.flashHeal, 'not player.isMoving and spells.prayerOfHealing.lastCasted(5) and heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid , "flashHeal_POH" },
-    -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
-    {spells.prayerOfHealing, 'not player.isMoving and spells.holyWordSanctify.cooldown > 6 and heal.countLossInRange(0.82) > 4 and not spells.prayerOfHealing.lastCasted(6)' , kps.heal.lowestTankInRaid , "POH" },
-    -- "Flash Concentration" -- Reduces the cast time of your Heal by 0.2 sec and increases its healing by 3%. 15 seconds remaining -- IsEquippedItem(173249)
-    {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.72 and player.hasBuff(spells.flashConcentration)', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
-
-    {{"nested"}, 'player.isMoving' ,{
-        {spells.renew, 'heal.lowestTankInRaid.hp < 0.72 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid },
-        {spells.renew, 'player.hp < 0.72 and not player.hasBuff(spells.renew)' , "player" },
-        {spells.renew, 'heal.lowestInRaid.hp < 0.72 and not heal.lowestInRaid.hasBuff(spells.renew)' , kps.heal.lowestInRaid },
-        {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.40 and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid },
-        {spells.powerWordShield, 'player.hp < 0.40 and not player.hasDebuff(spells.weakenedSoul)' , "player" },
-    }},
-
     -- DAMAGE
-    {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.82' , "target" , "shadowWordDeath" },
-    {spells.shadowWordDeath, 'mouseover.inCombat and mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.82' , "mouseover" , "shadowWordDeath" },
+    {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and heal.lowestInRaid.hp > 0.72', "target" },
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("target") and heal.lowestInRaid.hp > 0.72' , "target" },
+    {spells.holyFire, 'kps.concentration and not player.isMoving and heal.lowestInRaid.hp > 0.72 and player.mana > 0.82' , env.damageTarget },
+    {spells.smite, 'kps.concentration and not player.isMoving and heal.lowestInRaid.hp > 0.72' , env.damageTarget },
+    {{"nested"}, 'kps.multiTarget and target.isAttackable' , {
+        {spells.powerInfusion, 'target.hp > 0.82 or target.isElite' },
+        {spells.holyWordChastise, 'true' , env.damageTarget },
+        {spells.holyFire, 'not player.isMoving' , env.damageTarget },
+        {spells.mindgames, 'not player.isMoving' , env.damageTarget },
+        {spells.smite, 'not player.isMoving' , env.damageTarget },
+        {spells.holyNova, 'target.distance <= 10' , "target" },
+    }},
+    -- "Prayer of Healing" LASTCAST
+    {spells.heal, 'not player.isMoving and spells.prayerOfHealing.lastCasted(5) and player.hasBuff(spells.flashConcentration) and heal.lowestInRaid.hp < 0.72' , kps.heal.lowestInRaid , "heal_POM_Concentration" },
+    {spells.flashHeal, 'not player.isMoving and spells.prayerOfHealing.lastCasted(5) and heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid ,"flashHeal_POM" },
+    -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
+    {spells.prayerOfHealing, 'not player.isMoving and spells.holyWordSanctify.cooldown > 6 and heal.countLossInRange(0.82) > 4 and not spells.prayerOfHealing.lastCasted(6)' , kps.heal.lowestInRaid , "POH" },
+    -- "Flash Concentration" -- Reduces the cast time of your Heal by 0.2 sec and increases its healing by 3%. 15 seconds remaining -- IsEquippedItem(173249)
+    {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and player.hasBuff(spells.flashConcentration) and player.buffStacks(spells.flashConcentration) < 3', kps.heal.lowestInRaid, "flash_lowest_Concentration"  },
+    {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.72 and player.hasBuff(spells.flashConcentration)', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
+    
+    {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and heal.lowestInRaid.hp > 0.72' , "target" },
+    {spells.shadowWordDeath, 'mouseover.inCombat and mouseover.isAttackable and mouseover.hp < 0.20 and heal.lowestInRaid.hp > 0.72' , "mouseover" },
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
     {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
     {{"nested"}, 'kps.multiTarget and target.isAttackable' , {
@@ -202,6 +204,13 @@ kps.rotations.register("PRIEST","HOLY",
         {spells.mindgames, 'not player.isMoving' , env.damageTarget },
         {spells.smite, 'not player.isMoving' , env.damageTarget },
         {spells.holyNova, 'target.distance <= 10' , "target" },
+    }},
+    {{"nested"}, 'player.isMoving' ,{
+        {spells.powerWordShield, 'player.hp < 0.55 and not player.hasDebuff(spells.weakenedSoul)' , "player" },
+        {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.40 and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid },
+        {spells.renew, 'heal.lowestTankInRaid.hp < 0.72 and not heal.lowestTankInRaid.hasBuff(spells.renew)' , kps.heal.lowestTankInRaid },
+        {spells.renew, 'player.hp < 0.72 and not player.hasBuff(spells.renew)' , "player" },
+        {spells.renew, 'heal.lowestInRaid.hp < 0.55 and not heal.lowestInRaid.hasBuff(spells.renew)' , kps.heal.lowestInRaid },
     }},
 
     -- "Soins rapides"

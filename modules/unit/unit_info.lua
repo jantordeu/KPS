@@ -84,7 +84,6 @@ local damageDistance = {
         ["SHAMAN"] = true,
         ["MAGE"] = true,
         ["WARLOCK"] = true,
-        ["MAGE"] = true,
 }
 
 function Unit.isClassDistance(self)

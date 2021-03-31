@@ -89,7 +89,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     }},
  
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and heal.countLossInRange(0.82) > 2' , "/use 13" },
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use [@player] 13" },
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.82' , "/use [@targettarget] 13" },
     -- TRINKETS -- SLOT 1 /use 14
@@ -148,7 +148,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     }},
     {{"nested"},'kps.rampUp', {
         {spells.powerWordRadiance, 'not player.isMoving and not heal.hasNotBuffAtonement.isUnit("player") and not spells.powerWordRadiance.isRecastAt(heal.hasNotBuffAtonement.unit)' , kps.heal.hasNotBuffAtonement , "radiance_rampUp_lowestbuff" },
-        {spells.powerWordRadiance, 'not player.isMoving and heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and and not spells.powerWordRadiance.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid, "radiance_rampUp_lowest" },
+        {spells.powerWordRadiance, 'not player.isMoving and heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and not spells.powerWordRadiance.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid, "radiance_rampUp_lowest" },
         {spells.powerWordRadiance, 'not player.isMoving and player.myBuffDuration(spells.atonement) < 9 and not spells.powerWordRadiance.isRecastAt("player")' , "player", "radiance_rampUp_player" },
         {spells.powerWordRadiance, 'not player.isMoving and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 9 and not spells.powerWordRadiance.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid, "radiance_rampUp_tank" },
         {spells.powerWordRadiance, 'not player.isMoving and not spells.powerWordRadiance.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid, "radiance_rampUp" },

@@ -48,7 +48,8 @@ kps.rotations.register("PRIEST","SHADOW",
     --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
     {spells.desperatePrayer, 'player.hp < 0.70' , "player" },
     -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
-    {spells.vampiricEmbrace, 'heal.lowestInRaid.hp < 0.55' },
+    {spells.vampiricEmbrace, 'not player.isInRaid and heal.lowestInRaid.hp < 0.55' },
+    {spells.vampiricEmbrace, 'heal.countLossInRange(0.82) > 4' },
     -- "Power Word: Shield" 17 -- "Body and Soul"
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.2) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
     {spells.powerWordShield, 'player.hp < 0.55 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
@@ -82,9 +83,9 @@ kps.rotations.register("PRIEST","SHADOW",
     }},
     
     -- TRINKETS "Trinket0Slot" est slotId  13 "Trinket1Slot" est slotId  14
-    {{"macro"}, 'player.useTrinket(0) and not player.isMoving and player.timeInCombat > 30' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and not player.isMoving and player.timeInCombat > 5 and player.hasBuff(spells.voidForm)' , "/use 13" },
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9' , "/use 13" },
-    {{"macro"}, 'player.useTrinket(1) and not player.isMoving and player.timeInCombat > 5' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and not player.isMoving and player.timeInCombat > 30' , "/use 14" },
     
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.15 and player.hp > 0.70' , "target" },
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.70 and not target.isElite' , "target" },
@@ -93,10 +94,10 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.shadowfiend, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
     {spells.voidEruption, 'not player.hasBuff(spells.voidForm) and not player.isMoving and player.insanity > 40' , env.damageTarget , "voidEruption"  },
     {spells.powerInfusion, 'not player.isMoving' },
+    {spells.devouringPlague, 'target.isAttackable and player.insanity > 85' , "target" },
     {{"macro"}, 'player.hasBuff(spells.darkThoughts) and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
-    {spells.devouringPlague, 'target.isAttackable and player.insanity > 85' , "target" },
-    
+
     {{"nested"}, 'kps.multiTarget',{
         {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
         {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4' , "mouseover" },
@@ -109,7 +110,6 @@ kps.rotations.register("PRIEST","SHADOW",
     
     {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4' , "target" },
-    {{"macro"}, 'target.myDebuffDuration(spells.devouringPlague) < 2 and player.insanity > 85 and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.devouringPlague, 'target.isAttackable and spells.mindBlast.cooldown < 4' , "target" },
 
     {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
