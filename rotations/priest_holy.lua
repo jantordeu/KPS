@@ -111,7 +111,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.divineStar, 'player.hasTalent(6,2) and target.distance <= 30 and target.isAttackable' },
 
     -- "Prayer of Mending" LASTCAST
-    {spells.heal, 'not player.isMoving and spells.prayerOfMending.lastCasted(5) and player.hasBuff(spells.flashConcentration) and heal.lowestInRaid.hp < 0.70' , kps.heal.lowestInRaid , "heal_POM_Concentration" },
+    {spells.heal, 'not player.isMoving and spells.prayerOfMending.lastCasted(5) and player.hasBuff(spells.flashConcentration) and heal.lowestInRaid.hp < 0.75' , kps.heal.lowestInRaid , "heal_POM_Concentration" },
     {spells.flashHeal, 'not player.isMoving and spells.prayerOfMending.lastCasted(5) and heal.lowestInRaid.hp < 0.55' , kps.heal.lowestInRaid ,"flashHeal_POM" },
     -- "Prayer of Mending"
     {spells.prayerOfMending, 'player.isPVP' , "player" },
