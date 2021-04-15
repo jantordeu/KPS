@@ -548,15 +548,6 @@ kps.RaidStatus.prototype.hasNotBuffMending = kps.utils.cachedValue(function()
 end)
 
 --[[[
-@function `heal.hasNotBuffShield` - Returns the lowest health unit without Prayer of Mending Buff on raid e.g. heal.hasNotBuffMending.hp < 0.90
-]]--
-
-kps.RaidStatus.prototype.hasNotBuffShield = kps.utils.cachedValue(function()
-    return unitHasNotBuff(kps.spells.priest.powerWordShield)
-end)
-
-
---[[[
 @function `heal.hasNotBuffRenew` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
 ]]--
 

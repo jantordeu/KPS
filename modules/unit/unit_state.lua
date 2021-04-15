@@ -91,6 +91,7 @@ end
 function Unit.isFriend(self)
     if not Unit.exists(self) then return false end
     if Unit.inVehicle(self) then return false end
+    if Unit.isDead(self) then return false end
     if not Unit.lineOfSight(self) then return false end
     if not UnitCanAssist("player",self.unit) then return false end -- UnitCanAssist(unitToAssist, unitToBeAssisted) return 1 if the unitToAssist can assist the unitToBeAssisted, nil otherwise
     if not UnitIsFriend("player", self.unit) then return false end -- UnitIsFriend("unit","otherunit") return 1 if otherunit is friendly to unit, nil otherwise.
@@ -101,7 +102,7 @@ end
 @function `<UNIT>.isHealable` - returns true if the given unit is healable by the player.
 ]]--
 function Unit.isHealable(self)
-    if self.unit == "player" and not UnitIsDeadOrGhost("player") and not Unit.hasBuff(self)(kps.Spell.fromId(20711)) then return true end -- UnitIsDeadOrGhost(unit) Returns false for priests who are currently in [Spirit of Redemption] form
+    if UnitIsUnit("player",self.unit) and not UnitIsDeadOrGhost("player")then return true end
     if not Unit.exists(self) then return false end
     if Unit.inVehicle(self) then return false end
     if not Unit.lineOfSight(self) then return false end
