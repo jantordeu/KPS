@@ -515,7 +515,7 @@ local unitHasNotBuff = function(spell)
 end
 
 --[[[
-@function `heal.hasBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasNotBuffAtonement.hp < 0.90
+@function `heal.hasBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasBuffAtonement.hp < 0.90
 ]]--
 
 kps.RaidStatus.prototype.hasBuffAtonement = kps.utils.cachedValue(function()
