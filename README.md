@@ -169,7 +169,6 @@ Members:
     * any group member that has the Group Role `TANK`
     * is `focus` target
     * `player` if neither Group Role nor `focus` are set
- * `heal.lowestUnitInRaid` - Returns the lowest unit in the raid - exclude tank
  * `heal.defaultTarget` - Returns the default healing target based on these rules:
     * `player` if the player is below 20% hp incoming
     * `focus` if the focus is below 50% hp incoming (if the focus is not healable, `focustarget` is checked instead)

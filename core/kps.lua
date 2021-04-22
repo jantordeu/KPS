@@ -78,7 +78,7 @@ kps.combatStep = function ()
             castSequence = nil
         end
     else
-        if prioritySpell ~= nil and GetTime() - prioritySpellTime < 3 then
+        if prioritySpell ~= nil and GetTime() - prioritySpellTime < 5 then
             if prioritySpell.canBeCastAt(prioritySpellTarget) then
                 local a, b, c = prioritySpell.cast(prioritySpellTarget)
                 prioritySpell = nil

@@ -151,24 +151,6 @@ kps.RaidStatus.prototype.lowestInRaid = kps.utils.cachedValue(function()
 end)
 
 --[[[
-@function `heal.lowestUnitInRaid` - Returns the second lowest unit in the raid
-]]--
-
-kps.RaidStatus.prototype.lowestUnitInRaid = kps.utils.cachedValue(function()
-    local lowestUnit = kps.RaidStatus.prototype.lowestInRaid()
-    local lowestHp = lowestUnit.hp
-    local prevUnit = kps["env"].player
-    local prevHp = 2
-    for name,unit in pairs(raidStatus) do
-        if unit.isHealable and unit.hp < prevHp and unit.guid ~= lowestUnit.guid then
-            prevUnit = unit
-            prevHp = prevUnit.hp
-        end
-    end
-    return prevUnit
-end)
-
---[[[
 @function `heal.defaultTarget` - Returns the default healing target based on these rules:
     * `player` if the player is below 20% hp incoming
     * `focus` if the focus is below 50% hp incoming (if the focus is not healable, `focustarget` is checked instead)
@@ -624,7 +606,6 @@ function kpstest()
 --print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"|",kps["env"].heal.lowestTankInRaid.hp)
 print("|cff1eff00LOWEST|cffffffff", kps["env"].heal.lowestInRaid.name,"|",kps["env"].heal.lowestInRaid.hp)
-print("|cffff8000LOWESTUNIT:|cffffffff", kps["env"].heal.lowestUnitInRaid.name,"|",kps["env"].heal.lowestUnitInRaid.hp)
 print("|cffff8000countRange:|cffffffff",kps["env"].heal.countInRange,"|cffff8000countLossRange:|cffffffff",kps["env"].heal.countLossInRange(0.85))
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 print("|cffff8000atonementCount:|cffffffff", kps["env"].heal.hasBuffAtonementCount, "|cffff8000hasBuffAtonementHP:|cffffffff",kps["env"].heal.hasBuffAtonement.hp)

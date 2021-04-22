@@ -45,7 +45,7 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.psyfiend, 'player.isTarget and player.isPVP' , "player" },
     -- "Pierre de soins" 5512
     --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
-    {spells.desperatePrayer, 'player.hp < 0.70' , "player" },
+    {spells.desperatePrayer, 'player.hp < 0.60' , "player" },
     -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
     {spells.vampiricEmbrace, 'not player.isInRaid and heal.lowestInRaid.hp < 0.55' },
     {spells.vampiricEmbrace, 'heal.countLossInRange(0.82) > 4' },
@@ -54,8 +54,7 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.powerWordShield, 'player.hp < 0.55 and not player.hasBuff(spells.powerWordShield) and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },  
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.40 and not player.hasBuff(spells.vampiricEmbrace)' , "player" }, 
+    {spells.shadowMend, 'not player.isMoving and player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not spells.shadowMend.isRecastAt("player")' , "player" },
     -- "Levitate" 1706
     --{spells.levitate, 'player.IsFallingSince(1.2) and not player.hasBuff(spells.levitate)' , "player" },
 
@@ -89,19 +88,12 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.15 and player.hp > 0.70' , "target" },
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.70 and not target.isElite' , "target" },
     {spells.shadowWordDeath, 'mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.70 and not target.isElite' , "mouseover" },
-    
-    --{spells.vampiricTouch, 'player.hasBuff(spells.unfurlingDarkness) and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4' , "mouseover" },
-    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4' , "target" },
-    {spells.devouringPlague, 'target.isAttackable and target.myDebuffDuration(spells.devouringPlague) < 2' , "target" },
+
+    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear) and player.insanity > 30' , "target" , "searingNightmare" },
+    {spells.mindSear, 'kps.mindSear and not player.isMoving and player.insanity > 30' , env.damageTarget , "mindSear_mindSear" },
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 4' , "mouseover" },
-
-    {spells.shadowfiend, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
-    {spells.voidEruption, 'kps.defensive and not player.hasBuff(spells.voidForm) and not player.isMoving and player.insanity > 40' , env.damageTarget , "voidEruption"  },
-    {spells.powerInfusion, 'kps.defensive and not player.isMoving' },
-    {spells.devouringPlague, 'target.isAttackable and player.insanity > 85' , "target" },
-
+    
     {{"macro"}, 'spells.voidEruption.cooldown == 0 and player.hasBuff(spells.voidForm) and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.voidEruption, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt" },
     {{"macro"}, 'spells.mindBlast.cooldown == 0 and player.hasBuff(spells.talbadarStratagem) and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
@@ -109,8 +101,16 @@ kps.rotations.register("PRIEST","SHADOW",
     {{"macro"}, 'player.hasBuff(spells.darkThoughts) and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
     
-    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
-    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
+    {spells.shadowfiend, 'player.hasBuff(spells.voidForm)' , env.damageTarget },
+    {spells.shadowfiend, 'kps.multiTarget and player.hasTalent(6,2)' , env.damageTarget },
+    {spells.voidEruption, 'kps.multiTarget and not player.hasBuff(spells.voidForm) and not player.isMoving and player.insanity > 40' , env.damageTarget , "voidEruption"  },
+    {spells.powerInfusion, 'kps.multiTarget and not player.isMoving' },
+    {spells.devouringPlague, 'target.isAttackable and player.insanity > 85' , "target" },
+    
+    --{spells.vampiricTouch, 'player.hasBuff(spells.unfurlingDarkness) and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 4' , "mouseover" },
+    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 4 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4' , "target" },
+    {spells.devouringPlague, 'target.isAttackable and target.myDebuffDuration(spells.devouringPlague) < 2' , "target" },
 
     {spells.voidTorrent, 'not player.isMoving and player.insanity < 40' , env.damageTarget }, 
     {spells.mindgames, 'not player.isMoving' , env.damageTarget },
