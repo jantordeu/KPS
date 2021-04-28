@@ -35,7 +35,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     -- "Power Word: Barrier" 62618
     {{"macro"}, 'keys.shift and spells.powerWordBarrier.cooldown == 0', "/cast [@cursor] "..Barriere },
     -- "Door of Shadows" 
-    --{{"macro"}, ' keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
+    {{"macro"}, ' keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
     -- "Leap of Faith"
     --{spells.leapOfFaith, 'keys.alt and mouseover.isHealable', "mouseover" },
 
@@ -110,8 +110,11 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     }},
     -- ATONEMENT DAMAGE
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.80' , "target" },
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
-    {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
+    {spells.shadowWordPain, 'not player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("target")' , "target" , "target_pain" },
+    {spells.shadowWordPain, 'not player.hasTalent(6,1) and mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" , "mouseover_pain" },
+    {spells.purgeTheWicked, 'player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.purgeTheWicked) < 4 and not spells.purgeTheWicked.isRecastAt("target")' , "target" , "target_purge" },
+    {spells.purgeTheWicked, 'player.hasTalent(6,1) and mouseover.isAttackable and mouseover.myDebuffDuration(spells.purgeTheWicked) < 4 and not spells.purgeTheWicked.isRecastAt("mouseover")' , "mouseover" , "mouseover_purge" },
+    
     {{"nested"},'kps.multiTarget', {
         {spells.powerInfusion, 'target.hp > 0.80 or target.isElite' },
         {spells.shadowfiend, 'target.hp > 0.80 or target.isElite' , env.damageTarget },
@@ -120,6 +123,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
         {spells.powerWordSolace, 'true' , env.damageTarget  },
         {spells.penance, 'true' , env.damageTarget  },
+        {spells.mindSear, 'not player.isMoving and player.plateCount > 3' , env.damageTarget },
         {spells.smite, 'not player.isMoving' , env.damageTarget },
     }},
     -- TANK
@@ -144,7 +148,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     }},
     -- MOUSEOVER
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.70 and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" , "shadowMend_mouseover"},
-    {spells.powerWordShield, 'mouseover.hp < 0.90 and mouseover.isHealable and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("mouseover") and not mouseover.hasDebuff(spells.weakenedSoul)' , "mouseover" , "shield_mouseover" },
+    {spells.powerWordShield, 'mouseover.isHealable and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("mouseover") and not mouseover.hasDebuff(spells.weakenedSoul)' , "mouseover" , "shield_mouseover" },
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" , "shadowMend_mouseover_urg"},
     {spells.penance, 'mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" , "penance_mouseover_urg"},
     -- PLAYER
@@ -154,7 +158,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.penance, 'player.hp < 0.40' , "player" },
     -- DAMAGE
     {spells.mindgames, 'not player.isMoving and target.hasMyDebuff(spells.schism)' , env.damageTarget },
-    {spells.schism, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.80 and spells.powerWordRadiance.charges < 2' , env.damageTarget },
+    {spells.schism, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.80 and spells.powerWordRadiance.coodown > 9' , env.damageTarget },
     {spells.mindBlast, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.90' , env.damageTarget },
     {spells.powerWordSolace, 'true' , env.damageTarget  },
     {spells.penance, 'true' , env.damageTarget },

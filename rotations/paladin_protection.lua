@@ -35,7 +35,6 @@ kps.rotations.register("PALADIN","PROTECTION",
         {spells.handOfReckoning, 'target.isAttackable and not targettarget.isUnit("player")' , "target" , "taunt" },
         {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous_charges"},
         {spells.ardentDefender },
-        --{spells.guardianOfAncientKings, 'player.hpIncoming < 0.55 and not player.hasBuff(spells.ardentDefender)' },
     }},
     {{"nested"}, 'kps.interrupt',{
         {spells.avengersShield, 'target.distanceMax <= 10 and target.isCasting' , "target" , "avengersShield_casting" },
@@ -87,7 +86,6 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.hammerOfTheRighteous, 'player.hasBuff(spells.consecration) and target.distanceMax <= 10', "target" , "hammerOfTheRighteous" },
 
     {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.30', 'player'},
-    
     {{"macro"}, 'target.isAttackable and target.distanceMax <= 5' , "/startattack" },
 
  }
