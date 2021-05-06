@@ -1,6 +1,6 @@
 --[[[
 @module Hekili
-Uses the Hekili AddOn to determine the compat rotation. You must specify a blacklist of Spell ID's
+Uses the Hekili AddOn to determine the combat rotation. You must specify a blacklist of Spell ID's
 which will be ignored by the rotation.
 ]]--
 

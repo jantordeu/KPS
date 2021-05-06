@@ -294,6 +294,7 @@ kps.spells.priest.damnation = kps.Spell.fromId(341374)
 -- COVENANT ABILITIES
 kps.spells.priest.mindgames = kps.Spell.fromId(323673)
 kps.spells.priest.doorOfShadows = kps.Spell.fromId(300728)
+kps.spells.priest.dissonantEchoes = kps.Spell.fromId(343144)
 
 -- LEGENDAIRE
 kps.spells.priest.flashConcentration = kps.Spell.fromId(336267)
