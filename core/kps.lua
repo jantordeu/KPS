@@ -28,7 +28,8 @@ kps.prioritySpell = function (spell, target)
     prioritySpell = spell
     prioritySpellTarget = target or "target"
     prioritySpellTime = GetTime()
-    LOG.warn("Set %s for next cast.", spell.name)
+    LOG.debug("Set %s for next cast.",spell.name)
+    LOG.warn("Set for next cast:  %s. %s", spell.name, prioritySpellTarget)
 end
 
 kps.combatStep = function ()
@@ -84,7 +85,7 @@ kps.combatStep = function ()
                 prioritySpell = nil
                 return a, b, c
             else
-                if prioritySpell.cooldown > 3 then prioritySpell = nil end
+                if prioritySpell.cooldown > 5 then prioritySpell = nil end
             end
         end
         -- Spell Object

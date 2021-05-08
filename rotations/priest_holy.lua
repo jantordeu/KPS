@@ -51,17 +51,17 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.holyWordSerenity, 'player.hp < 0.40' , "player"},
     {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid },
     {spells.holyWordSerenity, 'heal.lowestTankInRaid.hp < 0.65' , kps.heal.lowestTankInRaid},
-    {spells.holyWordSerenity, 'targettarget.isFriend and targettarget.hp < 0.65' , "targettarget" },
     {spells.holyWordSerenity, 'focus.isFriend and focus.hp < 0.65' , "focus" },
+    {spells.holyWordSerenity, 'targettarget.isFriend and targettarget.hp < 0.65' , "targettarget" },
 
     -- "Surge of Light"
-    {spells.flashHeal, 'player.hasBuff(spells.surgeOfLight) and player.buffStacks(spells.surgeOfLight) == 2 and player.hasBuff(spells.flashConcentration) and player.buffStacks(spells.flashConcentration) < 5' , kps.heal.lowestInRaid , "flashHeal_Concentration_stacks"  },
     {{"nested"},'player.hasBuff(spells.surgeOfLight) and not spells.flashHeal.lastCasted(9)', {
         {spells.flashHeal, 'IsEquippedItem(173249) and not player.hasBuff(spells.flashConcentration)' , kps.heal.lowestInRaid , "flashHeal_Concentration_buff"  },
         {spells.flashHeal, 'player.hasBuff(spells.flashConcentration) and player.buffDuration(spells.flashConcentration) < 5' , kps.heal.lowestInRaid , "flashHeal_Concentration_duration" },
+        {spells.flashHeal, 'player.hasBuff(spells.flashConcentration) and player.buffStacks(spells.flashConcentration) < 3' , kps.heal.lowestInRaid , "flashHeal_Concentration_stacks" },
     }},
     {spells.flashHeal, 'not player.isMoving and IsEquippedItem(173249) and not player.hasBuff(spells.flashConcentration) and heal.lowestInRaid.hp < 0.80 and not spells.flashHeal.lastCasted(9)' , kps.heal.lowestInRaid , "flashHeal_Concentration_buff" },    
-    {spells.flashHeal, 'not player.isMoving and player.hasBuff(spells.flashConcentration) and player.buffDuration(spells.flashConcentration) < 5 and not spells.flashHeal.lastCasted(9)' , kps.heal.lowestInRaid , "flashHeal_Concentration_duration" }, 
+    {spells.flashHeal, 'not player.isMoving and player.hasBuff(spells.flashConcentration) and player.buffDuration(spells.flashConcentration) < 7 and not spells.flashHeal.lastCasted(9)' , kps.heal.lowestInRaid , "flashHeal_Concentration_duration" }, 
 
     -- ShouldInterruptCasting
     {{"macro"}, 'spells.heal.shouldInterrupt(0.85, kps.defensive)' , "/stopcasting" },
@@ -156,6 +156,10 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.80 and player.hasBuff(spells.flashConcentration)' , "mouseover" , "heal_mouseover" },
     {spells.flashHeal, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.40' , "mouseover" , "flashHeal_mouseover" },
     {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.80' , "mouseover" , "heal_mouseover" },
+
+
+        {spells.flashHeal, 'heal.lowestTankInRaid.hp < 0.40 and player.buffStacks(spells.flashConcentration) < 3', kps.heal.lowestTankInRaid, "flash_tank_Concentration"  },
+        {spells.heal, 'heal.lowestTankInRaid.hp < 0.70', kps.heal.lowestTankInRaid, "heal_tank_Concentration"  },
 
     -- top health an unit Flash Concentration
     {{"nested"}, 'not player.isMoving and player.hasBuff(spells.flashConcentration)' , {

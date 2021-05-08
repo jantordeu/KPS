@@ -444,8 +444,8 @@ local countUnitBuff = function(spell)
     return count
 end
 
-kps.RaidStatus.prototype.hasBuffAtonementCount = kps.utils.cachedValue(function()
-    return countUnitBuff(kps.spells.priest.atonement)
+kps.RaidStatus.prototype.hasBuffCount = kps.utils.cachedValue(function()
+    return countUnitBuff
 end)
 
 --------------------------------------------------------------------------------------------
