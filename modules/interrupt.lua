@@ -13,13 +13,14 @@ local spellLock = kps.Spell.fromId(19647)
 local kick = kps.Spell.fromId(1766)
 local windShear = kps.Spell.fromId(57994)
 local disrupt = kps.Spell.fromId(183752)
+local rebuke = kps.Spell.fromId(96231)
 
 kps.kickSpell = function()
     local _,_,classId = UnitClass("player")
     if classId == 1 then -- Warrior
         return nil
     elseif classId == 2 then -- Paladin
-        return nil
+        return rebuke
     elseif classId == 3 then -- Hunter
         return nil
     elseif classId == 4 then -- Rogue

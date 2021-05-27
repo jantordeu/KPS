@@ -24,6 +24,7 @@ local openingSequence = {
     {spells.phantomSingularity },
     {spells.darkSoulMisery},
     {spells.summonDarkglare},
+    {spells.soulRot},
     {spells.maleficRapture, 'player.soulShards > 0'},
 }
 
@@ -34,6 +35,9 @@ function dots(target, agonyTime, corruptionTime, unstableAfflictionTime, siphonL
             target..'.myDebuffDuration(spells.agony) <= '..agonyTime..' and not spells.agony.isRecastAt("'..target..'")',
         target})
     end
+    if unstableAfflictionTime > 0 then
+        table.insert(_dots, {spells.unstableAffliction, target..'.myDebuffDuration(spells.unstableAffliction) <= '..unstableAfflictionTime..' and not spells.unstableAffliction.isRecastAt("'..target..'") and not spells.unstableAffliction.lastCasted(2.0)', target})
+    end
     if corruptionTime > 0 then
         table.insert(_dots, {{"nested"}, 'player.hasTalent(2, 2)', {
             {spells.corruption, 'not '..target..'.hasMyDebuff(spells.corruption)'..' and not spells.corruption.isRecastAt("'..target..'")', target},
@@ -41,9 +45,6 @@ function dots(target, agonyTime, corruptionTime, unstableAfflictionTime, siphonL
         table.insert(_dots, {{"nested"}, 'not player.hasTalent(2, 2)', {
             {spells.corruption, target..'.myDebuffDuration(spells.corruption) <= '..corruptionTime..' and not spells.corruption.isRecastAt("'..target..'")', target},
         }})
-    end
-    if unstableAfflictionTime > 0 then
-        table.insert(_dots, {spells.unstableAffliction, target..'.myDebuffDuration(spells.unstableAffliction) <= '..unstableAfflictionTime..' and not spells.unstableAffliction.isRecastAt("'..target..'") and not spells.unstableAffliction.lastCasted(2.0)', target})
     end
     if siphonLifeTime > 0 then
         table.insert(_dots, {spells.siphonLife, target..'.myDebuffDuration(spells.siphonLife) <= '..siphonLifeTime..' and not spells.siphonLife.isRecastAt("'..target..'")', target})
@@ -131,8 +132,84 @@ kps.rotations.register("WARLOCK","AFFLICTION",
     {{"nested"}, 'player.isMoving', movingRotation},
     {{"nested"}, 'not player.isMoving', regularRotation},
 }
-,"Loox", {0,3,0,2,0,2,3})
+,"Raid", {0,3,0,2,0,2,3})
 
+local optimizedOpeningSequence = {
+    {spells.haunt},
+    {spells.unstableAffliction, 'not target.hasMyDebuff(spells.unstableAffliction) and not spells.unstableAffliction.isRecastAt("target")'},
+    {spells.agony, 'not target.hasMyDebuff(spells.agony)'},
+    {spells.corruption, 'not target.hasMyDebuff(spells.corruption)'},
+    {spells.siphonLife, 'not target.hasMyDebuff(spells.siphonLife)'},
+    {spells.drainSoul, 'target.debuffStacks(spells.shadowEmbrace) < 3 and kps.timeInCombat < 15'},
+    {spells.phantomSingularity },
+    {spells.darkSoulMisery},
+    {spells.summonDarkglare},
+    {spells.soulRot},
+    {spells.maleficRapture, 'player.soulShards > 0'},
+}
+
+local optimizedRotation = {
+    {spells.drainLife, 'player.buffStacks(spells.inevitableDemise) >= 50 and not spells.drainLife.lastCasted(15)'},
+    {spells.shadowBolt, 'player.hasBuff(spells.nightfall) and player.buffDuration(spells.nightfall) < 2.0'},
+
+    -- Opening Sequence, only if using cooldowns and only if we are at the start of a raid fight
+    {{"nested"}, useCooldowns, {
+        {{"nested"}, "IsInRaid() and kps.timeInCombat < 40", optimizedOpeningSequence},
+    }},
+
+    -- Curses, if enabled
+    {spells.curseOfTongues, 'kps.curseOfTongues and not target.hasDebuff(spells.curseOfTongues)'},
+    {spells.curseOfWeakness, 'kps.curseOfWeakness and not target.hasDebuff(spells.curseOfWeakness)'},
+
+    -- Trinket CD's
+    {{"nested"}, useCooldowns, {
+        { {"macro"}, "player.useTrinket(0)" , "/use 13"},
+        { {"macro"}, "player.useTrinket(1)" , "/use 14"},
+    }},
+
+
+    -- First-Level CD's
+    {{"nested"}, useCooldowns, {
+        {spells.summonDarkglare, hasMaxDotsOnTarget},
+    }},
+
+
+    -- Second Level CD's
+    {{"nested"}, useCooldowns, {
+        {spells.darkSoulMisery, useCooldowns},
+        {spells.soulRot, useCooldowns},
+    }},
+
+    -- DoTs at target
+    dots('target', 7.4, 4.2, 6.3, 4.5),
+
+    {spells.maleficRapture, 'player.soulFragments >= 50'},
+
+    {spells.drainSoul, 'target.debuffStacks(spells.shadowEmbrace) < 3'},
+
+    {spells.maleficRapture, 'player.soulFragments >= 40'},
+
+    {spells.haunt},
+
+    {spells.phantomSingularity},
+    {spells.maleficRapture, 'target.debuffDuration(spells.phantomSingularity) > 1.3'},
+
+    {spells.maleficRapture, 'player.soulFragments >= 30'},
+
+    -- DoT's at focus
+    dots('focus', 7.4, 4.2, 0.0, 4.5),
+    -- DoT's at mouseover
+    dots('mouseover', 5.4, 4.2, 0.0, 4.5),
+
+    -- Fillers
+    {{"nested"}, 'not player.hasTalent(1, 3)', {
+        {spells.shadowBolt},
+    }},
+    {{"nested"}, 'player.hasTalent(1, 3)', {
+        {spells.drainSoul},
+    }},
+
+}
 
 
 kps.rotations.register("WARLOCK","AFFLICTION",
@@ -140,8 +217,7 @@ kps.rotations.register("WARLOCK","AFFLICTION",
     -- Take care of burning rush...
     {"/cancelaura " .. spells.burningRush, "player.hasBuff(spells.burningRush) and player.isNotMovingSince(0.25)"},
 
-    {kps.hekili({
-    })}
+    {{"nested"}, 'player.isMoving', movingRotation},
+    {{"nested"}, 'not player.isMoving', optimizedRotation},
 }
-,"Hekili")
-
+,"Raid v2", {0,3,0,2,0,2,3})

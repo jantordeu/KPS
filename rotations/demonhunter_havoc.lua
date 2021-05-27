@@ -16,7 +16,7 @@ kps.rotations.register("DEMONHUNTER","HAVOC",
         spells.disrupt
     }), 'keys.shift'},
     {kps.hekili({
-        spells.disrupt.id,
+        spells.disrupt,
         spells.elysianDecree,
         spells.metamorphosis
     })}

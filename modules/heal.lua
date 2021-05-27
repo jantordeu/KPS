@@ -109,7 +109,8 @@ local tanksInRaid = kps.utils.cachedValue(function()
     for name,player in pairs(raidStatus) do
         if UnitGroupRolesAssigned(player.unit) == "TANK"
             or player.guid == kps["env"].focus.guid 
-            or player.guid == kps["env"].targettarget.guid then
+            or player.guid == kps["env"].targettarget.guid 
+            or player.guid == kps["env"].target.guid then
             table.insert(_tanksInRaid[_tanksInRaidIdx], player)
         end
     end
@@ -161,15 +162,15 @@ end)
 ]]--
 kps.RaidStatus.prototype.defaultTarget = kps.utils.cachedValue(function()
     -- If we're below 30% - always heal us first!
-    if kps.env.player.hp < 0.55 then return kps["env"].player end
+    if kps.env.player.hp < 0.70 then return kps["env"].player end
     -- If the focus target is below 50% - take it (must be some reason there is a focus after all...)
-    -- focus.isFriend coz isHealable (e.g. UnitInRange) is only available for members of the player's group.
-    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.55 then return kps["env"].focus end
+    -- focus.isFriend coz isFriend (e.g. UnitInRange) is only available for members of the player's group.
+    if kps["env"].focus.isFriend and kps["env"].focus.hp < 0.70 then return kps["env"].focus end
     -- MAYBE we also focused an enemy so we can heal it's target...
-    if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.55 then return kps["env"].focustarget end
+    if kps["env"].focustarget.isFriend and kps["env"].focustarget.hp < 0.70 then return kps["env"].focustarget end
     -- Now do the same for target...
-    if kps["env"].target.isHealable and kps["env"].target.hp < 0.55 then return kps["env"].target end
-    if kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.55 then return kps["env"].targettarget end
+    if kps["env"].target.isFriend and kps["env"].target.hp < 0.70 then return kps["env"].target end
+    if kps["env"].targettarget.isFriend and kps["env"].targettarget.hp < 0.70 then return kps["env"].targettarget end
     -- Nothing selected - get lowest raid member
     return kps.RaidStatus.prototype.lowestInRaid()
 end)
@@ -184,15 +185,15 @@ end)
 ]]--
 kps.RaidStatus.prototype.defaultTank = kps.utils.cachedValue(function()
     -- If we're below 30% - always heal us first!
-    if kps.env.player.hp < 0.55 then return kps["env"].player end
+    if kps.env.player.hp < 0.70 then return kps["env"].player end
     -- If the focus target is below 50% - take it (must be some reason there is a focus after all...) 
     -- focus.isFriend coz isHealable (e.g. UnitInRange) is only available for members of the player's group.
-    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.55 then return kps["env"].focus end
+    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.70 then return kps["env"].focus end
     -- MAYBE we also focused an enemy so we can heal it's target...
-    if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.55 then return kps["env"].focustarget end
+    if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.70 then return kps["env"].focustarget end
     -- Now do the same for target...
-    if kps["env"].target.isHealable and kps["env"].target.hp < 0.55 then return kps["env"].target end
-    if kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.55 then return kps["env"].targettarget end
+    if kps["env"].target.isHealable and kps["env"].target.hp < 0.70 then return kps["env"].target end
+    if kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.70 then return kps["env"].targettarget end
     -- Nothing selected - get lowest Tank if it is NOT the player and lower than 50%
     return kps.RaidStatus.prototype.lowestTankInRaid()
 end)
@@ -464,10 +465,6 @@ local unitHasDebuff = function(spell)
     return lowestUnit
 end
 
-kps.RaidStatus.prototype.hasDebuffMiasma = kps.utils.cachedValue(function()
-    return unitHasDebuff(kps.spells.immuneHeal.gluttonousMiasma)
-end)
-
 --------------------------------------------------------------------------------------------
 ------------------------------- RAID BUFF UNIT
 --------------------------------------------------------------------------------------------
@@ -537,47 +534,6 @@ kps.RaidStatus.prototype.hasNotBuffRenew = kps.utils.cachedValue(function()
     return unitHasNotBuff(kps.spells.priest.renew)
 end)
 
-
---------------------------------------------------------------------------------------------
-------------------------------- ENEMY TARGET
---------------------------------------------------------------------------------------------
-
---[[[
-@function `heal.enemyTarget` - Returns the enemy target for all raid members
-]]--
-kps.RaidStatus.prototype.enemyTarget = kps.utils.cachedValue(function()
-    local lowestUnit = "target"
-    for name, player in pairs(raidStatus) do
-        if player.isHealable and player.hasAttackableTarget then
-            local friendUnit = player.unit
-            local enemyTarget = friendUnit.."target"
-            lowestUnit = enemyTarget
-        end
-    end
-    return lowestUnit
-end)
-
---[[[
-@function `heal.enemyLowest` - Returns the lowest Health enemy target for all raid members
-]]--
-kps.RaidStatus.prototype.enemyLowest = kps.utils.cachedValue(function()
-    local lowestUnit = "target"
-    local lowestHp = 2
-    for name, player in pairs(raidStatus) do
-        if player.isHealable and player.hasAttackableTarget then
-            local friendUnit = player.unit
-            local enemyTarget = friendUnit.."target"
-            local enemyHealth = UnitHealth(enemyTarget)
-            if enemyHealth < lowestHp then
-                lowestUnit = enemyTarget
-                lowestHp = enemyHealth
-            end
-        end
-    end
-    return lowestUnit
-end)
-
-
 --------------------------------------------------------------------------------------------
 ------------------------------- TRICKY
 --------------------------------------------------------------------------------------------
@@ -608,7 +564,6 @@ print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"|",kps
 print("|cff1eff00LOWEST|cffffffff", kps["env"].heal.lowestInRaid.name,"|",kps["env"].heal.lowestInRaid.hp)
 print("|cffff8000countRange:|cffffffff",kps["env"].heal.countInRange,"|cffff8000countLossRange:|cffffffff",kps["env"].heal.countLossInRange(0.85))
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
-print("|cffff8000atonementCount:|cffffffff", kps["env"].heal.hasBuffAtonementCount, "|cffff8000hasBuffAtonementHP:|cffffffff",kps["env"].heal.hasBuffAtonement.hp)
 --print("|cffff8000glimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
 print("|cffff8000", "---------------------------------")
 

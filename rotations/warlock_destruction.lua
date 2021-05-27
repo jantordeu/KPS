@@ -61,6 +61,7 @@ local rotation = {
         {{"nested"}, 'keys.shift', {
             {spells.cataclysm},
         }},
+        immolate('mouseover', 5.0),
         -- Havoc
         {{"nested"}, 'focus.hasMyDebuff(spells.havoc) or mouseover.hasMyDebuff(spells.havoc)', {
             {spells.conflagrate, 'spells.conflagrate.charges > 0 and player.soulFragments <= 44'},

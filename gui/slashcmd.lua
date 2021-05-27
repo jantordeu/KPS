@@ -10,6 +10,7 @@ function SlashCmdList.KPS(cmd, editbox)
     if msg == "toggle" or msg == "t" then
         kps.enabled = not kps.enabled
         kps.gui.updateToggleStates()
+        collectgarbage("collect")
         kps.write("KPS", kps.enabled and "enabled" or "disabled")
     elseif msg == "show" then
         kps.gui.show()
@@ -83,7 +84,6 @@ end
 
 
 -- REMOVING GRYPHONS FROM ACTION BAR
-
 function removeGriffons()
 --    MainMenuBarLeftEndCap:Hide()
 --    MainMenuBarRightEndCap:Hide()
@@ -91,15 +91,8 @@ function removeGriffons()
     MainMenuBarArtFrame.RightEndCap:Hide()
 end
 
-
 -- FAKE ACHIEVEMENT
 -- /run fakeAchievement(11907)
-
--- 12110 argus heroic
--- 11992 garothi mythic
--- 12524 taloc mythic
--- 12536 G'huun heroique
-
 function fakeAchievement(id)
     local _, name = GetAchievementInfo(id)
     local link = "\124cffffff00\124Hachievement:"..id..":"..string.gsub(UnitGUID("player"), '0x', '')..":1:04:13:20:4294967295:4294967295:4294967295:4294967295\124h["..name.."]\124h\124r"

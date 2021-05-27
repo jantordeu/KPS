@@ -67,30 +67,33 @@ end
 ------------------------------- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
 
+-- name, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,
+-- nameplateShowAll, timeMod, ... = UnitAura(unit, index [, filter]) = UnitBuff(unit, index [, filter]) = UnitDebuff(unit, index [, filter])
+
 local UnitHasDebuff = function(unit,spellName)
-    local auraName,count,debuffType,duration,endTime,caster,isStealable,spellid,isBossDebuff,value
+    local auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_
     local i = 1
-    auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitDebuff(unit,i)
+    auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_ = UnitDebuff(unit,i)
     while auraName do
         if auraName == spellName then
             return true
         end
         i = i + 1
-        auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitDebuff(unit,i)
+        auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_ = UnitDebuff(unit,i)
     end
     return false
 end
 
 local UnitHasBuff = function(unit,spellName)
-    local auraName,count,debuffType,duration,endTime,caster,isStealable,spellid,isBossDebuff,value
+    local auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_
     local i = 1
-    auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitBuff(unit,i)
+    auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_ = UnitBuff(unit,i)
     while auraName do
         if auraName == spellName then
             return true
         end
         i = i + 1
-        auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitBuff(unit,i)
+        auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_ = UnitBuff(unit,i)
     end
     return false
 end
@@ -100,7 +103,6 @@ local function UnitIsAttackable(unit)
     if not UnitExists(unit) then return false end
     if (string.match(GetUnitName(unit), kps.locale["Dummy"])) then return true end
     if UnitCanAttack("player",unit) == false then return false end
-    --if UnitIsEnemy("player",unit) == false then return false end
     if not kps.env.harmSpell.inRange(unit) then return false end
     return true
 end
@@ -120,41 +122,6 @@ function kps.env.priest.damageTarget()
     elseif UnitIsAttackable("focustarget") then return "focustarget"
     end
 end
-
---------------------------------------------------------------------------------------------
-------------------------------- SHADOW PRIEST
---------------------------------------------------------------------------------------------
-
-local ShadowWordPain = kps.spells.priest.shadowWordPain.name
-local VampiricTouch = kps.spells.priest.vampiricTouch.name
-
--- Config FOCUS with MOUSEOVER
-function kps.env.priest.FocusMouseoverShadow()
-    local mouseover = kps.env.mouseover
-    local focus = kps.env.focus
-    if not focus.exists and not UnitIsUnit("target","mouseover") and mouseover.isAttackable and mouseover.inCombat then
-        if not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) then
-            return true
-        elseif not mouseover.hasMyDebuff(kps.spells.priest.shadowWordPain) then
-            return true
-        else
-            return true
-        end
-    elseif focus.exists and not UnitIsUnit("target","mouseover") and not UnitIsUnit("focus","mouseover") and focus.myDebuffDuration(kps.spells.priest.shadowWordPain) > 4 and focus.myDebuffDuration(kps.spells.priest.vampiricTouch) > 4 then
-        if not mouseover.hasMyDebuff(kps.spells.priest.vampiricTouch) and mouseover.isAttackable and mouseover.inCombat then
-            return true
-        elseif not mouseover.hasMyDebuff(kps.spells.priest.shadowWordPain) and mouseover.isAttackable and mouseover.inCombat then
-            return true
-        end
-    end
-    return false
-end
-
---------------------------------------------------------------------------------------------
-------------------------------- FUNCTIONS
---------------------------------------------------------------------------------------------
-
-
 
 --------------------------------------------------------------------------------------------
 ------------------------------- MESSAGE ON SCREEN

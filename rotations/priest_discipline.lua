@@ -120,28 +120,32 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {{"nested"},'kps.rampUp', {
         {{"nested"},'player.hasTalent(7,2) and player.hasBuff(spells.spiritShell)', damageRotation},
         {{"nested"},'player.hasTalent(7,3) and heal.hasBuffAtonement.hp < 1 and spells.powerWordRadiance.charges == 0', damageRotation},
-        {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(9)' },
         {spells.spiritShell, 'player.hasTalent(7,2) and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(9)' },
         {spells.powerWordShield, 'heal.hasBuffCount(spells.atonement) < 5 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 9 and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid , "shield_tank_rampUp" },
         {spells.powerWordShield, 'heal.hasBuffCount(spells.atonement) < 5 and player.myBuffDuration(spells.atonement) < 9 and not player.hasDebuff(spells.weakenedSoul)' , "player" , "shield_player_rampUp" },
         {spells.powerWordShield, 'heal.hasBuffCount(spells.atonement) < 5 and heal.lowestInRaid.myBuffDuration(spells.atonement) < 9 and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid , "shield_lowest_rampUp" },
         {spells.powerWordShield, 'heal.hasBuffCount(spells.atonement) < 5 and heal.hasNotBuffAtonement.myBuffDuration(spells.atonement) < 9 and not heal.hasNotBuffAtonement.hasDebuff(spells.weakenedSoul)' , kps.heal.hasNotBuffAtonement, "shield_nobuff_rampUp" },
         {spells.powerWordRadiance, 'not player.isMoving and not spells.powerWordRadiance.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid, "radiance_lowest_rampUp" },
-        {spells.powerWordRadiance, 'not player.isMoving and not spells.powerWordRadiance.isRecastAt(heal.hasNotBuffAtonement.unit)' , kps.heal.hasNotBuffAtonement, "radiance_nobuff_rampUp" },
+        {spells.powerWordRadiance, 'not player.isMoving' , kps.heal.hasNotBuffAtonement, "radiance_nobuff_rampUp" },
     }},
-
-    {{"nested"},'kps.multiTarget', {
+    -- ATONEMENT
+    {{"nested"},'kps.defensive', {
         {spells.rapture, 'not player.isInGroup and player.hp < 0.40 and spells.painSuppression.cooldown > 0' },
         {spells.shadowMend, 'not player.isMoving and player.hp < 0.80 and player.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("player")' , "player" },
         {spells.powerWordShield, 'player.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("player") and not player.hasDebuff(spells.weakenedSoul)' , "player"  },
         {spells.shadowMend, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.80 and targettarget.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("targettarget")' , "targettarget" , "shadowMend_targettarget" },
         {spells.powerWordShield, 'targettarget.isFriend and not targettarget.hasMyBuff(spells.atonement) and not spells.shadowMend.isRecastAt("targettarget") and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" , "shield_targettarget" },
+        {spells.shadowMend, 'not player.isMoving and focus.isFriend and focus.hp < 0.80 and focus.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("focus")' , "focus" , "shadowMend_focus" },
+        {spells.powerWordShield, 'focus.isFriend and not focus.hasMyBuff(spells.atonement) and not spells.shadowMend.isRecastAt("focus") and not focus.hasDebuff(spells.weakenedSoul)' , "focus" , "shield_focus" },
         {spells.shadowMend, 'not player.isMoving and player.hp < 0.40' , "player" , "shadowMend_player_urg"  },
         {spells.shadowMend, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.40' , "targettarget" , "shadowMend_targettarget_urg"  },
-        {{"nested"},'kps.multiTarget', damageRotation},
+        {spells.shadowMend, 'not player.isMoving and focus.isFriend and focus.hp < 0.40' , "focus" , "shadowMend_focus_urg"  },
     }},
-
+    -- ATONEMENT RADIANCE
+    {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(9)' },
+    {spells.powerWordRadiance, 'not player.isMoving and heal.countLossInRange(0.80) > heal.hasBuffCount(spells.atonement) and not spells.powerWordRadiance.lastCasted(9)' ,  kps.heal.hasNotBuffAtonement },
     -- ATONEMENT DAMAGE
+    {{"nested"},'kps.multiTarget', damageRotation},
     {{"nested"},'not kps.rampUp', {
         {spells.mindgames, 'not player.isMoving and target.hasMyDebuff(spells.schism)' , env.damageTarget },
         {spells.schism, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.80 and spells.powerWordRadiance.lastCasted(9)' , env.damageTarget },
@@ -151,8 +155,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     	{spells.mindSear, 'not player.isMoving and player.plateCount > 3 and heal.lowestInRaid.hp > 0.70' , env.damageTarget },
     	{spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.70' , env.damageTarget },
     }},
-    -- ATONEMENT RADIANCE
-    {spells.powerWordRadiance, 'not player.isMoving and heal.hasNotBuffAtonement.hp < 0.80 and spells.powerWordRadiance.charges == 2' ,  kps.heal.hasNotBuffAtonement },
     -- TANK
     {spells.shadowMend, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.80 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid , "shadowMend_tank" },
     {spells.powerWordShield, 'heal.lowestTankInRaid.hp < 0.80 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt(heal.lowestTankInRaid.unit) and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid , "shield_tank" },
@@ -164,12 +166,12 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.40' , "player"   },
     {spells.penance, 'player.hp < 0.40' , "player" },
     -- MOUSEOVER
-    {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.70 and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" , "shadowMend_mouseover"},
+    {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.60 and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" , "shadowMend_mouseover"},
     {spells.powerWordShield, 'mouseover.isHealable and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("mouseover") and not mouseover.hasDebuff(spells.weakenedSoul)' , "mouseover" , "shield_mouseover" },
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" , "shadowMend_mouseover_urg"},
     -- LOWEST
     {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.60 and heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "shadowMend_lowest_atonement" },
-    {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.70 and heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt(heal.lowestInRaid.unit) and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid , "shield_lowest_atonement" },
+    {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.60 and heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt(heal.lowestInRaid.unit) and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid , "shield_lowest_atonement" },
     {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid , "shadowMend_lowest_urg" },
     -- DAMAGE
     {spells.mindSear, 'not player.isMoving and player.plateCount > 3 and heal.lowestInRaid.hp > 0.60' , env.damageTarget },

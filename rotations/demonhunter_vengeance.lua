@@ -16,19 +16,38 @@ kps.rotations.register("DEMONHUNTER","VENGEANCE",
         {spells.fieryBrand, 'player.hp < 0.7'},
     }},
 
-    {spells.infernalStrike, 'keys.shift and not spells.infernalStrike.isRecastAt("target")'},
-
-    {kps.hekili({
-        spells.disrupt,
-        spells.infernalStrike
-    }), 'keys.ctrl'},
+    --{spells.infernalStrike, 'keys.shift and not spells.infernalStrike.isRecastAt("target")'},
 
 
-    {kps.hekili({
-        spells.disrupt,
-        spells.felDevastation,
-        spells.infernalStrike
-    })}
+    {{"nested"}, 'player.hasTalent(5, 1)', {
+        {kps.hekili({
+            spells.disrupt
+        }), 'keys.ctrl'},
+
+
+        {kps.hekili({
+            spells.disrupt,
+            spells.felDevastation
+        })}
+    }},
+
+    {{"nested"}, 'not player.hasTalent(5, 1)', {
+        {{"nested"}, 'keys.shift', {
+            {spells.elysianDecree},
+            {spells.sigilOfFlame},
+        }},
+        {kps.hekili({
+            spells.disrupt,
+            spells.elysianDecree
+        }), 'keys.ctrl'},
+
+
+        {kps.hekili({
+            spells.disrupt,
+            spells.felDevastation,
+            spells.elysianDecree
+        })}
+    }},
 
 
 

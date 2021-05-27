@@ -293,6 +293,10 @@ kps.spells.paladin.shiningLight = kps.Spell.fromId(327510)
 kps.spells.paladin.divineToll = kps.Spell.fromId(304971)
 kps.spells.paladin.finalReckoning = kps.Spell.fromId(343721)
 
+-- RACIAL
+kps.spells.paladin.arcaneTorrent = kps.Spell.fromId(155145)
+
+
 
 
 

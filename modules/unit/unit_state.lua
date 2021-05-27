@@ -15,7 +15,7 @@ end
 @function `<UNIT>.isAttackable` - returns true if the given unit can be attacked by the player.
 ]]--
 function Unit.isAttackable(self)
-    if Unit.isControlled(self) then return false end
+    if Unit.isControlled(self) and IsInGroup() and not UnitIsPVP("player") then return false end
     if not Unit.exists(self) then return false end
     if (string.match(GetUnitName(self.unit), kps.locale["Dummy"])) then return true end
     if not UnitCanAttack("player", self.unit) then return false end -- UnitCanAttack(attacker, attacked) return 1 if the attacker can attack the attacked, nil otherwise.
