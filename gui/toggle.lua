@@ -154,6 +154,10 @@ function kps.gui.updateToggleStates()
     end
 end
 
+function kps.resetPosition()
+    toggleAnchor:SetPoint("CENTER")
+end
+
 function kps.gui.hide()
     toggleAnchor:Hide()
 end
@@ -287,7 +291,6 @@ local function roundValue(num, idp)
 end
 
 --local updateIntervalSlider = addSlider("Slider1", toggleAnchor, 0, 25, 0.1 , 0.1, 0.1 ,1.5,"0.1","1.5","IntervalUpdate")
---
 --updateIntervalSlider:SetScript("OnValueChanged", function(self)
 --    kps.config.updateInterval = roundValue(updateIntervalSlider:GetValue(),2)
 --    print("updateInterval: ",kps.config.updateInterval)

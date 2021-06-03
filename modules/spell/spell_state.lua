@@ -202,7 +202,7 @@ local shouldInterrupt = setmetatable({}, {
     __index = function(t, self)
         local val = function(breakpoint,flag)
 
-        if flag ~= nil and flag == false then return false end
+        if flag == false then return false end
         if kps.lastTargetGUID == nil then return false end
         local spellCasting, _, _, _, endTime, _, _, _, _ = UnitCastingInfo("player")
         if spellCasting == nil then return false end

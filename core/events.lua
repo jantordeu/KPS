@@ -214,11 +214,10 @@ end)
 
 -- Hide Static PopUp
 local function hideStaticPopup(addon, eventBlocked)
-    StaticPopup1:Hide()
---    if string.upper(addon) == "KPS" then
---        StaticPopup1:Hide()
---        LOG.debug("Addon Action Blocked: %s", eventBlocked)
---    end
+    if string.upper(addon) == "KPS" then
+        StaticPopup1:Hide()
+        LOG.debug("Addon Action Blocked: %s", eventBlocked)
+    end
 end
 
 kps.events.register("ADDON_ACTION_FORBIDDEN", hideStaticPopup)

@@ -162,15 +162,15 @@ end)
 ]]--
 kps.RaidStatus.prototype.defaultTarget = kps.utils.cachedValue(function()
     -- If we're below 30% - always heal us first!
-    if kps.env.player.hp < 0.70 then return kps["env"].player end
+    if kps.env.player.hp < 0.60 then return kps["env"].player end
     -- If the focus target is below 50% - take it (must be some reason there is a focus after all...)
-    -- focus.isFriend coz isFriend (e.g. UnitInRange) is only available for members of the player's group.
-    if kps["env"].focus.isFriend and kps["env"].focus.hp < 0.70 then return kps["env"].focus end
+    -- focus.isFriend coz isHealable (e.g. UnitInRange) is only available for members of the player's group.
+    if kps["env"].focus.isFriend and kps["env"].focus.hp < 0.90 then return kps["env"].focus end
     -- MAYBE we also focused an enemy so we can heal it's target...
-    if kps["env"].focustarget.isFriend and kps["env"].focustarget.hp < 0.70 then return kps["env"].focustarget end
+    if kps["env"].focustarget.isFriend and kps["env"].focustarget.hp < 0.90 then return kps["env"].focustarget end
     -- Now do the same for target...
-    if kps["env"].target.isFriend and kps["env"].target.hp < 0.70 then return kps["env"].target end
-    if kps["env"].targettarget.isFriend and kps["env"].targettarget.hp < 0.70 then return kps["env"].targettarget end
+    if kps["env"].target.isFriend and kps["env"].target.hp < 0.90 then return kps["env"].target end
+    if kps["env"].targettarget.isFriend and kps["env"].targettarget.hp < 0.90 then return kps["env"].targettarget end
     -- Nothing selected - get lowest raid member
     return kps.RaidStatus.prototype.lowestInRaid()
 end)
@@ -185,15 +185,15 @@ end)
 ]]--
 kps.RaidStatus.prototype.defaultTank = kps.utils.cachedValue(function()
     -- If we're below 30% - always heal us first!
-    if kps.env.player.hp < 0.70 then return kps["env"].player end
+    if kps.env.player.hp < 0.60 then return kps["env"].player end
     -- If the focus target is below 50% - take it (must be some reason there is a focus after all...) 
     -- focus.isFriend coz isHealable (e.g. UnitInRange) is only available for members of the player's group.
-    if kps["env"].focus.isHealable and kps["env"].focus.hp < 0.70 then return kps["env"].focus end
+    if kps["env"].focus.isFriend and kps["env"].focus.hp < 0.90 then return kps["env"].focus end
     -- MAYBE we also focused an enemy so we can heal it's target...
-    if kps["env"].focustarget.isHealable and kps["env"].focustarget.hp < 0.70 then return kps["env"].focustarget end
+    if kps["env"].focustarget.isFriend and kps["env"].focustarget.hp < 0.90 then return kps["env"].focustarget end
     -- Now do the same for target...
-    if kps["env"].target.isHealable and kps["env"].target.hp < 0.70 then return kps["env"].target end
-    if kps["env"].targettarget.isHealable and kps["env"].targettarget.hp < 0.70 then return kps["env"].targettarget end
+    if kps["env"].target.isFriend and kps["env"].target.hp < 0.90 then return kps["env"].target end
+    if kps["env"].targettarget.isFriend and kps["env"].targettarget.hp < 0.90 then return kps["env"].targettarget end
     -- Nothing selected - get lowest Tank if it is NOT the player and lower than 50%
     return kps.RaidStatus.prototype.lowestTankInRaid()
 end)

@@ -79,6 +79,7 @@ local damageDistance = {
         ["DEATHKNIGHT"] = false,
         ["MONK"] = false,
         ["DEMONHUNTER"] = false,
+        ["DRUID"] = false,
         ["HUNTER"] = true,
         ["PRIEST"] = true,
         ["SHAMAN"] = true,

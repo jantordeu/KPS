@@ -157,7 +157,6 @@ end
 
 function Unit.isRaidTank(self)
     if UnitGroupRolesAssigned(self.unit) == "TANK" then return true end
-    if kps["env"].focus.guid == self.guid then return true end
     return false
 end
 

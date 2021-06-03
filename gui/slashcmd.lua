@@ -14,6 +14,8 @@ function SlashCmdList.KPS(cmd, editbox)
         kps.write("KPS", kps.enabled and "enabled" or "disabled")
     elseif msg == "show" then
         kps.gui.show()
+    elseif msg == "reset" then
+        kps.resetPosition()
     elseif msg == "hide" then
         kps.gui.hide()
     elseif msg== "disable" or msg == "d" then
@@ -43,6 +45,7 @@ function SlashCmdList.KPS(cmd, editbox)
     elseif msg == "help" then
         kps.write("Slash Commands:")
         kps.write("/kps - Show enabled status.")
+        kps.write("/kps reset - Reset Window Position.")
         kps.write("/kps enable/disable/toggle - Enable/Disable the addon.")
         kps.write("/kps cooldowns/cds - Toggle use of cooldowns.")
         kps.write("/kps pew - Spammable macro to do your best moves, if for some reason you don't want it fully automated.")
