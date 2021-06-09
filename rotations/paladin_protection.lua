@@ -55,8 +55,8 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.blessingOfProtection, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and not player.hasBuff(spells.guardianOfAncientKings)' , "player"},
     
     -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
-    {spells.avengingWrath, 'player.hp < 0.55' },
-    {spells.wordOfGlory, 'player.hp < 0.55 and player.hasBuff(spells.shiningLight)'},
+    {spells.avengingWrath, 'player.hp < 0.50' },
+    {spells.wordOfGlory, 'player.hp < 0.70 and player.hasBuff(spells.shiningLight)'},
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
     {spells.layOnHands, 'player.hpIncoming < 0.30' },
     -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 

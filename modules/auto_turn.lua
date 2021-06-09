@@ -2,6 +2,81 @@
 AutoTurn Module
 ]]--
 
+function _JumpOrAscendStart()
+   secured = false
+   while not secured do
+      RunScript([[
+         for index = 1, 100 do
+            if not issecure() then
+               return
+            end
+         end
+         secured = true
+         JumpOrAscendStart()
+      ]])
+   end
+end
+
+function _CameraOrSelectOrMoveStop()
+   secured = false
+   while not secured do
+      RunScript([[
+         for index = 1, 100 do
+            if not issecure() then
+               return
+            end
+         end
+         secured = true
+         CameraOrSelectOrMoveStop()
+      ]])
+   end
+end
+
+function _CameraOrSelectOrMoveStart()
+   secured = false
+   while not secured do
+      RunScript([[
+         for index = 1, 100 do
+            if not issecure() then
+               return
+            end
+         end
+         secured = true
+         CameraOrSelectOrMoveStart()
+      ]])
+   end
+end
+
+function _TurnLeftStart()
+   secured = false
+   while not secured do
+      RunScript([[
+         for index = 1, 100 do
+            if not issecure() then
+               return
+            end
+         end
+         secured = true
+         TurnLeftStart()
+      ]])
+   end
+end
+
+function _TurnLeftStop()
+   secured = false
+   while not secured do
+      RunScript([[
+         for index = 1, 100 do
+            if not issecure() then
+               return
+            end
+         end
+         secured = true
+         TurnLeftStop()
+      ]])
+   end
+end
+
 local LOG = kps.Logger(kps.LogLevel.INFO)
 
 kps.events.register("UI_ERROR_MESSAGE", function(event_type, event_error)

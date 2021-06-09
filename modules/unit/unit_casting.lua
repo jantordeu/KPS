@@ -84,7 +84,7 @@ end
 function Unit.isInterruptable(self)
     if UnitCanAttack("player", self.unit) == false then return false end
     --if UnitIsEnemy("player",self.unit) == false then return false end
-    local targetSpell, _, _, _, _, _, _, spellInterruptable,_ = UnitCastingInfo(self.unit)
+    local targetSpell, _, _, _, _, _, _, spellInterruptable, _ = UnitCastingInfo(self.unit)
     local targetChannel, _, _, _, _, _, channelInterruptable = UnitChannelInfo(self.unit)
     -- TODO: Blacklisted spells?
     if targetSpell and spellInterruptable == false then return true

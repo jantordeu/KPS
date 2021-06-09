@@ -8,7 +8,7 @@ local Player = kps.Player.prototype
 @function `player.isMounted` - returns true if the player is mounted (exception: Nagrand Mounts do not count as mounted since you can cast while riding)
 ]]--
 function Player.isMounted(self)
-    return IsMounted() and not Player.hasBuff(self)(kps.spells.mount.frostwolfWarWolf) and not Player.hasBuff(self)(kps.spells.mount.telaariTalbuk)
+    return (IsMounted() and not Player.hasBuff(self)(kps.spells.mount.frostwolfWarMount) and not Player.hasBuff(self)(kps.spells.mount.telaariTalbuk)) or Player.hasBuff(self)(kps.spells.mount.druidForm)
 end
 
 --[[[

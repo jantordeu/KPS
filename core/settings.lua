@@ -8,6 +8,7 @@ local settings = {
     "enabled","multiTarget","cooldowns","interrupt","defensive","autoTurn"
 }
 local settingsLoaded = false
+
 kps.events.register("ADDON_LOADED", function(name)
     if name == "KPS" then
         if KPS_SETTINGS ~= nil then
