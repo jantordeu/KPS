@@ -19,6 +19,22 @@ kps.Spell.Item = {}
 
 local GetUnitName = GetUnitName
 
+function _CastSpellByName(spell,target)
+   target = target or "target"
+   secured = false
+   while not secured do
+      RunScript([[
+         for index = 1, 100 do
+            if not issecure() then
+               return
+            end
+         end
+         secured = true
+         CastSpellByName("]] .. spell .. [[", "]] .. target .. [[")
+      ]])
+   end
+end
+
 function _CastGroundSpellByName(spell, target)
   local target = target or "target"
   secured = false
@@ -56,8 +72,6 @@ local castAt = setmetatable({}, {
 function kps.Spell.prototype.cast(self)
     return castAt[self]
 end
-
-
 
 local isOneOf = setmetatable({}, {
     __index = function(t, self)
