@@ -449,6 +449,23 @@ kps.RaidStatus.prototype.hasBuffCount = kps.utils.cachedValue(function()
     return countUnitBuff
 end)
 
+
+local countBuffInRange = function(health)
+    local spell = kps.spells.priest.atonement
+    if health == nil then health = 2 end
+    local count = 0
+    for name, unit in pairs(raidStatus) do
+        if unit.isHealable and unit.hp < health and unit.hasMyBuff(spell) then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+kps.RaidStatus.prototype.countLossAtonementInRange = kps.utils.cachedValue(function()
+    return countBuffInRange
+end)
+
 --------------------------------------------------------------------------------------------
 ------------------------------- RAID DEBUFF UNIT
 --------------------------------------------------------------------------------------------
@@ -562,10 +579,13 @@ function kpstest()
 --print("|cFFFF0000DamageTank:|cffffffff", kps["env"].heal.lowestTankInRaid.incomingDamage)
 print("|cffff8000TANK:|cffffffff", kps["env"].heal.lowestTankInRaid.name,"|",kps["env"].heal.lowestTankInRaid.hp)
 print("|cff1eff00LOWEST|cffffffff", kps["env"].heal.lowestInRaid.name,"|",kps["env"].heal.lowestInRaid.hp)
-print("|cffff8000countRange:|cffffffff",kps["env"].heal.countInRange,"|cffff8000countLossRange:|cffffffff",kps["env"].heal.countLossInRange(0.85))
+print("|cffff8000countRange:|cffffffff",kps["env"].heal.countInRange,"|cffff8000countLossRange:|cffffffff",kps["env"].heal.countLossInRange(0.80))
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
---print("|cffff8000glimmerCount:|cffffffff", kps["env"].heal.hasBuffCount(kps.spells.paladin.glimmerOfLight))
+print("|cffff8000countLossAtonementInRange:|cffffffff", kps["env"].heal.countLossAtonementInRange(0.80)) 
 print("|cffff8000", "---------------------------------")
+
+--print("|cffff8000lastCastedSpell:|cffffffff", kps.lastCastedSpell,"|cffff8000lastCast:|cffffffff", kps.lastCast )
+--print("|cffff8000lastInterruptSpell:|cffffffff", kps.lastInterruptSpell )
 
 --print("|cffff8000cooldown:|cffffffff", kps.spells.priest.voidBolt.cooldown)
 --print("|cffff8000cooldown:|cffffffff", kps.spells.priest.voidEruption.cooldown)
@@ -662,7 +682,7 @@ print("|cffff8000", "---------------------------------")
 --local atonement = kps.spells.priest.atonement 
 --print("|cffff8000BuffCount:|cffffffff", kps["env"].heal.hasBuffCount(atonement))
 
---local aura = kps.spells.priest.powerWordShield-- kps.spells.paladin.consecration
+--local aura = kps.spells.priest.powerWordShield
 --print("myBuffDuration:",kps["env"].player.myBuffDuration(aura))
 --print("hasBuff:",kps["env"].player.hasBuff(aura))
 

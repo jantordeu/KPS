@@ -247,6 +247,7 @@ kps.events.register("UNIT_SPELLCAST_START", function (unit, lineId, spellId)
 end)
 
 -- UNIT_SPELLCAST_SUCCEEDED -- Fired when a spell is cast successfully. Event is received even if spell is resisted.
+-- name, rank, icon, castTime, minRange, maxRange, spellId = GetSpellInfo(spellId or "spellName"[, "spellRank"])
 local count = 0
 kps.events.register("UNIT_SPELLCAST_SUCCEEDED", function (unit, lineId, spellId)
    if unit == "player" then
@@ -264,16 +265,16 @@ kps.events.register("UNIT_SPELLCAST_SUCCEEDED", function (unit, lineId, spellId)
 end)
 
 -- UNIT_SPELLCAST_SENT -- Fired when a unit attempts to cast a spell regardless of the success of the cast.
-kps.events.register("UNIT_SPELLCAST_SENT", function (unit, unittarget, lineId, spellId)
+kps.events.register("UNIT_SPELLCAST_SENT", function (unit, target, lineId, spellId)
    if unit == "player" then
        kps.lastSentSpell = select(1, GetSpellInfo(spellId))
    end
 end)
 
 -- UNIT_SPELLCAST_INTERRUPTED Fired when a unit's spellcast is interrupted, including party/raid members or the player. 
-kps.events.register("UNIT_SPELLCAST_INTERRUPTED", function (unit, unittarget, lineId, spellId)
+kps.events.register("UNIT_SPELLCAST_INTERRUPTED", function (unit, lineId, spellId)
    if unit == "player" then
-       kps.lastInterruptSpell = select(1, GetSpellInfo(spellId))
+		kps.lastInterruptSpell = select(1, GetSpellInfo(spellId))
    end
 end)
 

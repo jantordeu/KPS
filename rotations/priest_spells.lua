@@ -239,7 +239,7 @@ kps.spells.priest.unleashTheShadows = kps.Spell.fromId(194093)
 kps.spells.priest.vampiricEmbrace = kps.Spell.fromId(15286)
 kps.spells.priest.vampiricTouch = kps.Spell.fromId(34914)
 kps.spells.priest.vestmentsOfDiscipline = kps.Spell.fromId(197711)
-kps.spells.priest.voidBolt = kps.Spell.fromId(228266)
+kps.spells.priest.voidBolt = kps.Spell.fromId(228266) -- 205448/éclair-de-vide -- 343355/void-bolt
 kps.spells.priest.voidCorruption = kps.Spell.fromId(194016)
 kps.spells.priest.voidEruption = kps.Spell.fromId(228260)
 kps.spells.priest.voidOrigins = kps.Spell.fromId(228630)
@@ -295,6 +295,13 @@ kps.spells.priest.damnation = kps.Spell.fromId(341374)
 kps.spells.priest.mindgames = kps.Spell.fromId(323673)
 kps.spells.priest.doorOfShadows = kps.Spell.fromId(300728)
 kps.spells.priest.dissonantEchoes = kps.Spell.fromId(343144)
+kps.spells.priest.faeGuardians = kps.Spell.fromId(327661)
+-- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain.
+kps.spells.priest.wrathfulFaerie = kps.Spell.fromId(342132)
+-- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)
+kps.spells.priest.benevolentFaerie = kps.Spell.fromId(327710)
+-- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
+kps.spells.priest.guardianFaerie = kps.Spell.fromId(327694)
 
 -- LEGENDAIRE
 kps.spells.priest.flashConcentration = kps.Spell.fromId(336267)

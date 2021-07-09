@@ -23,8 +23,6 @@ kps.rotations.register("MAGE","FIRE",
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not focus.exists and mouseover.isAttackable and mouseover.inCombat and not mouseover.isUnit("target")' , "/focus mouseover" },
-    {{"macro"}, 'focus.exists and target.isUnit("focus")' , "/clearfocus" },
-    --{{"macro"}, 'focus.exists and not focus.isAttackable' , "/clearfocus" },
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
     {{"macro"}, 'player.hasTalent(7,3) and spells.meteor.cooldown == 0 and kps.lastSentSpell == spells.runeOfPower.name', "/cast [@cursor] "..Meteor },    

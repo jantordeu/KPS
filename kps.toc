@@ -1,4 +1,4 @@
-## Interface: 90005
+## Interface: 90100
 ## Title: |cffff8000KPS Addon
 ## Notes: Karnofsky Performance System
 ## SavedVariables:
