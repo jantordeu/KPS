@@ -302,6 +302,8 @@ kps.spells.priest.wrathfulFaerie = kps.Spell.fromId(342132)
 kps.spells.priest.benevolentFaerie = kps.Spell.fromId(327710)
 -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
 kps.spells.priest.guardianFaerie = kps.Spell.fromId(327694)
+-- Mind Devourer -- buff Your next Devouring Plague costs 0 insanity.
+kps.spells.priest.mindDevourer = kps.Spell.fromId(338333)
 
 -- LEGENDAIRE
 kps.spells.priest.flashConcentration = kps.Spell.fromId(336267)

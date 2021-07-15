@@ -112,21 +112,22 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.avengingCrusader, 'player.hasTalent(6,2) and kps.damage' },
      }},
 
-    -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
-    {spells.divineToll, 'heal.countLossInRange(0.85) > 2' , env.damageTarget },
     {spells.lightOfDawn, 'player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'player.hasTalent(4,3) and heal.countLossInRange(0.85) > 4 and not spells.ruleOfLaw.lastCasted(9)' },
     {spells.wordOfGlory, 'heal.lowestTankInRaid.hp < 0.50' , kps.heal.lowestTankInRaid },
     {spells.wordOfGlory, 'player.hp < 0.50' , "player" },
     {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.50' , kps.heal.lowestInRaid },
-    -- "Lumière de l’aube" -- "Light of Dawn" -- 3 charges de puissance sacrée  
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.85) > 4' },
+    -- "Lumière de l’aube" -- "Light of Dawn" -- 3 charges de puissance sacrée 
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.80) > 2' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.85) > 3' },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.85) > 2 and not player.isInRaid' },
     -- "Word of Glory" -- 3 charges de puissance sacrée
     {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
-    {spells.lightOfDawn, 'player.holyPower == 5 and heal.countLossInDistance(0.90) > 1' },
+    {spells.lightOfDawn, 'player.holyPower == 5 and heal.countLossInDistance(0.90) > 2' },
     -- Avoid using Shield of the Righteous, you will gain more damage from spamming Word of Glory to increase the chance of proccing Awakening
-    {spells.wordOfGlory, 'player.hasTalent(6,3)' , kps.heal.lowestInRaid },
+    {spells.wordOfGlory, 'player.holyPower == 5' , kps.heal.lowestInRaid },
+    -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
+    {spells.divineToll, 'heal.countLossInRange(0.85) > 2' , env.damageTarget },
 
     -- DEFAULT TANK
     {spells.holyShock, 'focus.isFriend and focus.hp < 0.70' , "focus" },
