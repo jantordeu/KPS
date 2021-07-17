@@ -92,3 +92,17 @@ function Unit.isClassDistance(self)
     if damageDistance[classFile] == true then return true end
     return false
 end
+
+local classUnit = setmetatable({}, {
+    __index = function(t, unit)
+        local val = function (className)
+            local _, classFile, classID = UnitClass(unit)
+            if classFile ==  string.upper(className) then return true end
+            return false
+        end
+        t[unit] = val
+        return val
+    end})
+function Unit.isClassName(self)
+    return classUnit[self.unit]
+end

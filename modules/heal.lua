@@ -584,6 +584,8 @@ print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 print("|cffff8000countLossAtonementInRange:|cffffffff", kps["env"].heal.countLossAtonementInRange(0.80)) 
 print("|cffff8000", "---------------------------------")
 
+
+--print("|cffff8000isClassName:|cffffffff", kps["env"].target.isClassName("priest") )
 --print("|cffff8000lastCastedSpell:|cffffffff", kps.lastCastedSpell,"|cffff8000lastCast:|cffffffff", kps.lastCast )
 --print("|cffff8000lastInterruptSpell:|cffffffff", kps.lastInterruptSpell )
 
