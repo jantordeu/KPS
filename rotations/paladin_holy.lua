@@ -148,14 +148,13 @@ kps.rotations.register("PALADIN","HOLY",
     -- ShouldInterruptCasting,
     {{"macro"}, 'spells.holyLight.shouldInterrupt(0.90,kps.defensive)' , "/stopcasting" },
     {{"macro"}, 'spells.flashOfLight.shouldInterrupt(0.90,kps.defensive)' , "/stopcasting" },
-    -- "Imprégnation de lumière" "Infusion of Light" -- reduit le coût de votre prochain Éclair lumineux de 30% ou augmentent les soins prodigués par votre prochain sort Lumière sacrée de 30%.
+    -- "Imprégnation de lumière" "Infusion of Light" -- Reduces the cost of your next Flash of Light by 30% or causes your next Holy Light to generate 1 Holy Power.
     -- "Beacon of Light" -- Although this does not generate Holy Power directly, you can cast a Flash of Light or Holy Light on the target affected by Beacon of Light to generate one Holy Power.
     {{"nested"},'not player.isMoving and player.hasBuff(spells.infusionOfLight)', {
-        {spells.flashOfLight, 'kps.groupSize() == 1 and player.hp < 0.85' , "player" , "FLASH_PLAYER" },
+        {spells.flashOfLight, 'kps.groupSize() == 1 and player.hp < 0.80' , "player" , "FLASH_PLAYER" },
         {spells.flashOfLight, 'heal.lowestTankInRaid.hp < 0.70' , kps.heal.lowestTankInRaid , "FLASH_TANK"  },
         {spells.flashOfLight, 'player.hp < 0.70' , "player" , "FLASH_PLAYER" },
         {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.70' , kps.heal.lowestInRaid  , "FLASH_LOWEST" },
-        {spells.holyLight, 'heal.lowestInRaid.hp < 0.85 and spells.holyShock.cooldown > 2' , kps.heal.lowestInRaid  , "holyLight_LOWEST" },
     }},
     -- DAMAGE    
     {{"nested"},'kps.damage', damageRotation},
@@ -163,6 +162,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.crusaderStrike, 'target.distance <= 5' , env.damageTarget},
     {spells.hammerOfWrath, 'true' , env.damageTarget },
     {spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 5' },
+    {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid  , "holyLight_LOWEST" },
 
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestTankInRaid.hpIncoming < 0.70 and player.hpIncoming > 0.80 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid , "MARTYR_tank"},
     {spells.lightOfTheMartyr, 'player.isMoving and heal.lowestInRaid.hpIncoming < 0.70 and player.hpIncoming > 0.80 and not heal.lowestInRaid.isUnit("player")' , kps.heal.lowestInRaid , "MARTYR_lowest"},

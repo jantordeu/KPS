@@ -107,7 +107,7 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
     {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
 
-    {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm) and spells.mindBlast.cooldown > 2' , env.damageTarget , "voidEruption"  },    
+    {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm) and spells.mindBlast.cooldown > 0' , env.damageTarget , "voidEruption"  },    
     {spells.devouringPlague, 'true' , env.damageTarget }, 
 
     -- "Sombres pensées" -- Attaque mentale peut être lancée instantanément ou pendant la canalisation de Fouet mental
