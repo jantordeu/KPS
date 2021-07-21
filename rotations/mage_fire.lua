@@ -80,7 +80,7 @@ kps.rotations.register("MAGE","FIRE",
     {{"nested"},'player.hasTalent(7,3) and player.hasTalent(3,3) and spells.meteor.cooldown == 0 and player.hasBuff(spells.runeOfPower)', {
         {{"macro"}, 'keys.shift', "/cast [@cursor] "..Meteor },
         {{"macro"}, 'mouseover.isAttackable and not mouseover.isMoving' , "/cast [@cursor] "..Meteor },
-        {{"macro"}, 'target.isAttackable and target.distanceMax <= 5' , "/cast [@player] "..Meteor },
+        {{"macro"}, 'target.isAttackable and target.distanceMax <= 10' , "/cast [@player] "..Meteor },
     }},
 
     -- STOPCASTING -- JUMP
@@ -103,7 +103,7 @@ kps.rotations.register("MAGE","FIRE",
     {spells.livingBomb,  'player.hasTalent(6,3) and not player.hasBuff(spells.combustion) and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.livingBomb) and mouseover.hp > 0.30' , "mouseover" },
     {spells.phoenixFlames , 'kps.multiTarget and player.hasBuff(spells.heatingUp)' ,  env.damageTarget },
     {spells.mirrorImage, 'target.isAttackable' , "target" },
-    {spells.dragonsBreath, 'not player.hasBuff(spells.combustion) and target.isAttackable and target.distanceMax <= 5' , "target" },
+    {spells.dragonsBreath, 'not player.hasBuff(spells.combustion) and target.isAttackable and target.distanceMax <= 10' , "target" },
 
     -- One Rune of Power and one Meteor should always be used 40 sec recharge
     {spells.runeOfPower, 'player.hasTalent(7,3) and player.hasTalent(3,3) and not player.isMoving and spells.runeOfPower.charges == 2 and spells.combustion.cooldown > 10 and spells.meteor.cooldown < 5 and target.isAttackable' },

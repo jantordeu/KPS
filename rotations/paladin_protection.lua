@@ -82,7 +82,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.hammerOfTheRighteous, 'player.hasBuff(spells.consecration) and target.distanceMax <= 10', "target" , "hammerOfTheRighteous" },
 
     {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.30', 'player'},
-    {{"macro"}, 'target.isAttackable and target.distanceMax <= 5' , "/startattack" },
+    {{"macro"}, 'target.isAttackable and target.distanceMax <= 10' , "/startattack" },
 
  }
 ,"paladin_protection_bfa")

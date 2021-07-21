@@ -146,6 +146,7 @@ kps.rotations.register("PRIEST","HOLY",
 
     {spells.powerInfusion, 'heal.lowestInRaid.hp < 0.40 and heal.countLossInRange(0.70) > 4' , "player" },
     {spells.powerInfusion, 'heal.lowestInRaid.hp < 0.40 and heal.countLossInRange(0.70) > 2 and not player.isInRaid' , "player" },
+    {spells.powerInfusion, 'mouseover.isFriend and mouseover.name == "Druidaxos"', "mouseover" },
     {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("druid")', "mouseover" },
     {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("mage")', "mouseover" },
     
@@ -182,13 +183,11 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
 
     -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
-    {spells.prayerOfHealing, 'not player.isMoving and spells.holyWordSanctify.cooldown > 15 and heal.countLossInRange(0.85) > 4 and not spells.prayerOfHealing.lastCasted(6)' , kps.heal.lowestInRaid , "POH" },
-    {spells.prayerOfHealing, 'not player.isMoving and spells.holyWordSanctify.cooldown > 15 and heal.countLossInRange(0.85) > 2 and not spells.prayerOfHealing.lastCasted(6) and not player.isInRaid' , kps.heal.lowestInRaid , "POH" },
-    {spells.heal, 'not player.isMoving and player.hasTalent(1,2) and heal.countLossInRange(0.85) > 2 and not spells.heal.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "heal_POH" },
-    {spells.heal, 'not player.isMoving and player.hasTalent(1,2) and heal.countLossInRange(0.85) > 1 and not spells.heal.isRecastAt(heal.lowestInRaid.unit) and not player.isInRaid' , kps.heal.lowestInRaid , "heal_POH" },
+    {spells.prayerOfHealing, 'not player.isMoving and spells.holyWordSanctify.cooldown > 12 and heal.countLossInRange(0.85) > 4 and not spells.prayerOfHealing.lastCasted(6)' , kps.heal.lowestInRaid , "POH" },
+    {spells.prayerOfHealing, 'not player.isMoving and spells.holyWordSanctify.cooldown > 12 and heal.countLossInRange(0.85) > 2 and not spells.prayerOfHealing.lastCasted(6) and not player.isInRaid' , kps.heal.lowestInRaid , "POH" },
+    {spells.heal, 'not player.isMoving and player.hasTalent(1,2) and heal.countLossInRange(0.80) > 2 and not spells.heal.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid , "heal_POH" },
+    {spells.heal, 'not player.isMoving and player.hasTalent(1,2) and heal.countLossInRange(0.80) > 1 and not spells.heal.isRecastAt(heal.lowestInRaid.unit) and not player.isInRaid' , kps.heal.lowestInRaid , "heal_POH" },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.hpIncoming > 0.70 and player.buffDuration(spells.flashConcentration) > 7', env.damageTarget, "smite_health"},
-    {spells.smite, 'not player.isMoving and player.hasBuff(spells.wrathfulFaerie) and player.buffDuration(spells.flashConcentration) > 7', env.damageTarget, "smite_health"},
-    {spells.heal, 'not player.isMoving and heal.lowestInRaid.hpIncoming < 0.70 and player.hasBuff(spells.flashConcentration)', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
 
     {{"nested"}, 'player.isMoving' ,{
         {spells.renew, 'heal.lowestTankInRaid.hp < 0.60 and not heal.lowestTankInRaid.hasMyBuff(spells.renew)' , kps.heal.lowestTankInRaid },

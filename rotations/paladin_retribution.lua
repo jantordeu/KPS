@@ -32,7 +32,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
     {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
     {spells.layOnHands, 'player.hp < 0.30', "player" },
-    {spells.wordOfGlory, 'player.hp < 0.50' , "player" },
+    {spells.wordOfGlory, 'player.hp < 0.70' , "player" },
     {spells.wordOfGlory, 'kps.groupSize() == 1 and player.hp < 0.80' , "player" },
     {spells.flashOfLight, 'player.hp < 0.80 and player.hasBuff(spells.selflessHealer) and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
     

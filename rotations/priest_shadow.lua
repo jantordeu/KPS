@@ -45,9 +45,11 @@ kps.rotations.register("PRIEST","SHADOW",
     -- "Etreinte vampirique" buff 15286 -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
     {spells.vampiricEmbrace, 'not player.isInRaid and heal.lowestInRaid.hp < 0.40' },
     {spells.vampiricEmbrace, 'heal.countLossInRange(0.80) > 4' },
+    {spells.vampiricEmbrace, 'kps.groupSize() == 1 and player.hp < 0.60' },
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover")' , "mouseover" },
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.40 and not spells.shadowMend.isRecastAt("player")' , "player" },
+    {spells.shadowMend, 'not player.isMoving and player.hp < 0.60 and not spells.shadowMend.isRecastAt("player")' , "player" },
+    {spells.shadowMend, 'not player.isMoving and kps.groupSize() == 1 and player.hp < 0.80 and not spells.shadowMend.lastCasted(6)' , "player" },
     -- "Power Word: Shield" 17 -- "Body and Soul"
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.6) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
     {spells.powerWordShield, 'player.hp < 0.50 and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
@@ -98,21 +100,21 @@ kps.rotations.register("PRIEST","SHADOW",
 
     {spells.devouringPlague, 'player.insanity >= 85' , env.damageTarget }, 
     {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , env.damageTarget },
+    {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm) and spells.mindBlast.cooldown > 0' , env.damageTarget , "voidEruption"  },    
+
+    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
+    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
+    {spells.devouringPlague, 'true' , env.damageTarget },
+
     {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("target")' , "target" },
     {spells.vampiricTouch, 'not player.isMoving and player.hasTalent(3,2) and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.vampiricTouch.isRecastAt("target")' , "target" , "misere" },
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5' , "target" , "shadowWordPain" },
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
     {spells.vampiricTouch, 'not player.isMoving and player.hasTalent(3,2) and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" , "misere" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 7' , "mouseover" , "shadowWordPain"  },
-    {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
-    {spells.mindSear, 'kps.mindSear and not player.isMoving' , env.damageTarget , "mindSear_mindSear" },
-
-    {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm) and spells.mindBlast.cooldown > 0' , env.damageTarget , "voidEruption"  },    
-    {spells.devouringPlague, 'true' , env.damageTarget }, 
 
     -- "Sombres pensées" -- Attaque mentale peut être lancée instantanément ou pendant la canalisation de Fouet mental
     --{{"macro"}, 'player.hasBuff(spells.darkThoughts) and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
-    {spells.mindBlast, 'player.hasBuff(spells.darkThoughts) and player.isCastingSpell(spells.mindFlay)' , env.damageTarget , 'mindBlast_darkThoughts_mindFly' },
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
     {spells.shadowWordPain, 'player.isMoving and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 7' , "target"  , "shadowWordPain_moving"  },
     {spells.shadowWordPain, 'player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 7' , "mouseover" , "shadowWordPain_moving"  },
