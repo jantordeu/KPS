@@ -60,16 +60,16 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.painSuppression, 'keys.alt and mouseover.isHealable' , "mouseover" },
     
     {{"nested"}, 'player.hasBuff(spells.rapture)' , {
-        {spells.powerWordShield, 'not heal.lowestTankInRaid.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
         {spells.powerWordShield, 'not heal.lowestInRaid.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid },
+        {spells.powerWordShield, 'not heal.lowestTankInRaid.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
         {spells.powerWordShield, 'not player.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt("player")' , "player" },
         {spells.powerWordShield, 'mouseover.isHealable and not mouseover.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt("mouseover")' , "mouseover" }, 
     }},
     
     {{"nested"}, 'kps.interrupt' ,{
-        {spells.shiningForce, 'player.hasTalent(4,3) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
-        {spells.psychicScream, 'kps.groupSize() == 1 and player.hasTalent(4,3) and spells.shiningForce.cooldown > 0 and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
-        {spells.psychicScream, 'kps.groupSize() == 1 and not player.hasTalent(4,3) and player.isTarget and target.distance <= 10 and target.isCasting' , "player" },
+        {spells.shiningForce, 'player.hasTalent(4,3) and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
+        {spells.psychicScream, 'kps.groupSize() == 1 and player.hasTalent(4,3) and spells.shiningForce.cooldown > 0 and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
+        {spells.psychicScream, 'kps.groupSize() == 1 and not player.hasTalent(4,3) and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
         {spells.dispelMagic, 'target.isAttackable and target.isBuffDispellable and not spells.dispelMagic.lastCasted(9)' , "target" },
         {spells.dispelMagic, 'mouseover.isAttackable and mouseover.isBuffDispellable and not spells.dispelMagic.lastCasted(9)' , "mouseover" },   
     }},
@@ -99,6 +99,12 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.powerWordShield, 'player.hp < 0.80 and not player.hasDebuff(spells.weakenedSoul)' , "player" },
         {spells.painSuppression, 'player.isStun and player.hp < 0.80' , "player" },
     }},
+    
+    -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
+    -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)  
+    -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
+    {spells.powerWordShield, 'target.hasMyDebuff(spells.wrathfulFaerie) and targettarget.isFriend and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
+    {spells.faeGuardians, 'target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" },
  
     -- TRINKETS -- SLOT 0 /use 13
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
@@ -108,13 +114,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" },
     
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3)' },
-    {spells.divineStar, 'player.hasTalent(6,2) and target.distance <= 30 and target.isAttackable' , "target" },  
-
-     -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
-    {spells.powerWordShield, 'spells.faeGuardians.lastCasted(5) and not heal.lowestTankInRaid.hasBuff(spells.guardianFaerie) and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid },
-    -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)
-    {spells.shadowMend, 'spells.faeGuardians.lastCasted(5) and spells.rapture.cooldown < 15 and not heal.lowestTankInRaid.hasBuff(spells.benevolentFaerie) and not spells.shadowMend.lastCasted(5)' , kps.heal.lowestTankInRaid, "shadowMend_benevolentFaerie" },
-    {spells.faeGuardians, 'true' , "target" }, 
+    {spells.divineStar, 'player.hasTalent(6,2) and target.distanceMax  <= 30 and target.isAttackable' , "target" },
 
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.80' , "target" },
     {spells.shadowWordDeath, 'mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.80' , "mouseover" },
@@ -124,8 +124,8 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.purgeTheWicked, 'player.hasTalent(6,1) and mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.purgeTheWicked) < 4 and not spells.purgeTheWicked.isRecastAt("mouseover")' , "mouseover" , "mouseover_purge" },
     -- RAMPUP
     {{"nested"},'kps.multiTarget', damageRotation},
+    {{"nested"},'player.hasTalent(7,2) and player.hasBuff(spells.spiritShell)', damageRotation},
     {{"nested"},'kps.rampUp', {
-        {{"nested"},'player.hasTalent(7,2) and player.hasBuff(spells.spiritShell)', damageRotation},
         {spells.spiritShell, 'player.hasTalent(7,2) and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(9)' },
         {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0 and spells.powerWordRadiance.lastCasted(9)' },
         {spells.powerWordShield, 'heal.hasBuffCount(spells.atonement) < 5 and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 9 and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid , "shield_tank_rampUp" },
@@ -174,9 +174,9 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.80 and heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt(heal.lowestInRaid.unit) and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid , "shield_lowest_atonement" },
     {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.40' , kps.heal.lowestInRaid , "shadowMend_lowest_urg" },
     -- DAMAGE
-    {spells.mindSear, 'not player.isMoving and player.plateCount > 3 and heal.lowestInRaid.hp > 0.70' , env.damageTarget },
-    {spells.smite, 'not player.isMoving and not kps.rampUp' , env.damageTarget },
-    {spells.holyNova, 'player.isMoving and target.distance <= 10' },
+    {spells.mindSear, 'not kps.rampUp and not player.isMoving and player.plateCount > 3' , env.damageTarget },
+    {spells.smite, 'not kps.rampUp and not player.isMoving' , env.damageTarget },
+    {spells.holyNova, 'player.isMoving and target.distanceMax  <= 10' },
 
 }
 ,"priest_discipline_Shadowlands")

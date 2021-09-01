@@ -35,7 +35,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.wordOfGlory, 'player.hp < 0.70' , "player" },
     {spells.wordOfGlory, 'kps.groupSize() == 1 and player.hp < 0.80' , "player" },
     {spells.flashOfLight, 'player.hp < 0.80 and player.hasBuff(spells.selflessHealer) and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
-    
+    {spells.arcaneTorrent, 'true' },
+
     -- Interrupt
     {{"nested"}, 'kps.interrupt' ,{
         {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting' , "target" },
@@ -46,7 +47,34 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         --{spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
     }},
     
-    {kps.hekili({
-    })}
+    -- TRINKETS -- SLOT 0 /use 13
+    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
+    -- TRINKETS -- SLOT 1 /use 14
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
+
+
+	{spells.seraphim, 'true' , env.damageTarget }, -- use Seraphim before using Wake of Ashes Icon Wake of Ashes
+	{spells.avengingWrath, 'player.holyPower >= 3' },
+	{spells.divineToll, 'kps.multiTarget' },
+	{spells.divineToll, 'spells.executionSentence.lastCasted(5)' }, -- cast Divine Toll Icon Divine Toll during Execution Sentence Icon Execution Sentence (if talented).
+	{spells.executionSentence, 'true' , env.damageTarget }, -- use Judgment and Final Reckoning before using Execution Sentence
+	{spells.finalReckoning, 'true' , env.damageTarget }, -- use Final Reckoning before Execution Sentence
+	{spells.divineStorm, 'kps.multiTarget and player.holyPower == 5' , env.damageTarget},
+	{spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},
+	{spells.wakeOfAshes, 'true',  env.damageTarget },
+	{spells.hammerOfWrath, 'true' , env.damageTarget },
+	{spells.bladeOfJustice, 'true' , env.damageTarget },
+	{spells.judgment, 'true' , env.damageTarget },
+
+
+	{spells.crusaderStrike, 'target.distanceMax  <= 10' , env.damageTarget},
+	{spells.divineStorm, 'kps.multiTarget and target.distanceMax  <= 10' , env.damageTarget},
+	{spells.templarsVerdict, 'target.distanceMax  <= 10' , env.damageTarget},
+	{spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 10' },
+	{spells.shieldOfVengeance , 'true' },
+    
+
+--    {kps.hekili({
+--    })}
 }
 ,"Hekili")

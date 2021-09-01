@@ -190,6 +190,10 @@ function kps.Player.prototype.timeInCombat(self)
     return GetTime() - combatEnterTime
 end
 
+local cleargarbage = function()
+    collectgarbage()
+end
+
 -- Combat Timer
 --/script print(kps.env.player.timeInCombat)
 kps.events.register("PLAYER_REGEN_DISABLED", function()
@@ -203,9 +207,8 @@ kps.events.register("PLAYER_LEAVE_COMBAT", function()
 end)
 kps.events.register("PLAYER_REGEN_ENABLED", function()
     combatEnterTime = 0
-    collectgarbage("collect")
+    cleargarbage()
 end)
-
 
 --[[[
 @function `player.hasTalent(<ROW>,<TALENT>)` - returns true if the player has the selected talent (row: 1-7, talent: 1-3).

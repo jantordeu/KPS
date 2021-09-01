@@ -19,7 +19,7 @@ local damageRotation = {
     {spells.holyPrism, 'player.hasTalent(2,3)' , env.damageTarget },
     {spells.lightsHammer, 'player.hasTalent(1,3)' , env.damageTarget },
     {spells.judgment, 'true' , env.damageTarget },
-    {spells.crusaderStrike, 'target.distance <= 5' , env.damageTarget},
+    {spells.crusaderStrike, 'target.distanceMax  <= 10' , env.damageTarget},
     {spells.hammerOfWrath, 'true' , env.damageTarget },
     {spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 10' },    
 }
@@ -158,7 +158,7 @@ kps.rotations.register("PALADIN","HOLY",
     }},
     -- DAMAGE
     {spells.judgment, 'true' , env.damageTarget },
-    {spells.crusaderStrike, 'target.distance <= 5' , env.damageTarget},
+    {spells.crusaderStrike, 'target.distanceMax  <= 10' , env.damageTarget},
     {spells.hammerOfWrath, 'true' , env.damageTarget },
     {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid  , "holyLight_LOWEST" },
     {spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 10' },

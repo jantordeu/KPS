@@ -34,8 +34,8 @@ kps.rotations.register("WARRIOR","PROTECTION",
     
     -- Charge enemy
     {{"macro"}, 'keys.shift', "/cast [@cursor] "..HeroicLeap },
-    {spells.heroicThrow, 'kps.defensive and target.isAttackable and target.distance > 10' },
-    {spells.intercept, 'kps.defensive and target.isAttackable and target.distance > 10' },
+    {spells.heroicThrow, 'kps.defensive and target.isAttackable and target.distanceMax  > 10' },
+    {spells.intercept, 'kps.defensive and target.isAttackable and target.distanceMax  > 10' },
 
     -- "Pierre de soins" 5512
     --{{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
@@ -57,10 +57,10 @@ kps.rotations.register("WARRIOR","PROTECTION",
 
     {spells.shieldBlock, 'player.incomingDamage > 0 and player.myBuffDuration(spells.shieldBlock) < 2' , "target" , "shieldBlock" },
     {spells.shieldSlam},
-    {spells.thunderClap, 'player.plateCount > 2 and target.distance <= 10'},
+    {spells.thunderClap, 'player.plateCount > 2 and target.distanceMax  <= 10'},
     {spells.revenge, 'spells.revenge.cost == 0' , "target", "revenge_free" },
     {spells.revenge, 'player.rage > 90' , "target", "revenge_rage" },
-    {spells.devastate, 'target.distance <= 10' , "target" , "devastate" }, 
+    {spells.devastate, 'target.distanceMax  <= 10' , "target" , "devastate" }, 
 
     {{"nested"}, 'player.hasTalent(6,2)', {
         {spells.ignorePain, 'player.buffValue(spells.ignorePain) < player.incomingDamage and player.myBuffDuration(spells.ignorePain) < 9' , "target", "ignorePain" },

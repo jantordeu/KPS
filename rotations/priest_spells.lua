@@ -308,6 +308,8 @@ kps.spells.priest.mindDevourer = kps.Spell.fromId(338333)
 -- LEGENDAIRE
 kps.spells.priest.flashConcentration = kps.Spell.fromId(336267)
 kps.spells.priest.talbadarStratagem = kps.Spell.fromId(342416)
+kps.spells.priest.directMask = kps.Spell.fromId(356532)
+
 
 
 

@@ -99,7 +99,7 @@ function kps.utils.createMessage(message)
     local msg = CreateFrame("MessageFrame", nil, UIParent)
     msg:SetPoint("LEFT", UIParent)
     msg:SetPoint("RIGHT", UIParent)
-    msg:SetPoint("TOP", 0, -700) -- set vertical position here
+    msg:SetPoint("TOP", 0, -700) -- set vertical position here, up -200,  down -900, middle -700
     msg:SetWidth(128)
     msg:SetHeight(64)
     msg:SetInsertMode("TOP")

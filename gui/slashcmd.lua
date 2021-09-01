@@ -10,7 +10,7 @@ function SlashCmdList.KPS(cmd, editbox)
     if msg == "toggle" or msg == "t" then
         kps.enabled = not kps.enabled
         kps.gui.updateToggleStates()
-        collectgarbage("collect")
+        collectgarbage()
         kps.write("KPS", kps.enabled and "enabled" or "disabled")
     elseif msg == "show" then
         kps.gui.show()
