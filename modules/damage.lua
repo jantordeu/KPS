@@ -105,7 +105,6 @@ kps.RaidTarget.prototype.enemyTarget = kps.utils.cachedValue(function()
     return lowestUnit
 end)
 
-
 --[[[
 @function `damage.enemyLowest` - Returns the lowest Health enemy target for all raid members
 ]]--

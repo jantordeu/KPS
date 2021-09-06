@@ -83,10 +83,9 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.purify, 'heal.isMagicDispellable' , kps.heal.isMagicDispellable },
     }},
 
-    -- "Pierre de soins" 5512
-    --{{"macro"}, 'player.hp < 0.60 and player.useItem(5512)' , "/use item:5512" },
-    {spells.desperatePrayer, 'player.hp < 0.60' , "player" },
     {spells.fade, 'player.isTarget and player.isInGroup' },
+    {spells.desperatePrayer, 'player.hp < 0.60' , "player" },
+    --{{"macro"}, 'player.hp < 0.60 and player.useItem(5512)' , "/use item:5512" },
     -- "Angelic Feather"
     {{"macro"},'player.hasTalent(2,3) and not player.isSwimming and player.isMovingSince(1.6) and not player.hasBuff(spells.angelicFeather)' , "/cast [@player] "..AngelicFeather },
     -- "Levitate" 1706
@@ -103,7 +102,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
     -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)  
     -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
-    {spells.powerWordShield, 'target.hasMyDebuff(spells.wrathfulFaerie) and targettarget.isFriend and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
+    {spells.powerWordShield, 'targettarget.isFriend and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
     {spells.faeGuardians, 'target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" },
  
     -- TRINKETS -- SLOT 0 /use 13
@@ -160,12 +159,11 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.penance, 'player.hp < 0.40' , "player" },
 
     -- ATONEMENT DAMAGE
+    {spells.powerWordSolace, 'true' , env.damageTarget  },
     {{"nested"},'not kps.rampUp and heal.hasBuffAtonement.hp < 1', {
         {spells.schism, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.80 and spells.powerWordRadiance.lastCasted(9)' , env.damageTarget },
         {spells.mindBlast, 'not player.isMoving and heal.hasBuffAtonement.hp < 0.80' , env.damageTarget },
         {spells.penance, 'true' , env.damageTarget },
-        {spells.powerWordSolace, 'true' , env.damageTarget  },
-        {spells.mindSear, 'not player.isMoving and player.plateCount > 3 and heal.lowestInRaid.hp > 0.70' , env.damageTarget },
         {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.70' , env.damageTarget },
         {spells.smite, 'not player.isMoving and heal.lowestInRaid.myBuffDuration(spells.atonement) > 2' , env.damageTarget },
     }},

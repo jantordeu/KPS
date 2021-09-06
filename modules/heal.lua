@@ -713,9 +713,6 @@ print("|cffff8000", "---------------------------------")
 --print("TANKS",unit.name)
 --end
 --
---for _,unit in ipairs(damageInRaid()) do
---print("DAMAGE",unit.name)
---end
 
 --print("|cffff8000hasRoleInRaidTANK:|cffffffff", kps["env"].heal.lowestInRaid.hasRoleInRaid("TANK"))
 --print("|cffff8000hasRoleInRaidHEALER:|cffffffff", kps["env"].heal.lowestInRaid.hasRoleInRaid("HEALER"))
