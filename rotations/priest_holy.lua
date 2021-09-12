@@ -109,9 +109,9 @@ kps.rotations.register("PRIEST","HOLY",
     }},
     -- "Dissipation de la magie" -- Dissipe la magie sur la cible ennemie, supprimant ainsi 1 effet magique bénéfique.
     {{"nested"}, 'kps.interrupt' ,{
-        {spells.holyWordChastise, 'player.hasTalent(4,2) and target.isInterruptable and target.isCasting' , "target" },
-        {spells.holyWordChastise, 'player.hasTalent(4,2) and mouseover.isInterruptable and mouseover.isCasting' , "mouseover" },
-        {spells.shiningForce, 'player.hasTalent(4,3) and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
+        {spells.holyWordChastise, 'player.hasTalent(4,2) and target.isInterruptable and target.isCasting and target.castTimeLeft < 2' , "target" },
+        {spells.holyWordChastise, 'player.hasTalent(4,2) and mouseover.isInterruptable and mouseover.isCasting and mouseover.castTimeLeft < 2' , "mouseover" },
+        {spells.shiningForce, 'player.hasTalent(4,3) and player.isTarget and target.distanceMax  <= 10 and target.isCasting and target.castTimeLeft < 2' , "player" },
         {spells.psychicScream, 'kps.groupSize() == 1 and player.hasTalent(4,3) and spells.shiningForce.cooldown > 0 and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
         {spells.psychicScream, 'kps.groupSize() == 1 and not player.hasTalent(4,3) and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
         {spells.dispelMagic, 'target.isAttackable and target.isBuffDispellable and not spells.dispelMagic.lastCasted(9)' , "target" },
@@ -133,13 +133,13 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.50' , "targettarget" },
     {spells.heal, 'not player.isMoving and player.hp < 0.50', "player" },
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.50', kps.heal.lowestTankInRaid },
+    {spells.heal, 'not player.isMoving and focus.isFriend and focus.hp < 0.50', "focus" },
     -- "Prayer of Mending"
     {spells.prayerOfMending, 'not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending)' , kps.heal.lowestTankInRaid },
     {spells.prayerOfMending, 'true' , kps.heal.hasNotBuffMending },
     {spells.circleOfHealing, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },    
     -- LOWEST URGENCE
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.50', kps.heal.lowestInRaid },
-    {spells.heal, 'not player.isMoving and focus.isFriend and focus.hp < 0.50', "focus" },
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
@@ -159,6 +159,7 @@ kps.rotations.register("PRIEST","HOLY",
     -- DAMAGE
     {{"nested"},'kps.multiTarget', damageRotation },
     -- URGENCE "Flash Concentration" -- healing by casting HW:Chastise processing Resonant Words
+    {spells.flashHeal, 'kps.party and not player.isMoving and player.buffStacks(spells.flashConcentration) < 3 and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid },
     {spells.holyWordChastise, 'heal.lowestInRaid.hp < 0.70 and player.buffDuration(spells.flashConcentration) > 7' , env.damageTarget },
     {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.70' , "targettarget" },
     {spells.heal, 'not player.isMoving and player.hp < 0.70', "player", "heal_player_Concentration"  },
@@ -178,9 +179,9 @@ kps.rotations.register("PRIEST","HOLY",
     -- DAMAGE
     {spells.smite, 'not player.isMoving and player.buffDuration(spells.flashConcentration) > 5', env.damageTarget, "smite_health"},
     {{"nested"}, 'player.isMoving' ,{
-        {spells.renew, 'player.hp < 0.70 and not player.hasMyBuff(spells.renew)' , "player" },
-        {spells.renew, 'heal.lowestTankInRaid.hp < 0.70 and not heal.lowestTankInRaid.hasMyBuff(spells.renew)' , kps.heal.lowestTankInRaid },
-        {spells.renew, 'heal.lowestInRaid.hp < 0.70 and not heal.lowestInRaid.hasMyBuff(spells.renew)' , kps.heal.lowestInRaid },
+        {spells.renew, 'player.hp < 0.50 and not player.hasMyBuff(spells.renew)' , "player" },
+        {spells.renew, 'heal.lowestTankInRaid.hp < 0.50 and not heal.lowestTankInRaid.hasMyBuff(spells.renew)' , kps.heal.lowestTankInRaid },
+        {spells.renew, 'heal.lowestInRaid.hp < 0.50 and not heal.lowestInRaid.hasMyBuff(spells.renew)' , kps.heal.lowestInRaid },
         {spells.powerWordShield, 'player.hp < 0.50 and not player.hasDebuff(spells.weakenedSoul)' , "player" },
         {spells.powerWordShield, 'heal.lowestTankInRaid.hp < 0.50 and not heal.lowestTankInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestTankInRaid },
         {spells.powerWordShield, 'heal.lowestInRaid.hp < 0.50 and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid },
