@@ -39,11 +39,6 @@ kps.rotations.register("WARRIOR","FURY",
     {spells.bloodthirst, 'player.hasBuff(spells.enragedRegeneration)' },
     {spells.enragedRegeneration, 'spells.bloodthirst.cooldown < player.gcd and player.hp < 0.70' },
     {spells.rallyingCry, 'player.hp < 0.60' },
-    {spells.stoneform, 'player.isDispellable("Disease")' , "player" },
-    {spells.stoneform, 'player.isDispellable("Poison")' , "player" },
-    {spells.stoneform, 'player.isDispellable("Magic")' , "player" },
-    {spells.stoneform, 'player.isDispellable("Curse")' , "player" },
-    {spells.stoneform, 'player.incomingDamage > player.hpMax * 0.10' },
     -- TRINKETS
     -- "Souhait ardent de Kil'jaeden" 144259
     {{"macro"}, 'player.timeInCombat > 30 and player.useTrinket(0)' , "/use 13" },

@@ -53,25 +53,25 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
 
-	{spells.seraphim, 'true' , env.damageTarget }, -- use Seraphim before using Wake of Ashes Icon Wake of Ashes
-	{spells.avengingWrath, 'player.holyPower >= 3' },
-	{spells.divineToll, 'kps.multiTarget' },
-	{spells.divineToll, 'spells.executionSentence.lastCasted(5)' }, -- cast Divine Toll Icon Divine Toll during Execution Sentence Icon Execution Sentence (if talented).
-	{spells.executionSentence, 'true' , env.damageTarget }, -- use Judgment and Final Reckoning before using Execution Sentence
-	{spells.finalReckoning, 'true' , env.damageTarget }, -- use Final Reckoning before Execution Sentence
-	{spells.divineStorm, 'kps.multiTarget and player.holyPower == 5' , env.damageTarget},
-	{spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},
-	{spells.wakeOfAshes, 'true',  env.damageTarget },
-	{spells.hammerOfWrath, 'true' , env.damageTarget },
-	{spells.bladeOfJustice, 'true' , env.damageTarget },
-	{spells.judgment, 'true' , env.damageTarget },
+    {spells.seraphim, 'true' , env.damageTarget }, -- use Seraphim before using Wake of Ashes Icon Wake of Ashes
+    {spells.avengingWrath, 'player.holyPower >= 3' },
+    {spells.divineToll, 'kps.multiTarget' },
+    {spells.divineToll, 'spells.executionSentence.lastCasted(5)' }, -- cast Divine Toll Icon Divine Toll during Execution Sentence Icon Execution Sentence (if talented).
+    {spells.executionSentence, 'true' , env.damageTarget }, -- use Judgment and Final Reckoning before using Execution Sentence
+    {spells.finalReckoning, 'true' , env.damageTarget }, -- use Final Reckoning before Execution Sentence
+    {spells.divineStorm, 'kps.multiTarget and player.holyPower == 5' , env.damageTarget},
+    {spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},
+    {spells.wakeOfAshes, 'true',  env.damageTarget },
+    {spells.hammerOfWrath, 'true' , env.damageTarget },
+    {spells.bladeOfJustice, 'true' , env.damageTarget },
+    {spells.judgment, 'true' , env.damageTarget },
 
 
-	{spells.crusaderStrike, 'target.distanceMax  <= 10' , env.damageTarget},
-	{spells.divineStorm, 'kps.multiTarget and target.distanceMax  <= 10' , env.damageTarget},
-	{spells.templarsVerdict, 'target.distanceMax  <= 10' , env.damageTarget},
-	{spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 10' },
-	{spells.shieldOfVengeance , 'true' },
+    {spells.crusaderStrike, 'target.distanceMax  <= 10' , env.damageTarget},
+    {spells.divineStorm, 'kps.multiTarget and target.distanceMax  <= 10' , env.damageTarget},
+    {spells.templarsVerdict, 'target.distanceMax  <= 10' , env.damageTarget},
+    {spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 10' },
+    {spells.shieldOfVengeance , 'true' },
     
 
 --    {kps.hekili({

@@ -162,23 +162,23 @@ end)
 
 kps.events.register("LOSS_OF_CONTROL_ADDED", function ()
     local i = C_LossOfControl.GetActiveLossOfControlDataCountByUnit("player")
-	local locType, spellID, _, _, _, _, duration,lockoutSchool,_,_ = C_LossOfControl.GetActiveLossOfControlDataByUnit("player",i)
-	if spellID and duration then
-		if duration > 0 then
-			if string.find(locType,"INTERRUPT") ~= nil then
-				if kps.timers.check("Interrupt") == 0 then kps.timers.create("Interrupt",duration) end
-			end
-			if string.find(locType,"STUN") ~= nil then
-				if kps.timers.check("Stun") == 0 then kps.timers.create("Stun",duration) end
-			end
-			if locType == "ROOT" then
-				if kps.timers.check("Root") == 0 then kps.timers.create("Root",duration) end
-			end
-			if lossOfControlType[loctype] == true then
-				if kps.timers.check("LossOfControl") == 0 then kps.timers.create("LossOfControl",duration) end
-			end
-		end
-	end
+    local locType, spellID, _, _, _, _, duration,lockoutSchool,_,_ = C_LossOfControl.GetActiveLossOfControlDataByUnit("player",i)
+    if spellID and duration then
+        if duration > 0 then
+            if string.find(locType,"INTERRUPT") ~= nil then
+                if kps.timers.check("Interrupt") == 0 then kps.timers.create("Interrupt",duration) end
+            end
+            if string.find(locType,"STUN") ~= nil then
+                if kps.timers.check("Stun") == 0 then kps.timers.create("Stun",duration) end
+            end
+            if locType == "ROOT" then
+                if kps.timers.check("Root") == 0 then kps.timers.create("Root",duration) end
+            end
+            if lossOfControlType[loctype] == true then
+                if kps.timers.check("LossOfControl") == 0 then kps.timers.create("LossOfControl",duration) end
+            end
+        end
+    end
 end)
 
 --[[[

@@ -40,10 +40,6 @@ kps.rotations.register("WARRIOR","PROTECTION",
     -- "Pierre de soins" 5512
     --{{"macro"}, 'player.useItem(5512) and player.hp < 0.70', "/use item:5512" },
     {spells.victoryRush, 'player.hp < 0.90'},
-    {spells.stoneform, 'player.isDispellable("Disease")' , "player" },
-    {spells.stoneform, 'player.isDispellable("Poison")' , "player" },
-    {spells.stoneform, 'player.isDispellable("Magic")' , "player" },
-    {spells.stoneform, 'player.isDispellable("Curse")' , "player" },
     {spells.shieldWall, 'player.hp < 0.60' },
     {spells.lastStand, 'player.hp < 0.40' },
 

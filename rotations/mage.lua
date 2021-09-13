@@ -27,6 +27,6 @@ function kps.env.mage.damageTarget()
 end
 
 kps.env.mage.checkfireBlast = function()
-	local charges = kps.spells.mage.fireBlast.charges
+    local charges = kps.spells.mage.fireBlast.charges
     return "fireBlast_charges:"..charges
 end

@@ -155,7 +155,7 @@ kps.rotations.register("PRIEST","HOLY",
 
     -- MOUSEOVER
     {spells.flashHeal, 'not player.isMoving and player.buffStacks(spells.flashConcentration) < 3 and mouseover.isFriend and mouseover.hp < 0.70' , "mouseover" },
-    {spells.heal, 'kps.party and not player.isMoving and mouseover.isFriend and mouseover.hp < 0.85' , "mouseover" },
+    {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.85' , "mouseover" },
     -- DAMAGE
     {{"nested"},'kps.multiTarget', damageRotation },
     -- URGENCE "Flash Concentration" -- healing by casting HW:Chastise processing Resonant Words

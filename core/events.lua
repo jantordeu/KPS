@@ -274,7 +274,7 @@ end)
 -- UNIT_SPELLCAST_INTERRUPTED Fired when a unit's spellcast is interrupted, including party/raid members or the player. 
 kps.events.register("UNIT_SPELLCAST_INTERRUPTED", function (unit, lineId, spellId)
    if unit == "player" then
-		kps.lastInterruptSpell = select(1, GetSpellInfo(spellId))
+        kps.lastInterruptSpell = select(1, GetSpellInfo(spellId))
    end
 end)
 

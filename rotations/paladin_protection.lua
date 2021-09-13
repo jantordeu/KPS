@@ -66,7 +66,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
     {spells.judgment, 'target.isAttackable' , "target" },
-	{spells.consecration, 'not player.isMoving and not player.hasBuff(spells.consecration) and target.distanceMax <= 5' , "player" , "consecration_player" },
+    {spells.consecration, 'not player.isMoving and not player.hasBuff(spells.consecration) and target.distanceMax <= 5' , "player" , "consecration_player" },
     -- "Bouclier du vertueux" -- "Shield of the Righteous"
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous"},
     -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
@@ -74,7 +74,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Bouclier du vengeur" -- "Avenger's Shield"
     {spells.avengersShield, 'target.distanceMax <= 10' , "target" },
 
-	-- "Hammer of Wrath" -- Only usable on enemies that have less than 20% health
+    -- "Hammer of Wrath" -- Only usable on enemies that have less than 20% health
     {spells.hammerOfWrath, 'target.isAttackable' , "target" },
     -- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant les dégâts de leur prochaine attaque automatique contre vous.
     {spells.blessedHammer, 'player.hasTalent(1,3) and target.distanceMax <= 10' , "target" , "blessedHammer" },

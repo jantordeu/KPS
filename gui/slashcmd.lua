@@ -103,7 +103,7 @@ function fakeAchievement(id)
 end
 
 function realAchievement(id)
-	local link = GetAchievementLink(id)
+    local link = GetAchievementLink(id)
     ChatEdit_InsertLink(link)
 end
 

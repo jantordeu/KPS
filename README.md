@@ -52,41 +52,36 @@ All DPS Specs have at least one rotation automatically generated from SimCraft -
 **Fully Supported in 8.0.1:**
 
 * Deathknight: Blood
-* Demonhunter: Havoc, Vengeance
-* Druid: Feral
-* Hunter: Marksmanship
-* Mage: Fire, Frost
-* Paladin: Protection, Retribution
-* Rogue: Outlaw
-* Shaman: Elemental
-* Warlock: Affliction, Destruction
+* Demonhunter: Vengeance
+* Druid: Restoration
+* Monk: Brewmaster
+* Paladin: Protection
+* Warlock: Affliction
 * Warrior: Fury, Protection
 
 **Outdated Rotations:**
 
-* Deathknight: Frost (7.0.3), Unholy (7.0.3)
-* Druid: Balance (7.0.3), Guardian (7.0.3), Restoration (7.0.3)
-* Hunter: Beastmaster (7.2.0)
-* Mage: Arcane (8.1.0)
+* Deathknight: Frost (Hekili), Unholy (Hekili)
+* Demonhunter: Havoc (Hekili)
+* Druid: Balance (Hekili), Feral (Hekili), Guardian (Hekili)
+* Hunter: Beastmaster (Hekili), Marksmanship (Hekili), Survival (Hekili)
+* Mage: Arcane (Hekili), Fire (8.3 Talents (3,2,3,1,1,2,3)), Frost (Hekili)
 * Monk: Mistweaver (7.0.3)
-* Paladin: Holy (7.0.3)
-* Priest: Discipline (8.1), Holy (8.1), Shadow (8.1)
-* Shaman: Restoration (7.0.3)
-* Warlock: Demonology (7.0.3)
+* Paladin: Holy (9.0.5), Retribution (Hekili)
+* Priest: Discipline (9.0.2), Holy (9.0.2), Shadow (9.0.2)
+* Rogue: Assassination (Hekili), Outlaw (Hekili), Subtlety (Hekili)
+* Shaman: Elemental (Hekili), Enhancement (Hekili), Restoration (7.0.3)
+* Warlock: Demonology (Hekili), Destruction (8.3.0)
+* Warrior: Arms (Hekili)
 
 **Automatically Generated Rotations:**
 _(Might not be fully functional)_
 
-* Hunter: Survival (8.0.1)
-* Monk: Brewmaster (8.0.1), Windwalker (6.2.2)
-* Rogue: Assassination (8.0.1), Subtlety (8.0.1)
-* Shaman: Enhancement (8.0.1)
-* Warrior: Arms (8.0.1)
+* Monk: Windwalker (6.2.2)
 
 **Special Thanks for contributing to the KPS rotations:**
 
 * htordeux
-* prescient
 
 
 
@@ -168,7 +163,9 @@ Members:
  * `heal.lowestTankInRaid` - Returns the lowest tank in the raid - a tank is either:
     * any group member that has the Group Role `TANK`
     * is `focus` target
+    * `targettarget` if neither Group Role nor `focus` are set
     * `player` if neither Group Role nor `focus` are set
+ * `heal.lowestInRaid` - Returns the lowest unit in the raid
  * `heal.defaultTarget` - Returns the default healing target based on these rules:
     * `player` if the player is below 20% hp incoming
     * `focus` if the focus is below 50% hp incoming (if the focus is not healable, `focustarget` is checked instead)
@@ -186,6 +183,7 @@ Members:
  * `heal.lossHealthRaid` - Returns the loss Health for all raid members
  * `heal.incomingHealthRaid` - Returns the incoming Health for all raid members
  * `heal.countLossInRange(<PCT>)` - Returns the count for all raid members below threshold health e.g. heal.countLossInRange(0.90)
+ * `heal.countInRange` - Returns the count for all raid members in range
  * `heal.countLossInDistance(<PCT>)` - Returns the count for all raid members below threshold health (default countInRange) in a distance (default 10 yards) e.g. heal.countLossInRange(0.90)
  * `heal.aggroTankTarget` - Returns the tank with highest aggro on the current target (*not* the unit with the highest aggro!). If there is no tank in the target thread list, the `heal.defaultTank` is returned instead.
     When used as a _target_ in your rotation, you *must* write `kps.heal.aggroTankTarget`!
@@ -197,12 +195,20 @@ Members:
  * `heal.isDiseaseDispellable` - Returns the raid unit with disease debuff to dispel
  * `heal.isPoisonDispellable` - Returns the raid unit with poison debuff to dispel
  * `heal.isCurseDispellable` - Returns the raid unit with curse debuff to dispel
- * `heal.hasAbsorptionHeal` - Returns the raid unit with an absorption Debuff
- * `heal.hasBossDebuff` - Returns the raid unit with a Boss Debuff
+ * `heal.hasBuffCount(<BUFF>)` - Returns the count for a specific Buff on raid e.g. heal.hasBuffCount(spells.atonement) > 3
+ * `heal.hasBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasBuffAtonement.hp < 0.90
  * `heal.hasNotBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasNotBuffAtonement.hp < 0.90
+ * `heal.hasNotBuffGlimmer` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
  * `heal.hasNotBuffMending` - Returns the lowest health unit without Prayer of Mending Buff on raid e.g. heal.hasNotBuffMending.hp < 0.90
  * `heal.hasNotBuffRenew` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
- * `heal.atonementHealthRaid` - Returns the loss Health for all raid members with buff atonement
+
+
+#### Hekili
+Uses the Hekili AddOn to determine the combat rotation. You must specify a blacklist of Spell ID's
+which will be ignored by the rotation.
+
+Members:
+
 
 
 #### Keys
@@ -228,6 +234,8 @@ Members:
  * `player.timeToShard` - returns average time to the next soul shard.
  * `player.isInRaid` - returns true if the player is currently in Raid.
  * `player.isInGroup` - returns true if the player is currently in Group.
+ * `player.groupSize` - returns the size of the players party or raid. If the player is in an instance group the
+instance group size is returned instead.
  * `player.isControlled` - Checks whether you are controlled over your character (you are feared, etc).
  * `player.isRoot` - Checks whether you are controlled over your character (you are feared, etc).
  * `player.isStun` - Checks whether you are controlled over your character (you are feared, etc).
@@ -269,6 +277,7 @@ Members:
  * `player.comboPoints` - Combo Points
  * `player.runicPower` - Runic Power
  * `player.soulShards` - Soul Shards
+ * `player.soulShards` - Soul Shards
  * `player.astralPower` - Astral Power (Druid)
  * `player.holyPower` - Holy Power
  * `player.maelstrom` - Shadow Orbs
@@ -286,7 +295,7 @@ Members:
  * `player.hasIntProc` - returns true if the player has a int proc
  * `player.hasStrProc` - returns true if the player has a strength proc
  * `player.hasAgiProc` - returns true if the player has a agility proc
- * `player.gcd` - returns the current global cooldown
+ * `player.gcd` - returns the current global cooldown  
  * `player.bloodlust` - returns true if th player has bloodlus (or heroism, time warp...)
  * `player.timeToNextHolyPower` - returns the time until the next holy power (including the gcd or cast time of the next power generating spell)
  * `player.runes` - returns the total number of active runes
@@ -302,10 +311,10 @@ Members:
  * `<PLAYER>.isMoving` - returns true if the player is currently moving - oppposed to the `<UNIT>.isMoving` this one is more reliable.
  * `<PLAYER>.isMovingSince(<SECONDS>)` - returns true if the player is currently moving - oppposed to the `<UNIT>.isMoving` this one is more reliable.
  * `<PLAYER>.isNotMovingSince(<SECONDS>)` - returns true if the player is currently not moving for the given amount of seconds.
- * `<UNIT>.plateCount` - e.g. 'player.plateCount' returns namePlates count in combat (actives enemies)
- * `<UNIT>.plateCountDebuff` - e.g. 'player.plateCountDebuff(spells.shadowWordPain)' returns namePlates count with specified debuff in combat (actives enemies)
- * `<UNIT>.isTarget` - returns true if the unit is targeted by an enemy nameplate
- * `<UNIT>.isTargetCount` - returns the number of enemies targeting player.
+ * `<PLAYER>.plateCount` - e.g. 'player.plateCount' returns namePlates count in combat (actives enemies)
+ * `<PLAYER>.plateCountDebuff` - e.g. 'player.plateCountDebuff(spells.shadowWordPain)' returns namePlates count with specified debuff in combat (actives enemies)
+ * `<PLAYER>.isTarget` - returns true if the unit is targeted by an enemy nameplate
+ * `<PLAYER>.isTargetCount` - returns the number of enemies targeting player.
  * `player.isBehind` - returns true if the player is behind the last target. Also returns true if the player never received an error - if you want to check if the player is in front *DON'T* use this function!
  * `player.isInFront` - returns true if the player is in front of the last target. Also returns true if the player never received an error - if you want to check if the player is behind *DON'T* use this function!
 
@@ -374,6 +383,7 @@ Members:
 
  * `<UNIT>.exists` - returns true if this unit exists
  * `<UNIT>.hasBuff(<SPELL>)` - return true if the unit has the given buff (`target.hasBuff(spells.renew)`)
+ * `<UNIT>.hasMyBuff(<SPELL>)` - return true if the unit has the given buff (`target.hasMyBuff(spells.renew)`)
  * `<UNIT>.hasDebuff(<SPELL>)` - returns true if the unit has the given debuff (`target.hasDebuff(spells.immolate)`)
  * `<UNIT>.hasMyDebuff(<SPELL>)` - returns true if the unit has the given debuff _AND_ the debuff was cast by the player (`target.hasMyDebuff(spells.immolate)`)
  * `<UNIT>.myBuffDuration(<SPELL>)` - returns the remaining duration of the buff on the given unit if the buff was cast by the player
@@ -411,7 +421,6 @@ Members:
  * `<UNIT>.isElite` - returns true if the unit is a elite mob
  * `<UNIT>.isClassDistance` - returns true if the unit is a class distance
  * `<UNIT>.hp` - returns the unit hp (in a range between 0.0 and 1.0).
- * `<UNIT>.hpTotal` - returns the current hp as an absolute value.
  * `<UNIT>.hpMax` - returns the maximum hp as an absolute value
  * `<UNIT>.hpIncoming` - returns the unit hp with incoming heals (in a range between 0.0 and 1.0).
  * `<UNIT>.mana` - returns the unit mana (in a range between 0.0 and 1.0).
@@ -658,9 +667,9 @@ kps.rotations.register(
  * `core/logger.lua:33` - Check if DEFAULT_CHAT_FRAME:AddMessage() has any significant advantages
  * `core/parser.lua:113` - syntax error in
  * `core/parser.lua:120` - Error Handling!
- * `gui/toggle.lua:75` - Right-Click Action
+ * `gui/toggle.lua:84` - Right-Click Action
  * `libs/LibRangeCheck-2.0/LibRangeCheck-2.0.lua:31` - check if unit is valid, etc
- * `modules/unit/unit_casting.lua:88` - Blacklisted spells?
+ * `modules/unit/unit_casting.lua:89` - Blacklisted spells?
 
 
 
