@@ -52,6 +52,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.guardianSpirit, 'player.hasTalent(3,2) and heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid },
     {spells.guardianSpirit, 'player.hasTalent(3,2) and focus.isFriend and focus.hp < 0.40' , "focus" },
     {spells.guardianSpirit, 'player.hasTalent(3,2) and player.hp < 0.40' , "player" },
+    {spells.guardianSpirit, 'player.hasTalent(3,2) and heal.lowestInRaid.hp < 0.30' ,  kps.heal.lowestInRaid },
     {spells.guardianSpirit, 'targettarget.isFriend and targettarget.hp < 0.30' , "targettarget" },
     {spells.guardianSpirit, 'player.hp < 0.30' , "player" },
     {spells.guardianSpirit, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid },
@@ -129,6 +130,7 @@ kps.rotations.register("PRIEST","HOLY",
     -- MOUSEOVER URGENCE
     {spells.flashHeal, 'not player.isMoving and player.buffStacks(spells.flashConcentration) < 4 and mouseover.isFriend and mouseover.hp < 0.50' , "mouseover" },
     {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.50' , "mouseover" },
+    -- LOWEST URGENCE
     {spells.flashHeal, 'not player.isMoving and player.buffStacks(spells.flashConcentration) < 4 and heal.lowestInRaid.hp < 0.50', kps.heal.lowestInRaid },
     {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.50' , "targettarget" },
     {spells.heal, 'not player.isMoving and player.hp < 0.50', "player" },
@@ -159,7 +161,6 @@ kps.rotations.register("PRIEST","HOLY",
     -- DAMAGE
     {{"nested"},'kps.multiTarget', damageRotation },
     -- URGENCE "Flash Concentration" -- healing by casting HW:Chastise processing Resonant Words
-    {spells.flashHeal, 'kps.party and not player.isMoving and player.buffStacks(spells.flashConcentration) < 3 and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid },
     {spells.holyWordChastise, 'heal.lowestInRaid.hp < 0.70 and player.buffDuration(spells.flashConcentration) > 7' , env.damageTarget },
     {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.70' , "targettarget" },
     {spells.heal, 'not player.isMoving and player.hp < 0.70', "player", "heal_player_Concentration"  },
@@ -195,7 +196,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and player.hp < 0.85 and player.hp  < heal.lowestTankInRaid.hp', "player" , "heal_player"  },
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.85', kps.heal.lowestTankInRaid , "heal_tank"  },
     -- Damage
-    {spells.smite, 'not player.isMoving and player.buffDuration(spells.flashConcentration) > 5', env.damageTarget, "smite_filler"},
+    {spells.smite, 'not player.isMoving and not player.hasBuff(spells.flashConcentration)', env.damageTarget, "smite_filler"},
 
 }
 ,"priest_holy_shadowlands")
