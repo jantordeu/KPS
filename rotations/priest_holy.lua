@@ -67,12 +67,13 @@ kps.rotations.register("PRIEST","HOLY",
 
     -- "Flash Concentration" -- Reduces the cast time of your Heal by 0.2 sec and increases its healing by 3%. 20 seconds remaining
     {{"nested"}, 'player.hasBuff(spells.flashConcentration)' ,{
-        {spells.flashHeal, 'not spells.flashHeal.lastCasted(2) and player.buffDuration(spells.flashConcentration) < 7', kps.heal.lowestInRaid , "flashHeal_Concentration_duration" },
-        {spells.flashHeal, 'player.buffDuration(spells.flashConcentration) < 5', "player" , "flashHeal_Concentration_damage" },
         {spells.flashHeal, 'player.hasBuff(spells.surgeOfLight) and player.buffDuration(spells.surgeOfLight) < 7' , kps.heal.lowestInRaid , "flashHeal_duration_surge"  },
         {spells.flashHeal, 'player.hasBuff(spells.surgeOfLight) and player.buffStacks(spells.flashConcentration) < 4' , kps.heal.lowestInRaid , "flashHeal_stacks_surge" },
+        {spells.flashHeal, 'player.buffDuration(spells.flashConcentration) < 7 and not spells.flashHeal.isRecastAt(heal.lowestInRaid.unit)', kps.heal.lowestInRaid , "flashHeal_Concentration_duration" },
+        {spells.flashHeal, 'player.buffDuration(spells.flashConcentration) < 7 and not spells.flashHeal.lastCasted(5)', "player" , "flashHeal_Concentration_damage" },
     }},
     {spells.flashHeal, 'not player.hasBuff(spells.flashConcentration) and not spells.flashHeal.isRecastAt(heal.lowestInRaid.unit)', kps.heal.lowestInRaid , "flashHeal_Concentration_buff" },
+
     -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
     -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)  
     -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
@@ -160,6 +161,9 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.85' , "mouseover" },
     -- DAMAGE
     {{"nested"},'kps.multiTarget', damageRotation },
+    {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and heal.lowestInRaid.hp > 0.70', "target" },
+    {spells.shadowWordPain, 'heal.lowestInRaid.hp > 0.70 and target.isAttackable and not target.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("target")' , "target" },
+    {spells.shadowWordPain, 'heal.lowestInRaid.hp > 0.85 and mouseover.isAttackable and mouseover.inCombat and not mouseover.hasMyDebuff(spells.shadowWordPain) and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
     -- URGENCE "Flash Concentration" -- healing by casting HW:Chastise processing Resonant Words
     {spells.holyWordChastise, 'heal.lowestInRaid.hp < 0.70 and player.buffDuration(spells.flashConcentration) > 7' , env.damageTarget },
     {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.70' , "targettarget" },
@@ -168,7 +172,6 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.70', kps.heal.lowestTankInRaid, "heal_tank_Concentration"  },
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
     -- DAMAGE
-    {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.70', "target" },
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
     {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
     -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
