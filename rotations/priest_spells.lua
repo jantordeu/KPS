@@ -278,6 +278,7 @@ kps.spells.priest.shiverVenom = kps.Spell.fromId(301624)
 
 -- RACIAL
 kps.spells.priest.rocketBarrage = kps.Spell.fromId(69041)
+kps.spells.priest.rocketJump = kps.Spell.fromId(69070)
 
 -- SHADOWLANDS
 kps.spells.priest.searingNightmare = kps.Spell.fromId(341385)

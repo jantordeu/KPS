@@ -631,6 +631,8 @@ print("|cffff8000", "---------------------------------")
 --print("|cffff8000countCharge:|cffffffff", kps.spells.mage.fireBlast.charges)
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.mindBlast.charges)
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.powerWordRadiance.charges)
+--print("|cffff8000countCharge:|cffffffff", kps.spells.priest.surgeOfLight.charges)
+--print("|cffff8000countStacks:|cffffffff", kps["env"].player.buffStacks(kps.spells.priest.surgeOfLight))
 
 -- CR_CRIT_SPELL = 11;
 -- CR_HASTE_SPELL = 20;
