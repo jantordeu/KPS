@@ -102,13 +102,14 @@ end
 @function `<UNIT>.isHealable` - returns true if the given unit is healable by the player.
 ]]--
 function Unit.isHealable(self)
-    if UnitIsUnit("player",self.unit) and not UnitIsDeadOrGhost("player")then return true end
-    if not Unit.exists(self) then return false end
-    if Unit.inVehicle(self) then return false end
+    if UnitIsUnit("player",self.unit) and not UnitIsDeadOrGhost("player") then return true end
+    --if not Unit.exists(self) then return false end
+    --if Unit.inVehicle(self) then return false end
     if not Unit.lineOfSight(self) then return false end
     if Unit.immuneHeal(self) then return false end
-    if not UnitCanAssist("player",self.unit) then return false end -- UnitCanAssist(unitToAssist, unitToBeAssisted) return 1 if the unitToAssist can assist the unitToBeAssisted, nil otherwise
-    if not UnitIsFriend("player", self.unit) then return false end -- UnitIsFriend("unit","otherunit") return 1 if otherunit is friendly to unit, nil otherwise.
+    --if not UnitCanAssist("player",self.unit) then return false end -- UnitCanAssist(unitToAssist, unitToBeAssisted) return 1 if the unitToAssist can assist the unitToBeAssisted, nil otherwise
+    --if not UnitIsFriend("player", self.unit) then return false end -- UnitIsFriend("unit","otherunit") return 1 if otherunit is friendly to unit, nil otherwise.
+    if not Unit.isFriend(self) then return false end
     local inRange,_ = UnitInRange(self.unit)
     if not inRange then return false end -- UnitInRange return FALSE when not in a party/raid reason why to be true for player alone
     return true

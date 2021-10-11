@@ -654,7 +654,9 @@ print("|cffff8000", "---------------------------------")
 
 --print("|cffff8000countCharge:|cffffffff", kps.spells.priest.powerWordRadiance.charges)
 --print("|cffff8000cooldownCharge:|cffffffff", kps.spells.priest.powerWordRadiance.cooldownCharges)
---print("|cffff8000cooldownSpellCharge:|cffffffff", kps.spells.priest.powerWordRadiance.cooldown)
+--print("|cffff8000cooldownSpell:|cffffffff", kps.spells.priest.powerWordRadiance.cooldown)
+--print("|cffff8000countCharge:|cffffffff", kps.spells.priest.mindBlast.charges)
+
 
 --print("|cffff8000buffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.warrior.ignorePain))
 --print("|cffff8000buffValue:|cffffffff", kps["env"].player.buffValue(kps.spells.azerite.theWellOfExistence))
