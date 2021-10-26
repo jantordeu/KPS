@@ -37,7 +37,7 @@ end
 function Spell.cooldown(spell)
     local usable, _ = IsUsableSpell(spell.name) -- usable, nomana = IsUsableSpell("spellName" or spellID)
     if not usable then return 999 end
-    local start,duration,_ = GetSpellCooldown(spell.name)
+    local start,duration,enabled,_ = GetSpellCooldown(spell.name)
     if start == nil or duration == nil then return 0 end
     local cd = start+duration-GetTime()
     if cd < 0 then return 0 end
@@ -54,8 +54,8 @@ end
 @function `<SPELL>.cooldownTotal` - returns the cooldown in seconds the spell has if casted - this is NOT the current cooldown of the spell! 
 ]]--
 function Spell.cooldownTotal(spell)
-    local start,duration,_ = GetSpellCooldown(spell.name)
-    if duration == nil then return 0 end
+    local start,duration,enabled,_ = GetSpellCooldown(spell.name)
+    if start == nil or duration == nil then return 0 end
     return duration
 end
 
@@ -165,7 +165,7 @@ local canBeCastAt = setmetatable({}, {
             local usable, nomana = IsUsableSpell(self.name) -- usable, nomana = IsUsableSpell("spellName" or spellID)
             if not usable then return false end
             if nomana then return false end
-            if (self.cooldown > 0) then return false end -- unknown spell returns zero
+            if self.cooldown > 0 then return false end -- unknown spell returns zero
             if not self.inRange(unit) then return false end
             return true
         end

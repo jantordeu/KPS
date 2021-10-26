@@ -32,7 +32,6 @@ kps.rotations.register("PRIEST","SHADOW",
     {{"macro"}, 'mouseover.inCombat and mouseover.isAttackable and player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
     -- "Leap of Faith"
     {spells.leapOfFaith, 'keys.alt and mouseover.isFriend', "mouseover" },
-
     {spells.fade, 'player.isTarget and player.isInGroup' },
     {spells.desperatePrayer, 'player.hp < 0.60' , "player" },
     --{{"macro"}, 'player.hp < 0.60 and player.useItem(5512)' , "/use item:5512" },
@@ -45,7 +44,7 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.vampiricEmbrace, 'heal.countLossInRange(0.80) > 4' },
     {spells.vampiricEmbrace, 'kps.groupSize() == 1 and player.hp < 0.50' },
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
-    {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover") and not player.isInRaid' , "mouseover" },
+    {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.50 and not spells.shadowMend.isRecastAt("mouseover") and not player.isInRaid' , "mouseover" },
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.70 and not spells.shadowMend.isRecastAt("player") and not spells.shadowMend.lastCasted(9) and not player.isInRaid' , "player" },
     -- "Power Word: Shield" 17 -- "Body and Soul"
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.6) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
@@ -56,7 +55,6 @@ kps.rotations.register("PRIEST","SHADOW",
     -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
     {spells.faeGuardians, 'target.isAttackable and kps.timeInCombat < 19 and not target.hasMyDebuff(spells.wrathfulFaerie) and player.hasBuff(spells.voidForm) and spells.shadowfiend.cooldown > 2' , "target" },
     {spells.faeGuardians, 'target.isAttackable and kps.timeInCombat > 19 and not target.hasMyDebuff(spells.wrathfulFaerie) and not player.hasBuff(spells.voidForm) and spells.voidEruption.cooldown > 9' , "target" },
-
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
         {spells.psychicHorror, 'player.hasTalent(4,3) and target.isInterruptable and target.castTimeLeft < 2' , "target" },
@@ -96,25 +94,24 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.devouringPlague, 'player.insanity > 85' , env.damageTarget },
     {{"macro"}, 'player.insanity < 30 and player.isCastingSpell(spells.mindSear)' , "/stopcasting" },
     {spells.mindSear, 'kps.mindSear and not player.isMoving and player.hasTalent(3,3) and player.insanity >= 30 and target.myDebuffDuration(spells.vampiricTouch) > 7' , env.damageTarget , "mindSear_mindSear" },
+
     {spells.shadowWordDeath, 'mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.50' , "mouseover" },
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.50' , "target" },
-    {spells.shadowWordDeath, 'IsEquippedItem(173244) and player.hasBuff(spells.voidForm) and player.hp > 0.70' , env.damageTarget },
+    {spells.shadowWordDeath, 'IsEquippedItem(173244) and player.hasBuff(spells.voidForm) and player.hp > 0.50' , env.damageTarget },
 
+    {{"macro"}, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 7 and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },      
+    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("target")' , "target" },    
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target"  },
     {spells.mindBlast, 'not player.isMoving and spells.mindBlast.charges == 2' , env.damageTarget },
     {spells.mindBlast, 'not player.isMoving and IsEquippedItem(173244) and player.hasBuff(spells.voidForm)' , env.damageTarget },
     {{"macro"}, 'spells.mindBlast.cooldown == 0 and player.hasBuff(spells.talbadarStratagem) and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.talbadarStratagem)' , env.damageTarget , "mindBlast_talbadar" },
-    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
     {{"macro"}, 'player.hasBuff(spells.mindDevourer) and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },
     {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , env.damageTarget },
 
-    {{"macro"}, 'target.myDebuffDuration(spells.vampiricTouch) < 7 and player.isCastingSpell(spells.mindFlay) and spells.mindFlay.cooldown == 0' , "/stopcasting" },    
-    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
-    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target"  },
+    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover"   },
     {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm) and spells.mindBlast.cooldown > 0' },
-
     {spells.devouringPlague, 'true' , env.damageTarget },
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts) and player.isCastingSpell(spells.mindFlay)' , env.damageTarget , 'mindBlast_darkThoughts' },
     {spells.shadowWordPain, 'player.isMoving and target.isAttackable' , "target"  , "shadowWordPain_moving"  },
