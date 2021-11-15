@@ -53,7 +53,7 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.powerWordShield, 'targettarget.isFriend and targettarget.hp < 0.70 and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
     -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)
     -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
-    {spells.faeGuardians, 'target.isAttackable and kps.timeInCombat < 19 and not target.hasMyDebuff(spells.wrathfulFaerie) and player.hasBuff(spells.voidForm) and spells.shadowfiend.cooldown > 2' , "target" },
+    {spells.faeGuardians, 'target.isAttackable and kps.timeInCombat < 19 and not target.hasMyDebuff(spells.wrathfulFaerie) and player.hasBuff(spells.voidForm)' , "target" },
     {spells.faeGuardians, 'target.isAttackable and kps.timeInCombat > 19 and not target.hasMyDebuff(spells.wrathfulFaerie) and not player.hasBuff(spells.voidForm) and spells.voidEruption.cooldown > 9' , "target" },
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
