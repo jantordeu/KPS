@@ -112,21 +112,21 @@ kps.rotations.register("PALADIN","HOLY",
      }},
 
     {spells.lightOfDawn, 'player.hasBuff(spells.ruleOfLaw)' },
-    {spells.ruleOfLaw, 'player.hasTalent(4,3) and heal.countLossInRange(0.80) > 3 and not spells.ruleOfLaw.lastCasted(9)' },
+    {spells.ruleOfLaw, 'player.hasTalent(4,3) and heal.countLossInRange(0.85) > 3 and not spells.ruleOfLaw.lastCasted(9)' },
     {spells.wordOfGlory, 'heal.lowestTankInRaid.hp < 0.50' , kps.heal.lowestTankInRaid },
     {spells.wordOfGlory, 'player.hp < 0.50' , "player" },
     {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.50' , kps.heal.lowestInRaid },
     -- "Lumière de l’aube" -- "Light of Dawn" -- 3 charges de puissance sacrée 
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.80) > 3' },
-    {spells.lightOfDawn, 'heal.countLossInDistance(0.80) > 2 and not player.isInRaid' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.85) > 3' },
+    {spells.lightOfDawn, 'heal.countLossInDistance(0.85) > 2 and not player.isInRaid' },
     -- "Word of Glory" -- 3 charges de puissance sacrée
-    {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.80' , kps.heal.lowestInRaid },
+    {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
     -- Avoid using Shield of the Righteous, you will gain more damage from spamming Word of Glory to increase the chance of proccing Awakening
     {spells.wordOfGlory, 'player.holyPower == 5' , kps.heal.lowestInRaid },
     -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
     -- Dump all your Holy Power BEFORE you cast Divine Toll -- want to be using Divine Toll during your wings windows
-    {spells.divineToll, 'heal.countLossInDistance(0.80) > 3' },
-    {spells.divineToll, 'heal.countLossInDistance(0.80) > 2 and not player.isInRaid' },
+    {spells.divineToll, 'kps.multiTarget and heal.countLossInDistance(0.85) > 3' },
+    {spells.divineToll, 'kps.multiTarget and heal.countLossInDistance(0.85) > 2 and not player.isInRaid' },
 
     -- GLIMMER
     {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 6' , kps.heal.lowestTankInRaid , "holyShock_tank" },
@@ -185,7 +185,6 @@ kps.rotations.register("PALADIN","HOLY",
 
 -- AZERITE
 --"Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
---{spells.azerite.overchargeMana, 'heal.countLossInRange(0.85)*2 > heal.countInRange' }, -- MANUAL
 --"Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
 --{spells.azerite.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid },
 --{spells.azerite.concentratedFlame, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
