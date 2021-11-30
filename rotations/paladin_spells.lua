@@ -292,6 +292,13 @@ kps.spells.paladin.shiningLight = kps.Spell.fromId(327510)
 -- Kirian
 kps.spells.paladin.divineToll = kps.Spell.fromId(304971)
 kps.spells.paladin.finalReckoning = kps.Spell.fromId(343721)
+-- NightFae
+kps.spells.paladin.blessingOfAutumn = kps.Spell.fromId(328622)
+kps.spells.paladin.blessingOfWinter = kps.Spell.fromId(328281)
+kps.spells.paladin.blessingOfSummer = kps.Spell.fromId(328620)
+
+
+
 
 -- RACIAL
 kps.spells.paladin.arcaneTorrent = kps.Spell.fromId(155145)

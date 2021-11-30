@@ -23,6 +23,11 @@ kps.rotations.register("DRUID","BALANCE",
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     
+    {spells.rejuvenation, 'not player.hasMyBuff(spells.rejuvenation)' , "player" },
+    {spells.renewal, 'player.hp < 0.30' , "player" },
+    {spells.moonfire, 'target.isAttackable and target.myDebuffDuration(spells.moonfire) < 2 and not spells.moonfire.isRecastAt("target")' , "target" },
+    {spells.sunfire, 'target.isAttackable and target.myDebuffDuration(spells.sunfire) < 2 and not spells.sunfire.isRecastAt("target")' , "target" }, 
+    
     {kps.hekili({
     })}
 }

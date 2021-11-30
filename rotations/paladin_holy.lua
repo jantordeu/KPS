@@ -109,7 +109,19 @@ kps.rotations.register("PALADIN","HOLY",
         -- "Croisé vengeur -- "Avenging Crusader" -- Crusader Strike, Judgment and auto-attack damage increased by 30%. -- 3 nearby allies will be healed for 250% of the damage done. Dure 20 sec.
         {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.70) > 4' },
         {spells.avengingCrusader, 'player.hasTalent(6,2) and kps.damage' },
+        -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
+        -- Dump all your Holy Power BEFORE you cast Divine Toll -- want to be using Divine Toll during your wings windows
+        {spells.divineToll, 'kps.multiTarget and heal.countLossInDistance(0.85) > 3' },
+        {spells.divineToll, 'kps.multiTarget and heal.countLossInDistance(0.85) > 2 and not player.isInRaid' },
      }},
+     
+    -- Blessing of Winter Frost damage and reduce enemies' movement speed 
+    --{spells.blessingOfWinter, 'true' },
+    -- Blessing of Autumn Cooldowns recover 30% faster.
+    --{spells.blessingOfAutumn, 'spells.avengingWrath.cooldown > 9' },
+    -- Blessing of Summer Attacks have a 40% chance to deal 30% additional damage as Holy.
+    --{spells.blessingOfSummer, 'player.holyPower >= 3' },
+
 
     {spells.lightOfDawn, 'player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'player.hasTalent(4,3) and heal.countLossInRange(0.85) > 3 and not spells.ruleOfLaw.lastCasted(9)' },
@@ -123,26 +135,20 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
     -- Avoid using Shield of the Righteous, you will gain more damage from spamming Word of Glory to increase the chance of proccing Awakening
     {spells.wordOfGlory, 'player.holyPower == 5' , kps.heal.lowestInRaid },
-    -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
-    -- Dump all your Holy Power BEFORE you cast Divine Toll -- want to be using Divine Toll during your wings windows
-    {spells.divineToll, 'kps.multiTarget and heal.countLossInDistance(0.85) > 3' },
-    {spells.divineToll, 'kps.multiTarget and heal.countLossInDistance(0.85) > 2 and not player.isInRaid' },
+
 
     -- GLIMMER
     {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 6' , kps.heal.lowestTankInRaid , "holyShock_tank" },
-    {spells.holyShock, 'player.myBuffDuration(spells.glimmerOfLight) < 6 and player.hp < 1' , "player" },
-    {spells.holyShock, 'heal.lowestInRaid.myBuffDuration(spells.glimmerOfLight) < 6 and heal.lowestInRaid.hp < 1' , kps.heal.lowestInRaid },
-    {spells.holyShock, 'heal.hasNotBuffGlimmer.myBuffDuration(spells.glimmerOfLight) < 6 and heal.hasNotBuffGlimmer.hp < 1' , kps.heal.hasNotBuffGlimmer },
+    {spells.holyShock, 'player.myBuffDuration(spells.glimmerOfLight) < 6' , "player" },
+    {spells.holyShock, 'heal.lowestInRaid.myBuffDuration(spells.glimmerOfLight) < 6' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'heal.hasNotBuffGlimmer.myBuffDuration(spells.glimmerOfLight) < 6' , kps.heal.hasNotBuffGlimmer },
     -- DEFAULT TANK
-    {spells.holyShock, 'focus.isFriend and focus.hp < 0.70' , "focus" },
-    {spells.holyShock, 'target.isFriend and target.hp < 0.70' , "target" },
-    {spells.holyShock, 'targettarget.isFriend and targettarget.hp < 0.70' , "targettarget" },
-    {spells.holyShock, 'player.hp < 0.70' , "player"  },
-    {spells.holyShock, 'heal.lowestTankInRaid.hp < 0.70' , kps.heal.lowestTankInRaid },
-    {spells.holyShock, 'heal.lowestInRaid.hp < 0.70' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'heal.defaultTank.hp < 0.70' , kps.heal.defaultTank },
+    {spells.holyShock, 'heal.defaultTarget .hp < 0.70' , kps.heal.defaultTarget },
     -- DAMAGE
     {spells.holyShock, 'target.isAttackable and not target.hasMyDebuff(spells.glimmerOfLight)' , "target" },
     {spells.holyShock, 'target.isAttackable and kps.groupSize() == 1' , "target" },
+    {spells.holyShock, 'true' , kps.heal.lowestInRaid },
     {{"nested"},'kps.damage', damageRotation},
 
     -- ShouldInterruptCasting,
@@ -160,6 +166,8 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.judgment, 'true' , env.damageTarget },
     {spells.crusaderStrike, 'target.distanceMax  <= 10' , env.damageTarget},
     {spells.hammerOfWrath, 'true' , env.damageTarget },
+    -- reduce the cost of your next Flash of Light by 30% or cause your next Holy Light to generate 1 Holy Power.
+    {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hp < 0.50' , kps.heal.lowestInRaid  , "flashOfLight_LOWEST" },
     {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid  , "holyLight_LOWEST" },
     {spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 10' },
 

@@ -48,33 +48,34 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     }},
     
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
+    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
+    --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
+    -- Blessing of Winter Frost damage and reduce enemies' movement speed 
+    --{spells.blessingOfWinter, 'true' },
+    -- Blessing of Autumn Cooldowns recover 30% faster.
+    --{spells.blessingOfAutumn, 'spells.avengingWrath.cooldown > 9' },
+    -- Blessing of Summer Attacks have a 40% chance to deal 30% additional damage as Holy.
+    --{spells.blessingOfSummer, 'player.holyPower >= 3' },
 
-    {spells.consecration, 'not player.isMoving and not target.hasMyDebuff(spells.consecration) and not target.isMoving and target.distanceMax <= 10' },
-    {spells.seraphim, 'true' , env.damageTarget }, -- use Seraphim before using Wake of Ashes Icon Wake of Ashes
-    {spells.avengingWrath, 'player.holyPower >= 3' },
-    {spells.divineToll, 'kps.multiTarget' },
-    {spells.divineToll, 'spells.executionSentence.lastCasted(5)' }, -- cast Divine Toll Icon Divine Toll during Execution Sentence Icon Execution Sentence (if talented).
-    {spells.executionSentence, 'true' , env.damageTarget }, -- use Judgment and Final Reckoning before using Execution Sentence
-    {spells.finalReckoning, 'mouseover.isAttackable' , env.damageTarget }, -- use Final Reckoning before Execution Sentence
-    {spells.divineStorm, 'kps.multiTarget and player.holyPower == 5' , env.damageTarget},
-    {spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},    {spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 10' },
-    {spells.wakeOfAshes, 'true',  env.damageTarget },
-    {spells.hammerOfWrath, 'true' , env.damageTarget },
-    {spells.bladeOfJustice, 'true' , env.damageTarget },
-    {spells.judgment, 'true' , env.damageTarget },
+	{spells.avengingWrath, 'kps.multiTarget and player.holyPower >= 3' },
+	{spells.divineToll, 'kps.multiTarget' },
+	{spells.seraphim, 'spells.avengingWrath.cooldown > 5' , env.damageTarget }, -- use Seraphim before using Wake of Ashes
+	-- Holy Power generating
+	{spells.wakeOfAshes, 'player.holyPower < 3',  env.damageTarget }, -- 3 holypower
+	{spells.hammerOfWrath, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
+	{spells.bladeOfJustice, 'player.holyPower < 4' , env.damageTarget }, -- 2 holypower
+	{spells.judgment, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
+	{spells.crusaderStrike, 'player.holyPower < 5' , env.damageTarget}, -- 1 holypower
+	-- Holy Power spending
+	{spells.finalReckoning, 'mouseover.isAttackable and player.holyPower > 2' , env.damageTarget }, -- use Final Reckoning before Execution Sentence
+	{spells.executionSentence, 'true' , env.damageTarget }, -- use Judgment and Final Reckoning before using Execution Sentence
+	{spells.divineStorm, 'player.plateCount >= 3' , env.damageTarget},
+	{spells.templarsVerdict, 'true' , env.damageTarget},
+	-- filler
+	{spells.consecration, 'not player.isMoving and not target.hasMyDebuff(spells.consecration) and not target.isMoving and target.distanceMax <= 10' },
+	{spells.shieldOfVengeance , 'true' },
 
-
-    {spells.crusaderStrike, 'target.distanceMax  <= 10' , env.damageTarget},
-    {spells.divineStorm, 'kps.multiTarget and target.distanceMax  <= 10' , env.damageTarget},
-    {spells.templarsVerdict, 'target.distanceMax  <= 10' , env.damageTarget},
-    {spells.shieldOfVengeance , 'true' },
-    
-
---    {kps.hekili({
---    })}
 }
 ,"Hekili")

@@ -9,35 +9,52 @@ local env = kps.env.monk
 --GENERATED FROM SIMCRAFT PROFILE 'monk_windwalker.simc'
 kps.rotations.register("MONK","WINDWALKER",
 {
-    {spells.invokeXuenTheWhiteTiger}, -- invoke_xuen
--- ERROR in 'touch_of_death,if=!artifact.gale_burst.enabled': Unknown expression 'artifact.gale_burst.enabled'!
--- ERROR in 'touch_of_death,if=artifact.gale_burst.enabled&cooldown.strike_of_the_windlord.up&!talent.serenity.enabled&cooldown.fists_of_fury.remains<=9&cooldown.rising_sun_kick.remains<=5': Unknown expression 'artifact.gale_burst.enabled'!
--- ERROR in 'touch_of_death,if=artifact.gale_burst.enabled&cooldown.strike_of_the_windlord.up&talent.serenity.enabled&cooldown.fists_of_fury.remains<=3&cooldown.rising_sun_kick.remains<8': Unknown expression 'artifact.gale_burst.enabled'!
--- ERROR in 'storm_earth_and_fire,if=artifact.strike_of_the_windlord.enabled&cooldown.strike_of_the_windlord.up&cooldown.fists_of_fury.remains<=9&cooldown.rising_sun_kick.remains<=5': Unknown expression 'artifact.strike_of_the_windlord.enabled'!
--- ERROR in 'storm_earth_and_fire,if=!artifact.strike_of_the_windlord.enabled&cooldown.fists_of_fury.remains<=9&cooldown.rising_sun_kick.remains<=5': Unknown expression 'artifact.strike_of_the_windlord.enabled'!
--- ERROR in 'serenity,if=artifact.strike_of_the_windlord.enabled&cooldown.strike_of_the_windlord.up&cooldown.fists_of_fury.remains<=3&cooldown.rising_sun_kick.remains<8': Unknown expression 'artifact.strike_of_the_windlord.enabled'!
--- ERROR in 'serenity,if=!artifact.strike_of_the_windlord.enabled&cooldown.fists_of_fury.remains<=3&cooldown.rising_sun_kick.remains<8': Unknown expression 'artifact.strike_of_the_windlord.enabled'!
-    {spells.energizingElixir, 'player.energy < player.energyMax and player.chi <= 1 and not player.hasBuff(spells.serenity)'}, -- energizing_elixir,if=energy<energy.max&chi<=1&buff.serenity.down
-    {spells.rushingJadeWind, 'player.hasBuff(spells.serenity) and not spells.rushingJadeWind.isRecastAt("target")'}, -- rushing_jade_wind,if=buff.serenity.up&!prev_gcd.rushing_jade_wind
--- ERROR in 'strike_of_the_windlord,if=artifact.strike_of_the_windlord.enabled': Unknown expression 'artifact.strike_of_the_windlord.enabled'!
-    {spells.whirlingDragonPunch}, -- whirling_dragon_punch
-    {spells.fistsOfFury}, -- fists_of_fury
 
-    {spells.risingSunKick}, -- rising_sun_kick
-    {spells.strikeOfTheWindlord}, -- strike_of_the_windlord
-    {spells.rushingJadeWind, 'player.chi > 1 and not spells.rushingJadeWind.isRecastAt("target")'}, -- rushing_jade_wind,if=chi>1&!prev_gcd.rushing_jade_wind
-    {spells.chiWave, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_wave,if=energy.time_to_max>2|buff.serenity.down
-    {spells.chiBurst, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_burst,if=energy.time_to_max>2|buff.serenity.down
--- ERROR in 'blackout_kick,if=(chi>1|buff.bok_proc.up)&buff.serenity.down&!prev_gcd.blackout_kick': Spell 'kps.spells.monk.bokProc' unknown (in expression: 'buff.bok_proc.up')!
-    {spells.tigerPalm, '( not player.hasBuff(spells.serenity) and player.chi <= 2 ) and not spells.tigerPalm.isRecastAt("target")'}, -- tiger_palm,if=(buff.serenity.down&chi<=2)&!prev_gcd.tiger_palm
+    {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
+    {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
 
+    {{"nested"}, 'kps.interrupt',{
+        {spells.spearHandStrike, 'target.isInterruptable and target.castTimeLeft < 2' , "target" },
+        {spells.spearHandStrike, 'mouseover.isInterruptable and mouseover.castTimeLeft < 2' , "mouseover" },
+        {spells.diffuseMagic , 'target.distanceMax <= 10 and target.isCasting' , "target" },
+        {spells.legSweep, 'target.distanceMax <= 10 and target.isCasting' , "target" },
+    }},
+    {{"nested"},'kps.cooldowns', {
+        {spells.detox, 'player.isDispellable("Poison")' , "player" },
+        {spells.detox, 'player.isDispellable("Disease")' , "player" },
+    }},
 
-    {spells.spinningCraneKick, 'not spells.spinningCraneKick.isRecastAt("target")'}, -- spinning_crane_kick,if=!prev_gcd.spinning_crane_kick
-    {spells.strikeOfTheWindlord}, -- strike_of_the_windlord
-    {spells.rushingJadeWind, 'player.chi >= 2 and not spells.rushingJadeWind.isRecastAt("target")'}, -- rushing_jade_wind,if=chi>=2&!prev_gcd.rushing_jade_wind
-    {spells.chiWave, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_wave,if=energy.time_to_max>2|buff.serenity.down
-    {spells.chiBurst, 'player.energyTimeToMax > 2 or not player.hasBuff(spells.serenity)'}, -- chi_burst,if=energy.time_to_max>2|buff.serenity.down
-    {spells.tigerPalm, '( not player.hasBuff(spells.serenity) and player.chi <= 2 ) and not spells.tigerPalm.isRecastAt("target")'}, -- tiger_palm,if=(buff.serenity.down&chi<=2)&!prev_gcd.tiger_palm
+    {spells.fistOfTheWhiteTiger, 'player.chi < 3' },
+    {spells.expelHarm, 'player.chi < player.chiMax' },
+    {spells.tigerPalm , 'player.chi < 4'},
+    {spells.invokeXuenTheWhiteTiger },
+    {spells.fallenOrder, 'kps.multiTarget'},
+    {spells.touchOfDeath },
 
+    {kps.hekili({
+		spells.flyingSerpentKick,
+		spells.fallenOrder
+    })}
+    
 }
-,"monk_windwalker.simc")
+,"monk_windwalker")
+
+
+
+--	{spells.fistOfTheWhiteTiger, 'player.chi < 3' },
+--	{spells.expelHarm, 'player.chi < player.chiMax' },
+--	{spells.tigerPalm , 'player.chi < 4'},
+--	{spells.invokeXuenTheWhiteTiger },
+--	{spells.fallenOrder },
+--	{spells.whirlingDragonPunch },
+--	{spells.spinningCraneKick , 'playerHasBuff(spells.DanceOfChiJi)' },
+--	{spells.fistsOfFury  },
+--	{spells.touchOfDeath },
+--	{spells.chiBurst, 'player.chi < player.chiMax' },
+--	{spells.blackoutKick },
+--	{spells.chiWave }, 'player.hasTalent(1,2)' },
+        
+ 
+
+
+ 

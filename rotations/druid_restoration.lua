@@ -19,7 +19,6 @@ kps.rotations.register("DRUID","RESTORATION",
         {spells.renewal, 'player.hp < 0.2'},
         {spells.ironbark, 'player.hp < 0.4'},
         {spells.barkskin, 'player.hp < 0.6'},
-        { {"macro"}, 'kps.useBagItem and player.hp < 0.8', "/use Healthstone" },
     }},
 
     {spells.lifebloom, 'heal.defaultTank.myBuffDuration(spells.lifebloom) < 3', kps.heal.defaultTank},
@@ -39,7 +38,7 @@ kps.rotations.register("DRUID","RESTORATION",
         --{spells.regrowth, 'heal.defaultTarget.hp < 0.8', kps.heal.defaultTarget},
     --}},
 
-    {spells.wildGrowth, 'keys.shift or kps.multiTarget and heal.defaultTarget.hpIncoming < 0.9 and heal.defaultTarget.hp < 1', kps.heal.defaultTarget},
+    {spells.wildGrowth, 'heal.defaultTarget.hpIncoming < 0.9 and heal.defaultTarget.hp < 1', kps.heal.defaultTarget},
 
     {spells.swiftmend, 'heal.defaultTank.hp < 0.6', kps.heal.defaultTank},
     {spells.swiftmend, 'heal.lowestInRaid.hp < 0.6', kps.heal.lowestInRaid},
