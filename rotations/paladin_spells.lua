@@ -296,9 +296,12 @@ kps.spells.paladin.finalReckoning = kps.Spell.fromId(343721)
 kps.spells.paladin.blessingOfAutumn = kps.Spell.fromId(328622)
 kps.spells.paladin.blessingOfWinter = kps.Spell.fromId(328281)
 kps.spells.paladin.blessingOfSummer = kps.Spell.fromId(328620)
-
-
-
+-- Venthyr
+kps.spells.paladin.ashenHallow = kps.Spell.fromId(316958)
+kps.spells.paladin.doorOfShadows = kps.Spell.fromId(300728)
+-- Necrolord
+kps.spells.paladin.vanquishersHammer = kps.Spell.fromId(328204)
+kps.spells.paladin.fleshcraft = kps.Spell.fromId(324631)
 
 -- RACIAL
 kps.spells.paladin.arcaneTorrent = kps.Spell.fromId(155145)

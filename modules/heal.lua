@@ -162,7 +162,7 @@ end)
 ]]--
 kps.RaidStatus.prototype.defaultTarget = kps.utils.cachedValue(function()
     -- If we're below 30% - always heal us first!
-    if kps.env.player.hp < 0.50 then return kps["env"].player end
+    if kps.env.player.hp < 0.70 then return kps["env"].player end
     -- If the focus target is below 50% - take it (must be some reason there is a focus after all...)
     -- focus.isFriend coz isHealable (e.g. UnitInRange) is only available for members of the player's group.
     if kps["env"].focus.isFriend and kps["env"].focus.hp < 0.70 then return kps["env"].focus end
