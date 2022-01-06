@@ -6,6 +6,9 @@
 local spells = kps.spells.paladin
 local env = kps.env.paladin
 
+local AshenHallow = spells.ashenHallow.name
+local DoorOfShadows = spells.doorOfShadows.name
+
 kps.runAtEnd(function()
    kps.gui.addCustomToggle("PALADIN","PROTECTION", "addControl", "Interface\\Icons\\spell_holy_sealofmight", "addControl")
 end)
@@ -43,9 +46,13 @@ kps.rotations.register("PALADIN","PROTECTION",
         {spells.rebuke, 'target.isCasting and target.isInterruptable and target.castTimeLeft < 2' , "target" },
         {spells.rebuke, 'focus.isCasting and focus.isInterruptable and focus.castTimeLeft < 2' , "focus" },
     }},
+    
+    -- VENTHYR
+    {{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
+    {{"macro"}, 'keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
-    {spells.ardentDefender, 'player.hpIncoming < 0.70 and target.isCasting' },    
+    {spells.ardentDefender, 'player.hpIncoming < 0.50' },    
     -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
     {spells.guardianOfAncientKings, 'player.hpIncoming < 0.50 and not player.hasBuff(spells.ardentDefender)' },
     -- "Blessing of Protection" -- Places a blessing on a party or raid member, protecting them from all physical attacks for 10 sec.
@@ -53,12 +60,14 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.blessingOfProtection, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and not player.hasBuff(spells.guardianOfAncientKings)' , "player"},
     
     -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
-    {spells.avengingWrath, 'player.hp < 0.50' },
-    {spells.wordOfGlory, 'player.hp < 0.70 and player.hasBuff(spells.shiningLight)'},
+    {spells.avengingWrath, 'player.hp < 0.55' },
+    -- "Bouclier du vertueux" -- "Shield of the Righteous"
+    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous"},
+    {spells.wordOfGlory, 'player.hp < 0.70'},
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
-    {spells.layOnHands, 'player.hpIncoming < 0.30' },
+    {spells.layOnHands, 'player.hpIncoming < 0.35' },
     -- "Divine Shield" -- Protects you from all damage and spells for 8 sec. 
-    {spells.divineShield, 'player.hpIncoming < 0.30' },
+    {spells.divineShield, 'player.hpIncoming < 0.35' },
     
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
@@ -67,15 +76,10 @@ kps.rotations.register("PALADIN","PROTECTION",
 
     {spells.judgment, 'target.isAttackable' , "target" },
     {spells.consecration, 'not player.isMoving and not player.hasBuff(spells.consecration) and target.distanceMax <= 5' , "player" , "consecration_player" },
-    -- "Bouclier du vertueux" -- "Shield of the Righteous"
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous"},
-    -- Kyrian Covenant Ability -- cast Holy Shock, Avenger's Shield, or Judgment on up to 5 targets within 30 yds
-    {spells.divineToll, 'true' , "target" },    
-    -- "Bouclier du vengeur" -- "Avenger's Shield"
-    {spells.avengersShield, 'target.distanceMax <= 10' , "target" },
-
     -- "Hammer of Wrath" -- Only usable on enemies that have less than 20% health
     {spells.hammerOfWrath, 'target.isAttackable' , "target" },
+    -- "Bouclier du vengeur" -- "Avenger's Shield"
+    {spells.avengersShield, 'target.distanceMax <= 10' , "target" },
     -- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant les dégâts de leur prochaine attaque automatique contre vous.
     {spells.blessedHammer, 'player.hasTalent(1,3) and target.distanceMax <= 10' , "target" , "blessedHammer" },
     -- "Hammer of the Righteous" -- "Marteau du vertueux" -- If you're standing in your Consecration, it also causes a wave of light that hits all nearby enemies for light Holy damage.

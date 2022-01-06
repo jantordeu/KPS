@@ -30,6 +30,7 @@ kps.rotations.register("MONK","WINDWALKER",
     {spells.invokeXuenTheWhiteTiger },
     {spells.fallenOrder, 'kps.multiTarget'},
     {spells.touchOfDeath },
+    {spells.vivify, 'heal.defaultTarget.hp < 0.70' , kps.heal.defaultTarget},
 
     {kps.hekili({
 		spells.flyingSerpentKick,

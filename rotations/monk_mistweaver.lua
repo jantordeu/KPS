@@ -29,6 +29,8 @@ kps.rotations.register("MONK","MISTWEAVER",
 -- During Invoke Yulon, Invoke ChiJi, you should replace casts of EssenceFont with EnvelopingMist to apply EnvelopingBreath to the majority of the group
 -- you will need to weave in casts of EnvelopingMist in order to trigger your EnvelopingBreath passive
 
+-- Soothing Mist is a channeled, 8 second long healing over time spell that is unique in that it only consumes mana whenever it ticks for healing
+-- and allows casting specifically 3 other spells while also casting this one
 {spells.soothingMist, 'heal.defaultTank.hp < 0.85' , kps.heal.defaultTank},
 {spells.envelopingMist, 'heal.defaultTank.hp < 0.70' , kps.heal.defaultTank},
 {spells.envelopingMist, 'heal.defaultTarget.hp < 0.70' , kps.heal.defaultTarget},
