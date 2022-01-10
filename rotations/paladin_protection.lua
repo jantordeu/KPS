@@ -50,8 +50,12 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- VENTHYR
     {{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
     {{"macro"}, 'keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
+    -- NECROLORD
+    --{spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.avengingWrath)' , "player" },
+    --{spells.vanquishersHammer, 'not player.hasBuff(spells.vanquishersHammer)' , env.damageTarget},
 
     -- "Ardent Defender" -- Reduces all damage you take by 20% for 8 sec -- cd 2 min -- next attack that would otherwise kill you will instead bring you to 20% of your maximum health.
+    {spells.ardentDefender, 'player.hpIncoming < 0.70 and target.isCasting' },
     {spells.ardentDefender, 'player.hpIncoming < 0.50' },    
     -- "Guardian of Ancient Kings" -- 5 min cd Damage taken reduced by 50% 8 seconds remaining
     {spells.guardianOfAncientKings, 'player.hpIncoming < 0.50 and not player.hasBuff(spells.ardentDefender)' },
@@ -60,7 +64,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.blessingOfProtection, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and not player.hasBuff(spells.guardianOfAncientKings)' , "player"},
     
     -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
-    {spells.avengingWrath, 'player.hp < 0.55' },
+    {spells.avengingWrath, 'player.hp < 0.70' },
     -- "Bouclier du vertueux" -- "Shield of the Righteous"
     {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous"},
     {spells.wordOfGlory, 'player.hp < 0.70'},
@@ -70,9 +74,9 @@ kps.rotations.register("PALADIN","PROTECTION",
     {spells.divineShield, 'player.hpIncoming < 0.35' },
     
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
+    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
+    --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
     {spells.judgment, 'target.isAttackable' , "target" },
     {spells.consecration, 'not player.isMoving and not player.hasBuff(spells.consecration) and target.distanceMax <= 5' , "player" , "consecration_player" },

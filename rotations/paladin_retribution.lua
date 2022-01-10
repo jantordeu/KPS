@@ -51,7 +51,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
     {{"macro"}, 'keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
     -- NECROLORD
-    --{spells.fleshcraft, 'not player.isMoving' , "player" },
+    --{spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.avengingWrath)' , "player" },
     --{spells.vanquishersHammer, 'not player.hasBuff(spells.vanquishersHammer)' , env.damageTarget},
     -- NIGHTFAE
     -- Blessing of Winter Frost damage and reduce enemies' movement speed 
@@ -79,10 +79,11 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 	{spells.shieldOfVengeance , 'player.plateCount >= 3' },
 	{spells.shieldOfVengeance , 'target.isElite' },
 	-- Holy Power generating
+	{spells.hammerOfWrath, 'player.hasBuff(spells.avengingWrath)' , env.damageTarget }, -- 1 holypower
 	{spells.bladeOfJustice, 'player.holyPower < 4' , env.damageTarget }, -- 2 holypower
-	{spells.judgment, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
+	{spells.judgment, 'true' , env.damageTarget }, -- 1 holypower
 	{spells.wakeOfAshes, 'player.holyPower < 3',  env.damageTarget }, -- 3 holypower
-	{spells.hammerOfWrath, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
+	{spells.hammerOfWrath, 'true' , env.damageTarget }, -- 1 holypower
 	{spells.crusaderStrike, 'spells.crusaderStrike.charges == 2' , env.damageTarget}, -- 1 holypower
 	-- Holy Power spending
 	{spells.finalReckoning, 'mouseover.isAttackable and player.holyPower >= 3' , env.damageTarget }, -- use Final Reckoning before Execution Sentence

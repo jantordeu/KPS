@@ -15,11 +15,13 @@ end)
 
 
 local damageRotation = {
+    {spells.judgment, 'true' , env.damageTarget },
+    {spells.holyShock, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.glimmerOfLight) and target.isAttackable and target.hasMyDebuff(spells.glimmerOfLight)' , "mouseover" },
     {spells.holyShock, 'true' , env.damageTarget },
     {spells.shieldOfTheRighteous, 'true' , env.damageTarget }, -- cost 3 holy power
     {spells.holyPrism, 'player.hasTalent(2,3)' , env.damageTarget },
     {spells.lightsHammer, 'player.hasTalent(1,3)' , env.damageTarget },
-    {spells.judgment, 'true' , env.damageTarget },
+    {spells.hammerOfWrath, 'player.hasBuff(spells.avengingWrath)' , env.damageTarget }, -- 1 holypower
     {spells.crusaderStrike, 'target.distanceMax  <= 10' , env.damageTarget},
     {spells.hammerOfWrath, 'true' , env.damageTarget },
     {spells.consecration, 'not player.isMoving and not target.isMoving and target.distanceMax <= 10' },    
@@ -40,12 +42,12 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.cleanse, 'target.isDispellable("Magic")' , "target" },
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec.
     {spells.divineProtection, 'player.hp < 0.70' },
-    -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection 
-    {spells.blessingOfProtection, 'player.hp < 0.30' , "player" },
-    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.30 and not heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },
     -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
     {spells.divineShield, 'player.hp < 0.30' , "player" },
     {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.30' , kps.heal.lowestTankInRaid },
+    -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection 
+    {spells.blessingOfProtection, 'player.hp < 0.30' , "player" },
+    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.30 and not heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
     {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
     {spells.layOnHands, 'player.hp < 0.30', "player" },
@@ -73,7 +75,7 @@ kps.rotations.register("PALADIN","HOLY",
     {{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
     {{"macro"}, 'keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
     -- NECROLORD
-    --{spells.fleshcraft, 'not player.isMoving' , "player" },
+    --{spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.avengingWrath)' , "player" },
     --{spells.vanquishersHammer, 'not player.hasBuff(spells.vanquishersHammer)' , env.damageTarget},
     -- NIGHTFAE
     -- Blessing of Winter Frost damage and reduce enemies' movement speed 
@@ -144,11 +146,11 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'heal.defaultTarget .hp < 0.70' , kps.heal.defaultTarget },
     {spells.holyShock, 'heal.lowestTankInRaid.myBuffDuration(spells.glimmerOfLight) < 6' , kps.heal.lowestTankInRaid , "holyShock_tank" },
     {spells.holyShock, 'player.myBuffDuration(spells.glimmerOfLight) < 6' , "player" },
-    {spells.holyShock, 'heal.lowestInRaid.myBuffDuration(spells.glimmerOfLight) < 6' , kps.heal.lowestInRaid },
-    {spells.holyShock, 'mouseover.hp < 0.85' , "mouseover" },
+    {spells.holyShock, 'heal.lowestInRaid.hp < player.hp and heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
+    {spells.holyShock, 'player.hp < 0.85' , "player" },
     -- DAMAGE
-    {spells.holyShock, 'target.isAttackable and not target.hasMyDebuff(spells.glimmerOfLight)' , "target" },
-    {spells.holyShock, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.glimmerOfLight)' , "mouseover" },
+    {spells.holyShock, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.glimmerOfLight) and target.isAttackable and target.hasMyDebuff(spells.glimmerOfLight)' , "mouseover" },
+    {spells.holyShock, 'true' , env.damageTarget },
     {spells.holyShock, 'true' , kps.heal.lowestInRaid },
     {{"nested"},'kps.damage', damageRotation},
 
@@ -162,6 +164,10 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.flashOfLight, 'player.hp < 0.70' , "player" , "FLASH_PLAYER" },
         {spells.flashOfLight, 'heal.lowestInRaid.hp < 0.70' , kps.heal.lowestInRaid  , "FLASH_LOWEST" },
         {spells.holyLight, 'heal.lowestInRaid.hp < 0.85 and spells.holyShock.cooldown > 2' , kps.heal.lowestInRaid  , "holyLight_LOWEST" },s
+    }},
+    {{"nested"}, 'IsEquippedItem(178926)' ,{
+        {spells.lightOfTheMartyr, 'heal.lowestTankInRaid.hpIncoming < 0.50 and player.hpIncoming > 0.70 and not heal.lowestTankInRaid.isUnit("player")' , kps.heal.lowestTankInRaid , "MARTYR_tank"},
+        {spells.lightOfTheMartyr, 'heal.lowestInRaid.hpIncoming < 0.50 and player.hpIncoming > 0.70 and not heal.lowestInRaid.isUnit("player")' , kps.heal.lowestInRaid , "MARTYR_lowest"},
     }},
     -- DAMAGE
     {spells.judgment, 'true' , env.damageTarget },

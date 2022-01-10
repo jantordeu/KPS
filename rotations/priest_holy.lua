@@ -14,7 +14,7 @@ local AngelicFeather = spells.angelicFeather.name
 local DoorOfShadows = spells.doorOfShadows.name
 
 kps.runAtEnd(function()
-kps.gui.addCustomToggle("PRIEST","HOLY", "party", "Interface\\Icons\\spell_holy_holynova", "party")
+kps.gui.addCustomToggle("PRIEST","HOLY", "damage", "Interface\\Icons\\spell_holy_holynova", "damage")
 end)
 
 
@@ -134,10 +134,6 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.prayerOfMending, 'not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending)' , kps.heal.lowestTankInRaid },
     {spells.prayerOfMending, 'true' , kps.heal.lowestInRaid },
     {spells.circleOfHealing, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
-    -- MANA
-    {spells.heal, 'kps.party and not player.isMoving and heal.defaultTarget.hp < 0.70', kps.heal.defaultTarget, "heal_defaultTarget"  },
-    {spells.heal, 'kps.party and not player.isMoving and heal.defaultTank.hp < 0.70', kps.heal.defaultTank, "heal_defaultTank"  },
-    {spells.smite, 'kps.party and not player.isMoving', env.damageTarget, "smite_health"},
     -- LOWEST URGENCE
     {spells.flashHeal, 'not player.isMoving and player.buffStacks(spells.flashConcentration) < 3 and heal.lowestInRaid.hp < 0.50', kps.heal.lowestInRaid },
     {spells.flashHeal, 'not player.isMoving and player.buffStacks(spells.flashConcentration) < 3 and mouseover.isFriend and mouseover.hp < 0.50', kps.heal.lowestInRaid },
@@ -159,12 +155,14 @@ kps.rotations.register("PRIEST","HOLY",
     {{"macro"}, 'spells.heal.shouldInterrupt(0.90, kps.defensive)' , "/stopcasting" },
     {{"macro"}, 'spells.flashHeal.shouldInterrupt(0.90, kps.defensive and player.buffDuration(spells.flashConcentration) > 9)' , "/stopcasting" }, 
     {{"macro"}, 'spells.prayerOfHealing.shouldInterrupt(heal.countLossInRange(0.90), kps.defensive)' , "/stopcasting" },
-
+    -- DAMAGE
     {spells.divineStar, 'not player.isMoving and player.hasTalent(6,2) and target.distanceMax  <= 30 and target.isAttackable' },
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.85) > 2' },
-    -- DAMAGE
     {{"nested"},'kps.multiTarget', damageRotation },
+    {spells.holyWordChastise, 'kps.damage and heal.lowestInRaid.hp < 0.70' , env.damageTarget },
     -- "Flash Concentration" -- healing by casting HW:Chastise processing Resonant Words
+    {spells.heal, 'not player.isMoving and heal.defaultTarget.hp < 0.70', kps.heal.defaultTarget, "heal_defaultTarget"  },
+    {spells.heal, 'not player.isMoving and heal.defaultTank.hp < 0.70', kps.heal.defaultTank, "heal_defaultTank"  },
     {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hp < 0.70' , "mouseover" },
     {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.70' , "targettarget" },
     {spells.heal, 'not player.isMoving and player.hp < 0.70', "player", "heal_player_Concentration"  },
@@ -173,7 +171,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
     -- DAMAGE
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
-    {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
+    {spells.holyFire, 'kps.damage and not player.isMoving and heal.lowestInRaid.hp > 0.85 and spells.holyWordChastise.cooldown > 2' , env.damageTarget },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.85 and player.buffDuration(spells.flashConcentration) > 5', env.damageTarget, "smite_health"},
     -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and spells.holyWordSanctify.cooldown > 6 and spells.holyWordSanctify.cooldown < 15 and not spells.prayerOfHealing.lastCasted(9)' , kps.heal.lowestInRaid },
