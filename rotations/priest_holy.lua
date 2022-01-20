@@ -13,9 +13,9 @@ local MassDispel = spells.massDispel.name
 local AngelicFeather = spells.angelicFeather.name
 local DoorOfShadows = spells.doorOfShadows.name
 
-kps.runAtEnd(function()
-kps.gui.addCustomToggle("PRIEST","HOLY", "damage", "Interface\\Icons\\spell_holy_holynova", "damage")
-end)
+--kps.runAtEnd(function()
+--kps.gui.addCustomToggle("PRIEST","HOLY", "damage", "Interface\\Icons\\spell_holy_holynova", "damage")
+--end)
 
 
 local damageRotation = {
@@ -159,7 +159,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.divineStar, 'not player.isMoving and player.hasTalent(6,2) and target.distanceMax  <= 30 and target.isAttackable' },
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.85) > 2' },
     {{"nested"},'kps.multiTarget', damageRotation },
-    {spells.holyWordChastise, 'kps.damage and heal.lowestInRaid.hp < 0.70' , env.damageTarget },
+    {spells.holyWordChastise, 'heal.lowestInRaid.hp < 0.70' , env.damageTarget },
     -- "Flash Concentration" -- healing by casting HW:Chastise processing Resonant Words
     {spells.heal, 'not player.isMoving and heal.defaultTarget.hp < 0.70', kps.heal.defaultTarget, "heal_defaultTarget"  },
     {spells.heal, 'not player.isMoving and heal.defaultTank.hp < 0.70', kps.heal.defaultTank, "heal_defaultTank"  },
@@ -171,7 +171,6 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
     -- DAMAGE
     {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
-    {spells.holyFire, 'kps.damage and not player.isMoving and heal.lowestInRaid.hp > 0.85 and spells.holyWordChastise.cooldown > 2' , env.damageTarget },
     {spells.smite, 'not player.isMoving and heal.lowestInRaid.hp > 0.85 and player.buffDuration(spells.flashConcentration) > 5', env.damageTarget, "smite_health"},
     -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and spells.holyWordSanctify.cooldown > 6 and spells.holyWordSanctify.cooldown < 15 and not spells.prayerOfHealing.lastCasted(9)' , kps.heal.lowestInRaid },

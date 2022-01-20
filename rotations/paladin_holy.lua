@@ -72,11 +72,11 @@ kps.rotations.register("PALADIN","HOLY",
     }},
 
     -- VENTHYR
-    {{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
-    {{"macro"}, 'keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
+    --{{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
+    --{{"macro"}, 'keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
     -- NECROLORD
-    --{spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.avengingWrath)' , "player" },
-    --{spells.vanquishersHammer, 'not player.hasBuff(spells.vanquishersHammer)' , env.damageTarget},
+    {spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.avengingWrath)' , "player" },
+    {spells.vanquishersHammer, 'not player.hasBuff(spells.vanquishersHammer)' , env.damageTarget},
     -- NIGHTFAE
     -- Blessing of Winter Frost damage and reduce enemies' movement speed 
     --{spells.blessingOfWinter, 'true' },
@@ -97,10 +97,10 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.bestowFaith, 'player.hasTalent(1,2) and not heal.lowestTankInRaid.hasBuff(spells.bestowFaith)' , kps.heal.lowestTankInRaid },
 
     -- TRINKETS -- SLOT 0 /use 13
-    {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and target.isAttackable' , "/use 13" },
+    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and targettarget.isFriend' , "/use [@targettarget] 14" },
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" }, 
+    --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" }, 
  
     -- Boss ALTIMOR
     --{spells.wordOfGlory, 'not player.isMoving and target.isFriend and target.hp < 0.90' , "target" },  
@@ -117,7 +117,7 @@ kps.rotations.register("PALADIN","HOLY",
     {{"nested"}, 'kps.multiTarget' ,{
         -- "Holy Avenger" -- "Vengeur sacré" -- Votre génération de puissance sacrée est triplée pendant 20 sec.
         {spells.holyAvenger, 'player.hasTalent(5,2) and not player.hasBuff(spells.avengingWrath) and heal.lowestTankInRaid.hp < 0.40' },
-        {spells.holyAvenger, 'player.hasTalent(5,2) and kps.damage' },
+        {spells.holyAvenger, 'player.hasTalent(5,2) and not player.hasBuff(spells.avengingWrath) and kps.damage' },
         -- "Courroux vengeur" -- "Avenging Wrath"  -- augmente vos dégâts, vos soins et vos chances de coup critique de 20% pendant 20 sec.
         {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and kps.damage' }, 
         {spells.avengingWrath, 'not player.hasBuff(spells.avengingWrath) and heal.countLossInRange(0.70) > 4' },
@@ -127,7 +127,7 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.avengingCrusader, 'player.hasTalent(6,2) and kps.damage' },
      }},
 
-    {spells.wordOfGlory, 'player.hasBuff(spells.vanquishersHammer)' , kps.heal.lowestInRaid },
+    {spells.wordOfGlory, 'player.hasBuff(spells.vanquishersHammer) and heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
     {spells.lightOfDawn, 'player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'player.hasTalent(4,3) and heal.countLossInRange(0.85) > 3 and not spells.ruleOfLaw.lastCasted(9)' },
     {spells.wordOfGlory, 'heal.lowestTankInRaid.hp < 0.50' , kps.heal.lowestTankInRaid },
@@ -151,7 +151,6 @@ kps.rotations.register("PALADIN","HOLY",
     -- DAMAGE
     {spells.holyShock, 'mouseover.isAttackable and not mouseover.hasMyDebuff(spells.glimmerOfLight) and target.isAttackable and target.hasMyDebuff(spells.glimmerOfLight)' , "mouseover" },
     {spells.holyShock, 'true' , env.damageTarget },
-    {spells.holyShock, 'true' , kps.heal.lowestInRaid },
     {{"nested"},'kps.damage', damageRotation},
 
     -- ShouldInterruptCasting,

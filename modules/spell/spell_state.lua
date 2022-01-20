@@ -151,6 +151,13 @@ function Spell.isCastableSpell(self)
     return self._isCastableSpell
 end
 
+function Spell.isClippingSpell(self)
+    if rawget(self,"_isClippingSpell") == nil then
+        self._isClippingSpell = self.isOneOf(kps.spells.clippingSpell)
+    end
+    return self._isClippingSpell
+end
+
 
 --[[[
 @function `<SPELL>.canBeCastAt(<UNIT-STRING>)` - returns true if the spell can be cast at the given unit (e.g.: `spell.immolate.canBeCastAt("focus")`). A spell can be cast if the target unit exists, the player has enough resources, the spell is not on cooldown and the target is in range.

@@ -17,29 +17,32 @@ kps.rotations.register("MONK","MISTWEAVER",
 
 
 {spells.lifeCocoon, 'heal.defaultTank.hp < 0.40' , kps.heal.defaultTank},
--- EnvelopingMist lasts for 6 seconds by default, each RisingSunKick is a 66% increase to that duration
-{spells.risingSunKick, 'true' , kps.heal.defaultTarget},
-{spells.thunderFocusTea, 'true' , kps.heal.defaultTarget},
 {spells.revival, 'heal.countLossInRange(0.80) == heal.countInRange' , kps.heal.defaultTarget},
--- ChijiTheRedCrane giving you a 25 second window in which you are spending no Mana, 3 min cd
--- DPS and get your Crane stacks to 3, before casting your instant EnvelopingMist 
+-- Thunder Focus Tea -- Enveloping Mist immediately heals for [ 280% of Spell Power ]. -- Renewing Mist's duration is increased by 10 sec. -- Vivify costs no mana. -- Rising Sun Kick's cooldown reduced by 0 sec
+{spells.thunderFocusTea, 'heal.defaultTarget.hp < 0.70' , kps.heal.defaultTarget},
+
+-- ChijiTheRedCrane giving you a 25 second window in which you are spending no Mana, 3 min cd -- DPS and get your Crane stacks to 3, before casting your instant EnvelopingMist 
 {spells.invokeChijiTheRedCrane, 'heal.countLossInRange(0.85) > 3' , kps.heal.defaultTarget},
+
 -- YulonTheJadeSerpent giving you a 25 second window Yu'lon will heal injured allies with Soothing Breath, healing the target and up to 2 allies 
 {spells.invokeYulonTheJadeSerpent, 'heal.countLossInRange(0.85) > 3' , kps.heal.defaultTarget},
+
 -- During Invoke Yulon, Invoke ChiJi, you should replace casts of EssenceFont with EnvelopingMist to apply EnvelopingBreath to the majority of the group
 -- you will need to weave in casts of EnvelopingMist in order to trigger your EnvelopingBreath passive
 
 -- Soothing Mist is a channeled, 8 second long healing over time spell that is unique in that it only consumes mana whenever it ticks for healing
 -- and allows casting specifically 3 other spells while also casting this one
-{spells.soothingMist, 'heal.defaultTank.hp < 0.85' , kps.heal.defaultTank},
+{spells.soothingMist, 'heal.defaultTank.hp < 0.70' , kps.heal.defaultTank},
+-- EnvelopingMist lasts for 6 seconds by default, each RisingSunKick is a 66% increase to that duration
 {spells.envelopingMist, 'heal.defaultTank.hp < 0.70' , kps.heal.defaultTank},
-{spells.envelopingMist, 'heal.defaultTarget.hp < 0.70' , kps.heal.defaultTarget},
+{spells.risingSunKick, 'true' , kps.heal.defaultTarget},
 
-{spells.essenceFont, 'heal.countLossInRange(0.85) > 3' , kps.heal.defaultTarget},
+{spells.essenceFont, 'heal.countLossInRange(0.85) > 5' , kps.heal.defaultTarget},
 
 {spells.mysticTouch, 'heal.defaultTarget.hp < 0.85' , kps.heal.defaultTarget},
-{spells.vivify, 'heal.defaultTarget.hp < 0.85' , kps.heal.defaultTarget},
-{spells.renewingMist, 'heal.lowestInRaid.hp < 0.90' , kps.heal.lowestInRaid},
+
+{spells.renewingMist, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid},
+{spells.vivify, 'heal.defaultTarget.hp < 0.70' , kps.heal.defaultTarget},
 
 
 

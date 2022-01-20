@@ -61,9 +61,9 @@ kps.combatStep = function ()
     if spell ~= nil and spell.isCastableSpell and player.isCasting then
         return spell.cast(target,message)
     end
---  if spell ~= nil and spell.id == 0 then
---      return "-stop-", "target", false
---  end
+	if spell ~= nil and player.isCastingClippingSpell then
+		return "-stop-", "target", false
+	end
 
     if castSequence ~= nil then
         if castSequence[castSequenceIndex] ~= nil and (castSequenceStartTime + kps.maxCastSequenceLength > GetTime()) then

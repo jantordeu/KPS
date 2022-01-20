@@ -24,36 +24,41 @@ kps.rotations.register("MONK","WINDWALKER",
         {spells.detox, 'player.isDispellable("Disease")' , "player" },
     }},
 
-    {spells.fistOfTheWhiteTiger, 'player.chi < 3' },
-    {spells.expelHarm, 'player.chi < player.chiMax' },
-    {spells.tigerPalm , 'player.chi < 4'},
-    {spells.invokeXuenTheWhiteTiger },
+    {spells.invokeXuenTheWhiteTiger, 'kps.multiTarget'},
+    --{spells.stormEarthAndFire, 'kps.multiTarget'},
     {spells.fallenOrder, 'kps.multiTarget'},
-    {spells.touchOfDeath },
-    {spells.vivify, 'heal.defaultTarget.hp < 0.70' , kps.heal.defaultTarget},
 
-    {kps.hekili({
+	{kps.hekili({
 		spells.flyingSerpentKick,
-		spells.fallenOrder
-    })}
+		spells.fallenOrder,
+	})}
+    
+--	{spells.touchOfDeath },
+--	{spells.fistOfTheWhiteTiger, 'player.hasTalent(3,2) and player.chi < 3 and player.energy > 80' },
+--	{spells.expelHarm, 'player.chi < 5 and player.energy > 80' },
+--	{spells.tigerPalm , 'player.chi < 4 and player.energy > 80'},
+--	{spells.whirlingDragonPunch }, -- Only usable while both Fists of Fury and Rising Sun Kick are on cooldown.
+--	{spells.risingSunKick },
+--	{spells.fistsOfFury  },
+--	{spells.chiBurst, 'player.chi < player.chiMax' },
+--	{spells.fistOfTheWhiteTiger, 'player.chi < 3' },
+--	{spells.spinningCraneKick , 'player.hasBuff(spells.DanceOfChiJi)' },
+--	{spells.blackoutKick },
+--	{spells.chiWave , 'player.hasTalent(1,2)' },
+--	{spells.expelHarm, 'player.chi < player.chiMax' },
+--	{spells.vivify, 'heal.defaultTarget.hp < 0.70' , kps.heal.defaultTarget},
+--	{spells.tigerPalm },    
+
     
 }
 ,"monk_windwalker")
 
 
-
---	{spells.fistOfTheWhiteTiger, 'player.chi < 3' },
---	{spells.expelHarm, 'player.chi < player.chiMax' },
---	{spells.tigerPalm , 'player.chi < 4'},
 --	{spells.invokeXuenTheWhiteTiger },
---	{spells.fallenOrder },
---	{spells.whirlingDragonPunch },
---	{spells.spinningCraneKick , 'playerHasBuff(spells.DanceOfChiJi)' },
---	{spells.fistsOfFury  },
---	{spells.touchOfDeath },
---	{spells.chiBurst, 'player.chi < player.chiMax' },
---	{spells.blackoutKick },
---	{spells.chiWave }, 'player.hasTalent(1,2)' },
+--	{spells.serenity, 'player.hasTalent(7,3)' },
+
+
+
         
  
 
