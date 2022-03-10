@@ -240,5 +240,8 @@ kps.spells.monk.zenPilgrimageReturn = kps.Spell.fromId(126895)
 kps.spells.monk.fallenOrder = kps.Spell.fromId(326860)
 kps.spells.monk.DanceOfChiJi = kps.Spell.fromId(325201)
 kps.spells.monk.invokeYulonTheJadeSerpent = kps.Spell.fromId(322118)
+kps.spells.monk.fleshcraft = kps.Spell.fromId(324631)
+kps.spells.monk.bonedustBrew = kps.Spell.fromId(325216)
+
 
 

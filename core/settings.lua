@@ -9,21 +9,20 @@ local settings = {
 }
 local settingsLoaded = false
 
-kps.events.register("ADDON_LOADED", function(name)
-    if name == "KPS" then
-        if KPS_SETTINGS ~= nil then
-            for k,v in pairs(settings) do
-                kps[v] = KPS_SETTINGS[v]
-            end
-        end
-        settingsLoaded = true
-        kps.gui.updateToggleStates()
+kps.load_settings = function()
+    local KPS_SETTINGS = KM.settings("KPS")
+    for k,v in pairs(settings) do
+        kps[v] = KPS_SETTINGS[v]
     end
-end)
+    settingsLoaded = true
+    kps.gui.updateToggleStates()
+end
+kps.load_settings()
+
 
 kps.events.registerOnUpdate(function ()
     if settingsLoaded then
-        if KPS_SETTINGS == nil then KPS_SETTINGS = {} end
+        local KPS_SETTINGS = KM.settings("KPS")
         for k,v in pairs(settings) do
             KPS_SETTINGS[v] = kps[v]
         end

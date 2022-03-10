@@ -37,7 +37,6 @@ THOTTBOT_IDS = {
 
 RACIAL_SPELLS = {
     59544, # Gift of the Naaru
-    265221, # Fireblood
 }
 ADDITIONAL_SPELLS = {
     "deathknight": [77535,

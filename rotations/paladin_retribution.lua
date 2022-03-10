@@ -62,6 +62,10 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     --{spells.blessingOfSummer, 'player.holyPower >= 3' },
     -- KYRIAN
     --{spells.divineToll, 'kps.multiTarget' },
+    
+    {kps.hekili({
+
+    }), 'kps.defensive'},
 
     
     -- TRINKETS -- SLOT 0 /use 13

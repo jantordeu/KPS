@@ -1,4 +1,4 @@
-## Interface: 90100
+## Interface: 90200
 ## Title: |cffff8000KPS Addon
 ## Notes: Karnofsky Performance System
 ## SavedVariables:
@@ -83,7 +83,6 @@ rotations\warlock.lua
 rotations\warrior.lua
 env.lua
 modules\heal.lua
-modules\damage.lua
 modules\player\player_demons.lua
 rotations\deathknight_blood.lua
 rotations\deathknight_frost.lua

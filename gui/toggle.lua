@@ -9,10 +9,19 @@ local LOG = kps.Logger(kps.LogLevel.INFO)
 local iconSize = 36
 local iconOffset = 4
 local maxCustomButtons = 5
-local shadowTexture = "Interface\\AddOns\\KPS\\Media\\shadow.tga"
-local borderTexture = "Interface\\AddOns\\KPS\\Media\\border.tga"
-local borderTextureFailed = "Interface\\AddOns\\KPS\\Media\\border_red.tga"
-local borderTextureActive = "Interface\\AddOns\\KPS\\Media\\border_green.tga"
+
+kps.shadowColor = function(frm)
+    frm:SetColorTexture(0, 0, 0, 0.8)
+end
+kps.borderColor = function(frm)
+    frm:SetColorTexture(0, 0, 0, 0.4)
+end
+kps.borderColorFailed = function(frm)
+    frm:SetColorTexture(1, 0, 0, 0.6)
+end
+kps.borderColorActive = function(frm)
+    frm:SetColorTexture(0, 1, 0, 0.6)
+end
 
 local allToggleFrames = {}
 
@@ -25,8 +34,8 @@ local function createToggleButton(id, parent, offsetIndex, texture, description,
         frame:EnableMouse(true)
         frame:RegisterForDrag("LeftButton")
         frame:SetScript("OnDragStart", frame.StartMoving)
-        frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
-        frame:SetPoint("CENTER")
+        KM.saveFrame("KPS", frame)
+        KM.restoreFrame("KPS", frame)
     else
         frame:SetPoint("TOPRIGHT", parent, anchorOffset, 0)
     end
@@ -40,15 +49,15 @@ local function createToggleButton(id, parent, offsetIndex, texture, description,
     frame.texture:SetTexCoord(0.07, 0.92, 0.07, 0.93) -- cut off the blizzard border
     frame.texture:SetTexture(texture) -- set the default texture
     -- border
-    frame.border = frame:CreateTexture(nil, "OVERLAY") -- create the border texture
+    frame.border = frame:CreateTexture(nil, "BORDER") -- create the border texture
     frame.border:SetParent(frame) -- link it with the icon frame so it drags around with it
     frame.border:SetPoint('TOPRIGHT', frame, 1, 1) -- outset the points a bit so it goes around the spell icon
     frame.border:SetPoint('BOTTOMLEFT', frame, -1, -1)
     frame.updateState = function(self)
         if kps[id] then
-            frame.border:SetTexture(borderTextureActive)
+            kps.borderColorActive(frame.border)
         else
-            frame.border:SetTexture(borderTexture)
+            kps.borderColor(frame.border)
         end
     end
     frame.updateState()
@@ -57,7 +66,7 @@ local function createToggleButton(id, parent, offsetIndex, texture, description,
     frame.shadow:SetParent(frame) -- link it with the icon frame so it drags around with it
     frame.shadow:SetPoint('TOPRIGHT', frame.border, 4.5, 4.5) -- outset the points a bit so it goes around the border
     frame.shadow:SetPoint('BOTTOMLEFT', frame.border, -4.5, -4.5) -- outset the points a bit so it goes around the border
-    frame.shadow:SetTexture(shadowTexture)  -- set the texture
+    kps.shadowColor(frame.shadow)
     frame.shadow:SetVertexColor(0, 0, 0, 0.85)  -- color the texture black and set the alpha so its a bit more trans
     -- clicks
     if anchorOffset == 0 then
@@ -95,9 +104,9 @@ local function createToggleButton(id, parent, offsetIndex, texture, description,
         kps[id] = false
         frame.updateState = function(self)
             if kps[id] then
-                frame.border:SetTexture(borderTextureActive)
+                kps.borderColorActive(frame.border)
             else
-                frame.border:SetTexture(borderTexture)
+                kps.borderColor(frame.border)
             end
         end
         if description == nil then
@@ -145,7 +154,7 @@ local function createToggleButton(id, parent, offsetIndex, texture, description,
     return frame
 end
 
-local toggleAnchor = createToggleButton("enabled", UIParent, 0, "Interface\\AddOns\\KPS\\Media\\kps.tga")
+local toggleAnchor = createToggleButton("enabled", UIParent, 0, "Interface\\Icons\\spell_animabastion_orb")
 
 function kps.gui.updateToggleStates()
     for _, frame in pairs(allToggleFrames) do
@@ -176,13 +185,13 @@ end
 
 function kps.gui.updateBorderIcon()
     if kps.enabled then
-        toggleAnchor.border:SetTexture(borderTexture)
+        kps.borderColor(toggleAnchor.border)
         kps.write("KPS disabled")
     else
         if InCombatLockdown() then
-            toggleAnchor.border:SetTexture(borderTextureFailed)
+            kps.borderColorFailed(toggleAnchor.border)
         else
-            toggleAnchor.border:SetTexture(borderTextureActive)
+            kps.borderColorActive(toggleAnchor.border)
         end
         kps.write("KPS enabled")
     end
@@ -249,13 +258,13 @@ end
 local function combatBorderIcon(status)
     if status then
         if kps.enabled then
-            toggleAnchor.border:SetTexture(borderTextureFailed)
+            kps.borderColorFailed(toggleAnchor.border)
         end
     else
         if kps.enabled then
-            toggleAnchor.border:SetTexture(borderTextureActive)
+            kps.borderColorActive(toggleAnchor.border)
         else
-            toggleAnchor.border:SetTexture(borderTexture)
+            kps.borderColor(toggleAnchor.border)
         end
     end
 end

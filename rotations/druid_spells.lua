@@ -337,6 +337,7 @@ kps.spells.druid.yserasGift = kps.Spell.fromId(145108)
 kps.spells.druid.convokeTheSpirits = kps.Spell.fromId(337433)
 kps.spells.druid.wrath = kps.Spell.fromId(190984)
 kps.spells.druid.starfire = kps.Spell.fromId(194153)
-
+kps.spells.druid.lunarEclipse = kps.Spell.fromId(45518) -- buff
+kps.spells.druid.solarEclipse = kps.Spell.fromId(45517) -- buff
 
 

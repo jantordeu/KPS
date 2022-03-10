@@ -19,21 +19,23 @@ end)
 
 kps.rotations.register("PRIEST","SHADOW",
 {
-
-    {spells.powerWordFortitude, 'not player.isInGroup and not player.hasBuff(spells.powerWordFortitude)', "player" },
+    {spells.powerWordFortitude, 'not player.hasBuff(spells.powerWordFortitude) and not player.isInGroup', "player" },
 
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
 
     -- "Dissipation de masse" 32375
+    --{{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@player] "..MassDispel },
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0 ', "/cast [@cursor] "..MassDispel },
     -- "Shadow Crash"
     {{"macro"}, 'keys.shift and player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
     {{"macro"}, 'mouseover.inCombat and mouseover.isAttackable and player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
     -- "Leap of Faith"
-    {spells.leapOfFaith, 'keys.alt and mouseover.isFriend', "mouseover" },
-    {spells.fade, 'player.isTarget and player.isInGroup' },
-    {spells.desperatePrayer, 'player.hp < 0.60' , "player" },
+    {spells.leapOfFaith, 'keys.alt and mouseover.isFriend and spells.leapOfFaith.cooldown == 0', "mouseover" },
+    -- "Door of Shadows" 
+    --{{"macro"}, ' keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
+    {spells.fade, 'player.isTarget' },
+    {spells.desperatePrayer, 'player.hp < 0.50' , "player" },
     --{{"macro"}, 'player.hp < 0.60 and player.useItem(5512)' , "/use item:5512" },
     -- "Dispersion" 47585
     {{"macro"}, 'player.hasBuff(spells.dispersion) and player.hp > 0.90' , "/cancelaura "..Dispersion },
@@ -46,15 +48,11 @@ kps.rotations.register("PRIEST","SHADOW",
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.50 and not spells.shadowMend.isRecastAt("mouseover") and not player.isInRaid' , "mouseover" },
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.70 and not spells.shadowMend.isRecastAt("player") and not spells.shadowMend.lastCasted(9) and not player.isInRaid' , "player" },
+    {spells.shadowMend, 'not player.isMoving and player.hp < 0.40 and not spells.shadowMend.isRecastAt("player")' , "player" },
     -- "Power Word: Shield" 17 -- "Body and Soul"
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.6) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
     {spells.powerWordShield, 'player.hp < 0.50 and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
-    -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
-    {spells.powerWordShield, 'targettarget.isFriend and targettarget.hp < 0.70 and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
-    -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)
-    -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
-    {spells.faeGuardians, 'target.isAttackable and kps.timeInCombat < 19 and not target.hasMyDebuff(spells.wrathfulFaerie) and player.hasBuff(spells.voidForm)' , "target" },
-    {spells.faeGuardians, 'target.isAttackable and kps.timeInCombat > 19 and not target.hasMyDebuff(spells.wrathfulFaerie) and not player.hasBuff(spells.voidForm) and spells.voidEruption.cooldown > 9' , "target" },
+    {spells.powerWordShield, 'player.isTarget and targettarget.hp < 0.70 and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
         {spells.psychicHorror, 'player.hasTalent(4,3) and target.isInterruptable and target.castTimeLeft < 2' , "target" },
@@ -78,36 +76,45 @@ kps.rotations.register("PRIEST","SHADOW",
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.80' , "/use [@targettarget] 13" },
     -- TRINKETS -- SLOT 1 /use 14
     --{{"macro"}, 'player.useTrinket(1) and not player.isMoving and kps.timeInCombat > 30' , "/use 14" },
-    
-    {kps.hekili({
 
-    }), 'kps.defensive'},
+   {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 5 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
+   {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target"  },
+   {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 5 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
+   {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover"   },
     
-    {spells.shadowWordDeath, 'mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.50' , "mouseover" },
-    {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.50' , "target" },
-    {spells.shadowWordDeath, 'IsEquippedItem(173244) and player.hasBuff(spells.voidForm) and spells.shadowfiend.cooldown > 2 and player.hp > 0.50' , env.damageTarget },
+   {kps.hekili({
+
+   }), 'kps.defensive'},
+   
+   {spells.shadowWordDeath, 'mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.50' , "mouseover" },
+   {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20 and player.hp > 0.50' , "target" },
+   {spells.shadowWordDeath, 'IsEquippedItem(173244) and player.hasBuff(spells.voidForm) and spells.shadowfiend.cooldown > 2 and player.hp > 0.50' , "target" },
+   
+    -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
+    -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)
+    -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
+    {spells.faeGuardians, 'target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" },
     
-    {spells.vampiricTouch, 'not player.isMoving and target.isAttackable and target.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("target")' , "target" },    
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target"  },
-    {spells.devouringPlague, 'player.insanity > 85' , env.damageTarget },
-    {spells.shadowfiend, 'kps.multiTarget and player.hasBuff(spells.voidForm)' , env.damageTarget },
-    {spells.powerInfusion, 'kps.multiTarget and not player.isMoving' },
-    {spells.voidBolt, 'player.hasBuff(spells.dissonantEchoes)' , env.damageTarget , "voidBolt_dissonantEchoes"  },
-    {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , env.damageTarget , "voidBolt_voidForm" },
-    {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.voidForm)' , env.damageTarget },
-    {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.talbadarStratagem)' , env.damageTarget , "mindBlast_talbadar" },
-    {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , env.damageTarget },
-    {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , env.damageTarget , 'mindBlast_darkThoughts' },
+    -- Venthyr
+    {spells.mindgames, 'not player.isMoving and target.isAttackable and spells.voidEruption.cooldown > 15' , "target" },
+    {spells.mindgames, 'not player.isMoving and target.isAttackable and player.hasBuff(spells.voidForm)' , "target" },
+    {spells.powerInfusion, 'not player.isMoving' },
+
+    {spells.devouringPlague, 'player.insanity > 85' , "target" },
+    {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , "target" , 'mindBlast_darkThoughts' },
+    {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , "target" }, 
+    {spells.shadowfiend, 'kps.multiTarget and not player.isMoving and spells.voidEruption.cooldown == 0' , "target" },
+    {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm) and target.myDebuffDuration(spells.vampiricTouch) > 5' },
+    {spells.voidBolt, 'player.hasBuff(spells.dissonantEchoes)' , "target" , "voidBolt_dissonantEchoes"  },
+    {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , "target" , "voidBolt_voidForm" },
+    {spells.devouringPlague, 'true' , "target" },
+    {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.talbadarStratagem)' , "target" , "mindBlast_talbadar" },
+    {spells.mindBlast, 'not player.isMoving' , "target"  },
+    {spells.voidTorrent, 'not player.isMoving and player.insanity <= 40 and not player.hasBuff(spells.voidForm)' , "target" },
     {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
-    {spells.mindSear, 'kps.mindSear and not player.isMoving and player.hasTalent(3,3) and player.insanity >= 30' , env.damageTarget , "mindSear_mindSear" },
-    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 7 and not spells.vampiricTouch.isRecastAt("mouseover")' , "mouseover" },
-    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover"   },
-    {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm) and spells.mindBlast.cooldown > 0' },
-    {spells.devouringPlague, 'true' , env.damageTarget },
+    {spells.mindSear, 'kps.mindSear and not player.isMoving and player.hasTalent(3,3) and player.insanity >= 30' , "target" , "mindSear_mindSear" },
     {spells.shadowWordPain, 'player.isMoving and target.isAttackable' , "target"  , "shadowWordPain_moving"  },
     {spells.shadowWordPain, 'player.isMoving and mouseover.inCombat and mouseover.isAttackable' , "mouseover" , "shadowWordPain_moving"  },
-    {spells.voidTorrent, 'not player.isMoving and player.insanity <= 40 and not player.hasBuff(spells.voidForm)' , env.damageTarget },
-    {spells.mindBlast, 'not player.isMoving' , env.damageTarget },
-    {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , env.damageTarget },
+    {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , "target" },
 
 },"priest_shadow_shadowlands")

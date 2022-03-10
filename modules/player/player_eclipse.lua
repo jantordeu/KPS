@@ -34,8 +34,9 @@ end
 --[[[
 @function `player.eclipsePower` - returns current eclipse power - ranges from 100(solar) to -100(lunar)
 ]]--
+-- It goes from 0 to 100, and its use as solar or lunar power is determined by what buff is active on the player.
 function Player.eclipsePower(self)
-    return -1 * UnitPower("player", 8)
+    return UnitPower("player", SPELL_POWER_ECLIPSE)
 end
 
 --[[[
