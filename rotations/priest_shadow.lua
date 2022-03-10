@@ -94,19 +94,20 @@ kps.rotations.register("PRIEST","SHADOW",
     -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)
     -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
     {spells.faeGuardians, 'target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" },
-    
     -- Venthyr
     {spells.mindgames, 'not player.isMoving and target.isAttackable and spells.voidEruption.cooldown > 15' , "target" },
     {spells.mindgames, 'not player.isMoving and target.isAttackable and player.hasBuff(spells.voidForm)' , "target" },
-    {spells.powerInfusion, 'not player.isMoving' },
+    {spells.powerInfusion, 'spells.voidEruption.cooldown > 15' },
+    {spells.powerInfusion, 'not player.isMoving and spells.voidEruption.cooldown == 0 and not player.hasBuff(spells.dissonantEchoes)' },
 
     {spells.devouringPlague, 'player.insanity > 85' , "target" },
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , "target" , 'mindBlast_darkThoughts' },
     {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , "target" }, 
-    {spells.shadowfiend, 'kps.multiTarget and not player.isMoving and spells.voidEruption.cooldown == 0' , "target" },
-    {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm) and target.myDebuffDuration(spells.vampiricTouch) > 5' },
+    {spells.shadowfiend, 'not player.isMoving and spells.voidEruption.cooldown == 0 and not player.hasBuff(spells.dissonantEchoes)' , "target" },
     {spells.voidBolt, 'player.hasBuff(spells.dissonantEchoes)' , "target" , "voidBolt_dissonantEchoes"  },
     {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , "target" , "voidBolt_voidForm" },
+    {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm) and spells.mindBlast.cooldown > 2' },
+
     {spells.devouringPlague, 'true' , "target" },
     {spells.mindBlast, 'not player.isMoving and player.hasBuff(spells.talbadarStratagem)' , "target" , "mindBlast_talbadar" },
     {spells.mindBlast, 'not player.isMoving' , "target"  },
