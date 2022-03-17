@@ -311,6 +311,9 @@ kps.spells.priest.flashConcentration = kps.Spell.fromId(336267)
 kps.spells.priest.talbadarStratagem = kps.Spell.fromId(342416)
 kps.spells.priest.directMask = kps.Spell.fromId(356532)
 
+kps.spells.priest.unholyNova = kps.Spell.fromId(324724)
+kps.spells.priest.fleshcraft = kps.Spell.fromId(324631)
+
 
 
 
