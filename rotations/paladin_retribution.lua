@@ -32,11 +32,11 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.35' , kps.heal.lowestTankInRaid },
     
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
-    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.35', kps.heal.lowestTankInRaid },
-    {spells.layOnHands, 'player.hp < 0.35', "player" },
-    {spells.flashOfLight, 'player.hp < 0.70 and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
+    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
+    {spells.layOnHands, 'player.hp < 0.30', "player" },
+    {spells.flashOfLight, 'player.hp < 0.50 and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
     {spells.arcaneTorrent, 'true' },
-    {spells.wordOfGlory, 'player.hp < 0.55' , "player" },
+    {spells.wordOfGlory, 'player.hp < 0.50' , "player" },
 
     -- Interrupt
     {{"nested"}, 'kps.interrupt' ,{
@@ -63,11 +63,6 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- KYRIAN
     --{spells.divineToll, 'kps.multiTarget' },
     
-    {kps.hekili({
-
-    }), 'kps.defensive'},
-
-    
     -- TRINKETS -- SLOT 0 /use 13
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and target.isAttackable' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
@@ -77,10 +72,9 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 	{spells.seraphim, 'player.hasTalent(5,3) and player.holyPower >= 3 and spells.executionSentence.cooldown == 0' , env.damageTarget },  -- use Seraphim before using Wake of Ashes
 	{spells.avengingWrath, 'kps.multiTarget and player.holyPower >= 3' },
 	{spells.templarsVerdict, 'player.hasBuff(spells.vanquishersHammer)' , env.damageTarget}, -- use both charges of Vanquisher's Hammer after Seraphim 
-	{spells.templarsVerdict, 'player.holyPower == 5 and player.hasBuff(spells.vanquishersHammer)' , env.damageTarget}, -- use both charges of Vanquisher's Hammer after Seraphim 
-	{spells.divineStorm, 'player.holyPower == 5 and player.plateCount >= 3' , env.damageTarget},
+    {spells.divineStorm, 'player.holyPower == 5 and player.plateCount >= 3' , env.damageTarget},
 	{spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},
-	{spells.shieldOfVengeance , 'player.plateCount >= 3' },
+	{spells.shieldOfVengeance , 'player.plateCount > 1' },
 	{spells.shieldOfVengeance , 'target.isElite' },
 	-- Holy Power generating
 	{spells.hammerOfWrath, 'player.hasBuff(spells.avengingWrath)' , env.damageTarget }, -- 1 holypower
@@ -92,7 +86,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
 	-- Holy Power spending
 	{spells.finalReckoning, 'mouseover.isAttackable and player.holyPower >= 3' , env.damageTarget }, -- use Final Reckoning before Execution Sentence
 	{spells.executionSentence, 'player.hasTalent(1,3)' , env.damageTarget }, -- use Judgment and Final Reckoning before using Execution Sentence
-    {spells.divineStorm, 'player.plateCount >= 3' , env.damageTarget},
+    {spells.divineStorm, 'player.plateCount > 1' , env.damageTarget},
 	{spells.templarsVerdict, 'true' , env.damageTarget},
 	{spells.crusaderStrike, 'true' , env.damageTarget}, -- 1 holypower
 	-- filler

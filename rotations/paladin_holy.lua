@@ -8,6 +8,7 @@ local env = kps.env.paladin
 
 local AshenHallow = spells.ashenHallow.name 
 local DoorOfShadows = spells.doorOfShadows.name
+local LightsHammer = spells.lightsHammer.name
 
 kps.runAtEnd(function()
    kps.gui.addCustomToggle("PALADIN","HOLY", "damage", "Interface\\Icons\\spell_holy_avenginewrath", "damage")
@@ -72,8 +73,8 @@ kps.rotations.register("PALADIN","HOLY",
     }},
 
     -- VENTHYR
-    --{{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
-    --{{"macro"}, 'keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
+    {{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
+    {{"macro"}, 'keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
     -- NECROLORD
     {spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.avengingWrath)' , "player" },
     {spells.vanquishersHammer, 'not player.hasBuff(spells.vanquishersHammer)' , env.damageTarget},
@@ -126,7 +127,8 @@ kps.rotations.register("PALADIN","HOLY",
         {spells.avengingCrusader, 'player.hasTalent(6,2) and heal.countLossInRange(0.70) > 4' },
         {spells.avengingCrusader, 'player.hasTalent(6,2) and kps.damage' },
      }},
-
+    {spells.beaconOfVirtue, 'player.hasTalent(7,1) and heal.countLossInDistance(0.85) > 3' , kps.heal.lowestTankInRaid },
+    {{"macro"}, 'player.hasTalent(1,3) and heal.countLossInDistance(0.85) > 3 and spells.lightsHammer.cooldown == 0', "/cast [@player] "..LightsHammer},
     {spells.wordOfGlory, 'player.hasBuff(spells.vanquishersHammer) and heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
     {spells.lightOfDawn, 'player.hasBuff(spells.ruleOfLaw)' },
     {spells.ruleOfLaw, 'player.hasTalent(4,3) and heal.countLossInRange(0.85) > 3 and not spells.ruleOfLaw.lastCasted(9)' },

@@ -66,7 +66,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Avenging Wrath" -- "Courroux vengeur" -- Dégâts, soins et chances de coup critique augmentés de 20%. pendant 20 sec.
     {spells.avengingWrath, 'player.hp < 0.70' },
     -- "Bouclier du vertueux" -- "Shield of the Righteous"
-    {spells.shieldOfTheRighteous, 'not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous"},
+    {spells.shieldOfTheRighteous, 'player.hp < 0.90 and not player.hasBuff(spells.shieldOfTheRighteous)' , "target" , "shieldOfTheRighteous"},
     {spells.wordOfGlory, 'player.hp < 0.70'},
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health
     {spells.layOnHands, 'player.hpIncoming < 0.35' },

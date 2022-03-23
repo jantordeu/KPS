@@ -28,8 +28,8 @@ kps.rotations.register("PRIEST","SHADOW",
     --{{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@player] "..MassDispel },
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0 ', "/cast [@cursor] "..MassDispel },
     -- "Shadow Crash"
-    {{"macro"}, 'keys.shift and player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
-    {{"macro"}, 'mouseover.inCombat and mouseover.isAttackable and player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
+    --{{"macro"}, 'keys.shift and player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
+    --{{"macro"}, 'mouseover.inCombat and mouseover.isAttackable and player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
     -- "Leap of Faith"
     {spells.leapOfFaith, 'keys.alt and mouseover.isFriend and spells.leapOfFaith.cooldown == 0', "mouseover" },
     -- "Door of Shadows" 
@@ -46,13 +46,12 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.vampiricEmbrace, 'heal.countLossInRange(0.80) > 4' },
     {spells.vampiricEmbrace, 'kps.groupSize() == 1 and player.hp < 0.50' },
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
-    {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.50 and not spells.shadowMend.isRecastAt("mouseover") and not player.isInRaid' , "mouseover" },
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.70 and not spells.shadowMend.isRecastAt("player") and not spells.shadowMend.lastCasted(9) and not player.isInRaid' , "player" },
+    {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40 and not spells.shadowMend.isRecastAt("mouseover") and not player.hasBuff(spells.voidForm) and not player.isInRaid' , "mouseover" },
+    {spells.shadowMend, 'not player.isMoving and player.hp < 0.70 and not spells.shadowMend.isRecastAt("player") and not spells.shadowMend.lastCasted(9) and not player.hasBuff(spells.voidForm) and not player.isInRaid' , "player" },
     {spells.shadowMend, 'not player.isMoving and player.hp < 0.40 and not spells.shadowMend.isRecastAt("player")' , "player" },
     -- "Power Word: Shield" 17 -- "Body and Soul"
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.6) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
-    {spells.powerWordShield, 'player.hp < 0.50 and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_HEALTH" },
-    {spells.powerWordShield, 'player.isTarget and targettarget.hp < 0.70 and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
+    {spells.powerWordShield, 'player.hp < 0.50 and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul) and not player.hasBuff(spells.voidForm)' , "player" , "SCHIELD_HEALTH" },
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
         {spells.psychicHorror, 'player.hasTalent(4,3) and target.isInterruptable and target.castTimeLeft < 3' , "target" },
@@ -89,13 +88,14 @@ kps.rotations.register("PRIEST","SHADOW",
     -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
     -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)
     -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
+    {spells.powerWordShield, 'player.isTarget and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
     {spells.faeGuardians, 'not player.isMoving and target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" },
     -- Venthyr
     --{spells.mindgames, 'not player.isMoving and target.isAttackable and spells.voidEruption.cooldown > 15' , "target" },
     --{spells.mindgames, 'not player.isMoving and target.isAttackable and player.hasBuff(spells.voidForm)' , "target" },
     -- NECROLORD
-    {spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.voidForm)' , "player" },
-    {spells.unholyNova, 'kps.multiTarget' },
+    --{spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.voidForm)' , "player" },
+    --{spells.unholyNova, 'kps.multiTarget' },
 
     {spells.powerInfusion, 'kps.multiTarget' },
     {spells.devouringPlague, 'player.insanity > 85' , "target" },

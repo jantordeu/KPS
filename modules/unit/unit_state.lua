@@ -93,8 +93,18 @@ function Unit.isFriend(self)
     if Unit.inVehicle(self) then return false end
     if Unit.isDead(self) then return false end
     if not Unit.lineOfSight(self) then return false end
-    if not UnitCanAssist("player",self.unit) then return false end -- UnitCanAssist(unitToAssist, unitToBeAssisted) return 1 if the unitToAssist can assist the unitToBeAssisted, nil otherwise
+    --if not UnitCanAssist("player",self.unit) then return false end -- UnitCanAssist(unitToAssist, unitToBeAssisted) return 1 if the unitToAssist can assist the unitToBeAssisted, nil otherwise
     if not UnitIsFriend("player", self.unit) then return false end -- UnitIsFriend("unit","otherunit") return 1 if otherunit is friendly to unit, nil otherwise.
+    return true
+end
+
+--[[[
+@function `<UNIT>.isPlayer` - returns true if the unit is a friend unit
+]]--
+
+function Unit.isPlayer(self)
+    if not Unit.isFriend(self) then return false end
+    if not UnitIsPlayer(self.unit) then return false end
     return true
 end
 
