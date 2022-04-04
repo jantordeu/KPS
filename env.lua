@@ -20,11 +20,12 @@ kps.env.boss4 = kps.Unit.new("boss4")
 
 kps.env.activeEnemies = kps.BasicActiveEnemies.new()
 
-kps.events.registerOnUpdate(function()
-    if kps.enabled then
-        kps.combatStep()
-    end
-end)
+--  kps.combatStep() is updated internally with KM.vars.updateInterval in keymoon
+--kps.events.registerOnUpdate(function()
+--    if kps.enabled then
+--        kps.combatStep()
+--    end
+--end)
 
 function kps.env.min(a,b)
     if a < b then

@@ -50,6 +50,7 @@ kps.rotations.register("PRIEST","HOLY",
     -- "Flash Concentration" -- Reduces the cast time of your Heal by 0.2 sec and increases its healing by 3%. 20 seconds remaining
     {spells.flashHeal, 'not player.isMoving and IsEquippedItem(178927) and not player.hasBuff(spells.flashConcentration)', kps.heal.lowestInRaid , "flashHeal_Concentration_buff" },
     {{"nested"}, 'player.hasBuff(spells.flashConcentration) and player.hasBuff(spells.surgeOfLight)' ,{
+        {spells.flashHeal, 'player.buffDuration(spells.surgeOfLight) < 5 and player.hasBuff(spells.benevolentFaerie) and spells.divineHymn.cooldown > 30' , "player" , "flashHeal_duration_surge"  },
         {spells.flashHeal, 'player.buffDuration(spells.surgeOfLight) < 5' , kps.heal.lowestInRaid , "flashHeal_duration_surge"  },
         {spells.flashHeal, 'player.buffDuration(spells.flashConcentration) < 5' , kps.heal.lowestInRaid , "flashHeal_concentration_surge" },
         {spells.flashHeal, 'player.buffStacks(spells.flashConcentration) < 4' , kps.heal.lowestInRaid , "flashHeal_stacks_surge" },
@@ -57,6 +58,22 @@ kps.rotations.register("PRIEST","HOLY",
     {{"nested"}, 'player.hasBuff(spells.flashConcentration) and not player.hasBuff(spells.surgeOfLight)' ,{
         {spells.flashHeal, 'not player.isMoving and player.buffDuration(spells.flashConcentration) < 6 and not spells.flashHeal.isRecastAt("player")' , "player", "flashHeal_concentration_player" },
     }},
+
+    -- VENTHYR
+    --{spells.mindgames, 'not player.isMoving and target.isAttackable' , "target" },
+    -- NIGHTFAE
+    -- Haunted Mask prioritise the CDR from Benevolent Faerie over the DR from Guardian Faerie
+    -- guardianFaerie DR -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
+    -- benevolentFaerie CDR -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)  
+    -- wrathfulFaerie MANA -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
+    -- faeGuardians on Enemy -- Guardian Faerie and Benevolent Faerie are applied to yourself, Wrathful Faerie is applied to your enemy target.
+    {spells.powerWordShield, 'targettarget.isFriend and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
+    {spells.faeGuardians, 'player.buffDuration(spells.flashConcentration) > 10 and target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" },
+    -- faeGuardians on Friendly -- Guardian Faerie and Benevolent Faerie are applied to your friendly target, Wrathful Faerie is applied to a nearby enemy target.
+    {spells.directMask, 'spells.divineHymn.cooldown > 30 and not player.hasBuff(spells.hauntedMask)' , "player" },
+    -- NECROLORD
+    --{spells.fleshcraft, 'not player.isMoving' , "player" },
+    --{spells.unholyNova, 'not player.isMoving' },
 
     -- "Dispel" "Purifier"
     {spells.purify, 'target.isDispellable("Magic")' , "target" },    
@@ -100,7 +117,12 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.50', kps.heal.lowestTankInRaid },
     {spells.heal, 'not player.isMoving and focus.isFriend and focus.hp < 0.50', "focus" },
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.50', kps.heal.lowestInRaid },
-    
+
+--    {spells.renew, 'mouseover.isFriend and not mouseover.isInRaid and not mouseover.hasMyBuff(spells.renew)' , "mouseover" },
+--    {spells.renew, 'target.isFriend and not target.isInRaid and not target.hasMyBuff(spells.renew)' , "target" },
+--    {spells.heal, 'not player.isMoving and mouseover.isFriend and not mouseover.isInRaid and mouseover.hp < 0.90' , "mouseover" },
+--    {spells.heal, 'not player.isMoving and target.isFriend and not target.isInRaid and target.hp < 0.90' , "target" },
+
     -- "Leap of Faith"
     {spells.leapOfFaith, 'keys.alt and mouseover.isFriend and spells.leapOfFaith.cooldown == 0', "mouseover" },
     -- "Door of Shadows" 
@@ -131,23 +153,12 @@ kps.rotations.register("PRIEST","HOLY",
 
     -- "Apotheosis" 200183 increasing the effects of Serendipity by 200% and reducing the cost of your Holy Words by 100%
     {spells.apotheosis, 'player.hasTalent(7,2) and heal.lowestInRaid.hp < 0.40' },
-    {spells.apotheosis, 'player.hasTalent(7,2) and heal.countLossInRange(0.70) > 2' },    
+    {spells.apotheosis, 'player.hasTalent(7,2) and heal.countLossInRange(0.70) > 2 and not player.isInRaid' },
     {spells.powerInfusion, 'heal.lowestInRaid.hp < 0.40 and not player.isInRaid' , "player" },
     {spells.powerInfusion, 'heal.countLossInRange(0.70) > 2 and not player.isInRaid' , "player" },
     {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("WARLOCK")', "mouseover" },
     {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("DRUID")', "mouseover" },
     {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("MAGE")', "mouseover" },
-
-    -- NIGHTFAE   
-    -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
-    -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)  
-    -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
-    {spells.powerWordShield, 'targettarget.isFriend and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
-    {spells.faeGuardians, 'target.isAttackable and player.buffDuration(spells.flashConcentration) > 15 and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" , "duration" },
-    {spells.faeGuardians, 'target.isAttackable and spells.flashHeal.lastCasted(5) and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" , "lastcasted" },
-
-    -- Venthyr
-    --{spells.mindgames, 'not player.isMoving and target.isAttackable' , "target" },
 
     -- TRINKETS -- SLOT 0 /use 13
     --{{"macro"}, 'player.useTrinket(0) and not player.isMoving and kps.timeInCombat > 5' , "/use 13" },
@@ -161,12 +172,12 @@ kps.rotations.register("PRIEST","HOLY",
     {{"macro"}, 'spells.flashHeal.shouldInterrupt(0.90, kps.defensive and player.buffDuration(spells.flashConcentration) > 9)' , "/stopcasting" }, 
     {{"macro"}, 'spells.prayerOfHealing.shouldInterrupt(heal.countLossInRange(0.90), kps.defensive)' , "/stopcasting" },
     -- DAMAGE
-    {spells.divineStar, 'not player.isMoving and player.hasTalent(6,2) and target.distanceMax  <= 20 and target.isAttackable' },
+    {spells.divineStar, 'not player.isMoving and target.isAttackable and player.hasTalent(6,2) and target.distanceMax  <= 20' },
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.85) > 2' },
     {{"nested"},'kps.multiTarget and target.isAttackable', damageRotation },
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
-    {spells.shadowWordPain, 'targettarget.isAttackable and targettarget.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("targettarget")' , "targettarget" },
-    {spells.smite, 'not player.isMoving and target.isAttackable and heal.lowestInRaid.hp > 0.85', "target" },
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and heal.lowestInRaid.hpIncoming > 0.80' , "target" },
+    {spells.shadowWordPain, 'targettarget.isAttackable and targettarget.myDebuffDuration(spells.shadowWordPain) < 5 and heal.lowestInRaid.hpIncoming > 0.80' , "targettarget" },
+    {spells.smite, 'not player.isMoving and target.isAttackable and heal.lowestInRaid.hpIncoming > 0.85', "target" },
     {{"nested"}, 'player.isMoving' ,{
         {spells.renew, 'player.hp < 0.50 and not player.hasMyBuff(spells.renew)' , "player" },
         {spells.renew, 'heal.lowestTankInRaid.hp < 0.50 and not heal.lowestTankInRaid.hasMyBuff(spells.renew)' , kps.heal.lowestTankInRaid },
@@ -187,12 +198,14 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and spells.holyWordSanctify.cooldown > 6 and spells.holyWordSanctify.cooldown < 15 and not spells.prayerOfHealing.lastCasted(9)' , kps.heal.lowestInRaid },
     {spells.heal, 'not player.isMoving and heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid },
     {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hpIncoming < 0.85' , "mouseover" },
-    {spells.heal, 'not player.isMoving and target.isFriend and target.hp < 0.85' , "target" },
-    {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.85' , "targettarget" },
-    {spells.heal, 'not player.isMoving and focus.isFriend and focus.hp < 0.85', "focus" },
+    {spells.heal, 'not player.isMoving and target.isFriend and target.hpIncoming < 0.85' , "target" },
+    {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hpIncoming < 0.85' , "targettarget" },
+    {spells.heal, 'not player.isMoving and focus.isFriend and focus.hpIncoming < 0.85', "focus" },
     -- DAMAGE
-    {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
     {spells.holyFire, 'not player.isMoving', env.damageTarget },
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5' , "target" },
+    {spells.shadowWordPain, 'targettarget.isAttackable and targettarget.myDebuffDuration(spells.shadowWordPain) < 5' , "targettarget" },
+    {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
     {spells.smite, 'not player.isMoving', env.damageTarget },
 
 

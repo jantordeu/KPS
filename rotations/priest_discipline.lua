@@ -135,25 +135,18 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.purgeTheWicked, 'player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.purgeTheWicked) < 4 and not spells.purgeTheWicked.isRecastAt("target")' , "target" , "target_purge" },
     {spells.purgeTheWicked, 'player.hasTalent(6,1) and mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.purgeTheWicked) < 4 and not spells.purgeTheWicked.isRecastAt("mouseover")' , "mouseover" , "mouseover_purge" },
     {spells.divineStar, 'player.hasTalent(6,2) and target.distanceMax  <= 20 and target.isAttackable' , "target" },
-    {{"nested"},'kps.multiTarget', damageRotation },
-    {{"nested"},'player.hasTalent(7,2) and player.hasBuff(spells.spiritShell)', damageRotation},
-    {{"nested"},'heal.countLossAtonementInRange(0.80) > 4', damageRotation },
     -- RAMPUP
     {spells.spiritShell, 'player.hasTalent(7,2) and spells.powerWordRadiance.charges == 0' },
     {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0' },
-
     {{"nested"},'kps.rampUp', {
-        {spells.shadowMend, 'not player.isMoving and heal.lowestInRaid.hp < 0.80 and heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt(heal.lowestInRaid.unit) and not spells.shadowMend.lastCasted(2)' , kps.heal.lowestInRaid , "shadowMend_lowest_rampup" },
-        {spells.powerWordShield, 'heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and not spells.powerWordShield.isRecastAt(heal.lowestInRaid.unit) and not heal.lowestInRaid.hasDebuff(spells.weakenedSoul)' , kps.heal.lowestInRaid , "shield_lowest_rampUp" },
-        {spells.shadowMend, 'not UnitIsUnit("player",heal.hasNotBuffAtonement.unit) and not player.isMoving and heal.hasNotBuffAtonement.hp < 0.80 and not spells.shadowMend.isRecastAt(heal.hasNotBuffAtonement.unit) and not spells.shadowMend.lastCasted(2)' , kps.heal.hasNotBuffAtonement },
-        {spells.powerWordShield, 'not UnitIsUnit("player",heal.hasNotBuffAtonement.unit) and not spells.powerWordShield.isRecastAt(heal.hasNotBuffAtonement.unit) and not heal.hasNotBuffAtonement.hasDebuff(spells.weakenedSoul)' , kps.heal.hasNotBuffAtonement },
-        {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.80 and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.shadowMend.isRecastAt("mouseover") and not spells.shadowMend.lastCasted(2)' , "mouseover" , "shadowMend_mouseover"},
-        {spells.powerWordShield, 'mouseover.isHealable and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.powerWordShield.isRecastAt("mouseover") and not mouseover.hasDebuff(spells.weakenedSoul)' , "mouseover" , "shield_mouseover" },
-    }},
-    {{"nested"},'kps.rampUp', {
+        {spells.rapture, 'true' },
         {spells.powerWordRadiance, 'not player.isMoving and heal.hasBuffCount(spells.atonement) < heal.countInRange' , kps.heal.lowestInRaid, "radiance_rampUp_count" },
         {spells.powerWordRadiance, 'not player.isMoving and heal.hasBuffCount(spells.atonement) < heal.countInRange' , "player", "radiance_rampUp_count" },
     }},
+    {{"nested"},'kps.multiTarget', damageRotation },
+    {{"nested"},'player.hasTalent(7,2) and player.hasBuff(spells.spiritShell)', damageRotation},
+    {{"nested"},'kps.rampUp and heal.countLossAtonementInRange(0.80) > 4', damageRotation },
+    -- NOT RAMPUP
     {{"nested"},'not kps.rampUp', {
         {spells.schism, 'not player.isMoving and heal.countLossAtonementInRange(0.80) > 2 and spells.powerWordRadiance.lastCasted(9)' , "target" },
         {spells.mindBlast, 'not player.isMoving and heal.countLossAtonementInRange(0.80) > 2' , "target" },

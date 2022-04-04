@@ -19,9 +19,9 @@ kps.Unit.metatable = {}
 ]]--
 function kps.Unit.prototype.exists(self)
     if self.unit == nil then return false end
-    if UnitExists(self.unit)== false then return false end
-    if UnitIsVisible(self.unit)==false then return false end
-    if UnitIsDeadOrGhost(self.unit)==true then return false end
+    if UnitExists(self.unit) == false then return false end
+    if UnitIsVisible(self.unit) == false then return false end
+    if UnitIsDeadOrGhost(self.unit) == true then return false end
     return true
 end
 

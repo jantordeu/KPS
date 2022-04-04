@@ -585,10 +585,9 @@ print("|cffff8000countLossAtonementInRange:|cffffffff", kps["env"].heal.countLos
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 print("|cffff8000", "---------------------------------")
 
---print("|cffff8000Raid:|cffffffff", UnitInRaid("target") == nil)
---print("|cffff8000UnitPlayer:|cffffffff", kps["env"].target.isPlayer,UnitIsPlayer("target"))
---print("|cffff8000UnitFriend:|cffffffff", kps["env"].target.isFriend,UnitIsFriend("target","player") )
---print("|cffff8000Assist:|cffffffff", UnitCanAssist("player","target"))
+--print("|cffff8000durationdebuff:|cffffffff", kps["env"].target.myDebuffDuration(kps.spells.priest.vampiricTouch))
+--print("|cffff8000recast:|cffffffff", kps.spells.priest.vampiricTouch.isRecastAt("target"))
+--print("|cffff8000lastcast:|cffffffff", kps.spells.priest.vampiricTouch.lastCasted(2))
 
 --print("|cffff8000GCDhaste:|cffffffff", kps["env"].player.gcd)
 --local _, gcd = GetSpellCooldown(61304)

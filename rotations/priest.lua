@@ -67,37 +67,6 @@ end
 ------------------------------- LOCAL FUNCTIONS
 --------------------------------------------------------------------------------------------
 
--- name, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,
--- nameplateShowAll, timeMod, ... = UnitAura(unit, index [, filter]) = UnitBuff(unit, index [, filter]) = UnitDebuff(unit, index [, filter])
-
-local UnitHasDebuff = function(unit,spellName)
-    local auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_
-    local i = 1
-    auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_ = UnitDebuff(unit,i)
-    while auraName do
-        if auraName == spellName then
-            return true
-        end
-        i = i + 1
-        auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_ = UnitDebuff(unit,i)
-    end
-    return false
-end
-
-local UnitHasBuff = function(unit,spellName)
-    local auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_
-    local i = 1
-    auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_ = UnitBuff(unit,i)
-    while auraName do
-        if auraName == spellName then
-            return true
-        end
-        i = i + 1
-        auraName, icon, count, debuffType, duration, expirationTime, source, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer,_ = UnitBuff(unit,i)
-    end
-    return false
-end
-
 local function UnitIsAttackable(unit)
     if UnitIsDeadOrGhost(unit) then return false end
     if not UnitExists(unit) then return false end

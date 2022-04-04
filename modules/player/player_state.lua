@@ -93,36 +93,6 @@ function Player.plateCount(self)
 end
 
 --[[[
-@function `<PLAYER>.plateCountDebuff` - e.g. 'player.plateCountDebuff(spells.shadowWordPain)' returns namePlates count with specified debuff in combat (actives enemies)
-]]--
-
-local UnitHasDebuff = function(unit,spellName)
-    local auraName,count,debuffType,duration,endTime,caster,isStealable,spellid,isBossDebuff,value
-    local i = 1
-    auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitDebuff(unit,i)
-    while auraName do
-        if auraName == spellName then
-            return true
-        end
-        i = i + 1
-        auraName,_,count,debuffType,duration,endTime,caster,isStealable,_,spellid,_,isBossDebuff,_,_,value1,value2,value3 = UnitDebuff(unit,i)
-    end
-    return false
-end
-
-local PlateHasDebuff = function(spell)
-    local plateCount = 0
-    for nameplate,_ in pairs(activeUnitPlates) do
-        if UnitAffectingCombat(nameplate) and UnitHasDebuff(nameplate,spell.name) then plateCount = plateCount + 1 end
-    end
-    return plateCount
-end
-
-function Player.plateCountDebuff(spell)
-    return PlateHasDebuff
-end
-
---[[[
 @function `<PLAYER>.isTarget` - returns true if the unit is targeted by an enemy nameplate
 ]]--
 function Player.isTarget(self)
@@ -133,19 +103,4 @@ function Player.isTarget(self)
         end
     end
     return false
-end
-
---[[[
-@function `<PLAYER>.isTargetCount` - returns the number of enemies targeting player.
-]]--
-
-function Player.isTargetCount(self)
-    local plateCount = 0
-    for nameplate,_ in pairs(activeUnitPlates) do
-        if UnitExists(nameplate.."target") then
-            local target = nameplate.."target"
-            if UnitIsUnit(target,self.unit) then plateCount = plateCount + 1 end
-        end
-    end
-    return plateCount
 end

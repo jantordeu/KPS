@@ -8,33 +8,33 @@ local UnitBuff = UnitBuff
 local UnitDebuff = UnitDebuff
 local UnitCanAssist = UnitCanAssist
 
-local UnitHasBuff = function(unit,spellName)
-        local auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
-        local i = 1
-        auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unit,i)
-        while auraName do
-            if auraName == spellName then
-                return auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
-            end
-            i = i + 1
-            auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unit,i)
-        end
-    return nil
-end
+--local UnitHasBuff = function(unit,spellName)
+--        local auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
+--        local i = 1
+--        auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unit,i)
+--        while auraName do
+--            if auraName == spellName then
+--                return auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
+--            end
+--            i = i + 1
+--            auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitBuff(unit,i)
+--        end
+--    return nil
+--end
 
-local UnitHasDebuff = function(unit,spellName)
-        local auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
-        local i = 1
-        auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unit,i)
-        while auraName do
-            if auraName == spellName then
-                return auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
-            end
-            i = i + 1
-            auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unit,i)
-        end
-    return nil
-end
+--local UnitHasDebuff = function(unit,spellName)
+--        local auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
+--        local i = 1
+--        auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unit,i)
+--        while auraName do
+--            if auraName == spellName then
+--                return auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3
+--            end
+--            i = i + 1
+--            auraName, icon, count, debuffType, duration, expirationTime, caster, isStealable, nameplateShowPersonal, spellId, canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod, value1, value2, value3 = UnitDebuff(unit,i)
+--        end
+--    return nil
+--end
 
 
 local buffOrDebuff = function(unit, spellName, buffFn, onlyMine)
