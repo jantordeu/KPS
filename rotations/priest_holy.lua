@@ -70,7 +70,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.powerWordShield, 'targettarget.isFriend and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
     {spells.faeGuardians, 'player.buffDuration(spells.flashConcentration) > 10 and target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" },
     -- faeGuardians on Friendly -- Guardian Faerie and Benevolent Faerie are applied to your friendly target, Wrathful Faerie is applied to a nearby enemy target.
-    {spells.directMask, 'spells.divineHymn.cooldown > 30 and not player.hasBuff(spells.hauntedMask)' , "player" },
+    --{spells.directMask, 'spells.divineHymn.cooldown > 30 and not player.hasBuff(spells.hauntedMask)' , "player" },
     -- NECROLORD
     --{spells.fleshcraft, 'not player.isMoving' , "player" },
     --{spells.unholyNova, 'not player.isMoving' },
@@ -118,11 +118,17 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and focus.isFriend and focus.hp < 0.50', "focus" },
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.50', kps.heal.lowestInRaid },
 
---    {spells.renew, 'mouseover.isFriend and not mouseover.isInRaid and not mouseover.hasMyBuff(spells.renew)' , "mouseover" },
---    {spells.renew, 'target.isFriend and not target.isInRaid and not target.hasMyBuff(spells.renew)' , "target" },
---    {spells.heal, 'not player.isMoving and mouseover.isFriend and not mouseover.isInRaid and mouseover.hp < 0.90' , "mouseover" },
---    {spells.heal, 'not player.isMoving and target.isFriend and not target.isInRaid and target.hp < 0.90' , "target" },
 
+--[[
+    {spells.renew, 'mouseover.isFriend and not mouseover.isInRaid and not mouseover.hasMyBuff(spells.renew)' , "mouseover" },
+    {spells.renew, 'target.isFriend and not target.isInRaid and not target.hasMyBuff(spells.renew)' , "target" },
+    {spells.heal, 'not player.isMoving and mouseover.isFriend and not mouseover.isInRaid and mouseover.hp < 0.90' , "mouseover" },
+    {spells.heal, 'not player.isMoving and target.isFriend and not target.isInRaid and target.hp < 0.90' , "target" },
+    {spells.renew, 'targettarget.isFriend and not targettarget.isInRaid and not targettarget.hasMyBuff(spells.renew)' , "targettarget" },
+    {spells.heal, 'not player.isMoving and targettarget.isFriend and not targettarget.isInRaid and targettarget.hp < 0.90' , "targettarget" },
+]]
+
+    
     -- "Leap of Faith"
     {spells.leapOfFaith, 'keys.alt and mouseover.isFriend and spells.leapOfFaith.cooldown == 0', "mouseover" },
     -- "Door of Shadows" 
@@ -175,9 +181,6 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.divineStar, 'not player.isMoving and target.isAttackable and player.hasTalent(6,2) and target.distanceMax  <= 20' },
     {spells.halo, 'not player.isMoving and player.hasTalent(6,3) and heal.countLossInRange(0.85) > 2' },
     {{"nested"},'kps.multiTarget and target.isAttackable', damageRotation },
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and heal.lowestInRaid.hpIncoming > 0.80' , "target" },
-    {spells.shadowWordPain, 'targettarget.isAttackable and targettarget.myDebuffDuration(spells.shadowWordPain) < 5 and heal.lowestInRaid.hpIncoming > 0.80' , "targettarget" },
-    {spells.smite, 'not player.isMoving and target.isAttackable and heal.lowestInRaid.hpIncoming > 0.85', "target" },
     {{"nested"}, 'player.isMoving' ,{
         {spells.renew, 'player.hp < 0.50 and not player.hasMyBuff(spells.renew)' , "player" },
         {spells.renew, 'heal.lowestTankInRaid.hp < 0.50 and not heal.lowestTankInRaid.hasMyBuff(spells.renew)' , kps.heal.lowestTankInRaid },
@@ -194,6 +197,10 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and focus.isFriend and focus.hp < 0.70' , "focus" },
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.70', kps.heal.lowestTankInRaid, "heal_tank_Concentration"  },
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
+    -- DAMAGE
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
+    {spells.shadowWordPain, 'targettarget.isAttackable and targettarget.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("targettarget")' , "targettarget" },
+    {spells.smite, 'not player.isMoving and target.isAttackable and heal.lowestInRaid.hpIncoming > 0.85', "target" },
     -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and spells.holyWordSanctify.cooldown > 6 and spells.holyWordSanctify.cooldown < 15 and not spells.prayerOfHealing.lastCasted(9)' , kps.heal.lowestInRaid },
     {spells.heal, 'not player.isMoving and heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid },
@@ -202,10 +209,8 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hpIncoming < 0.85' , "targettarget" },
     {spells.heal, 'not player.isMoving and focus.isFriend and focus.hpIncoming < 0.85', "focus" },
     -- DAMAGE
-    {spells.holyFire, 'not player.isMoving', env.damageTarget },
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5' , "target" },
-    {spells.shadowWordPain, 'targettarget.isAttackable and targettarget.myDebuffDuration(spells.shadowWordPain) < 5' , "targettarget" },
     {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
+    {spells.holyFire, 'not player.isMoving and target.isAttackable', "target" },
     {spells.smite, 'not player.isMoving', env.damageTarget },
 
 
