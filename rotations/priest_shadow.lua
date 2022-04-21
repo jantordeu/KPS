@@ -93,7 +93,6 @@ kps.rotations.register("PRIEST","SHADOW",
     -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
     -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)
     -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
-    {spells.shadowWordPain, 'player.hasBuff(spells.benevolentFaerie) and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" },
     {spells.faeGuardians, 'not player.hasBuff(spells.benevolentFaerie)' , "player" },
     -- NECROLORD
     {spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.voidForm)' , "player" },

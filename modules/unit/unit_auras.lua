@@ -810,8 +810,8 @@ function Unit.isControlled(self)
     auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitDebuff(self.unit,i)
     while auraName do
         local crowdControl = kps.spells.crowdControl[spellId]
-        if crowdControl ~= nil then
-            if crowdControl == "CC" then return true end
+        if crowdControl ~= nil and crowdControl == "CC" then
+            return true
         end
         i = i + 1
         auraName,_,count,debuffType,duration,expirationTime,caster, isStealable, _, spellId, _, isBossDebuff = UnitDebuff(self.unit,i)

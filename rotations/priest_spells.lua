@@ -315,6 +315,8 @@ kps.spells.priest.hauntedMask = kps.Spell.fromId(356968) -- Buff
 kps.spells.priest.unholyNova = kps.Spell.fromId(324724)
 kps.spells.priest.fleshcraft = kps.Spell.fromId(324631)
 
+kps.spells.priest.divineConversation = kps.Spell.fromId(363727)
+
 
 
 
