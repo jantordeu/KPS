@@ -51,7 +51,7 @@ kps.rotations.register("PRIEST","HOLY",
     --{spells.fleshcraft, 'not player.isMoving' , "player" },
     --{spells.unholyNova, 'not player.isMoving' },
     -- VENTHYR
-    --{spells.mindgames, 'not player.isMoving and target.isAttackable' , "target" },
+    {spells.mindgames, 'target.isAttackable' , "target" },
     -- NIGHTFAE
     -- Haunted Mask prioritise the CDR from Benevolent Faerie over the DR from Guardian Faerie
     -- guardianFaerie DR -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
@@ -59,12 +59,15 @@ kps.rotations.register("PRIEST","HOLY",
     -- wrathfulFaerie MANA -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
     -- faeGuardians on Enemy -- Guardian Faerie and Benevolent Faerie are applied to yourself, Wrathful Faerie is applied to your enemy target.
     -- faeGuardians on Friendly -- Guardian Faerie and Benevolent Faerie are applied to your friendly target, Wrathful Faerie is applied to a nearby enemy target.
-    {spells.faeGuardians, 'player.buffDuration(spells.flashConcentration) < 10 and not heal.lowestTankInRaid.hasBuff(spells.guardianFaerie)' ,  kps.heal.lowestTankInRaid },
+    {spells.powerWordShield, 'targettarget.isFriend and target.isAttackable and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasMyBuff(spells.guardianFaerie)' , "targettarget" },
+    {spells.shadowWordPain, 'target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie) and player.hasBuff(spells.benevolentFaerie)',  "target" },
+    --{spells.faeGuardians, 'player.buffDuration(spells.flashConcentration) > 10 and not player.hasBuff(spells.benevolentFaerie)' , "player" },
+    {spells.faeGuardians, 'player.buffDuration(spells.flashConcentration) > 10 and target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie) and not player.hasBuff(spells.benevolentFaerie)' , "target" },
     
     -- "Flash Concentration" -- Reduces the cast time of your Heal by 0.2 sec and increases its healing by 3%. 20 seconds remaining
     {spells.flashHeal, 'not player.isMoving and IsEquippedItem(178927) and not player.hasBuff(spells.flashConcentration)', kps.heal.lowestInRaid , "flashHeal_Concentration_buff" },
     {{"nested"}, 'player.hasBuff(spells.flashConcentration) and player.hasBuff(spells.surgeOfLight)' ,{
-        {spells.flashHeal, 'spells.divineHymn.cooldown > 20' , "player" , "flashHeal_faeGuardians"  },
+        {spells.flashHeal, 'spells.divineHymn.cooldown > 20 and player.hasBuff(spells.benevolentFaerie)' , "player" , "flashHeal_faeGuardians"  },
         {spells.flashHeal, 'player.buffDuration(spells.surgeOfLight) < 5' , kps.heal.lowestInRaid , "flashHeal_duration_surge"  },
         {spells.flashHeal, 'player.buffDuration(spells.flashConcentration) < 5' , kps.heal.lowestInRaid , "flashHeal_concentration_surge" },
         {spells.flashHeal, 'player.buffStacks(spells.flashConcentration) < 4' , kps.heal.lowestInRaid , "flashHeal_stacks_surge" },
@@ -103,7 +106,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.holyWordSerenity, 'heal.lowestInRaid.hp < 0.70' , kps.heal.lowestInRaid },
     
     -- "Prayer of Mending"
-    {spells.prayerOfMending, 'not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending) and heal.lowestInRaid.hp > 0.40' , kps.heal.lowestTankInRaid },
+    {spells.prayerOfMending, 'not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending) and heal.lowestInRaid.hp > 0.50' , kps.heal.lowestTankInRaid },
     {spells.circleOfHealing, 'heal.countLossInRange(0.85) > 2' , kps.heal.lowestInRaid },
     
     -- LOWEST URGENCE
@@ -119,9 +122,9 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.50', kps.heal.lowestInRaid },
 
     {{"nested"}, 'kps.frienly and not player.isMoving' ,{
-    	{spells.heal, 'mouseover.isFriend and not mouseover.isInRaid and mouseover.hp < 0.90' , "mouseover" },
-    	{spells.heal, 'target.isFriend and not target.isInRaid and target.hp < 0.90' , "target" },
-    	{spells.heal, 'targettarget.isFriend and not targettarget.isInRaid and targettarget.hp < 0.90' , "targettarget" },
+    	{spells.heal, 'mouseover.isFriend and mouseover.hp < 0.90' , "mouseover" },
+    	{spells.heal, 'target.isFriend and target.hp < 0.90' , "target" },
+    	{spells.heal, 'targettarget.isFriend and targettarget.hp < 0.90' , "targettarget" },
     }},
 
     -- "Leap of Faith"
@@ -158,15 +161,15 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.powerInfusion, 'heal.lowestInRaid.hp < 0.40 and not player.isInRaid' , "player" },
     {spells.powerInfusion, 'heal.countLossInRange(0.70) > 2 and not player.isInRaid' , "player" },
     {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("WARLOCK")', "mouseover" },
-    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("DRUID")', "mouseover" },
+    --{spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("DRUID")', "mouseover" },
     {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("MAGE")', "mouseover" },
 
     -- TRINKETS -- SLOT 0 /use 13
-    --{{"macro"}, 'player.useTrinket(0) and not player.isMoving and kps.timeInCombat > 5' , "/use 13" },
-    --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.85' , "/use [@targettarget] 13" },
+    {{"macro"}, 'player.useTrinket(0) and kps.timeInCombat > 5' , "/use 13" },
+    --{{"macro"}, 'player.useTrinket(0) and targettarget.isHealable and targettarget.hp < 0.85' , "/use [@targettarget] 13" },
     -- TRINKETS -- SLOT 1 /use 14
     --{{"macro"}, 'player.useTrinket(1) and focus.isHealable' , "/use [@focus] 14" },
-    --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" }, -- spells.soulshape.cooldown > 5
 
     -- ShouldInterruptCasting
     {{"macro"}, 'spells.heal.shouldInterrupt(0.90, kps.defensive)' , "/stopcasting" },
@@ -193,9 +196,6 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.70', kps.heal.lowestTankInRaid, "heal_tank_Concentration"  },
     {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid, "heal_lowest_Concentration"  },
     -- DAMAGE
-    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
-    {spells.shadowWordPain, 'targettarget.isAttackable and targettarget.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("targettarget")' , "targettarget" },
-    {spells.holyFire, 'not player.isMoving and target.isAttackable and player.hasBuff(spells.divineConversation)', "target" },
     {spells.smite, 'not player.isMoving and target.isAttackable and heal.lowestInRaid.hpIncoming > 0.85 and not player.hasBuff(spells.divineConversation)', "target" },
     -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
     {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and spells.holyWordSanctify.cooldown > 6 and spells.holyWordSanctify.cooldown < 15 and not spells.prayerOfHealing.lastCasted(9)' , kps.heal.lowestInRaid },
@@ -205,8 +205,10 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hpIncoming < 0.85' , "targettarget" },
     {spells.heal, 'not player.isMoving and focus.isFriend and focus.hpIncoming < 0.85', "focus" },
     -- DAMAGE
-    {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
-
+    {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("target")' , "target" },
+    {spells.shadowWordPain, 'targettarget.isAttackable and targettarget.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("targettarget")' , "targettarget" },
+    --{spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 5 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" },
+    {spells.holyFire, 'not player.isMoving and target.isAttackable', "target" },
     {spells.smite, 'not player.isMoving and not player.hasBuff(spells.divineConversation)', env.damageTarget },
 
 

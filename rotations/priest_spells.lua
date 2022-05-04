@@ -316,6 +316,7 @@ kps.spells.priest.unholyNova = kps.Spell.fromId(324724)
 kps.spells.priest.fleshcraft = kps.Spell.fromId(324631)
 
 kps.spells.priest.divineConversation = kps.Spell.fromId(363727)
+kps.spells.priest.soulshape = kps.Spell.fromId(310143)
 
 
 

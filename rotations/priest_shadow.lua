@@ -71,10 +71,10 @@ kps.rotations.register("PRIEST","SHADOW",
     }},
 
     -- TRINKETS -- SLOT 0 /use 13
-    --{{"macro"}, 'player.useTrinket(0) and not player.isMoving and kps.timeInCombat > 5' , "/use 13" },
+    {{"macro"}, 'player.useTrinket(0) and kps.timeInCombat > 5' , "/use 13" },
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.80' , "/use [@targettarget] 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    --{{"macro"}, 'player.useTrinket(1) and not player.isMoving and kps.timeInCombat > 30' , "/use 14" },
+    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" },
 
    {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 5 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
    {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < 5' , "target"  },
@@ -86,8 +86,7 @@ kps.rotations.register("PRIEST","SHADOW",
    {spells.shadowWordDeath, 'IsEquippedItem(173244) and player.hasBuff(spells.voidForm) and spells.shadowfiend.cooldown > 45 and player.hp > 0.50' , "target" },
    
     -- VENTHYR
-    --{spells.mindgames, 'not player.isMoving and spells.voidEruption.cooldown > 15' , "target" },
-    --{spells.mindgames, 'not player.isMoving and player.hasBuff(spells.voidForm)' , "target" },
+    {spells.mindgames, 'true' , "target" },
     -- NIGHTFAE
     -- Haunted Mask prioritise the CDR from Benevolent Faerie over the DR from Guardian Faerie
     -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
@@ -95,16 +94,16 @@ kps.rotations.register("PRIEST","SHADOW",
     -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
     {spells.faeGuardians, 'not player.hasBuff(spells.benevolentFaerie)' , "player" },
     -- NECROLORD
-    {spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.voidForm)' , "player" },
-    {spells.unholyNova, 'kps.multiTarget and not player.isMoving' },
+    --{spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.voidForm)' , "player" },
+    --{spells.unholyNova, 'kps.multiTarget and not player.isMoving' },
 
-    {spells.devouringPlague, 'player.insanity > 85' , "target" },
+    {spells.devouringPlague, 'player.insanity > 70' , "target" },
+    {spells.voidBolt, 'player.hasBuff(spells.dissonantEchoes)' , "target" , "voidBolt_dissonantEchoes"  },
+    {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , "target" , "voidBolt_voidForm" },
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , "target" , 'mindBlast_darkThoughts' },
     {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , "target" },
     {spells.powerInfusion, 'kps.multiTarget' },
     {spells.shadowfiend, 'kps.multiTarget' , "target" },
-    {spells.voidBolt, 'player.hasBuff(spells.dissonantEchoes)' , "target" , "voidBolt_dissonantEchoes"  },
-    {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , "target" , "voidBolt_voidForm" },
     {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm)' },
 
     {spells.devouringPlague, 'true' , "target" },

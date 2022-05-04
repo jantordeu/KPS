@@ -140,7 +140,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.lightOfDawn, 'heal.countLossInDistance(0.85) > 2 and not player.isInRaid' },
     -- "Word of Glory" -- 3 charges de puissance sacrée
     -- Avoid using Shield of the Righteous, you will gain more damage from spamming Word of Glory to increase the chance of proccing Awakening
-    {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
+    {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.70' , kps.heal.lowestInRaid },
     {spells.lightOfDawn, 'player.holyPower == 5' , kps.heal.lowestInRaid },
 
     -- GLIMMER
