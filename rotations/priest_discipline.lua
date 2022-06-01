@@ -17,6 +17,10 @@ kps.runAtEnd(function()
    kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "rampUp", "Interface\\Icons\\ability_shaman_astralshift", "rampUp")
 end)
 
+kps.runAtEnd(function()
+kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "control", "Interface\\Icons\\spell_nature_slow", "control")
+end)
+
 local damageRotation = {
     {spells.powerInfusion, 'true' },
     {spells.shadowfiend, 'true' , env.damageTarget },
@@ -52,17 +56,18 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.painSuppression, 'player.hp < 0.30' , "player"},
     {spells.painSuppression, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
 
+    -- "Shackle Undead"
+    {spells.shackleUndead, 'kps.control and not player.isMoving and target.isAttackable and not target.incorrectTarget and not target.hasDebuff(spells.shackleUndead)' , "target" },
     -- "Leap of Faith"
-    {spells.leapOfFaith, 'keys.alt and mouseover.isFriend and spells.leapOfFaith.cooldown == 0 and spells.doorOfShadows.cooldown > 0', "mouseover" },
+    {spells.leapOfFaith, 'keys.alt and mouseover.isFriend and spells.leapOfFaith.cooldown == 0', "mouseover" },
     -- "Door of Shadows" 
-    {{"macro"}, ' keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
+    --{{"macro"}, ' keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
     {spells.fade, 'player.isTarget' },
-    {spells.desperatePrayer, 'player.hp < 0.50' , "player" },
+    {spells.desperatePrayer, 'player.hp < 0.50' , "player" },   
     -- "Angelic Feather"
-    --{{"macro"},'player.hasTalent(2,3) and not player.isSwimming and player.isMovingSince(1.6) and not player.hasBuff(spells.angelicFeather)' , "/cast [@player] "..AngelicFeather },
+    --{{"macro"},'player.hasTalent(2,3) and not player.isSwimming and player.isMovingSince(2) and not player.hasBuff(spells.angelicFeather)' , "/cast [@player] "..AngelicFeather },
     -- "Levitate" 1706
     --{spells.levitate, 'player.IsFallingSince(1.4) and not player.hasBuff(spells.levitate)' , "player" },
-    -- "Body and Soul"
     {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.6) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" },
 
     -- RAPTURE
@@ -71,7 +76,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.powerWordShield, 'heal.lowestInRaid.myBuffDuration(spells.atonement) < 2 and not heal.lowestInRaid.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt(heal.lowestInRaid.unit)' , kps.heal.lowestInRaid },
         {spells.powerWordShield, 'heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and not heal.lowestTankInRaid.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt(heal.lowestTankInRaid.unit)' , kps.heal.lowestTankInRaid },
         {spells.powerWordShield, 'player.myBuffDuration(spells.atonement) < 2 and not player.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt("player")' , "player" },
-        {spells.powerWordShield, 'not UnitIsUnit("player",heal.hasNotBuffAtonement.unit) and not spells.powerWordShield.isRecastAt(heal.hasNotBuffAtonement.unit)' , kps.heal.hasNotBuffAtonement },
+        {spells.powerWordShield, 'heal.hasNotBuff(spells.atonement) and not spells.powerWordShield.isRecastAt(heal.hasNotBuffAtonement.unit)' , kps.heal.hasNotBuffAtonement },
     }},
     {{"nested"}, 'kps.interrupt' ,{
         {spells.shiningForce, 'player.hasTalent(4,3) and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
@@ -88,14 +93,14 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.purify, 'heal.isMagicDispellable' , kps.heal.isMagicDispellable },
     }},
 
-    -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
-    -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)  
-    -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
-    {spells.powerWordShield, 'targettarget.isFriend and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasBuff(spells.guardianFaerie) and not targettarget.hasDebuff(spells.weakenedSoul)' , "targettarget" },
-    {spells.faeGuardians, 'target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie)' , "target" },
-    -- Venthyr
-    {spells.mindgames, 'target.isAttackable' , "target" },
- 
+    -- VENTHYR
+    {spells.mindgames, 'not player.isMoving' , "target" },
+     -- NIGHTFAE
+    {spells.powerWordShield, 'targettarget.isFriend and target.isAttackable and target.hasMyDebuff(spells.wrathfulFaerie) and not targettarget.hasMyBuff(spells.guardianFaerie)' , "targettarget" },
+    {spells.shadowWordPain, 'target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie) and player.hasBuff(spells.benevolentFaerie)',  "target" },
+    --{spells.faeGuardians, 'player.buffDuration(spells.flashConcentration) > 10 and not player.hasBuff(spells.benevolentFaerie)' , "player" },
+    {spells.faeGuardians, 'player.buffDuration(spells.flashConcentration) > 10 and target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie) and not player.hasBuff(spells.benevolentFaerie)' , "target" },
+
     -- TRINKETS -- SLOT 0 /use 13
     --{{"macro"}, 'player.useTrinket(0) and not player.isMoving and kps.timeInCombat > 5' , "/use 13" },
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.80' , "/use [@targettarget] 13" },

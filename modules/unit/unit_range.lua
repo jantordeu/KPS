@@ -39,21 +39,40 @@ end
 local CHECK_INTERVAL = 2
 local GetTime = GetTime
 local unitExclude = {}
+local unitBadTarget = {}
 
 kps.events.register("UI_ERROR_MESSAGE", function (arg1, arg2)
     if arg1 == 52 and arg2 == SPELL_FAILED_LINE_OF_SIGHT then
-        -- 52 / Cible hors du champ de vision
         if kps.lastTargetGUID == nil then kps.lastTargetGUID = UnitGUID("target") end
         unitExclude[kps.lastTargetGUID] = GetTime()
+    end
+    if arg1 == 52 and arg2 == SPELL_FAILED_BAD_TARGETS then
+        if kps.lastTargetGUID == nil then kps.lastTargetGUID = UnitGUID("target") end
+        unitBadTarget[kps.lastTargetGUID] = GetTime()
     end
 end)
 
 local unitLineOfSigh = function(unitguid)
     if unitExclude[unitguid] == nil then return true end
     if (GetTime() - unitExclude[unitguid]) >= CHECK_INTERVAL then return true end
+    if not UnitAffectingCombat("player") then unitExclude = {} end
     return false
 end
 
 function Unit.lineOfSight(self)
     return unitLineOfSigh(self.guid)
+end
+
+--[[[
+@function `<UNIT>.incorrectTarget` - returns true during Combat if attackable target is BAD_TARGETS either returns false
+]]--
+
+local unitIncorrectTarget = function(unitguid)
+    if unitBadTarget[unitguid] == nil then return false end
+    if not UnitAffectingCombat("player") then unitBadTarget = {} end
+    return true
+end
+
+function Unit.incorrectTarget(self)
+    return unitIncorrectTarget(self.guid)
 end

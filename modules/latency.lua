@@ -17,7 +17,7 @@ kps.events.register("UNIT_SPELLCAST_SENT", function(...)
 
         latencySpell = spellname
         startId = 0
-        if unitID == "player" and spellname then sentTime = GetTime() end
+        if unitID == "player" then sentTime = GetTime() end
 end)
 
 -- "UNIT_SPELLCAST_START"
@@ -27,11 +27,8 @@ kps.events.register("UNIT_SPELLCAST_START", function(...)
 
         if startId ~= 0 then return end
         startId = startId + 1
-        if unitID == "player" and (spellname == latencySpell) then
-            startTime = GetTime()
-        else
-            startTime = nil
-        end
+
+        if unitID == "player" and spellname == latencySpell then startTime = GetTime() end
 
         if startTime then
             local latency = startTime - sentTime

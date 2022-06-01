@@ -450,7 +450,7 @@ kps.RaidStatus.prototype.hasBuffCount = kps.utils.cachedValue(function()
 end)
 
 
-local countBuffInRange = function(health)
+local countUnitBuffHealth = function(health)
     local spell = kps.spells.priest.atonement
     if health == nil then health = 2 end
     local count = 0
@@ -463,7 +463,7 @@ local countBuffInRange = function(health)
 end
 
 kps.RaidStatus.prototype.countLossAtonementInRange = kps.utils.cachedValue(function()
-    return countBuffInRange
+    return countUnitBuffHealth
 end)
 
 --------------------------------------------------------------------------------------------
@@ -472,7 +472,7 @@ end)
 
 local unitHasDebuff = function(spell)
     local lowestHp = 2
-    local lowestUnit = kps["env"].player
+    local lowestUnit = false
     for name, unit in pairs(raidStatus) do
         if unit.hasDebuff(spell) and unit.hp < lowestHp then
             lowestHp = unit.hp
@@ -488,7 +488,7 @@ end
 
 local unitHasBuff = function(spell)
     local lowestHp = 2
-    local lowestUnit = kps["env"].player
+    local lowestUnit = false
     for name, unit in pairs(raidStatus) do
         if unit.isHealable and unit.hasMyBuff(spell) and unit.hp < lowestHp then
             lowestHp = unit.hp
@@ -500,7 +500,7 @@ end
 
 local unitHasNotBuff = function(spell)
     local lowestHp = 2
-    local lowestUnit = kps["env"].player
+    local lowestUnit = false
     for name, unit in pairs(raidStatus) do
         if unit.isHealable and not unit.hasMyBuff(spell) and unit.hp < lowestHp then
             lowestHp = unit.hp
@@ -511,11 +511,19 @@ local unitHasNotBuff = function(spell)
 end
 
 --[[[
-@function `heal.hasBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasBuffAtonement.hp < 0.90
+@function `heal.hasBuffAtonement` - Returns the UNIT with lowest health with Atonement Buff on raid e.g. heal.hasBuffAtonement.hp < 0.90
 ]]--
 
 kps.RaidStatus.prototype.hasBuffAtonement = kps.utils.cachedValue(function()
     return unitHasBuff(kps.spells.priest.atonement)
+end)
+
+--[[[
+@function `heal.hasBuff` - Returns the UNIT TABLE with lowest health with Buff on raid e.g. heal.hasBuff(spells.atonement)
+]]--
+
+kps.RaidStatus.prototype.hasBuff = kps.utils.cachedValue(function()
+    return unitHasBuff
 end)
 
 
@@ -528,27 +536,11 @@ kps.RaidStatus.prototype.hasNotBuffAtonement = kps.utils.cachedValue(function()
 end)
 
 --[[[
-@function `heal.hasNotBuffGlimmer` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
+@function `heal.hasNotBuff` - Returns the UNIT TABLE with lowest health without Buff on raid e.g. heal.hasNotBuff(spells.atonement)
 ]]--
 
-kps.RaidStatus.prototype.hasNotBuffGlimmer = kps.utils.cachedValue(function()
-    return unitHasNotBuff(kps.spells.paladin.glimmerOfLight)
-end)
-
---[[[
-@function `heal.hasNotBuffMending` - Returns the lowest health unit without Prayer of Mending Buff on raid e.g. heal.hasNotBuffMending.hp < 0.90
-]]--
-
-kps.RaidStatus.prototype.hasNotBuffMending = kps.utils.cachedValue(function()
-    return unitHasNotBuff(kps.spells.priest.prayerOfMending)
-end)
-
---[[[
-@function `heal.hasNotBuffRenew` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
-]]--
-
-kps.RaidStatus.prototype.hasNotBuffRenew = kps.utils.cachedValue(function()
-    return unitHasNotBuff(kps.spells.priest.renew)
+kps.RaidStatus.prototype.hasNotBuff = kps.utils.cachedValue(function()
+    return unitHasNotBuff
 end)
 
 --------------------------------------------------------------------------------------------
@@ -584,6 +576,13 @@ print("|cffff8000countLossRange:|cffffffff",kps["env"].heal.countLossInRange(0.8
 print("|cffff8000countLossAtonementInRange:|cffffffff", kps["env"].heal.countLossAtonementInRange(0.80))
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 print("|cffff8000", "---------------------------------")
+
+
+--print("|cffff8000Incorrect", kps["env"].target.incorrectTarget)
+--print("|cffff8000lineOfSight", kps["env"].target.lineOfSight)
+
+--print("|cffff8000hasBuff", "|cffffffff", kps["env"].heal.hasBuff(kps.spells.priest.flashConcentration))
+--print("|cffff8000hasNotBuff", "|cffffffff", kps["env"].heal.hasNotBuff(kps.spells.priest.flashConcentration))
 
 --print("|cffff8000durationdebuff:|cffffffff", kps["env"].target.myDebuffDuration(kps.spells.priest.vampiricTouch))
 --print("|cffff8000recast:|cffffffff", kps.spells.priest.vampiricTouch.isRecastAt("target"))

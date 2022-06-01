@@ -16,6 +16,10 @@ kps.runAtEnd(function()
    kps.gui.addCustomToggle("PRIEST","SHADOW", "mindSear", "Interface\\Icons\\spell_shadow_mindshear", "mindSear")
 end)
 
+kps.runAtEnd(function()
+kps.gui.addCustomToggle("PRIEST","SHADOW", "control", "Interface\\Icons\\spell_nature_slow", "control")
+end)
+
 
 kps.rotations.register("PRIEST","SHADOW",
 {
@@ -30,6 +34,8 @@ kps.rotations.register("PRIEST","SHADOW",
     -- "Shadow Crash"
     --{{"macro"}, 'keys.shift and player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
     --{{"macro"}, 'mouseover.inCombat and mouseover.isAttackable and player.hasTalent(5,3) and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
+    -- "Shackle Undead"
+    {spells.shackleUndead, 'kps.control and not player.isMoving and target.isAttackable and not target.incorrectTarget and not target.hasDebuff(spells.shackleUndead)' , "target" },
     -- "Leap of Faith"
     {spells.leapOfFaith, 'keys.alt and mouseover.isFriend and spells.leapOfFaith.cooldown == 0', "mouseover" },
     -- "Door of Shadows" 
@@ -75,44 +81,36 @@ kps.rotations.register("PRIEST","SHADOW",
     --{{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 9 and targettarget.isHealable and targettarget.hp < 0.80' , "/use [@targettarget] 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30' , "/use 14" },
-
-   {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 5 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
-   {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < 5' , "target"  },
-   {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 5 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
-   {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5' , "mouseover"   },
-   
-   {spells.shadowWordDeath, 'mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.50' , "mouseover" },
-   {spells.shadowWordDeath, 'target.hp < 0.20 and player.hp > 0.50' , "target" },
-   {spells.shadowWordDeath, 'IsEquippedItem(173244) and player.hasBuff(spells.voidForm) and spells.shadowfiend.cooldown > 45 and player.hp > 0.50' , "target" },
-   
+    
     -- VENTHYR
-    {spells.mindgames, 'true' , "target" },
+    {spells.mindgames, 'not player.isMoving' , "target" },
     -- NIGHTFAE
-    -- Haunted Mask prioritise the CDR from Benevolent Faerie over the DR from Guardian Faerie
-    -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
-    -- benevolentFaerie -- buff Increases the cooldown recovery rate of your target's major ability by 100%. Follows your Flash Heal (holy) Shadow Mend (shadow,disc)
-    -- wrathfulFaerie -- debuff target -- Any direct attacks against the target restore 0.5% Mana or 3 Insanity. Follows your Shadow Word: Pain
     {spells.faeGuardians, 'not player.hasBuff(spells.benevolentFaerie)' , "player" },
     -- NECROLORD
-    --{spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.voidForm)' , "player" },
-    --{spells.unholyNova, 'kps.multiTarget and not player.isMoving' },
+    {spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.voidForm) and player.hp < 0.50' , "player" },
+    {spells.unholyNova, 'kps.multiTarget and not player.isMoving' },
 
+    {spells.shadowWordDeath, 'IsEquippedItem(173244) and spells.shadowfiend.cooldown > 45 and player.hp > 0.50' , "target" },    
     {spells.devouringPlague, 'player.insanity > 70' , "target" },
-    {spells.voidBolt, 'player.hasBuff(spells.dissonantEchoes)' , "target" , "voidBolt_dissonantEchoes"  },
     {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , "target" , "voidBolt_voidForm" },
     {spells.mindBlast, 'player.hasBuff(spells.darkThoughts)' , "target" , 'mindBlast_darkThoughts' },
-    {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , "target" },
+    {spells.voidBolt, 'player.hasBuff(spells.dissonantEchoes)' , "target" , "voidBolt_dissonantEchoes"  },
+    {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , "target" , "plague_mindDevourer" },
+    {spells.shadowWordDeath, 'mouseover.isAttackable and mouseover.hp < 0.20 and player.hp > 0.50' , "mouseover" },
+    {spells.shadowWordDeath, 'target.hp < 0.20 and player.hp > 0.50' , "target" },
+    {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 5 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
+    {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < 5' , "target"  },
     {spells.powerInfusion, 'kps.multiTarget' },
     {spells.shadowfiend, 'kps.multiTarget' , "target" },
     {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm)' },
-
     {spells.devouringPlague, 'true' , "target" },
-    {spells.mindBlast, 'not player.isMoving' , "target"  },
-    {spells.voidTorrent, 'not player.isMoving and player.insanity <= 40 and not player.hasBuff(spells.voidForm)' , "target" },
+    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 5 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
+    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 5' , "mouseover"   },
     {spells.searingNightmare, 'kps.mindSear and player.hasTalent(3,3) and player.isCastingSpell(spells.mindSear)' , "target" , "searingNightmare" },
     {spells.mindSear, 'kps.mindSear and not player.isMoving and player.hasTalent(3,3) and player.insanity >= 30' , "target" , "mindSear_mindSear" },
+    {spells.mindBlast, 'not player.isMoving' , "target"  },
+    {spells.voidTorrent, 'not player.isMoving and player.insanity <= 40 and not player.hasBuff(spells.voidForm)' , "target" },
     {spells.shadowWordPain, 'player.isMoving' , "target"  , "shadowWordPain_moving"  },
-    {spells.shadowWordPain, 'player.isMoving and mouseover.inCombat and mouseover.isAttackable' , "mouseover" , "shadowWordPain_moving"  },
     {spells.mindFlay, 'not player.isMoving and not player.isCastingSpell(spells.mindFlay)' , "target" },
 
 },"priest_shadow_shadowlands")
