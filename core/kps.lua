@@ -61,9 +61,9 @@ kps.combatStep = function ()
     if spell ~= nil and spell.isCastableSpell and player.isCasting then
         return spell.cast(target,message)
     end
-	if spell ~= nil and player.isCastingClippingSpell then
-		return "-stop-", "target", false
-	end
+    if spell ~= nil and player.isCastingClippingSpell then
+        return "-stop-", "target", false
+    end
 
     if castSequence ~= nil then
         if castSequence[castSequenceIndex] ~= nil and (castSequenceStartTime + kps.maxCastSequenceLength > GetTime()) then
@@ -124,28 +124,28 @@ end
 local prioritySpellHistory = {}
 
 hooksecurefunc("UseAction", function(...)
-    if kps.enabled and (select(3, ...) ~= nil) and InCombatLockdown() == true  then
-        -- actionType, id, subType = GetActionInfo(slot)
-        local stype,id,_ = GetActionInfo(select(1, ...))
-        if stype == "spell" then
-            if prioritySpellHistory[id] == nil then
-                prioritySpellHistory[id] = kps.Spell.fromId(id)
-            end
-            local spell = prioritySpellHistory[id]
-            if (prioritySpell == nil or prioritySpell.name ~= spell.name) and spell.isPrioritySpell then
-                kps.prioritySpell(spell, "target")
-            end
-        end
-        if stype == "item" then
-            priorityAction = kps.useItem(id)
-        end
-        if stype == "macro" then
-            macroText = select(3, GetMacroInfo(id))
-            if string.find(macroText,"kps") == nil then
-                priorityMacro = macroText
-            end
-        end
-    end
+   if kps.enabled and (select(3, ...) ~= nil) and InCombatLockdown() == true  then
+       -- actionType, id, subType = GetActionInfo(slot)
+       local stype,id,_ = GetActionInfo(select(1, ...))
+       if stype == "spell" then
+           if prioritySpellHistory[id] == nil then
+               prioritySpellHistory[id] = kps.Spell.fromId(id)
+           end
+           local spell = prioritySpellHistory[id]
+           if (prioritySpell == nil or prioritySpell.name ~= spell.name) and spell.isPrioritySpell then
+               kps.prioritySpell(spell, "target")
+           end
+       end
+       if stype == "item" then
+           priorityAction = kps.useItem(id)
+       end
+       if stype == "macro" then
+           macroText = select(3, GetMacroInfo(id))
+           if string.find(macroText,"kps") == nil then
+               priorityMacro = macroText
+           end
+       end
+   end
 end)
 
 kps.lastCastedSpell = nil

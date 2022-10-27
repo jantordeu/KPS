@@ -20,7 +20,7 @@ kps.env.boss4 = kps.Unit.new("boss4")
 
 kps.env.activeEnemies = kps.BasicActiveEnemies.new()
 
---  kps.combatStep() is updated internally with KM.vars.updateInterval in keymoon
+--kps.combatStep() is updated internally with KM.vars.updateInterval in keymoon
 --kps.events.registerOnUpdate(function()
 --    if kps.enabled then
 --        kps.combatStep()
@@ -53,7 +53,8 @@ local function getPlayerSpells()
         kps.spells.warlock,
         kps.spells.monk,
         kps.spells.druid,
-        kps.spells.demonhunter
+        kps.spells.demonhunter,
+        kps.spells.evoker
     }
     _,_,classId = UnitClass("player")
     return playerSpells[classId]
@@ -81,7 +82,8 @@ local function getClassEnv()
         kps.env.warlock,
         kps.env.monk,
         kps.env.druid,
-        kps.env.demonhunter
+        kps.env.demonhunter,
+        kps.spells.evoker
     }
     _,_,classId = UnitClass("player")
     return playerEnvs[classId]

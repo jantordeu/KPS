@@ -8,7 +8,7 @@ You could even outsource your rotations to a separate addon if you want to.
 
 kps.classes = {}
 
-local classNames = { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "DEATHKNIGHT", "SHAMAN", "MAGE", "WARLOCK", "MONK", "DRUID", "DEMONHUNTER" }
+local classNames = { "WARRIOR", "PALADIN", "HUNTER", "ROGUE", "PRIEST", "DEATHKNIGHT", "SHAMAN", "MAGE", "WARLOCK", "MONK", "DRUID", "DEMONHUNTER" ,"EVOKER"}
 
 local specNames = {}
 specNames[1] = {"ARMS","FURY","PROTECTION"}
@@ -23,6 +23,7 @@ specNames[9] = {"AFFLICTION","DEMONOLOGY","DESTRUCTION"}
 specNames[10] = {"BREWMASTER","MISTWEAVER","WINDWALKER"}
 specNames[11] = {"BALANCE","FERAL","GUARDIAN","RESTORATION"}
 specNames[12] = {"HAVOC","VENGEANCE"}
+specNames[13] = {"DEVASTATION","PRESERVATION"}
 
 local function classToNumber(class)
     if type(class) == "string" then

@@ -255,6 +255,9 @@ kps.spells.priest.wordOfMending = kps.Spell.fromId(278645)
 kps.spells.priest.wordsOfHealing = kps.Spell.fromId(196430)
 kps.spells.priest.weakenedSoul = kps.Spell.fromId(6788)
 kps.spells.priest.fireBlood = kps.Spell.fromId(265221)
+kps.spells.priest.echoOfLight = kps.Spell.fromId(77489)
+
+
 -- "Exaucements" -- "Answered Prayers" -- Prayer of Healing increases the healing done by your next Flash Heal, Binding Heal or Heal by 60%
 kps.spells.priest.answeredPrayers = kps.Spell.fromId(253437)
 -- "Espoir impérissable" -- "Everlasting Hope" -- increase the healing amount of your next Prayer of Healing spell by 30%.
@@ -317,6 +320,9 @@ kps.spells.priest.fleshcraft = kps.Spell.fromId(324631)
 
 kps.spells.priest.divineConversation = kps.Spell.fromId(363727)
 kps.spells.priest.soulshape = kps.Spell.fromId(310143)
+kps.spells.priest.livingShadow = kps.Spell.fromId(363578)
+
+-- DRAGONGFLIGHT
 
 
 

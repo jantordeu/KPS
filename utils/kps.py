@@ -73,7 +73,7 @@ def parse_rotation_meta(class_name, spec_name):
             raw_meta_info[meta_key].append(meta_data)
 
     meta_info = {}
-    for meta_key, meta_data in raw_meta_info.iteritems():
+    for meta_key, meta_data in raw_meta_info.items():
         if len(meta_key) > 1:
             meta_info[meta_key[1:]] = " ".join(meta_data)
 

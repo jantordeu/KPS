@@ -21,23 +21,31 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
 
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec.
-    {spells.divineProtection, 'player.hp < 0.80' },
+    {spells.divineProtection, 'player.hp < 0.70' , "player" },
     -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection 
     -- can be used to clear harmful physical damage debuffs and bleeds from the target.
-    {spells.blessingOfProtection, 'player.hp < 0.30' , "player" },
-    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.30 and not heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },
+    {spells.blessingOfProtection, 'player.hp < 0.35' , "player" },
+    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.35 and not heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },
     
     -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
     {spells.divineShield, 'player.hp < 0.35' , "player" },
     {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.35' , kps.heal.lowestTankInRaid },
     
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
-    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.30', kps.heal.lowestTankInRaid },
-    {spells.layOnHands, 'player.hp < 0.30', "player" },
-    {spells.flashOfLight, 'player.hp < 0.50 and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
+    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.35', kps.heal.lowestTankInRaid },
+    {spells.layOnHands, 'player.hp < 0.35', "player" },
+    {spells.flashOfLight, 'player.hp < 0.55 and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
+    {spells.wordOfGlory, 'player.hp < 0.55' , "player" },
+    {spells.shieldOfVengeance , 'player.plateCount > 1' },
+    {spells.shieldOfVengeance , 'target.isElite' },
     {spells.arcaneTorrent, 'true' },
-    {spells.wordOfGlory, 'player.hp < 0.50' , "player" },
 
+    {{"nested"},'kps.cooldowns', {
+        {spells.cleanseToxins, 'mouseover.isHealable and ( mouseover.isDispellable("Poison") or mouseover.isDispellable("Disease"))' , "mouseover" },
+        {spells.cleanseToxins, 'player.isDispellable("Disease")' , "player" },
+        {spells.cleanseToxins, 'player.isDispellable("Poison")' , "player" },
+        {spells.cleanseToxins, 'heal.isPoisonDispellable' , kps.heal.isPoisonDispellable },
+    }},
     -- Interrupt
     {{"nested"}, 'kps.interrupt' ,{
         {spells.rebuke, 'target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
@@ -68,31 +76,28 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- TRINKETS -- SLOT 1 /use 14
     --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
-	{spells.seraphim, 'player.hasTalent(5,3) and player.holyPower >= 3 and spells.finalReckoning.cooldown == 0' , env.damageTarget },  -- use Seraphim before using Wake of Ashes
-	{spells.seraphim, 'player.hasTalent(5,3) and player.holyPower >= 3 and spells.executionSentence.cooldown == 0' , env.damageTarget },  -- use Seraphim before using Wake of Ashes
-	{spells.avengingWrath, 'kps.multiTarget and player.holyPower >= 3' },
-	{spells.templarsVerdict, 'player.hasBuff(spells.vanquishersHammer)' , env.damageTarget}, -- use both charges of Vanquisher's Hammer after Seraphim 
+    {spells.seraphim, 'player.hasTalent(5,3) and player.holyPower >= 3' , env.damageTarget },  -- use Seraphim before using Wake of Ashes
+    {spells.avengingWrath, 'kps.multiTarget and player.holyPower >= 3' },  
+    {spells.templarsVerdict, 'player.hasBuff(spells.vanquishersHammer)' , env.damageTarget}, -- use both charges of Vanquisher's Hammer after Seraphim 
     {spells.divineStorm, 'player.holyPower == 5 and player.plateCount >= 3' , env.damageTarget},
-	{spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},
-	{spells.shieldOfVengeance , 'player.plateCount > 1' },
-	{spells.shieldOfVengeance , 'target.isElite' },
-	-- Holy Power generating
-	{spells.hammerOfWrath, 'player.hasBuff(spells.avengingWrath)' , env.damageTarget }, -- 1 holypower
-	{spells.bladeOfJustice, 'player.holyPower < 4' , env.damageTarget }, -- 2 holypower
-	{spells.judgment, 'true' , env.damageTarget }, -- 1 holypower
-	{spells.wakeOfAshes, 'player.holyPower < 3',  env.damageTarget }, -- 3 holypower
-	{spells.hammerOfWrath, 'true' , env.damageTarget }, -- 1 holypower
-	{spells.crusaderStrike, 'spells.crusaderStrike.charges == 2' , env.damageTarget}, -- 1 holypower
-	-- Holy Power spending
-	{spells.finalReckoning, 'mouseover.isAttackable and player.holyPower >= 3' , env.damageTarget }, -- use Final Reckoning before Execution Sentence
-	{spells.executionSentence, 'player.hasTalent(1,3)' , env.damageTarget }, -- use Judgment and Final Reckoning before using Execution Sentence
+    {spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},
+    -- Holy Power generating
+    {spells.wakeOfAshes, 'player.holyPower < 3',  env.damageTarget }, -- 3 holypower
+    {spells.bladeOfJustice, 'player.holyPower < 4' , env.damageTarget }, -- 2 holypower
+    {spells.judgment, 'true' , env.damageTarget }, -- 1 holypower
+    {spells.hammerOfWrath, 'true' , env.damageTarget }, -- 1 holypower
+    {spells.crusaderStrike, 'spells.crusaderStrike.charges == 2' , env.damageTarget}, -- 1 holypower
+    {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.35', 'player'},
+    -- Holy Power spending
+    {spells.finalReckoning, 'mouseover.isAttackable and player.holyPower >= 3' , env.damageTarget }, -- use Final Reckoning before Execution Sentence
+    {spells.executionSentence, 'player.hasTalent(1,3)' , env.damageTarget }, -- use Judgment and Final Reckoning before using Execution Sentence
     {spells.divineStorm, 'player.plateCount > 1' , env.damageTarget},
-	{spells.templarsVerdict, 'true' , env.damageTarget},
-	{spells.crusaderStrike, 'true' , env.damageTarget}, -- 1 holypower
-	-- filler
+    {spells.templarsVerdict, 'true' , env.damageTarget},
+    {spells.crusaderStrike, 'true' , env.damageTarget}, -- 1 holypower
+    -- filler
     {spells.consecration, 'not player.isMoving and target.isAttackable and not target.isMoving and target.distanceMax <= 10' },
     
-    {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.30', 'player'},
+
     {{"macro"}, 'target.isAttackable and target.distanceMax <= 10' , "/startattack" },
 
 }

@@ -33,6 +33,7 @@ THOTTBOT_IDS = {
     "shaman": 7,
     "warlock": 9,
     "warrior": 1,
+    "evoker": 13,
 }
 
 RACIAL_SPELLS = {
@@ -79,7 +80,7 @@ ADDITIONAL_SPELLS = {
 
     ],"warrior": [
         85739, # Meat Cleaver
-    ],
+    ],"evoker": [],
 }
 
 SPELL_ID_BLACKLIST = [
@@ -149,9 +150,9 @@ def summarize(spells, class_name):
     for spell in spells:
         filtered, reason = is_filtered(spell)
         if filtered:
-            s += " * FILTERED (%s): %s\n" % (reason, spell["name"][1:])
+            s += " * FILTERED (%s): %s\n" % (reason, spell["name"][0:])
         else:
-            s += " * %s (ID: %s CAT: %s)\n" % (spell["name"][1:], spell["id"], spell["cat"])
+            s += " * %s (ID: %s CAT: %s)\n" % (spell["name"][0:], spell["id"], spell["cat"])
     for spell_id in RACIAL_SPELLS:
         spell = Spell(spell_id)
         s += " * %s (ID: %s - from ADDITIONAL_SPELLS)\n" % (spell.name, spell.id)
@@ -173,7 +174,7 @@ kps.spells.%s = {}
     class_spells = []
     for spell in spells:
         if not is_filtered(spell)[0]:
-            class_spells.append("kps.spells.%s.%s = kps.Spell.fromId(%s)\n" % (class_name,spell_key(spell["name"][1:]),spell["id"]))
+            class_spells.append("kps.spells.%s.%s = kps.Spell.fromId(%s)\n" % (class_name,spell_key(spell["name"][0:]),spell["id"]))
     for spell_id in RACIAL_SPELLS:
         try:
             spell = Spell(spell_id)

@@ -24,9 +24,10 @@ local kinds = {
   visual = "VisualID",
   source = "SourceID",
   species = "SpeciesID",
+  icon = "IconID",
 }
 
-local isClassicWow = select(4,GetBuildInfo()) < 20000
+local isClassicWow = select(4,GetBuildInfo()) < 90000
 
 local function contains(table, element)
   for _, value in pairs(table) do
@@ -44,19 +45,28 @@ local function addLine(tooltip, id, kind)
   for i = 1,15 do
     frame = _G[tooltip:GetName() .. "TextLeft" .. i]
     if frame then text = frame:GetText() end
-    if text and string.find(text, kind .. ":") then return end
+    if text and string.find(text, kind) then return end
   end
 
   local left, right
   if type(id) == "table" then
-    left = NORMAL_FONT_COLOR_CODE .. kind .. "s:" .. FONT_COLOR_CODE_CLOSE
+    left = NORMAL_FONT_COLOR_CODE .. kind .. "s" .. FONT_COLOR_CODE_CLOSE
     right = HIGHLIGHT_FONT_COLOR_CODE .. table.concat(id, ", ") .. FONT_COLOR_CODE_CLOSE
   else
-    left = NORMAL_FONT_COLOR_CODE .. kind .. ":" .. FONT_COLOR_CODE_CLOSE
+    left = NORMAL_FONT_COLOR_CODE .. kind .. FONT_COLOR_CODE_CLOSE
     right = HIGHLIGHT_FONT_COLOR_CODE .. id .. FONT_COLOR_CODE_CLOSE
   end
 
   tooltip:AddDoubleLine(left, right)
+
+  if kind == kinds.spell then
+    iconId = select(3, GetSpellInfo(id))
+    if iconId then addLine(tooltip, iconId, kinds.icon) end
+  elseif kind == kinds.item then
+    iconId = C_Item.GetItemIconByID(id)
+    if iconId then addLine(tooltip, iconId, kinds.icon) end
+  end
+
   tooltip:Show()
 end
 
@@ -131,20 +141,20 @@ GameTooltip:HookScript("OnTooltipSetSpell", function(self)
   addLine(self, id, kinds.spell)
 end)
 
-hooksecurefunc("SpellButton_OnEnter", function(self)
-  local slot = SpellBook_GetSpellBookSlot(self)
-  local spellID = select(2, GetSpellBookItemInfo(slot, SpellBookFrame.bookType))
-  addLine(GameTooltip, spellID, kinds.spell)
-end)
+--hooksecurefunc("SpellButton_OnEnter", function(self)
+--  local slot = SpellBook_GetSpellBookSlot(self)
+--  local spellID = select(2, GetSpellBookItemInfo(slot, SpellBookFrame.bookType))
+--  addLine(GameTooltip, spellID, kinds.spell)
+--end)
 
 if not isClassicWow then
-  hooksecurefunc(GameTooltip, "SetRecipeResultItem", function(self, id)
-    addLine(self, id, kinds.spell)
-  end)
+--  hooksecurefunc(GameTooltip, "SetRecipeResultItem", function(self, id)
+--    addLine(self, id, kinds.spell)
+--  end)
 
-  hooksecurefunc(GameTooltip, "SetRecipeRankInfo", function(self, id)
-    addLine(self, id, kinds.spell)
-  end)
+--  hooksecurefunc(GameTooltip, "SetRecipeRankInfo", function(self, id)
+--    addLine(self, id, kinds.spell)
+--  end)
 
   -- Artifact Powers
   hooksecurefunc(GameTooltip, "SetArtifactPowerByID", function(self, powerID)

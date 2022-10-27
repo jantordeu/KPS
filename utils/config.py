@@ -14,4 +14,5 @@ SUPPORTED_SPECS={
     "shaman": ["elemental", "enhancement", "restoration"],
     "warlock": ["affliction", "demonology", "destruction"],
     "warrior": ["arms", "fury", "protection"],
+    "evoker": ["devastation", "preservation"],
 }

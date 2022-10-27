@@ -206,12 +206,6 @@ function eventLoop.attachCombatLogHandler()
     end)
 end
 
---- NotifyInspec on PLAYER_LOGIN
-kps.events.register("PLAYER_LOGIN", function()
-    NotifyInspect("player")
-    removeGriffons()
-end)
-
 -- Hide Static PopUp
 local function hideStaticPopup(addon, eventBlocked)
     if string.upper(addon) == "KPS" then
@@ -263,6 +257,15 @@ kps.events.register("UNIT_SPELLCAST_SUCCEEDED", function (unit, lineId, spellId)
        end
    end
 end)
+
+kps.events.register("UNIT_SPELLCAST_SUCCEEDED", function (unit, lineId, spellId)
+   if UnitName(unit) == "Olimphy" then
+       if spellId == 265187 then
+            if kps.timers.check("powerInfusion") == 0 then kps.timers.create("powerInfusion", 5 ) end
+       end
+   end
+end)
+
 
 -- UNIT_SPELLCAST_SENT -- Fired when a unit attempts to cast a spell regardless of the success of the cast.
 kps.events.register("UNIT_SPELLCAST_SENT", function (unit, target, lineId, spellId)

@@ -13,6 +13,9 @@ kps.spells.potion.draenicIntellectPotion = kps.Spell.Item.fromId(156426) -- Drae
 kps.spells.potion.draenicAgilityPotion = kps.Spell.Item.fromId(156577) -- Draenic Agility Potion
 kps.spells.potion.draenicStrengthPotion = kps.Spell.Item.fromId(156428) -- Draenic Strength Potion
 
+-- ARMORY ITEM
+kps.spells.item = {}
+kps.spells.item.hyperthreadWristwraps = kps.Spell.Item.fromId(168989)
 
 -- Spells which require a select (cast on ground cursor)
 kps.spells.ae = {}
@@ -180,7 +183,6 @@ kps.spells.clippingSpell.mindFlay = kps.Spell.fromId(15407)
 kps.spells.castableSpell = {}
 kps.spells.castableSpell.fireBlast = kps.Spell.fromId(108853)
 kps.spells.castableSpell.combustion = kps.Spell.fromId(190319)
-kps.spells.castableSpell.searingNightmare = kps.Spell.fromId(341385)
 kps.spells.castableSpell.spiritShell = kps.Spell.fromId(109964)
 kps.spells.castableSpell.directMask = kps.Spell.fromId(356532)
 
@@ -213,6 +215,4 @@ kps.spells.azerite.focusedazeriteBeam = kps.Spell.fromId(295258)
 -- Vitality Conduit
 kps.spells.azerite.vitalityConduit = kps.Spell.fromId(296230)
 
--- ARMORY ITEM
-kps.spells.item = {}
-kps.spells.item.hyperthreadWristwraps = kps.Spell.Item.fromId(168989)
+

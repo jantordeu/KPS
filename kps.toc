@@ -80,6 +80,7 @@ rotations\rogue.lua
 rotations\shaman.lua
 rotations\warlock.lua
 rotations\warrior.lua
+rotations\evoker.lua
 env.lua
 modules\heal.lua
 modules\player\player_demons.lua
@@ -121,6 +122,8 @@ rotations\warlock_destruction.lua
 rotations\warrior_arms.lua
 rotations\warrior_fury.lua
 rotations\warrior_protection.lua
+rotations\evoker_devastation.lua
+rotations\evoker_preservation.lua
 gui\gui.lua
 gui\rotation_dropdown.lua
 gui\toggle.lua

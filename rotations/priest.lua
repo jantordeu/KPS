@@ -97,7 +97,7 @@ end
 --------------------------------------------------------------------------------------------
 
 local function holyWordSanctifyOnScreen()
-    if kps.spells.priest.holyWordSanctify.cooldown < 2 and kps.timers.check("holyWordSanctify") < 2 then
+    if kps.spells.priest.holyWordSanctify.cooldown < 5 and kps.timers.check("holyWordSanctify") < 2 then
         kps.timers.create("holyWordSanctify", 10 )
         kps.utils.createMessage("holyWordSanctify Ready")
     end
@@ -105,7 +105,7 @@ end
 
 local function flashConcentrationOnScreen()
     local spell = kps.spells.priest.flashConcentration
-    if kps["env"].player.buffDuration(spell) < 7 and kps.timers.check("flashConcentration") < 2 then
+    if kps["env"].player.buffDuration(spell) < 5 and kps.timers.check("flashConcentration") < 2 then
         kps.timers.create("flashConcentration", 10 )
         kps.utils.createMessage("flashConcentration REFRESH")
     end

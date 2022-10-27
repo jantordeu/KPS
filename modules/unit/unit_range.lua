@@ -42,11 +42,11 @@ local unitExclude = {}
 local unitBadTarget = {}
 
 kps.events.register("UI_ERROR_MESSAGE", function (arg1, arg2)
-    if arg1 == 52 and arg2 == SPELL_FAILED_LINE_OF_SIGHT then
+    if arg1 == 53 and arg2 == SPELL_FAILED_LINE_OF_SIGHT then
         if kps.lastTargetGUID == nil then kps.lastTargetGUID = UnitGUID("target") end
         unitExclude[kps.lastTargetGUID] = GetTime()
     end
-    if arg1 == 52 and arg2 == SPELL_FAILED_BAD_TARGETS then
+    if arg1 == 53 and arg2 == SPELL_FAILED_BAD_TARGETS then
         if kps.lastTargetGUID == nil then kps.lastTargetGUID = UnitGUID("target") end
         unitBadTarget[kps.lastTargetGUID] = GetTime()
     end

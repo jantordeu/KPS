@@ -53,7 +53,7 @@ def read_rotation_data():
     generated = {}
     contributors = set()
 
-    for class_name_lower, spec_names in SUPPORTED_SPECS.iteritems():
+    for class_name_lower, spec_names in SUPPORTED_SPECS.items():
         class_name = class_name_lower.title()
         for spec_name_lower in spec_names:
             spec_name = spec_name_lower.title()

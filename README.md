@@ -186,11 +186,6 @@ Members:
  * `heal.isPoisonDispellable` - Returns the raid unit with poison debuff to dispel
  * `heal.isCurseDispellable` - Returns the raid unit with curse debuff to dispel
  * `heal.hasBuffCount(<BUFF>)` - Returns the count for a specific Buff on raid e.g. heal.hasBuffCount(spells.atonement) > 3
- * `heal.hasBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasBuffAtonement.hp < 0.90
- * `heal.hasNotBuffAtonement` - Returns the UNIT with lowest health without Atonement Buff on raid e.g. heal.hasNotBuffAtonement.hp < 0.90
- * `heal.hasNotBuffGlimmer` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
- * `heal.hasNotBuffMending` - Returns the lowest health unit without Prayer of Mending Buff on raid e.g. heal.hasNotBuffMending.hp < 0.90
- * `heal.hasNotBuffRenew` - Returns the lowest health unit without Renew Buff on raid e.g. heal.hasNotBuffRenew.hp < 0.90
 
 
 #### Hekili
