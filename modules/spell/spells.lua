@@ -162,7 +162,6 @@ kps.spells.bossDebuff = {}
 kps.spells.bossDebuff.deathwish = kps.Spell.fromId(274271) -- Magic
 kps.spells.bossDebuff.grievousAxe = kps.Spell.fromId(284781) -- Roi Rastakhan Dazar'alor
 
-
 -- ignore Aura Buff
 kps.spells.immuneDamage = {}
 kps.spells.immuneDamage.divineShield = kps.Spell.fromId(642)

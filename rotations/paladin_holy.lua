@@ -196,12 +196,4 @@ kps.rotations.register("PALADIN","HOLY",
 
 }
 ,"holy_paladin_bfa")
-
-
--- AZERITE
---"Overcharge Mana" "Surcharge de mana" -- each spell you cast to increase your healing by 4%, stacking. While overcharged, your mana regeneration is halted.
---"Souvenir des rêves lucides" "Memory of Lucid Dreams" -- augmente la vitesse de génération de la ressource ([Mana][Énergie][Maelström]) de 100% pendant 12 sec
---{spells.azerite.memoryOfLucidDreams, 'heal.countLossInRange(0.80) > 2' , kps.heal.lowestInRaid },
---{spells.azerite.concentratedFlame, 'heal.lowestInRaid.hp < 0.85' , kps.heal.lowestInRaid },
---spells.azerite.concentratedFlame, 'target.isAttackable' , "target" },
     
