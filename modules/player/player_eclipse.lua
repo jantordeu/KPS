@@ -78,11 +78,7 @@ end
 @function `player.eclipsePhaseDuration` - returns the duration of each eclipse phase
 ]]--
 function Player.eclipsePhaseDuration(self)
-    if Player.hasTalent(self)(7,1) then
-        return 5
-    else
-        return 10
-    end
+    return 10
 end
 
 --[[[

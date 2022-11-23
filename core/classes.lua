@@ -55,10 +55,11 @@ function kps.classes.toKey(class, spec)
     if not classId then return 0 end
     local specId = specToNumber(classId, spec)
     if not specId then return 0 end
-    if classId < 1 or classId > 12 then return 0 end
+    if classId < 1 or classId > 13 then return 0 end
     if classId < 11 and specId > 3 then return 0 end
     if classId == 11 and specId > 4 then return 0 end
     if classId == 12 and specId > 2 then return 0 end
+    if classId == 13 and specId > 2 then return 0 end
     return classId * 10 + specId
 end
 

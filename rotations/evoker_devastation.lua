@@ -13,4 +13,4 @@ kps.rotations.register("EVOKER","DEVASTATION",
     {kps.hekili({
     })}
 }
-,"Hekili")
+,"EVOKER_Hekili")

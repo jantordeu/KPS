@@ -65,7 +65,6 @@ function Player.timeToShard(self)
     if activeAgonies == 0 then return 999999 end
     local tickTime = kps.spells.warlock.agony.tickTime
     local average = 1.0 / (0.184 * math.pow(activeAgonies, -2.0/3.0)) * tickTime / activeAgonies
-    if kps.env.player.hasTalent(7,2) then average = average / 1.15 end
     return average
 end
 
@@ -243,8 +242,8 @@ end
 -- Bag functions
 local function lookupBag(item)
     for bagID = 0, NUM_BAG_SLOTS do
-        for slot = 1, GetContainerNumSlots(bagID) do
-            local itemID = GetContainerItemID(bagID,slot)
+        for slot = 1, C_Container.GetContainerNumSlots(bagID) do
+            local itemID = C_Container.GetContainerItemID(bagID,slot)
             if itemID then
                 if itemID == item  then -- itemType == kps.locale["Armor"] -- itemType == kps.locale["Consumable"] 
                     return true

@@ -66,10 +66,10 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.fade, 'player.isTarget' },
     {spells.desperatePrayer, 'player.hp < 0.50' , "player" },   
     -- "Angelic Feather"
-    --{{"macro"},'player.hasTalent(2,3) and not player.isSwimming and player.isMovingSince(2) and not player.hasBuff(spells.angelicFeather)' , "/cast [@player] "..AngelicFeather },
+    --{{"macro"},'not player.isSwimming and player.isMovingSince(2) and not player.hasBuff(spells.angelicFeather)' , "/cast [@player] "..AngelicFeather },
     -- "Levitate" 1706
     --{spells.levitate, 'player.IsFallingSince(1.4) and not player.hasBuff(spells.levitate)' , "player" },
-    {spells.powerWordShield, 'player.hasTalent(2,1) and player.isMovingSince(1.6) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" },
+    {spells.powerWordShield, 'player.isMovingSince(1.6) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" },
 
     -- RAPTURE
     {{"nested"}, 'player.hasBuff(spells.rapture)' , {
@@ -79,9 +79,9 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.powerWordShield, 'player.myBuffDuration(spells.atonement) < 2 and not player.hasBuff(spells.powerWordShield) and not spells.powerWordShield.isRecastAt("player")' , "player" },
     }},
     {{"nested"}, 'kps.interrupt' ,{
-        {spells.shiningForce, 'player.hasTalent(4,3) and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
-        {spells.psychicScream, 'kps.groupSize() == 1 and player.hasTalent(4,3) and spells.shiningForce.cooldown > 0 and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
-        {spells.psychicScream, 'kps.groupSize() == 1 and not player.hasTalent(4,3) and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
+        {spells.shiningForce, 'player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
+        {spells.psychicScream, 'kps.groupSize() == 1 and spells.shiningForce.cooldown > 0 and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
+        {spells.psychicScream, 'kps.groupSize() == 1 and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
         {spells.dispelMagic, 'target.isAttackable and target.isBuffDispellable and not spells.dispelMagic.lastCasted(9)' , "target" },
         {spells.dispelMagic, 'mouseover.isAttackable and mouseover.isBuffDispellable and not spells.dispelMagic.lastCasted(9)' , "mouseover" },   
     }},
@@ -135,24 +135,24 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.shadowMend, 'not player.isMoving and mouseover.isHealable and mouseover.hp < 0.40' , "mouseover" , "shadowMend_mouseover_urg"},
     
     {{"nested"},'kps.multiTarget', damageRotation },
-    {{"nested"},'player.hasTalent(7,2) and player.hasBuff(spells.spiritShell)', damageRotation},
+    {{"nested"},'player.hasBuff(spells.spiritShell)', damageRotation},
     {{"nested"},'kps.rampUp and heal.countLossAtonementInRange(0.80) > 4', damageRotation },
 
     -- RAMPUP -- ATONEMENT
     {{"nested"},'kps.rampUp', {
-        {spells.spiritShell, 'player.hasTalent(7,2) and spells.powerWordRadiance.charges == 0' },
-        {spells.evangelism, 'player.hasTalent(7,3) and spells.powerWordRadiance.charges == 0' },
+        {spells.spiritShell, 'spells.powerWordRadiance.charges == 0' },
+        {spells.evangelism, 'spells.powerWordRadiance.charges == 0' },
         {spells.powerWordRadiance, 'not player.isMoving and heal.hasBuffCount(spells.atonement) < heal.countInRange' , kps.heal.lowestInRaid, "radiance_rampUp_count" },
         {spells.powerWordRadiance, 'not player.isMoving and heal.hasBuffCount(spells.atonement) < heal.countInRange' , "player", "radiance_rampUp_count" },
     }},    
     -- NOT RAMPUP -- DAMAGE
     {{"nested"},'not kps.rampUp', {
         {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20', "target" },
-        {spells.shadowWordPain, 'not player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("target")' , "target" , "target_pain" },
-        {spells.shadowWordPain, 'not player.hasTalent(6,1) and mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" , "mouseover_pain" },
-        {spells.purgeTheWicked, 'player.hasTalent(6,1) and target.isAttackable and target.myDebuffDuration(spells.purgeTheWicked) < 4 and not spells.purgeTheWicked.isRecastAt("target")' , "target" , "target_purge" },
-        {spells.purgeTheWicked, 'player.hasTalent(6,1) and mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.purgeTheWicked) < 4 and not spells.purgeTheWicked.isRecastAt("mouseover")' , "mouseover" , "mouseover_purge" },
-        {spells.divineStar, 'not player.isMoving and target.isAttackable and player.hasTalent(6,2) and target.distanceMax <= 20' },
+        {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("target")' , "target" , "target_pain" },
+        {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" , "mouseover_pain" },
+        {spells.purgeTheWicked, 'target.isAttackable and target.myDebuffDuration(spells.purgeTheWicked) < 4 and not spells.purgeTheWicked.isRecastAt("target")' , "target" , "target_purge" },
+        {spells.purgeTheWicked, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.purgeTheWicked) < 4 and not spells.purgeTheWicked.isRecastAt("mouseover")' , "mouseover" , "mouseover_purge" },
+        {spells.divineStar, 'not player.isMoving and target.isAttackable and target.distanceMax <= 20' },
         {spells.schism, 'not player.isMoving and heal.countLossAtonementInRange(0.80) > 2 and spells.powerWordRadiance.lastCasted(9)' , "target" },
         {spells.mindBlast, 'not player.isMoving and heal.countLossAtonementInRange(0.80) > 2' , "target" },
         {spells.powerWordRadiance, 'not player.isMoving and heal.lowestTankInRaid.myBuffDuration(spells.atonement) < 2 and not spells.powerWordRadiance.isRecastAt(heal.lowestTankInRaid.unit)' ,  kps.heal.lowestTankInRaid },

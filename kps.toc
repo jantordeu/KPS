@@ -54,7 +54,6 @@ modules\auto_turn.lua
 modules\hekili.lua
 modules\interrupt.lua
 modules\totem.lua
-modules\spell_id.lua
 modules\unlock\basic.lua
 rotations\deathknight_spells.lua
 rotations\demonhunter_spells.lua

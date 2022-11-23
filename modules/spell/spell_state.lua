@@ -169,7 +169,8 @@ local canBeCastAt = setmetatable({}, {
             if not self.needsSelect then
                 if not UnitExists(unit) and not self.isBattleRez then return false end
             end
-            local usable, nomana = IsUsableSpell(self.name) -- usable, nomana = IsUsableSpell("spellName" or spellID)
+            -- spell is not usable if The player hasn't learned the spell. The player lacks required mana. Reactive conditions haven't been met
+            local usable, nomana = IsUsableSpell(self.name)
             if not usable then return false end
             if nomana then return false end
             if self.cooldown > 0 then return false end -- unknown spell returns zero

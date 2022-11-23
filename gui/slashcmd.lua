@@ -85,17 +85,3 @@ function SlashCmdList.KPS(cmd, editbox)
     end
 end
 
--- FAKE ACHIEVEMENT
--- /run fakeAchievement(11907)
-function fakeAchievement(id)
-    local _, name = GetAchievementInfo(id)
-    local link = "\124cffffff00\124Hachievement:"..id..":"..string.gsub(UnitGUID("player"), '0x', '')..":1:07:31:21:4294967295:4294967295:4294967295:4294967295\124h["..name.."]\124h\124r"
-    ChatEdit_InsertLink(link)
-end
-
-function realAchievement(id)
-    local link = GetAchievementLink(id)
-    ChatEdit_InsertLink(link)
-end
-
-

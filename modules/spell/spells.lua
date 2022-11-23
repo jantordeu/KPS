@@ -140,6 +140,8 @@ kps.spells.battlerez.rebirth = kps.Spell.fromId(20484) -- Rebirth
 kps.spells.battlerez.raiseAlly = kps.Spell.fromId(61999) -- Raise Ally
 kps.spells.battlerez.soulstone = kps.Spell.fromId(20707) -- Soulstone
 kps.spells.battlerez.eternalGuardian = kps.Spell.fromId(126393) -- Eternal Guardian
+kps.spells.battlerez.intercession = kps.Spell.fromId(391054) -- Intercession Paladin
+
 
 -- Immune Heal
 kps.spells.immuneHeal = {}
@@ -161,6 +163,7 @@ kps.spells.absorptionHeal.chilledBlood = kps.Spell.fromId(245586) -- Chilled Blo
 kps.spells.bossDebuff = {}
 kps.spells.bossDebuff.deathwish = kps.Spell.fromId(274271) -- Magic
 kps.spells.bossDebuff.grievousAxe = kps.Spell.fromId(284781) -- Roi Rastakhan Dazar'alor
+
 
 -- ignore Aura Buff
 kps.spells.immuneDamage = {}

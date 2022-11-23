@@ -58,13 +58,6 @@ kps.rotations.register("WARRIOR","PROTECTION",
     {spells.revenge, 'player.rage > 90' , "target", "revenge_rage" },
     {spells.devastate, 'target.distanceMax  <= 10' , "target" , "devastate" }, 
 
-    {{"nested"}, 'player.hasTalent(6,2)', {
-        {spells.ignorePain, 'player.buffValue(spells.ignorePain) < player.incomingDamage and player.myBuffDuration(spells.ignorePain) < 9' , "target", "ignorePain" },
-        {spells.ignorePain, 'player.myBuffDuration(spells.ignorePain) < 12 and player.buffValue(spells.ignorePain) < player.hpMax * 0.50' , "target", "ignorePain_buffvalue" },
-        {spells.ignorePain, 'player.hasTalent(6,2) and player.myBuffDuration(spells.ignorePain) < 3' , "target", "ignorePain_duration" },
-        {spells.revenge, 'player.hasTalent(6,2) and player.myBuffDuration(spells.ignorePain) < 9' , "target", "revenge_buff" },
-    }},
-
     {{"macro"}, 'true' , "/startattack" },
 
 }

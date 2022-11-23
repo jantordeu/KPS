@@ -24,7 +24,7 @@ kps.rotations.register("MONK","MISTWEAVER",
 
 -- precast Essence Font to have a double Gusts proc on all targets with the Essence Font HoT
 -- if you’re Necrolord, you always want to Cast Bonedust Brew before Revival for increased effectiveness
-{spells.risingSunKick, 'player.hasTalent(7,3) and target.isAttackable and heal.hasBuffCount(spells.essenceFont) > 4' , "target"},
+{spells.risingSunKick, 'target.isAttackable and heal.hasBuffCount(spells.essenceFont) > 4' , "target"},
 {spells.essenceFont, 'heal.countLossInRange(0.80) > 4' , kps.heal.lowestInRaid},
 {spells.revival, 'heal.countLossInRange(0.80) > 4' , kps.heal.lowestInRaid},
 

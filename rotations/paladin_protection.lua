@@ -39,7 +39,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     }},
     {{"nested"}, 'kps.interrupt',{
         {spells.avengersShield, 'target.distanceMax <= 10 and target.isCasting' , "target" , "avengersShield_casting" },
-        {spells.blindingLight, 'player.hasTalent(3,3) and target.distanceMax <= 10 and target.isCasting ' , "target" },
+        {spells.blindingLight, 'target.distanceMax <= 10 and target.isCasting ' , "target" },
         {spells.hammerOfJustice, 'target.distanceMax <= 10 and target.isCasting and target.isInterruptable' , "target" },
         {spells.hammerOfJustice, 'focus.distanceMax <= 10 and focus.isCasting and focus.isInterruptable' , "focus" },
         -- " Réprimandes" "Rebuke" -- Interrupts spellcasting and prevents any spell in that school from being cast for 4 sec.
@@ -85,7 +85,7 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- "Bouclier du vengeur" -- "Avenger's Shield"
     {spells.avengersShield, 'target.distanceMax <= 10' , "target" },
     -- "Marteau béni" -- "Blessed Hammer" Talent Remplace Marteau du vertueux -- dégâts du Sacré aux ennemis et les affaiblit, réduisant les dégâts de leur prochaine attaque automatique contre vous.
-    {spells.blessedHammer, 'player.hasTalent(1,3) and target.distanceMax <= 10' , "target" , "blessedHammer" },
+    {spells.blessedHammer, 'target.distanceMax <= 10' , "target" , "blessedHammer" },
     -- "Hammer of the Righteous" -- "Marteau du vertueux" -- If you're standing in your Consecration, it also causes a wave of light that hits all nearby enemies for light Holy damage.
     {spells.hammerOfTheRighteous, 'player.hasBuff(spells.consecration) and target.distanceMax <= 10', "target" , "hammerOfTheRighteous" },
 

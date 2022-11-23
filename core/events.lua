@@ -206,6 +206,11 @@ function eventLoop.attachCombatLogHandler()
     end)
 end
 
+--- NotifyInspec on PLAYER_LOGIN
+kps.events.register("PLAYER_LOGIN", function()
+    NotifyInspect("player")
+end)
+
 -- Hide Static PopUp
 local function hideStaticPopup(addon, eventBlocked)
     if string.upper(addon) == "KPS" then

@@ -16,9 +16,6 @@ kps.rotations.register("DEMONHUNTER","VENGEANCE",
         {spells.fieryBrand, 'player.hp < 0.7'},
     }},
 
-    --{spells.infernalStrike, 'keys.shift and not spells.infernalStrike.isRecastAt("target")'},
-
-
     {{"nested"}, 'player.hasTalent(5, 1)', {
         {kps.hekili({
             spells.disrupt

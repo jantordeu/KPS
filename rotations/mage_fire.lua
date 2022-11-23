@@ -35,7 +35,6 @@ kps.rotations.register("MAGE","FIRE",
     {spells.scorch, 'player.hasBuff(spells.combustion) and not player.hasBuff(spells.hotStreak)' , "target" , "scorch_combustion" },
 
     {{"nested"},'kps.combustion and not player.isMoving and player.hasTalent(3,3) and spells.combustion.cooldown < 2', {
-        {spells.azerite.memoryOfLucidDreams },
         {spells.combustion, 'player.hasBuff(spells.runeOfPower) and player.hasBuff(spells.hotStreak)' , "player" , "combustion" },
         {spells.fireBlast, 'spells.fireBlast.charges == 3 and not player.hasBuff(spells.heatingUp) and not player.hasBuff(spells.hotStreak) and not spells.fireBlast.isRecastAt("target")' , env.damageTarget , "fireBlast_heatingUp_precombustion" },
         {spells.runeOfPower },
