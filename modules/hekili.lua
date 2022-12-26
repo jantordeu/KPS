@@ -22,23 +22,27 @@ local hekiliCalc = function (display, entry, blacklist)
                 end
             end
             return spell
+        end
+--[[
         else
             -- Item or Potion or whatever
             local id, name, key, itemId = Hekili:GetAbilityInfo(spell_id)
             if itemId ~= nil then
                 -- Check all slots for item id
-                local slot = 1
+                local slot = 13
                 while slot < 15 do
                     local slotItemId,_ = GetInventoryItemID("player", slot)
                     if slotItemId == itemId then
-                        return "/use "..slot
+                        local macrotext = "/use "..slot
+                        print("macrotext",macrotext)
+                        return macroText, "-"
                     end
                     slot = slot + 1
                 end
             end
         end
+]]
     end
-
     return nil
 end
 

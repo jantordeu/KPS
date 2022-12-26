@@ -158,3 +158,14 @@ kps.spells.evoker.unravel = kps.Spell.fromId(368432)
 kps.spells.evoker.volatility = kps.Spell.fromId(369089)
 kps.spells.evoker.youreComingWithMe = kps.Spell.fromId(370388)
 kps.spells.evoker.zephyr = kps.Spell.fromId(374227)
+
+
+kps.spells.evoker.wingBuffet = kps.Spell.fromId(357214)
+kps.spells.evoker.tailSwipe = kps.Spell.fromId(368970)
+kps.spells.evoker.furyOfTheAspects = kps.Spell.fromId(390386)
+kps.spells.evoker.boonOfTheCovenants = kps.Spell.fromId(387168)
+kps.spells.evoker.fleshcraft = kps.Spell.fromId(324631)
+
+
+
+

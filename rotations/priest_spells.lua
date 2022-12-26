@@ -54,7 +54,7 @@ kps.spells.priest.dispelMagic = kps.Spell.fromId(528)
 kps.spells.priest.dispersion = kps.Spell.fromId(47585)
 kps.spells.priest.divineAttendant = kps.Spell.fromId(196602)
 kps.spells.priest.divineHymn = kps.Spell.fromId(64843)
-kps.spells.priest.divineStar = kps.Spell.fromId(110744)
+kps.spells.priest.divineStar = kps.Spell.fromId(122121)
 kps.spells.priest.domeOfLight = kps.Spell.fromId(197590)
 kps.spells.priest.dominantMind = kps.Spell.fromId(205367)
 kps.spells.priest.doomsayer = kps.Spell.fromId(197727)
@@ -319,7 +319,7 @@ kps.spells.priest.livingShadow = kps.Spell.fromId(363578)
 
 -- DRAGONGFLIGHT
 kps.spells.priest.mindSpike = kps.Spell.fromId(73510)
-kps.spells.priest.SurgeOfDarkness = kps.Spell.fromId(87160)
+kps.spells.priest.surgeOfDarkness = kps.Spell.fromId(87160)
 kps.spells.priest.mindFlayInsanity = kps.Spell.fromId(391401)
 kps.spells.priest.coalescingShadows = kps.Spell.fromId(391243)
 kps.spells.priest.powerWordLife = kps.Spell.fromId(373481)
@@ -330,6 +330,10 @@ kps.spells.priest.resonantWords = kps.Spell.fromId(337948)
 -- DivineWord
 kps.spells.priest.divineWord = kps.Spell.fromId(372760)
 kps.spells.priest.empyrealBlaze = kps.Spell.fromId(372616)
+kps.spells.priest.protectiveLight = kps.Spell.fromId(193065)
+kps.spells.priest.harshDiscipline = kps.Spell.fromId(373180)
+kps.spells.priest.lightsWrath = kps.Spell.fromId(373178)
+
 
 
 

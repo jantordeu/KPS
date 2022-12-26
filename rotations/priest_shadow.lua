@@ -27,10 +27,10 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.desperatePrayer, 'player.hp < 0.50' , "player" },
     -- "Dissipation de masse"
     --{{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@player] "..MassDispel },
-    {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0 ', "/cast [@cursor] "..MassDispel },
+    {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@cursor] "..MassDispel },
     -- "Shadow Crash"
     {{"macro"}, 'keys.shift and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
-    {{"macro"}, 'mouseover.isAttackable and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
+    {{"macro"}, 'mouseover.isAttackable and spells.shadowCrash.cooldown == 0 and not mouseover.isMoving', "/cast [@cursor] "..ShadowCrash },
     -- "Shackle Undead"
     {spells.shackleUndead, 'kps.control and not player.isMoving and target.isAttackable and not target.incorrectTarget and not target.hasDebuff(spells.shackleUndead)' , "target" },
     -- "Leap of Faith"
@@ -45,10 +45,10 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.vampiricEmbrace, 'heal.countLossInRange(0.70) > 4 and heal.lowestInRaid.hp < 0.55' },
     {spells.vampiricEmbrace, 'kps.groupSize() == 1 and player.hp < 0.55' },
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
-    {spells.shadowMend, 'not player.isMoving and player.hp < 0.40 and not spells.shadowMend.isRecastAt("player") and not spells.shadowMend.lastCasted(2) and not player.hasBuff(spells.voidForm)' , "player" },
+    {spells.flashHeal, 'not player.isMoving and player.hp < 0.70 and not player.hasBuff(spells.protectiveLight)', "player" },
+    {spells.flashHeal, 'not player.isMoving and player.hp < 0.40 and not spells.flashHeal.isRecastAt("player") and not spells.flashHeal.lastCasted(2)', "player" },
     -- "Power Word: Shield" -- "Body and Soul"
-    {spells.powerWordShield, 'player.isMovingSince(1.6) and not player.hasBuff(spells.bodyAndSoul) and not player.hasDebuff(spells.weakenedSoul)' , "player" , "SCHIELD_MOVING" },
-    {spells.powerWordShield, 'player.hp < 0.55 and not player.hasBuff(spells.vampiricEmbrace) and not player.hasDebuff(spells.weakenedSoul) and not player.hasBuff(spells.voidForm)' , "player" , "SCHIELD_HEALTH" },
+    {spells.powerWordShield, 'player.hp < 0.70 and not player.hasBuff(spells.vampiricEmbrace) and not player.hasBuff(spells.voidForm)' , "player"  },
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
         {spells.psychicHorror, 'target.isInterruptable and target.castTimeLeft < 3' , "target" },
@@ -74,34 +74,33 @@ kps.rotations.register("PRIEST","SHADOW",
     --{spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.voidForm) and player.hp < 0.55' , "player" },
     --{spells.unholyNova, 'kps.multiTarget and not player.isMoving' },
     -- NIGHTFAE
-    {spells.faeGuardians, 'not player.hasBuff(spells.benevolentFaerie)' , "player" },
+    --{spells.faeGuardians, 'not player.hasBuff(spells.benevolentFaerie)' , "player" },
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and kps.timeInCombat > 5' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 10' , "/use 14" },
 
+    {spells.powerInfusion, 'kps.multiTarget and player.hasBuff(spells.darkAscension)' },
     {spells.shadowWordDeath, 'spells.shadowfiend.cooldown > 45' , "target" },
     {spells.shadowWordDeath, 'target.hp < 0.20 and player.hp > 0.55' , "target" },
     {spells.devouringPlague, 'player.insanity > 70' , "target" },
-    {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , "target" },
-    {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , "target" , "voidBolt_voidForm" },
     {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
     {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < 6' , "target"  },
     {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 6' , "mouseover"   },
-    {spells.mindBlast, 'player.hasBuff(spells.shadowyInsight)' , "target"  }, -- Shadowy Insigh Your next Mind Blast is instant cast.
-    {spells.mindBlast, 'not player.isMoving and spells.shadowfiend.cooldown > 45' , "target"  },
-    {spells.mindSpike, 'player.hasBuff(spells.SurgeOfDarkness)' , "target"  },
-    {spells.mindgames, 'not player.isMoving' , "target" },
-
+    --{spells.voidBolt, 'player.hasBuff(spells.voidForm)' , "target" , "voidBolt_voidForm" },
+    --{spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm)' },
     {spells.darkAscension, 'kps.multiTarget and not player.isMoving' },
-    --{{spells.shadowfiend,spells.darkAscension}, 'kps.multiTarget' , "target" },
-    {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm)' },
-    {spells.powerInfusion, 'kps.multiTarget and player.hasBuff(spells.darkAscension)' },
+    {spells.devouringPlague, 'not target.hasMyDebuff(spells.devouringPlague)' , "target" },
+    {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , "target" },
+    {spells.mindBlast, 'player.hasBuff(spells.shadowyInsight)' , "target"  },
+    {spells.mindBlast, 'not player.isMoving and spells.shadowfiend.cooldown > 45' , "target"  },
+    {spells.mindBlast, 'not player.isMoving and spells.mindBlast.charges == 2' , "target"  },
+    {spells.mindSpike, 'player.hasBuff(spells.surgeOfDarkness)' , "target"  },
+    {spells.mindgames, 'not player.isMoving' , "target" },
+    {spells.divineStar, 'not player.isMoving and target.isAttackable and target.distanceMax  <= 20' },
     {spells.shadowfiend, 'kps.multiTarget' , "target" },
-
-    {spells.devouringPlague, 'target.myDebuffDuration(spells.devouringPlague) < 2' , "target" },
     {spells.devouringPlague, 'true' , "target" },
     {spells.mindBlast, 'not player.isMoving' , "target"  },
     {spells.shadowWordPain, 'player.isMoving' , "target"  , "shadowWordPain_moving"  },

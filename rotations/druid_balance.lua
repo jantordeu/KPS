@@ -28,7 +28,10 @@ kps.rotations.register("DRUID","BALANCE",
     {spells.moonfire, 'target.isAttackable and target.myDebuffDuration(spells.moonfire) < 2 and not spells.moonfire.isRecastAt("target")' , "target" },
     {spells.sunfire, 'target.isAttackable and target.myDebuffDuration(spells.sunfire) < 2 and not spells.sunfire.isRecastAt("target")' , "target" }, 
     
-    {kps.hekili({
-    })}
+	{kps.hekili({
+		spells.moonfire,
+		spells.sunfire
+	}), 'kps.multiTarget'},
+
 }
 ,"Hekili")

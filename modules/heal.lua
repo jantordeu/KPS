@@ -570,12 +570,12 @@ print("|cffff8000countLossAtonementInRange:|cffffffff", kps["env"].heal.countLos
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 print("|cffff8000", "---------------------------------")
 
-local maxtalent =  MAX_TALENT_TIERS
-local numCol = NUM_TALENT_COLUMNS
-local activeSpec = GetActiveSpecGroup("player")
-local talentID, name, texture, selected, available, spellID, unknown, row, column, known, grantedByAura =  GetTalentTierInfo(maxtalent,numCol,1)
-print("|cffff8000Talent:|cffffffff", maxtalent,numCol  )
-print("|cffff8000Talent:|cffffffff", GetTalentTierInfo(maxtalent,numCol,1))
+--local maxtalent =  MAX_TALENT_TIERS
+--local activeSpec = GetActiveSpecGroup("player")
+---- tierAvailable, selectedTalent, tierUnlockLevel = GetTalentTierInfo(tier, specGroupIndex [, isInspect, inspectedUnit])
+--local tierAvailable, selectedTalent, tierUnlockLevel =  GetTalentTierInfo(maxtalent,activeSpec,"player")
+--print("|cffff8000activeSpec:|cffffffff", activeSpec )
+--print("|cffff8000Talent:|cffffffff", tierAvailable, selectedTalent)
 
 
 --print("|cffff8000name:|cffffffff", kps["env"].target.name == "Klïnda" )

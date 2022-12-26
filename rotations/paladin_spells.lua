@@ -24,7 +24,6 @@ kps.spells.paladin.avengingCrusader = kps.Spell.fromId(216331)
 kps.spells.paladin.avengingLight = kps.Spell.fromId(199441)
 kps.spells.paladin.avengingWrath = kps.Spell.fromId(31884)
 kps.spells.paladin.awakening = kps.Spell.fromId(248033)
-kps.spells.paladin.bastionOfLight = kps.Spell.fromId(204035)
 kps.spells.paladin.bastionOfPower = kps.Spell.fromId(117809)
 kps.spells.paladin.bastionOfTruth = kps.Spell.fromId(209216)
 kps.spells.paladin.beaconOfFaith = kps.Spell.fromId(156910)
@@ -263,7 +262,6 @@ kps.spells.paladin.warriorOfLight = kps.Spell.fromId(210341)
 kps.spells.paladin.wordOfGlory = kps.Spell.fromId(85673)
 kps.spells.paladin.wrathOfTheAshbringer = kps.Spell.fromId(186945)
 kps.spells.paladin.zeal = kps.Spell.fromId(269569)
-kps.spells.paladin.zealotry = kps.Spell.fromId(269262)
 
 
 -- AZERITE
@@ -297,7 +295,19 @@ kps.spells.paladin.arcaneTorrent = kps.Spell.fromId(155145)
 -- DRAGONFLIGHT
 kps.spells.paladin.exorcism = kps.Spell.fromId(383185)
 kps.spells.paladin.divineToll = kps.Spell.fromId(375576)
-
+-- Unending Light -- Each Holy Power spent on Light of Dawn increases the healing of your next Word of Glory by 5%, up to a maximum of 45%.
+kps.spells.paladin.unendingLight = kps.Spell.fromId(394709)
+kps.spells.paladin.eyeOfTyr = kps.Spell.fromId(387174)
+kps.spells.paladin.bastionOfLight = kps.Spell.fromId(378974)
+kps.spells.paladin.barrierOfFaith = kps.Spell.fromId(148039)
+-- Blessing of Autumn -- Cooldowns recover 30% faster. 30 seconds remaining
+kps.spells.paladin.BlessingOfAutumn = kps.Spell.fromId(388010)
+-- Blessing of Winter -- Frost damage and reduce enemies movement speed by 5% and attack speed by 2%, stacking 10 times.
+kps.spells.paladin.BlessingOfWinter = kps.Spell.fromId(388011)
+-- Blessing of Spring -- Healing done increased by 15% and healing received increased by 30%. 30 seconds remaining
+kps.spells.paladin.BlessingOfSpring = kps.Spell.fromId(388013)
+-- Blessing of Summer -- Attacks have a 40% chance to deal 30% additional damage as Holy. 30 seconds remaining
+kps.spells.paladin.BlessingOfSummer = kps.Spell.fromId(388007)
 
 
 
