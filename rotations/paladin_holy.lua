@@ -128,6 +128,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'player.holyPower < 5 and heal.lowestInRaidGlimmer.hp < 0.80' , kps.heal.lowestInRaidGlimmer },
     -- "Word of Glory" -- 3 charges de puissance sacrée -- Vanquisher's Hammer -- Word of Glory to automatically trigger Light of Dawn
     -- "Unending Light -- Each Holy Power spent on Light of Dawn increases the healing of your next Word of Glory by 5%, up to a maximum of 45%.
+    {spells.ruleOfLaw , 'heal.countLossInDistance(0.85) > 2 and not player.hasBuff(spells.ruleOfLaw )' , kps.heal.lowestInRaid },
     {spells.lightOfDawn, 'not player.hasBuff(spells.unendingLight)' , kps.heal.lowestInRaid },
     {{"nested"}, 'heal.lowestInRaid.hp < 0.55' ,{
         {spells.wordOfGlory, 'player.hp < 0.55' , "player" },

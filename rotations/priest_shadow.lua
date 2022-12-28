@@ -13,7 +13,7 @@ local ShadowCrash = spells.shadowCrash.name
 local DoorOfShadows = spells.doorOfShadows.name
 
 kps.runAtEnd(function()
-kps.gui.addCustomToggle("PRIEST","SHADOW", "control", "Interface\\Icons\\spell_nature_slow", "control")
+kps.gui.addCustomToggle("PRIEST","SHADOW", "hekili", "Interface\\Icons\\spell_nature_slow", "hekili")
 end)
 
 
@@ -24,7 +24,7 @@ kps.rotations.register("PRIEST","SHADOW",
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
 
-    {spells.desperatePrayer, 'player.hp < 0.50' , "player" },
+    {spells.desperatePrayer, 'player.hp < 0.55' , "player" },
     -- "Dissipation de masse"
     --{{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@player] "..MassDispel },
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@cursor] "..MassDispel },
@@ -32,7 +32,7 @@ kps.rotations.register("PRIEST","SHADOW",
     {{"macro"}, 'keys.shift and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
     {{"macro"}, 'mouseover.isAttackable and spells.shadowCrash.cooldown == 0 and not mouseover.isMoving', "/cast [@cursor] "..ShadowCrash },
     -- "Shackle Undead"
-    {spells.shackleUndead, 'kps.control and not player.isMoving and target.isAttackable and not target.incorrectTarget and not target.hasDebuff(spells.shackleUndead)' , "target" },
+    --{spells.shackleUndead, 'not player.isMoving and target.isAttackable and not target.incorrectTarget and not target.hasDebuff(spells.shackleUndead)' , "target" },
     -- "Leap of Faith"
     {spells.leapOfFaith, 'keys.alt and mouseover.isFriend and spells.leapOfFaith.cooldown == 0', "mouseover" },
     -- "Fade"
@@ -80,6 +80,12 @@ kps.rotations.register("PRIEST","SHADOW",
     {{"macro"}, 'player.useTrinket(0) and kps.timeInCombat > 5' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 10' , "/use 14" },
+    
+    {kps.hekili({
+        spells.leapOfFaith,
+        spells.massDispel
+    }), 'kps.hekili'},
+    
 
     {spells.powerInfusion, 'kps.multiTarget and player.hasBuff(spells.darkAscension)' },
     {spells.shadowWordDeath, 'spells.shadowfiend.cooldown > 45' , "target" },
@@ -91,6 +97,8 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 6' , "mouseover"   },
     --{spells.voidBolt, 'player.hasBuff(spells.voidForm)' , "target" , "voidBolt_voidForm" },
     --{spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm)' },
+    {spells.voidTorrent, 'not player.isMoving' , "target" , "voidBolt_voidForm" },
+
     {spells.darkAscension, 'kps.multiTarget and not player.isMoving' },
     {spells.devouringPlague, 'not target.hasMyDebuff(spells.devouringPlague)' , "target" },
     {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , "target" },

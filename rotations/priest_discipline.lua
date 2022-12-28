@@ -17,10 +17,6 @@ kps.runAtEnd(function()
    kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "rampUp", "Interface\\Icons\\ability_shaman_astralshift", "rampUp")
 end)
 
-kps.runAtEnd(function()
-kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "control", "Interface\\Icons\\spell_nature_slow", "control")
-end)
-
 local damageRotation = {
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20', "target" },
     {spells.powerInfusion, 'true' },
@@ -58,7 +54,7 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.painSuppression, 'mouseover.isHealable and mouseover.hp < 0.30' , "mouseover" },
 
     -- "Shackle Undead"
-    {spells.shackleUndead, 'kps.control and not player.isMoving and target.isAttackable and not target.incorrectTarget and not target.hasDebuff(spells.shackleUndead)' , "target" },
+    --{spells.shackleUndead, 'not player.isMoving and target.isAttackable and not target.incorrectTarget and not target.hasDebuff(spells.shackleUndead)' , "target" },
     -- "Leap of Faith"
     {spells.leapOfFaith, 'keys.alt and mouseover.isFriend and spells.leapOfFaith.cooldown == 0', "mouseover" },
     -- "Door of Shadows" 

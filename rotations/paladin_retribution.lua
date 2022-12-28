@@ -12,6 +12,10 @@ local AshenHallow = spells.ashenHallow.name
 local DoorOfShadows = spells.doorOfShadows.name
 local Reckoning = spells.finalReckoning.name
 
+kps.runAtEnd(function()
+kps.gui.addCustomToggle("PALADIN","RETRIBUTION", "hekili", "Interface\\Icons\\spell_nature_slow", "hekili")
+end)
+
 kps.rotations.register("PALADIN","RETRIBUTION",
 {
     {{"macro"}, 'not target.isAttackable and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
@@ -74,7 +78,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {kps.hekili({
         spells.cleanseToxins,
         spells.vanquishersHammer
-    }), 'kps.multiTarget'},
+    }), 'kps.hekili'},
     
 
     {spells.crusade, 'kps.multiTarget and player.holyPower > 2 and spells.seraphim.cooldown == 0' , env.damageTarget }, -- cd 2 min -- duration 25 sec
@@ -84,7 +88,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.executionSentence, 'player.hasBuff(spells.seraphim)' , env.damageTarget }, -- cd 1 min -- cost 3 Holy Power
 
     {spells.seraphim, 'player.hasBuff(spells.crusade)' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
-    {spells.seraphim, 'player.holyPower > 2 and spells.crusade.cooldown > 50' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
+    {spells.seraphim, 'player.holyPower > 2 and spells.crusade.cooldown > 50 and spells.executionSentence.cooldown < 9 and spells.finalReckoning.cooldown < 9' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
     {spells.divineStorm, 'player.holyPower == 5 and player.plateCount > 2' , env.damageTarget}, -- cd 1 min
     {spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , env.damageTarget},
