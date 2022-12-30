@@ -308,6 +308,8 @@ kps.spells.paladin.BlessingOfWinter = kps.Spell.fromId(388011)
 kps.spells.paladin.BlessingOfSpring = kps.Spell.fromId(388013)
 -- Blessing of Summer -- Attacks have a 40% chance to deal 30% additional damage as Holy. 30 seconds remaining
 kps.spells.paladin.BlessingOfSummer = kps.Spell.fromId(388007)
+-- Blessing of Dawn -- Les dégâts et soins sont augmentés de 9% -- Buff
+kps.spells.paladin.BlessingOfDawn = kps.Spell.fromId(385127)
 
 
 

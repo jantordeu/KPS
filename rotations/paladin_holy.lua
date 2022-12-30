@@ -52,6 +52,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.layOnHands, 'player.hp < 0.35', "player" },
     -- "Bénédiction de sacrifice" dure 12 s ou player.hp < 0.20. Réduit les dégâts subis de 30%, mais vous transfère 100% des dégâts évités.
     {spells.blessingOfSacrifice, 'heal.lowestTankInRaid.hp < 0.55 and player.hpIncoming > 0.70 and not heal.lowestTankInRaid.isUnit("player")', kps.heal.lowestTankInRaid },
+    {spells.blessingOfSacrifice, 'heal.lowestInRaid.hp < 0.55 and player.hpIncoming > 0.70 and not heal.lowestInRaid.isUnit("player")', kps.heal.lowestInRaid },
 
     {{"nested"},'kps.cooldowns', {
         {spells.cleanse, 'mouseover.isHealable and (mouseover.isDispellable("Magic") or mouseover.isDispellable("Poison") or mouseover.isDispellable("Disease"))' , "mouseover" },
@@ -94,18 +95,17 @@ kps.rotations.register("PALADIN","HOLY",
     --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and targettarget.isFriend' , "/use [@targettarget] 14" },
     --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 30 and target.isAttackable' , "/use 14" },
 
+    {{"nested"}, 'targettarget.isFriend' ,{
+        {spells.wordOfGlory, 'targettarget.hp < 0.70 and player.hasBuff(spells.unendingLight)' , "targettarget"  },
+        {spells.holyShock, 'targettarget.hp < 0.80' , "targettarget"   },
+        {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and targettarget.hp < 0.55 and not spells.flashOfLight.isRecastAt("targettarget")' , "targettarget" },
+        {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and targettarget.hp < 0.80 and not spells.holyLight.isRecastAt("targettarget")' , "targettarget" },
+    }},
     {{"nested"}, 'mouseover.isFriend' ,{
         {spells.wordOfGlory, 'mouseover.hp < 0.70 and player.hasBuff(spells.unendingLight)' , "mouseover"  },
         {spells.holyShock, 'mouseover.hp < 0.80' , "mouseover"   },
         {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and mouseover.hp < 0.55 and not spells.flashOfLight.isRecastAt("mouseover")' , "mouseover" },
         {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and mouseover.hp < 0.80 and not spells.holyLight.isRecastAt("mouseover")' , "mouseover" },
-    }},
-    
-    {{"nested"}, 'targetarget.isFriend' ,{
-        {spells.wordOfGlory, 'targetarget.hp < 0.70 and player.hasBuff(spells.unendingLight)' , "targetarget"  },
-        {spells.holyShock, 'targetarget.hp < 0.80' , "targetarget"   },
-        {spells.flashOfLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and targetarget.hp < 0.55 and not spells.flashOfLight.isRecastAt("targetarget")' , "targetarget" },
-        {spells.holyLight, 'not player.isMoving and player.hasBuff(spells.infusionOfLight) and targetarget.hp < 0.80 and not spells.holyLight.isRecastAt("targetarget")' , "targetarget" },
     }},
     
 --[[
@@ -139,9 +139,10 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.lightOfDawn, 'heal.countLossInDistance(0.85) > 2' },
     -- Avoid using Shield of the Righteous, you will gain more damage from spamming Word of Glory or lightOfDawn increase the chance of proccing Awakening
     {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.70 and player.hasBuff(spells.unendingLight)' , kps.heal.lowestInRaid },
-
+    {spells.lightOfDawn, 'player.holyPower == 5' },
     -- Dump all your Holy Power before you cast Divine Toll
     {spells.divineToll, 'kps.multiTarget and heal.countLossInDistance(0.80) > 3' },
+
     -- ShouldInterruptCasting,
     {{"macro"}, 'spells.holyLight.shouldInterrupt(0.90,kps.defensive)' , "/stopcasting" },
     {{"macro"}, 'spells.flashOfLight.shouldInterrupt(0.90,kps.defensive)' , "/stopcasting" },
