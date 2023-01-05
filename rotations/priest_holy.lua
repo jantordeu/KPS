@@ -159,11 +159,11 @@ kps.rotations.register("PRIEST","HOLY",
 	{spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid },
 
     -- TRINKETS -- SLOT 0 /use 13 -- "Aigrette fumante" "Tuft of Smoldering Plumage"
-    {{"macro"}, 'player.useTrinket(0) and target.isFriend and target.hp < 0.70 and kps.timeInCombat > 5' , "/use 13" },
-    {{"macro"}, 'player.useTrinket(0) and mouseover.isFriend and mouseover.hp < 0.70 and kps.timeInCombat > 5' , "/use 13" },
-    {{"macro"}, 'player.useTrinket(0) and targettarget.isHealable and targettarget.hp < 0.70' , "/use [@targettarget] 13" },
+    --{{"macro"}, 'player.useTrinket(0) and target.isFriend and target.hp < 0.70 and kps.timeInCombat > 5' , "/use 13" },
+    --{{"macro"}, 'player.useTrinket(0) and mouseover.isFriend and mouseover.hp < 0.70 and kps.timeInCombat > 5' , "/use 13" },
+    --{{"macro"}, 'player.useTrinket(0) and targettarget.isHealable and targettarget.hp < 0.70' , "/use [@targettarget] 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 15' , "/use 14" },
+    --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 15' , "/use 14" },
     
     {{"nested"}, 'player.isMoving' ,{
         {spells.powerWordShield, 'player.hp < 0.55 and not player.hasDebuff(spells.weakenedSoul)' , "player" },

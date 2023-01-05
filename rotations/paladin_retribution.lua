@@ -25,28 +25,19 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.everyManForHimself, 'player.isStun' },
     -- "Pierre de soins" 5512
     --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
-
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec.
-    {spells.divineProtection, 'player.hp < 0.70' , "player" },
+    {spells.divineProtection, 'true' , "player" },
     -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection 
-    -- can be used to clear harmful physical damage debuffs and bleeds from the target.
-    {spells.blessingOfProtection, 'player.hp < 0.55' , "player" },
-    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.55 and not heal.lowestInRaid.isRaidTank' , kps.heal.lowestInRaid },
-    
+    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.35 and not heal.lowestInRaid.isRaidTank and not heal.lowestInRaid.hasDebuff(spells.forbearance)' , kps.heal.lowestInRaid },
     -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
-    {spells.divineShield, 'player.hp < 0.35' , "player" },
-    {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.35' , kps.heal.lowestTankInRaid },
-    
+    {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.35 and not heal.lowestTankInRaid .hasDebuff(spells.forbearance)' , kps.heal.lowestTankInRaid },
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
-    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.35', kps.heal.lowestTankInRaid },
-    {spells.layOnHands, 'player.hp < 0.35', "player" },
-    {spells.flashOfLight, 'player.hp < 0.65 and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
-    {spells.wordOfGlory, 'player.hp < 0.65' , "player" },
+    {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.35 and not heal.lowestTankInRaid.hasDebuff(spells.forbearance)', kps.heal.lowestTankInRaid },
     {spells.shieldOfVengeance , 'true' },
-    {spells.arcaneTorrent, 'true' },
 
     {{"nested"},'kps.cooldowns', {
-        {spells.cleanseToxins, 'mouseover.isHealable and ( mouseover.isDispellable("Poison") or mouseover.isDispellable("Disease"))' , "mouseover" },
+        {spells.cleanseToxins, 'mouseover.isHealable and mouseover.isDispellable("Poison")' , "mouseover" },
+        {spells.cleanseToxins, 'mouseover.isHealable and mouseover.isDispellable("Disease")' , "mouseover" },
         {spells.cleanseToxins, 'player.isDispellable("Disease")' , "player" },
         {spells.cleanseToxins, 'player.isDispellable("Poison")' , "player" },
         {spells.cleanseToxins, 'heal.isPoisonDispellable' , kps.heal.isPoisonDispellable },
@@ -59,6 +50,14 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
     }},
     
+    {{"nested"}, 'player.hp < 0.70' ,{
+        {spells.blessingOfProtection, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)' , "player" },
+        {spells.divineShield, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)' , "player" },
+        {spells.layOnHands, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)', "player" },
+        {spells.flashOfLight, 'player.hp < 0.65 and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
+        {spells.wordOfGlory, 'player.hp < 0.65' , "player" },
+    }},
+    
     -- VENTHYR
     --{{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
     --{{"macro"}, 'keys.alt and spells.doorOfShadows.cooldown == 0', "/cast [@cursor] "..DoorOfShadows},
@@ -66,7 +65,6 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     --{spells.fleshcraft, 'not player.isMoving and not player.hasBuff(spells.avengingWrath)' , "player" },
     --{spells.vanquishersHammer, 'not player.hasBuff(spells.vanquishersHammer)' , env.damageTarget},
     -- KYRIAN
-
 
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
@@ -80,33 +78,39 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         spells.vanquishersHammer
     }), 'kps.hekili'},
     
-
-    {spells.crusade, 'kps.multiTarget and player.holyPower > 2 and spells.seraphim.cooldown == 0' , env.damageTarget }, -- cd 2 min -- duration 25 sec
-    -- {spells.avengingWrath, 'kps.multiTarget and player.holyPower > 2' }, -- replaces avengingWrath
-    {spells.divineToll, 'kps.multiTarget and player.hasBuff(spells.seraphim)' },
-    {{"macro"}, 'spells.finalReckoning.cooldown == 0 and player.hasBuff(spells.seraphim)', "/cast [@player] "..Reckoning }, -- cd 1 min -- no cost Holy Power
+    {{"nested"}, 'not player.hasBuff(spells.BlessingOfDawn) and spells.crusade.cooldown < 5' ,{
+        {spells.arcaneTorrent, 'player.holyPower < 5' },
+        {spells.crusaderStrike, 'target.isAttackable and target.distanceMax <= 10' , env.damageTarget}, -- generate 1 Holy Power
+        {spells.bladeOfJustice, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
+        {spells.wakeOfAshes, 'player.holyPower < 3',  env.damageTarget }, -- 3 holypower
+        {spells.divineToll, 'player.holyPower < 3' , kps.heal.lowestInRaid }, -- generate 1 Holy Power per target hit
+        {spells.judgment, 'true' , env.damageTarget }, -- 1 holypower
+    }},
+    
     {spells.executionSentence, 'player.hasBuff(spells.seraphim)' , env.damageTarget }, -- cd 1 min -- cost 3 Holy Power
-
-    {spells.seraphim, 'player.hasBuff(spells.crusade)' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
-    {spells.seraphim, 'player.holyPower > 2 and spells.crusade.cooldown > 50 and spells.executionSentence.cooldown < 9 and spells.finalReckoning.cooldown < 9' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
-    {spells.divineStorm, 'player.holyPower == 5 and player.plateCount > 2' , env.damageTarget}, -- cd 1 min
+    {{"macro"}, 'spells.finalReckoning.cooldown == 0 and player.hasBuff(spells.seraphim)', "/cast [@player] "..Reckoning }, -- cd 1 min -- no cost Holy Power
+    {spells.divineToll, 'not target.hasMyDebuff(spells.judgment) and player.hasBuff(spells.seraphim)' }, -- cd 1 min
+    {spells.seraphim, 'player.hasBuff(spells.crusade) and player.buffStacks(spells.crusade) == 10' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
+    {spells.seraphim, 'player.holyPower > 2 and spells.crusade.cooldown > 50' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
+    {spells.crusade, 'kps.multiTarget and player.holyPower > 2' , env.damageTarget }, -- cd 2 min -- duration 25 sec
+    -- {spells.avengingWrath, 'kps.multiTarget and player.holyPower > 2' }, -- replaces avengingWrath
+    {spells.divineStorm, 'player.holyPower == 5 and player.plateCount > 2' , env.damageTarget},
     {spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},
+    {spells.exorcism, 'not target.hasMyDebuff(spells.exorcism)' , env.damageTarget },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , env.damageTarget},
     {spells.bladeOfJustice, 'player.hasBuff(spells.bladeOfWrath)' , env.damageTarget},
-    {spells.exorcism, 'not target.hasMyDebuff(spells.exorcism)' , env.damageTarget },
 
     -- Holy Power generating
-    {spells.judgment, 'true' , env.damageTarget }, -- 1 holypower
-    {spells.divineToll, 'not target.hasMyDebuff(spells.judgment)' }, -- cd 1 min
     {spells.wakeOfAshes, 'player.holyPower < 3',  env.damageTarget }, -- 3 holypower
-    {spells.consecration, 'not player.isMoving and target.isAttackable and not target.isMoving and target.distanceMax <= 10' },
+    {spells.judgment, 'true' , env.damageTarget }, -- 1 holypower
     {spells.hammerOfWrath, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
     {spells.bladeOfJustice, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
+    {spells.consecration, 'not player.isMoving and target.isAttackable and not target.isMoving and target.distanceMax <= 10' },
     {spells.crusaderStrike, 'spells.crusaderStrike.charges == 2' , env.damageTarget}, -- 1 holypower
     {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.40', 'player'},
-    -- Holy Power spending -- seraphim cost 3 Holy Power
-    {spells.divineStorm, 'spells.seraphim.cooldown > 0 and player.plateCount > 1' , env.damageTarget},
-    {spells.templarsVerdict, 'spells.seraphim.cooldown > 0' , env.damageTarget},
+    -- Holy Power spending
+    {spells.divineStorm, 'spells.seraphim.cooldown > 3 and player.plateCount > 1' , env.damageTarget},
+    {spells.templarsVerdict, 'spells.seraphim.cooldown > 3' , env.damageTarget},
     -- filler
     {spells.crusaderStrike, 'true' , env.damageTarget}, -- 1 holypower
 

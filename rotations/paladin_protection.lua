@@ -19,7 +19,14 @@ kps.rotations.register("PALADIN","PROTECTION",
 
     {spells.blessingOfFreedom , 'player.isRoot' },
     {spells.everyManForHimself, 'player.isStun' },
-
+    
+    {{"nested"},'kps.cooldowns', {
+        {spells.cleanseToxins, 'mouseover.isHealable and mouseover.isDispellable("Poison")' , "mouseover" },
+        {spells.cleanseToxins, 'mouseover.isHealable and mouseover.isDispellable("Disease")' , "mouseover" },
+        {spells.cleanseToxins, 'player.isDispellable("Disease")' , "player" },
+        {spells.cleanseToxins, 'player.isDispellable("Poison")' , "player" },
+        {spells.cleanseToxins, 'heal.isPoisonDispellable' , kps.heal.isPoisonDispellable },
+    }},
     -- Interrupt
     {{"nested"}, 'kps.interrupt' ,{
         {spells.rebuke, 'target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
@@ -28,14 +35,18 @@ kps.rotations.register("PALADIN","PROTECTION",
         {spells.hammerOfJustice, 'target.isAttackable and target.distanceMax <= 10 and target.isCasting' , "target" },
     }},
 
-
+    {{"nested"}, 'player.hp < 0.70' ,{
+        {spells.blessingOfProtection, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)' , "player" },
+        {spells.divineShield, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)' , "player" },
+        {spells.layOnHands, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)', "player" },
+        {spells.flashOfLight, 'player.hp < 0.65 and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
+        {spells.wordOfGlory, 'player.hp < 0.65' , "player" },
+    }},
+    
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5' , "/use 14" },
-    
-    {spells.blessingOfProtection, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender) and not player.hasBuff(spells.guardianOfAncientKings)' , "player"},
-
     
     {kps.hekili({
         spells.cleanseToxins,

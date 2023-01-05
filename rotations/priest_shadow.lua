@@ -30,7 +30,6 @@ kps.rotations.register("PRIEST","SHADOW",
     {{"macro"}, 'keys.ctrl and spells.massDispel.cooldown == 0', "/cast [@cursor] "..MassDispel },
     -- "Shadow Crash"
     {{"macro"}, 'keys.shift and spells.shadowCrash.cooldown == 0', "/cast [@cursor] "..ShadowCrash },
-    {{"macro"}, 'mouseover.isAttackable and spells.shadowCrash.cooldown == 0 and not mouseover.isMoving', "/cast [@cursor] "..ShadowCrash },
     -- "Shackle Undead"
     --{spells.shackleUndead, 'not player.isMoving and target.isAttackable and not target.incorrectTarget and not target.hasDebuff(spells.shackleUndead)' , "target" },
     -- "Leap of Faith"
@@ -79,7 +78,7 @@ kps.rotations.register("PRIEST","SHADOW",
     -- TRINKETS -- SLOT 0 /use 13
     {{"macro"}, 'player.useTrinket(0) and kps.timeInCombat > 5' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
-    {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 10' , "/use 14" },
+    --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 10' , "/use 14" },
     
     {kps.hekili({
         spells.leapOfFaith,
