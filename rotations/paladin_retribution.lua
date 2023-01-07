@@ -54,7 +54,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.blessingOfProtection, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)' , "player" },
         {spells.divineShield, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)' , "player" },
         {spells.layOnHands, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)', "player" },
-        {spells.flashOfLight, 'player.hp < 0.65 and player.buffStacks(spells.selflessHealer) > 2' , "player" , "FLASH_PLAYER" },
+        {spells.flashOfLight, 'player.hp < 0.65 and player.buffStacks(spells.selflessHealer) > 2' , "player" },
         {spells.wordOfGlory, 'player.hp < 0.65' , "player" },
     }},
     
@@ -70,9 +70,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 10' , "/use 14" },
-    
-    {spells.exorcism, 'not target.hasMyDebuff(spells.exorcism)' , env.damageTarget },
-    
+
     {kps.hekili({
         spells.cleanseToxins,
         spells.vanquishersHammer
@@ -88,10 +86,10 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     }},
     
     {spells.executionSentence, 'player.hasBuff(spells.seraphim)' , env.damageTarget }, -- cd 1 min -- cost 3 Holy Power
-    {{"macro"}, 'spells.finalReckoning.cooldown == 0 and player.hasBuff(spells.seraphim)', "/cast [@player] "..Reckoning }, -- cd 1 min -- no cost Holy Power
-    {spells.divineToll, 'not target.hasMyDebuff(spells.judgment) and player.hasBuff(spells.seraphim)' }, -- cd 1 min
-    {spells.seraphim, 'player.hasBuff(spells.crusade) and player.buffStacks(spells.crusade) == 10' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
-    {spells.seraphim, 'player.holyPower > 2 and spells.crusade.cooldown > 50' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
+    {{"macro"}, 'spells.finalReckoning.cooldown == 0 and player.hasBuff(spells.seraphim) and target.distanceMax <= 10', "/cast [@player] "..Reckoning }, -- cd 1 min -- no cost Holy Power
+    {spells.divineToll, 'player.holyPower < 3 and player.hasBuff(spells.seraphim)' , env.damageTarget }, -- cd 1 min
+    {spells.seraphim, 'player.hasBuff(spells.crusade) and player.buffStacks(spells.crusade) == 10 and spells.crusade.cooldown > 0' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
+    {spells.seraphim, 'spells.crusade.cooldown > 50' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
     {spells.crusade, 'kps.multiTarget and player.holyPower > 2' , env.damageTarget }, -- cd 2 min -- duration 25 sec
     -- {spells.avengingWrath, 'kps.multiTarget and player.holyPower > 2' }, -- replaces avengingWrath
     {spells.divineStorm, 'player.holyPower == 5 and player.plateCount > 2' , env.damageTarget},

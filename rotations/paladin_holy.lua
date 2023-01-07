@@ -157,18 +157,16 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.holyShock, 'target.isAttackable and not target.hasMyDebuff(spells.holyShock)' , env.damageTarget },
     -- "Unending Light -- Each Holy Power spent on Light of Dawn increases the healing of your next Word of Glory by 5%, up to a maximum of 45%.
     {spells.lightOfDawn, 'not player.hasBuff(spells.unendingLight)' , kps.heal.lowestInRaid },
-    {{"nested"}, 'heal.lowestInRaid.hp < 0.55 and player.hasBuff(spells.unendingLight)' ,{
-        {spells.wordOfGlory, 'player.hp < 0.55' , "player" },
-        {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.55 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp' , kps.heal.lowestInRaid },
-        {spells.wordOfGlory, 'heal.lowestTankInRaid.hp < 0.55' , kps.heal.lowestTankInRaid },
-    }},
+    {spells.wordOfGlory, 'player.hp < 0.55 and player.hasBuff(spells.unendingLight)' , "player" },
+    {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.55 and heal.lowestInRaid.hp < heal.lowestTankInRaid.hp and player.hasBuff(spells.unendingLight)' , kps.heal.lowestInRaid },
+    {spells.wordOfGlory, 'heal.lowestTankInRaid.hp < 0.55 and player.hasBuff(spells.unendingLight)' , kps.heal.lowestTankInRaid },
     -- "Lumière de l’aube" -- "Light of Dawn" -- 3 charges de puissance sacrée
     {spells.ruleOfLaw , 'heal.countLossInDistance(0.85) > 2 and not player.hasBuff(spells.ruleOfLaw )' , kps.heal.lowestInRaid },
     {spells.lightOfDawn, 'heal.countLossInDistance(0.85) > 2' },
+    -- Dump all your Holy Power before you cast Divine Toll
+    {spells.divineToll, 'player.holyPower < 3 and heal.countLossInDistance(0.85) > 2', kps.heal.lowestInRaid }, -- generate 1 Holy Power per target hit
     -- Avoid using Shield of the Righteous, you will gain more damage from spamming Word of Glory or lightOfDawn increase the chance of proccing Awakening
     {spells.wordOfGlory, 'heal.lowestInRaid.hp < 0.70 and player.hasBuff(spells.unendingLight)' , kps.heal.lowestInRaid },
-    -- Dump all your Holy Power before you cast Divine Toll
-    {spells.divineToll, 'player.holyPower < 3', kps.heal.lowestInRaid }, -- generate 1 Holy Power per target hit
 
     -- ShouldInterruptCasting,
     {{"macro"}, 'spells.holyLight.shouldInterrupt(0.90,kps.defensive)' , "/stopcasting" },
@@ -209,5 +207,5 @@ kps.rotations.register("PALADIN","HOLY",
     {{"macro"}, 'target.isAttackable and target.distanceMax <= 10' , "/startattack" },
 
 }
-,"holy_paladin_bfa")
+,"holy_paladin_df")
     

@@ -34,7 +34,6 @@ local damageRotation = {
 -- kps.defensive to avoid overheal
 kps.rotations.register("PRIEST","HOLY",
 {
-    {{"macro"}, 'player.hasBuff(spells.spiritOfRedemption) and heal.countInRange == 0' , "/cancelaura "..SpiritOfRedemption },
     {spells.holyWordSerenity, 'player.hasBuff(spells.spiritOfRedemption)' , kps.heal.lowestInRaid},
     {spells.prayerOfMending, 'player.hasBuff(spells.spiritOfRedemption)' , kps.heal.lowestInRaid},
     {spells.circleOfHealing, 'player.hasBuff(spells.spiritOfRedemption)' , kps.heal.lowestInRaid},
@@ -84,7 +83,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.powerWordLife, 'heal.lowestInRaid.hp < 0.35' , kps.heal.lowestInRaid },
     -- Divine Word your next Holy Word: Serenity, Sanctify, or Chastise is increased by 50% and grants a corresponding Divine Favor for 15 sec.
     {{spells.divineWord,spells.holyWordSerenity} , 'spells.holyWordSerenity.cooldown == 0 and spells.divineWord.cooldown == 0 and heal.lowestInRaid.hp < 0.55', kps.heal.lowestInRaid },
-    --{spells.divineWord, 'spells.holyWordSerenity.cooldown == 0 and heal.lowestInRaid.hp < 0.55' },   
+    {spells.divineWord, 'spells.holyWordSerenity.cooldown == 0 and heal.lowestInRaid.hp < 0.55' },   
   
     -- "Guardian Spirit" 47788
     {spells.guardianSpirit, 'targettarget.isFriend and targettarget.hp < 0.40' , "targettarget" },
@@ -116,9 +115,9 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.apotheosis, 'heal.lowestInRaid.hp < 0.40 and not player.isInRaid' },
     {spells.apotheosis, 'heal.countLossInRange(0.70) > 2 and not player.isInRaid' },
     {spells.powerInfusion, 'heal.countLossInRange(0.55) > 2 and not player.isInRaid' , "player" },
-    --{spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("WARLOCK")', "mouseover" },
-    --{spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("MAGE")', "mouseover" },
-    --{spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("DRUID")', "mouseover" },
+    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("WARLOCK")', "mouseover" },
+    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("MAGE")', "mouseover" },
+    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("DRUID")', "mouseover" },
     --{spells.powerInfusion, 'focus.isFriend and focus.name == "Olimphy" and kps.timers.check("powerInfusion") > 0', "focus" },
     
     {{"nested"},'kps.cooldowns', {
@@ -137,26 +136,24 @@ kps.rotations.register("PRIEST","HOLY",
         {spells.psychicScream, 'kps.groupSize() == 1 and spells.shiningForce.cooldown > 0 and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
         {spells.psychicScream, 'kps.groupSize() == 1 and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
     }},
-
-    -- MOUSEOVER
-    {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hpIncoming < 0.70 and player.hasBuff(spells.lightweaver)' , "mouseover" },
-    {spells.flashHeal, 'not player.isMoving and mouseover.isFriend and mouseover.hpIncoming < 0.70 and not player.hasBuff(spells.lightweaver)' , "mouseover" },
-    -- LOWEST URGENCE -- Lightweaver -- Flash Heal reduces the cast time of your next Heal within 20 sec by 30% and increases its healing done by 15%. Stacks up to 2 times.
-    {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and player.hasBuff(spells.lightweaver)', kps.heal.lowestInRaid },
-    {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and not player.hasBuff(spells.lightweaver)', kps.heal.lowestInRaid },
-    {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70 and player.hasBuff(spells.surgeOfLight) and player.buffStacks(spells.lightweaver) < 2', kps.heal.lowestInRaid },
-
     {spells.circleOfHealing, 'heal.countLossInRange(0.85) > 1' , kps.heal.lowestInRaid },
     {spells.prayerOfMending, 'not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending)' , kps.heal.lowestTankInRaid },
+    -- MOUSEOVER
+    {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hpIncoming < 0.70 and player.hasBuff(spells.lightweaver)' , "mouseover" },
+    {spells.flashHeal, 'not player.isMoving and mouseover.isFriend and mouseover.hpIncoming < 0.70 and not player.hasBuff(spells.lightweaver) and not spells.flashHeal.lastCasted(2)' , "mouseover" },
+    -- LOWEST URGENCE -- Lightweaver -- Flash Heal reduces the cast time of your next Heal within 20 sec by 30% and increases its healing done by 15%. Stacks up to 2 times.
+    {spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and player.hasBuff(spells.lightweaver)', kps.heal.lowestInRaid },
+    {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.55 and not player.hasBuff(spells.lightweaver) and not spells.flashHeal.lastCasted(2)', kps.heal.lowestInRaid },
+    {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70 and player.hasBuff(spells.surgeOfLight) and not player.hasBuff(spells.lightweaver)', kps.heal.lowestInRaid },
     -- "Prayer of Healing" -- Holy Word: Sanctify Cooldown reduced by 6 sec when you cast Prayer of Healing and by 2 sec when you cast Renew.
-    {spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and spells.holyWordSanctify.cooldown > 6 and not spells.prayerOfHealing.lastCasted(6)' , kps.heal.lowestInRaid },
-    {spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70 and not player.hasBuff(spells.lightweaver)', kps.heal.lowestInRaid },
+    --{spells.flashHeal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70 and not player.hasBuff(spells.lightweaver) and not spells.flashHeal.lastCasted(2)', kps.heal.lowestInRaid },
 	{spells.heal, 'not player.isMoving and target.isFriend and target.hp < 0.70' , "target" },
 	{spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hp < 0.70' , "targettarget" },
 	{spells.heal, 'not player.isMoving and player.hp < 0.70', "player" },
 	{spells.heal, 'not player.isMoving and heal.lowestTankInRaid.hp < 0.70', kps.heal.lowestTankInRaid },
 	{spells.heal, 'not player.isMoving and focus.isFriend and focus.hp < 0.70', "focus" },
 	{spells.heal, 'not player.isMoving and heal.lowestInRaid.hp < 0.70', kps.heal.lowestInRaid },
+    --{spells.prayerOfHealing, 'not player.isMoving and heal.countLossInRange(0.85) > 2 and spells.holyWordSanctify.cooldown > 6 and not spells.prayerOfHealing.lastCasted(6)' , kps.heal.lowestInRaid },
 
     -- TRINKETS -- SLOT 0 /use 13 -- "Aigrette fumante" "Tuft of Smoldering Plumage"
     --{{"macro"}, 'player.useTrinket(0) and target.isFriend and target.hp < 0.70 and kps.timeInCombat > 5' , "/use 13" },
@@ -195,7 +192,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.heal, 'not player.isMoving and targettarget.isFriend and targettarget.hpIncoming < 0.85' , "targettarget" },
     {spells.heal, 'not player.isMoving and focus.isFriend and focus.hpIncoming < 0.85', "focus" },
     -- DAMAGE
-    {spells.holyFire, 'not player.isMoving and target.isAttackable and not target.hasDebuff(spells.shackleUndead)' , "target" },
+    --{spells.holyFire, 'not player.isMoving and target.isAttackable and not target.hasDebuff(spells.shackleUndead)' , "target" },
     {spells.smite, 'not player.isMoving and target.isAttackable and not target.hasDebuff(spells.shackleUndead)', "target" },
     {spells.smite, 'not player.isMoving and targettarget.isAttackable and not targettarget.hasDebuff(spells.shackleUndead)', "targettarget" },
 
