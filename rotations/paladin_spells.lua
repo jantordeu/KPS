@@ -310,7 +310,10 @@ kps.spells.paladin.BlessingOfSpring = kps.Spell.fromId(388013)
 kps.spells.paladin.BlessingOfSummer = kps.Spell.fromId(388007)
 -- Blessing of Dawn -- Les dégâts et soins sont augmentés de 9% -- Buff
 kps.spells.paladin.BlessingOfDawn = kps.Spell.fromId(385127)
-
+-- Radiant Decree -- Replaces Wake of Ashes with Radiant Decree.
+kps.spells.paladin.radiantDecree = kps.Spell.fromId(384052)
+-- Empyrean Legacy -- 
+kps.spells.paladin.empyreanLegacy = kps.Spell.fromId(387178)
 
 
 

@@ -10,6 +10,11 @@ local AshenHallow = spells.ashenHallow.name
 local DoorOfShadows = spells.doorOfShadows.name
 
 
+kps.runAtEnd(function()
+kps.gui.addCustomToggle("PALADIN","PROTECTION", "hekili", "Interface\\Icons\\spell_holy_avenginewrath", "hekili")
+end)
+
+
 kps.rotations.register("PALADIN","PROTECTION",
 {
 
@@ -50,8 +55,10 @@ kps.rotations.register("PALADIN","PROTECTION",
     
     {kps.hekili({
         spells.cleanseToxins,
-        spells.vanquishersHammer
-    }), 'kps.multiTarget'},
+        spells.divineShield,
+        spells.layOnHands,
+        spells.blessingOfProtection
+    }), 'kps.hekili'},
 
 --    {spells.ardentDefender, 'player.hpIncoming < 0.70 and target.isCasting' },
 --    {spells.ardentDefender, 'player.hpIncoming < 0.50' },    

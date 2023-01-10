@@ -13,7 +13,7 @@ local ShadowCrash = spells.shadowCrash.name
 local DoorOfShadows = spells.doorOfShadows.name
 
 kps.runAtEnd(function()
-kps.gui.addCustomToggle("PRIEST","SHADOW", "hekili", "Interface\\Icons\\spell_nature_slow", "hekili")
+kps.gui.addCustomToggle("PRIEST","SHADOW", "hekili", "Interface\\Icons\\spell_holy_avenginewrath", "hekili")
 end)
 
 
@@ -43,11 +43,12 @@ kps.rotations.register("PRIEST","SHADOW",
     -- "Etreinte vampirique" -- pendant 15 sec, vous permet de rendre à un allié proche, un montant de points de vie égal à 40% des dégâts d’Ombre que vous infligez avec des sorts à cible unique
     {spells.vampiricEmbrace, 'heal.countLossInRange(0.70) > 4 and heal.lowestInRaid.hp < 0.55' },
     {spells.vampiricEmbrace, 'kps.groupSize() == 1 and player.hp < 0.55' },
-    -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
-    {spells.flashHeal, 'not player.isMoving and player.hp < 0.70 and not player.hasBuff(spells.protectiveLight)', "player" },
-    {spells.flashHeal, 'not player.isMoving and player.hp < 0.40 and not spells.flashHeal.isRecastAt("player") and not spells.flashHeal.lastCasted(2)', "player" },
     -- "Power Word: Shield" -- "Body and Soul"
     {spells.powerWordShield, 'player.hp < 0.70 and not player.hasBuff(spells.vampiricEmbrace) and not player.hasBuff(spells.voidForm)' , "player"  },
+    -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
+    {spells.flashHeal, 'not player.isMoving and player.hp < 0.70 and not player.hasBuff(spells.protectiveLight) and not spells.flashHeal.isRecastAt("player") and not spells.flashHeal.lastCasted(2)', "player" },
+    {spells.flashHeal, 'not player.isMoving and player.hp < 0.40 and not spells.flashHeal.isRecastAt("player") and not spells.flashHeal.lastCasted(2)', "player" },
+
     -- interrupts
     {{"nested"}, 'kps.interrupt',{
         {spells.psychicHorror, 'target.isInterruptable and target.castTimeLeft < 3' , "target" },
@@ -80,12 +81,16 @@ kps.rotations.register("PRIEST","SHADOW",
     -- TRINKETS -- SLOT 1 /use 14
     --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 10' , "/use 14" },
     
+    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
+    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 6' , "mouseover"   },
+    
     {kps.hekili({
         spells.leapOfFaith,
         spells.massDispel
     }), 'kps.hekili'},
     
 
+    {spells.powerInfusion, 'kps.multiTarget and player.hasBuff(spells.voidForm)' },
     {spells.powerInfusion, 'kps.multiTarget and player.hasBuff(spells.darkAscension)' },
     {spells.shadowWordDeath, 'spells.shadowfiend.cooldown > 45' , "target" },
     {spells.shadowWordDeath, 'target.hp < 0.20 and player.hp > 0.55' , "target" },

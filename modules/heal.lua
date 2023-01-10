@@ -368,7 +368,7 @@ end)
 ]]--
 
 local dispelRaidDebuff = function (dispelType)
-    local lowestUnit = false
+    local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
         if unit.isHealable and unit.isDispellable(dispelType) then lowestUnit = unit break end
     end
@@ -384,7 +384,7 @@ end)
 ]]--
 
 kps.RaidStatus.prototype.isMagicDispellable = kps.utils.cachedValue(function()
-    local lowestUnit = false
+    local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
         if unit.isHealable and unit.isDispellable("Magic") then lowestUnit = unit break end
     end
@@ -396,7 +396,7 @@ end)
 ]]--
 
 kps.RaidStatus.prototype.isDiseaseDispellable = kps.utils.cachedValue(function()
-    local lowestUnit = false
+    local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
         if unit.isHealable and unit.isDispellable("Disease") then lowestUnit = unit break end
     end
@@ -408,7 +408,7 @@ end)
 ]]--
 
 kps.RaidStatus.prototype.isPoisonDispellable = kps.utils.cachedValue(function()
-    local lowestUnit = false
+    local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
         if unit.isHealable and unit.isDispellable("Poison") then lowestUnit = unit break end
     end
@@ -420,7 +420,7 @@ end)
 ]]--
 
 kps.RaidStatus.prototype.isCurseDispellable = kps.utils.cachedValue(function()
-    local lowestUnit = false
+    local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
         if unit.isHealable and unit.isDispellable("Curse") then lowestUnit = unit break end
     end
@@ -436,7 +436,7 @@ end)
 ]]--
 
 local unitHasRaidDebuff = function(spell)
-    local lowestUnit = false
+    local lowestUnit = kps["env"].player
     for name, unit in pairs(raidStatus) do
         if unit.isHealable and unit.hasDebuff(spell) then
         lowestUnit = unit
@@ -587,9 +587,10 @@ print("|cffff8000", "---------------------------------")
 --print("|cffff8000GCDhaste:|cffffffff", kps["env"].player.gcd)
 --local _, gcd = GetSpellCooldown(61304)
 --print("|cffff8000GCD :|cffffffff", gcd )
+--print("|cffff8000Latency :|cffffffff", kps["env"].kps.latency )
+
 --print("|cffff8000cooldownTotal:|cffffffff", kps.spells.priest.mindFlay.cooldownTotal)
 --print("|cffff8000cooldown:|cffffffff", kps.spells.priest.mindFlay.cooldown)
---print("|cffff8000Latency :|cffffffff", kps["env"].kps.latency )
 --print("|cffff8000distanceMax:|cffffffff", kps["env"].target.distanceMax )
 --print("|cffff8000distanceMin:|cffffffff", kps["env"].target.distanceMin )
 --print("|cffff8000isClassName:|cffffffff", kps["env"].target.isClassName("priest") )

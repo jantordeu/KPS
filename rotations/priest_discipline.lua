@@ -14,7 +14,7 @@ local DoorOfShadows = spells.doorOfShadows.name
 
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "rampUp", "Interface\\Icons\\ability_shaman_astralshift", "rampUp")
+   kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "rampUp", "Interface\\Icons\\spell_holy_avenginewrath", "rampUp")
 end)
 
 local damageRotation = {
