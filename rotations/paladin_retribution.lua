@@ -34,7 +34,6 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.cleanseToxins, 'mouseover.isHealable and mouseover.isDispellable("Disease")' , "mouseover" },
         {spells.cleanseToxins, 'player.isDispellable("Disease")' , "player" },
         {spells.cleanseToxins, 'player.isDispellable("Poison")' , "player" },
-        {spells.cleanseToxins, 'heal.isPoisonDispellable' , kps.heal.isPoisonDispellable },
     }},
     -- Interrupt
     {{"nested"}, 'kps.interrupt' ,{
@@ -93,7 +92,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.divineToll, 'player.holyPower < 3 and player.hasBuff(spells.seraphim)' , env.damageTarget }, -- cd 1 min
     {spells.divineToll, 'player.holyPower < 3 and player.hasBuff(spells.crusade)' , env.damageTarget }, -- cd 1 min
     {spells.executionSentence, 'player.hasBuff(spells.seraphim)' , env.damageTarget }, -- cd 1 min -- cost 3 Holy Power
-    {{"macro"}, 'spells.finalReckoning.cooldown == 0 and player.hasBuff(spells.seraphim) and target.distanceMax <= 10', "/cast [@player] "..Reckoning }, -- cd 1 min -- no cost Holy Power
+    {{"macro"}, 'spells.finalReckoning.cooldown == 0 and player.hasBuff(spells.seraphim) and target.distanceMax <= 10 and not player.isMovingSince(2)', "/cast [@player] "..Reckoning }, -- cd 1 min -- no cost Holy Power
     {spells.seraphim, 'player.hasBuff(spells.crusade) and player.buffStacks(spells.crusade) == 10 and spells.crusade.cooldown > 0' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
     {spells.seraphim, 'spells.crusade.cooldown > 50' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
     {spells.crusade, 'kps.multiTarget and player.holyPower > 2' , env.damageTarget }, -- cd 2 min -- duration 25 sec
@@ -114,7 +113,6 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.bladeOfJustice, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
     {spells.consecration, 'not player.isMoving and target.isAttackable and not target.isMoving and target.distanceMax <= 10' },
     {spells.crusaderStrike, 'spells.crusaderStrike.charges == 2' , env.damageTarget}, -- 1 holypower
-    {spells.flashOfLight, 'not player.isMoving and player.hpIncoming < 0.40', 'player'},
     -- Holy Power spending
     {spells.divineStorm, 'spells.seraphim.cooldown > 3 and player.plateCount > 1' , env.damageTarget},
     {spells.templarsVerdict, 'spells.seraphim.cooldown > 3' , env.damageTarget},

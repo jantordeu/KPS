@@ -85,7 +85,6 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
         {spells.purify, 'heal.lowestTankInRaid.isDispellable("Magic")' , kps.heal.lowestTankInRaid},
         {spells.purify, 'player.isDispellable("Magic")' , "player" },
         {spells.purify, 'heal.lowestInRaid.isDispellable("Magic")' , kps.heal.lowestInRaid},
-        {spells.purify, 'heal.isMagicDispellable' , kps.heal.isMagicDispellable },
     }},
 
     -- VENTHYR

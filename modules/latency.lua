@@ -33,7 +33,10 @@ end)
 kps.events.register("UNIT_SPELLCAST_START", function(...)
 	local unitID = select(1,...)
 	if unitID ~= "player" then return end
+	if sendTime == nil then latency = lagWorld
+	else
 	latency = GetTime() - sendTime
+	end
 	kps.latency = math.max(latency,lagWorld)
 end)
 

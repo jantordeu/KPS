@@ -58,7 +58,6 @@ kps.rotations.register("MAGE","FIRE",
         {spells.removeCurse, 'player.isDispellable("Curse")' , "player" },
         {spells.removeCurse, 'heal.lowestTankInRaid.isDispellable("Curse")' , kps.heal.lowestTankInRaid },
         {spells.removeCurse, 'heal.lowestInRaid.isDispellable("Curse")' , kps.heal.lowestInRaid },
-        {spells.removeCurse, 'heal.isCurseDispellable' , kps.heal.isMagicDispellable },
     }},
     {{"nested"}, 'kps.interrupt',{
         {spells.counterspell, 'target.isInterruptable and target.castTimeLeft < 2' , "target" },

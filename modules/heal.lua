@@ -570,9 +570,50 @@ print("|cffff8000countLossAtonementInRange:|cffffffff", kps["env"].heal.countLos
 print("|cffff8000plateCount:|cffffffff", kps["env"].player.plateCount)
 print("|cffff8000", "---------------------------------")
 
---print("|cffff8000name:|cffffffff", kps["env"].target.name == "Klïnda" )
---print("|cffff8000name:|cffffffff", kps["env"].target.name == "Olimphy" )
 
+local function PrintTalents()
+    local specID = PlayerUtil.GetCurrentSpecID()
+    
+    -- last selected configID or fall back to default spec config
+    local configID = C_ClassTalents.GetLastSelectedSavedConfigID(specID) or C_ClassTalents.GetActiveConfigID()
+    
+    local configInfo = C_Traits.GetConfigInfo(configID)
+    local treeID = configInfo.treeIDs[1]
+
+    local nodes = C_Traits.GetTreeNodes(treeID)
+
+    for _, nodeID in ipairs(nodes) do
+        local nodeInfo = C_Traits.GetNodeInfo(configID, nodeID)
+        if nodeInfo.currentRank and nodeInfo.currentRank > 0 then
+            local entryID = nodeInfo.activeEntry and nodeInfo.activeEntry.entryID and nodeInfo.activeEntry.entryID
+            local entryInfo = entryID and C_Traits.GetEntryInfo(configID, entryID)
+            local definitionInfo = entryInfo and entryInfo.definitionID and C_Traits.GetDefinitionInfo(entryInfo.definitionID)
+
+            if definitionInfo ~= nil then
+                local talentName = TalentUtil.GetTalentName(definitionInfo.overrideName, definitionInfo.spellID)
+                print(string.format("%s %d/%d", talentName, nodeInfo.currentRank, nodeInfo.maxRanks))
+            end
+        end
+    end
+end
+
+
+-- name, texture, offset, numSlots, isGuild, offspecID = GetSpellTabInfo(tabIndex)
+-- spellType, id = GetSpellBookItemInfo(spellName)
+-- spellType, id = GetSpellBookItemInfo(index, bookType) BOOKTYPE_SPELL BOOKTYPE_PET
+-- spellName, spellSubName, spellID = GetSpellBookItemName(spellName)
+-- spellName, spellSubName, spellID = GetSpellBookItemName(index, bookType)
+
+--for i = 1, GetNumSpellTabs() do
+--local offset, numSlots = select(3, GetSpellTabInfo(i))
+--for index = offset+1, offset+numSlots do
+--	local spellType,spellID = GetSpellBookItemInfo(index, BOOKTYPE_SPELL)
+--	local spellname = select(1,GetSpellBookItemName(index, BOOKTYPE_SPELL))
+--	print(spellType,spellID,spellname)
+--end
+--end
+
+--print("|cffff8000name:|cffffffff", kps["env"].target.name == "Olimphy" )
 --print("|cffff8000Incorrect", kps["env"].target.incorrectTarget)
 --print("|cffff8000lineOfSight", kps["env"].target.lineOfSight)
 --print("|cffff8000isInRaid", kps["env"].target.isInRaid)

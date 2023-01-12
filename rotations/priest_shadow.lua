@@ -64,7 +64,6 @@ kps.rotations.register("PRIEST","SHADOW",
     {{"nested"}, 'kps.cooldowns',{
         {spells.purifyDisease, 'mouseover.isDispellable("Disease")' , "mouseover" },
         {spells.purifyDisease, 'player.isDispellable("Disease")' , "player" },
-        {spells.purifyDisease, 'heal.isDiseaseDispellable' , kps.heal.isDiseaseDispellable},
     }},
 
     -- VENTHYR

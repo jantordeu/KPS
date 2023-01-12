@@ -90,7 +90,7 @@ kps.rotations.register("PRIEST","HOLY",
     {spells.guardianSpirit, 'heal.lowestTankInRaid.hp < 0.40' , kps.heal.lowestTankInRaid },
     {spells.guardianSpirit, 'player.hp < 0.40' , "player" },
     {spells.guardianSpirit, 'focus.isFriend and focus.hp < 0.40' , "focus" },
-    {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.30' ,  kps.heal.lowestInRaid },
+    {spells.guardianSpirit, 'heal.lowestInRaid.hp < 0.40' ,  kps.heal.lowestInRaid },
     -- "Holy Word: Serenity"
     {spells.holyWordSerenity, 'mouseover.isFriend and mouseover.hp < 0.70' , "mouseover" },
     {spells.holyWordSerenity, 'targettarget.isFriend and targettarget.hp < 0.70' , "targettarget" },
@@ -111,21 +111,11 @@ kps.rotations.register("PRIEST","HOLY",
     -- {spells.faeGuardians, 'player.mana < 0.85 and target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie) and not player.hasBuff(spells.benevolentFaerie)' , "target" },
     -- {spells.faeGuardians, 'spells.divineHymn.cooldown > 10 and target.isAttackable and not target.hasMyDebuff(spells.wrathfulFaerie) and not player.hasBuff(spells.benevolentFaerie)' , "target" },
 
-    -- "Apotheosis" 200183 increasing the effects of Serendipity by 200% and reducing the cost of your Holy Words by 100%
-    {spells.apotheosis, 'heal.lowestInRaid.hp < 0.55 and not player.isInRaid' },
-    {spells.apotheosis, 'heal.countLossInRange(0.80) > 2 and not player.isInRaid' },
-    {spells.powerInfusion, 'heal.countLossInRange(0.70) > 2 and not player.isInRaid' , "player" },
-    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("WARLOCK")', "mouseover" },
-    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("MAGE")', "mouseover" },
-    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("DRUID")', "mouseover" },
-    --{spells.powerInfusion, 'focus.isFriend and focus.name == "Olimphy" and kps.timers.check("powerInfusion") > 0', "focus" },
-    
     {{"nested"},'kps.cooldowns', {
         {spells.purify, 'mouseover.isDispellable("Magic")' , "mouseover" },
         {spells.purify, 'heal.lowestTankInRaid.isDispellable("Magic")' , kps.heal.lowestTankInRaid},
         {spells.purify, 'player.isDispellable("Magic")' , "player" },
         {spells.purify, 'heal.lowestInRaid.isDispellable("Magic")' , kps.heal.lowestInRaid},
-        {spells.purify, 'heal.isMagicDispellable' , kps.heal.isMagicDispellable },
     }},
     {{"nested"}, 'kps.interrupt' ,{
         {spells.dispelMagic, 'target.isAttackable and target.isBuffDispellable and not spells.dispelMagic.lastCasted(9)' , "target" },
@@ -136,10 +126,21 @@ kps.rotations.register("PRIEST","HOLY",
         {spells.psychicScream, 'kps.groupSize() == 1 and spells.shiningForce.cooldown > 0 and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
         {spells.psychicScream, 'kps.groupSize() == 1 and player.isTarget and target.distanceMax  <= 10 and target.isCasting' , "player" },
     }},
+    
+    -- "Apotheosis" 200183 increasing the effects of Serendipity by 200% and reducing the cost of your Holy Words by 100%
+    {spells.apotheosis, 'heal.lowestInRaid.hp < 0.55 and not player.isInRaid' },
+    {spells.apotheosis, 'heal.countLossInRange(0.80) > 2 and not player.isInRaid' },
+    {spells.powerInfusion, 'heal.countLossInRange(0.70) > 2 and not player.isInRaid' , "player" },
+    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("WARLOCK")', "mouseover" },
+    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("MAGE")', "mouseover" },
+    {spells.powerInfusion, 'mouseover.isFriend and mouseover.isRaidDamager and mouseover.isClassName("DRUID")', "mouseover" },
+    --{spells.powerInfusion, 'focus.isFriend and focus.name == "Olimphy" and kps.timers.check("powerInfusion") > 0', "focus" },
     {spells.circleOfHealing, 'heal.countLossInRange(0.85) > 1' , kps.heal.lowestInRaid },
     {spells.prayerOfMending, 'not heal.lowestTankInRaid.hasBuff(spells.prayerOfMending) and heal.lowestInRaid.hp > 0.55' , kps.heal.lowestTankInRaid },
     {spells.holyNova, 'heal.countLossInDistance(0.85) > 2 and not spells.holyNova.lastCasted(60)' },
     -- MOUSEOVER
+    {spells.heal, 'not player.isMoving and player.hpIncoming < 0.70 and player.hasBuff(spells.lightweaver)' , "player" },
+    {spells.flashHeal, 'not player.isMoving and player.hpIncoming < 0.70 and not player.hasBuff(spells.lightweaver) and not spells.flashHeal.lastCasted(2)' , "player" },
     {spells.heal, 'not player.isMoving and mouseover.isFriend and mouseover.hpIncoming < 0.70 and player.hasBuff(spells.lightweaver)' , "mouseover" },
     {spells.flashHeal, 'not player.isMoving and mouseover.isFriend and mouseover.hpIncoming < 0.70 and not player.hasBuff(spells.lightweaver) and not spells.flashHeal.lastCasted(2)' , "mouseover" },
     -- LOWEST URGENCE -- Lightweaver -- Flash Heal reduces the cast time of your next Heal within 20 sec by 30% and increases its healing done by 15%. Stacks up to 2 times.

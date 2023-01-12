@@ -30,7 +30,6 @@ kps.rotations.register("PALADIN","PROTECTION",
         {spells.cleanseToxins, 'mouseover.isHealable and mouseover.isDispellable("Disease")' , "mouseover" },
         {spells.cleanseToxins, 'player.isDispellable("Disease")' , "player" },
         {spells.cleanseToxins, 'player.isDispellable("Poison")' , "player" },
-        {spells.cleanseToxins, 'heal.isPoisonDispellable' , kps.heal.isPoisonDispellable },
     }},
     -- Interrupt
     {{"nested"}, 'kps.interrupt' ,{

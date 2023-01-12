@@ -1,9 +1,24 @@
 local Spell = kps.Spell.prototype
 
+-- name, texture, offset, numSlots, isGuild, offspecID = GetSpellTabInfo(tabIndex)
+-- spellType, id = GetSpellBookItemInfo(spellName)
+-- spellType, id = GetSpellBookItemInfo(index, bookType) BOOKTYPE_SPELL BOOKTYPE_PET
+-- spellName, spellSubName, spellID = GetSpellBookItemName(spellName)
+-- spellName, spellSubName, spellID = GetSpellBookItemName(index, bookType)
+
+--for i = 1, GetNumSpellTabs() do
+--local offset, numSlots = select(3, GetSpellTabInfo(i))
+--for index = offset+1, offset+numSlots do
+--	local spellType,spellID = GetSpellBookItemInfo(index, BOOKTYPE_SPELL)
+--	local spellname = select(1,GetSpellBookItemName(index, BOOKTYPE_SPELL))
+--	print(spellType,spellID,spellname)
+--end
+--end
+
 
 local function getSpellBookEntry(spellname)
     local index = nil
-    local name, texture, offset, numSpells, isGuild = GetSpellTabInfo(2)
+    local name, texture, offset, numSpells, isGuild, offspecID  = GetSpellTabInfo(2)
     -- Collecting the Spell GLOBAL SpellID, not to be confused with the SpellID
     -- Matching the Spell Name and the GLOBAL SpellID will give us the Spellbook index of the Spell
     for index = offset+1, numSpells+offset do
@@ -15,7 +30,7 @@ local function getSpellBookEntry(spellname)
         end
     end
     -- If a Pet Spellbook is found, do the same as above and try to get an Index on the Spell
-    local numPetSpells = HasPetSpells()
+    local numPetSpells, _ = HasPetSpells()
     if numPetSpells then
         for index = 1, numPetSpells do
             -- Get the Global Spell ID from the Pet's spellbook

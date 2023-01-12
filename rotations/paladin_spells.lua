@@ -314,6 +314,8 @@ kps.spells.paladin.BlessingOfDawn = kps.Spell.fromId(385127)
 kps.spells.paladin.radiantDecree = kps.Spell.fromId(384052)
 -- Empyrean Legacy -- 
 kps.spells.paladin.empyreanLegacy = kps.Spell.fromId(387178)
+-- Intercession -- reprendre le combat avec 60% de ses points de vie et 20% de son mana.
+kps.spells.paladin.intercession = kps.Spell.fromId(391054)
 
 
 
