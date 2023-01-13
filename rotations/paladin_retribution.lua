@@ -98,6 +98,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.crusade, 'kps.multiTarget and player.holyPower > 2' , env.damageTarget }, -- cd 2 min -- duration 25 sec
     -- {spells.avengingWrath, 'kps.multiTarget and player.holyPower > 2' }, -- replaces avengingWrath
     -- Empyrean Legacy Templar's Verdict to automatically activate Divine Storm
+    {spells.judgment, 'player.holyPower < 5 and target.isAttackable and not player.hasBuff(spells.empyreanLegacy)' , env.damageTarget }, -- generate 1 Holy Power
     {spells.templarsVerdict, 'player.hasBuff(spells.empyreanLegacy)' , env.damageTarget},
     {spells.divineStorm, 'player.holyPower == 5 and player.plateCount > 2' , env.damageTarget},
     {spells.divineStorm, 'spells.seraphim.cooldown > 3 and player.plateCount > 4' , env.damageTarget},
@@ -108,16 +109,16 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     --{spells.radiantDecree, 'spells.seraphim.cooldown > 3 and player.plateCount > 1' , env.damageTarget}, -- Replaces Wake of Ashes with Radiant Decree -- cost 3 holy power
     -- Holy Power generating
     {spells.wakeOfAshes, 'player.holyPower < 3',  env.damageTarget }, -- 3 holypower
-    {spells.judgment, 'true' , env.damageTarget }, -- 1 holypower
+    {spells.judgment, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
     {spells.hammerOfWrath, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
     {spells.bladeOfJustice, 'player.holyPower < 5' , env.damageTarget }, -- 1 holypower
     {spells.consecration, 'not player.isMoving and target.isAttackable and not target.isMoving and target.distanceMax <= 10' },
-    {spells.crusaderStrike, 'spells.crusaderStrike.charges == 2' , env.damageTarget}, -- 1 holypower
+    {spells.crusaderStrike, 'player.holyPower < 5 and spells.crusaderStrike.charges == 2' , env.damageTarget}, -- 1 holypower
     -- Holy Power spending
     {spells.divineStorm, 'spells.seraphim.cooldown > 3 and player.plateCount > 1' , env.damageTarget},
     {spells.templarsVerdict, 'spells.seraphim.cooldown > 3' , env.damageTarget},
     -- filler
-    {spells.crusaderStrike, 'true' , env.damageTarget}, -- 1 holypower
+    {spells.crusaderStrike, 'player.holyPower < 5' , env.damageTarget}, -- 1 holypower
 
     --{{"macro"}, 'target.isAttackable and target.distanceMax <= 10' , "/startattack" },
 

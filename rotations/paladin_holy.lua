@@ -163,7 +163,7 @@ kps.rotations.register("PALADIN","HOLY",
     {spells.divineFavor, 'heal.lowestInRaid.hpIncoming < 0.55'  }, -- cd 45 s 
     {spells.ruleOfLaw , 'heal.countLossInDistance(0.85) > 2 and not player.hasBuff(spells.ruleOfLaw )' , kps.heal.lowestInRaid },
     {spells.lightOfDawn, 'not player.hasBuff(spells.unendingLight)' , kps.heal.lowestInRaid },
-    {spells.judgment, 'target.isAttackable and not player.hasBuff(spells.empyreanLegacy)' , env.damageTarget }, -- generate 1 Holy Power
+    {spells.judgment, 'player.holyPower < 5 and target.isAttackable and not player.hasBuff(spells.empyreanLegacy)' , env.damageTarget }, -- generate 1 Holy Power
     {{"macro"}, 'spells.lightsHammer.cooldown == 0 and heal.countLossInDistance(0.85) > 2 and not player.isMovingSince(2)', "/cast [@player] "..LightsHammer},
     {{"macro"}, 'spells.lightsHammer.cooldown == 0 and target.isAttackable and target.distanceMax <= 10 and not player.isMovingSince(2)', "/cast [@player] "..LightsHammer},
     -- Dump all your Holy Power before you cast Divine Toll
@@ -194,8 +194,8 @@ kps.rotations.register("PALADIN","HOLY",
     }},
     -- DAMAGE
     {{"nested"},'kps.damage', damageRotation},
-    {spells.judgment, 'target.isAttackable' , env.damageTarget }, -- generate 1 Holy Power
-    {spells.hammerOfWrath, 'target.isAttackable' , env.damageTarget }, -- generate 1 Holy Power.
+    {spells.judgment, 'player.holyPower < 5 and target.isAttackable' , env.damageTarget }, -- generate 1 Holy Power
+    {spells.hammerOfWrath, 'player.holyPower < 5 and target.isAttackable' , env.damageTarget }, -- generate 1 Holy Power.
     {spells.crusaderStrike, 'player.holyPower < 5 and spells.holyShock.cooldown > 3 and target.isAttackable and target.distanceMax <= 10' , env.damageTarget}, -- generate 1 Holy Power
     {spells.consecration, 'not player.isMoving and not target.isMoving and target.isAttackable and target.distanceMax <= 10' },
     -- MARAAD
