@@ -62,7 +62,7 @@ kps.rotations.register("PALADIN","PROTECTION",
 --    {spells.ardentDefender, 'player.hpIncoming < 0.70 and target.isCasting' },
 --    {spells.ardentDefender, 'player.hpIncoming < 0.50' },    
 --    {spells.guardianOfAncientKings, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender)' },
-
+--    {spells.momentOfGlory, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender)' },
 --    {spells.avengingWrath, 'player.hp < 0.70' },
 --    {spells.shieldOfTheRighteous, 'player.hp < 0.90 and not player.hasBuff(spells.shieldOfTheRighteous)' , "target"},
 --    {spells.wordOfGlory, 'player.hp < 0.70'},

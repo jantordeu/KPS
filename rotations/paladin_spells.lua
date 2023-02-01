@@ -316,6 +316,15 @@ kps.spells.paladin.radiantDecree = kps.Spell.fromId(384052)
 kps.spells.paladin.empyreanLegacy = kps.Spell.fromId(387178)
 -- Intercession -- reprendre le combat avec 60% de ses points de vie et 20% de son mana.
 kps.spells.paladin.intercession = kps.Spell.fromId(391054)
+-- Consecrated Blade -- Art of War causes Blade of Justice to cast Consecration at the target's location.
+kps.spells.paladin.consecratedBlade = kps.Spell.fromId(382522)
+-- Blade of Wrath -- Your next Blade of Justice deals 25% increased damage. same time with Consecrated Blade
+kps.spells.paladin.bladeOfWrath = kps.Spell.fromId(281178)
+-- Virtuous Command -- Judgment grants you Virtuous Command for 5 sec, which causes your Templar's Verdict,  Verdict du templier, Frappe du croisé to deal 5% additional Holy damage.
+kps.spells.paladin.virtuousCommand = kps.Spell.fromId(383307)
+-- Moment of Glory -- Avenger's Shield damage increased by 20% and cooldown reduced by 75%. Generating an absorb shield for 20% of all damage dealt.
+kps.spells.paladin.momentOfGlory = kps.Spell.fromId(327193)
+
 
 
 

@@ -80,14 +80,15 @@ kps.rotations.register("PRIEST","SHADOW",
     -- TRINKETS -- SLOT 1 /use 14
     --{{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 10' , "/use 14" },
     
-    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
-    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 6' , "mouseover"   },
+    {{"nested"}, 'kps.hekilis',{
+        {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
+        {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 6' , "mouseover"   },
+    }},
     
     {kps.hekili({
         spells.leapOfFaith,
         spells.massDispel
     }), 'kps.hekili'},
-    
 
     {spells.powerInfusion, 'kps.multiTarget and player.hasBuff(spells.voidForm)' },
     {spells.powerInfusion, 'kps.multiTarget and player.hasBuff(spells.darkAscension)' },
@@ -100,15 +101,16 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 6' , "mouseover"   },
     {spells.voidBolt, 'player.hasBuff(spells.voidForm)' , "target" , "voidBolt_voidForm" },
     {spells.voidEruption, 'kps.multiTarget and not player.isMoving and not player.hasBuff(spells.voidForm)' },
-    {spells.voidTorrent, 'not player.isMoving' , "target" , "voidBolt_voidForm" },
     {spells.darkAscension, 'kps.multiTarget and not player.isMoving' },
     {spells.devouringPlague, 'not target.hasMyDebuff(spells.devouringPlague)' , "target" },
     {spells.devouringPlague, 'player.hasBuff(spells.mindDevourer)' , "target" },
+    {spells.voidTorrent, 'not player.isMoving' , "target" },
     {spells.mindBlast, 'player.hasBuff(spells.shadowyInsight)' , "target"  },
     {spells.mindBlast, 'not player.isMoving and spells.shadowfiend.cooldown > 45' , "target"  },
     {spells.mindBlast, 'not player.isMoving and spells.mindBlast.charges == 2' , "target"  },
     {spells.mindSpike, 'player.hasBuff(spells.surgeOfDarkness)' , "target"  },
     {spells.mindgames, 'not player.isMoving' , "target" },
+    {spells.mindSear, 'not player.isMoving and player.plateCount > 3' , "target" },
     {spells.divineStar, 'not player.isMoving and target.isAttackable and target.distanceMax  <= 20' },
     {spells.shadowfiend, 'kps.multiTarget' , "target" },
     {spells.devouringPlague, 'true' , "target" },

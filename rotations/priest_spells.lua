@@ -333,6 +333,8 @@ kps.spells.priest.empyrealBlaze = kps.Spell.fromId(372616)
 kps.spells.priest.protectiveLight = kps.Spell.fromId(193065)
 kps.spells.priest.harshDiscipline = kps.Spell.fromId(373180)
 kps.spells.priest.lightsWrath = kps.Spell.fromId(373178)
+-- Prayer Circle Cast time and cost of Prayer of Healing reduced by 20%.
+kps.spells.priest.prayerCircle = kps.Spell.fromId(321379)
 
 
 
