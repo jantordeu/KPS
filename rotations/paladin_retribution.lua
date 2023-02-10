@@ -22,20 +22,28 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat' , "/target mouseover" },
     {{"macro"}, 'not focus.exists and mouseover.isHealable and mouseover.isRaidTank' , "/focus mouseover" },
     
-    {spells.blessingOfFreedom , 'player.isRoot' },
-    {spells.everyManForHimself, 'player.isStun' },
+    {spells.blessingOfFreedom , 'player.isRoot' , "player" },
+    {spells.everyManForHimself, 'player.isStun', "player" },
     -- "Pierre de soins" 5512
     --{{"macro"}, 'player.hp < 0.70 and player.useItem(5512)' , "/use item:5512" },
+    {spells.divineShield, 'keys.shift and mouseover.isFriend and not mouseover.hasDebuff(spells.forbearance)' , "mouseover" },
+    {spells.intercession, 'keys.alt and mouseover.isFriend and mouseover.isDead' , "mouseover"  },
+    {spells.blessingOfFreedom , 'keys.ctrl and mouseover.isFriend' , "mouseover"  },
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec.
     {spells.divineProtection, 'true' , "player" },
     {spells.shieldOfVengeance , 'true' },
 
+    {spells.cleanseToxins, 'target.isDispellable("Poison")' , "target" },
+    {spells.cleanseToxins, 'target.isDispellable("Disease")' , "target" },
     {{"nested"},'kps.cooldowns', {
         {spells.cleanseToxins, 'mouseover.isHealable and mouseover.isDispellable("Poison")' , "mouseover" },
         {spells.cleanseToxins, 'mouseover.isHealable and mouseover.isDispellable("Disease")' , "mouseover" },
         {spells.cleanseToxins, 'player.isDispellable("Disease")' , "player" },
         {spells.cleanseToxins, 'player.isDispellable("Poison")' , "player" },
+        {spells.cleanseToxins, 'heal.lowestInRaid.isDispellable("Disease")' , kps.heal.lowestInRaid },
+        {spells.cleanseToxins, 'heal.lowestInRaid.isDispellable("Poison")' , kps.heal.lowestInRaid },
     }},
+
     -- Interrupt
     {{"nested"}, 'kps.interrupt' ,{
         {spells.rebuke, 'target.isAttackable and target.distanceMax <= 10 and target.isInterruptable' , "target" },
@@ -53,18 +61,21 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         {spells.flashOfLight, 'player.hp < 0.65 and player.buffStacks(spells.selflessHealer) > 2' , "player" },
         {spells.wordOfGlory, 'player.hp < 0.55' , "player" },
     }},
-    
-    -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection
-    {spells.blessingOfProtection, 'player.hp < 0.35 and not heal.lowestInRaid.isRaidTank and not player.hasDebuff(spells.forbearance)' , "player" },
-    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.35 and not heal.lowestInRaid.isRaidTank and not heal.lowestInRaid.hasDebuff(spells.forbearance)' , kps.heal.lowestInRaid },
+
     -- "Divine Shield" -- Immune to all attacks and harmful effects. 8 seconds remaining
+    {spells.divineShield, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)' , "player" },
     {spells.divineShield, 'heal.lowestTankInRaid.hp < 0.35 and not heal.lowestTankInRaid .hasDebuff(spells.forbearance)' , kps.heal.lowestTankInRaid },
+    -- "Blessing of Protection" -- immunity to Physical damage and harmful effects for 10 sec. bosses will not attack targets affected by Blessing of Protection 
+    {spells.blessingOfProtection, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)' , "player" },
+    {spells.blessingOfProtection, 'heal.lowestInRaid.hp < 0.35 and not heal.lowestInRaid.isRaidTank and not heal.lowestInRaid.hasDebuff(spells.forbearance)' , kps.heal.lowestInRaid },
     -- "Lay on Hands" -- Heals a friendly target for an amount equal to your maximum health.
+    {spells.layOnHands, 'player.hp < 0.35 and not player.hasDebuff(spells.forbearance)', "player" },
     {spells.layOnHands, 'heal.lowestTankInRaid.hp < 0.35 and not heal.lowestTankInRaid.hasDebuff(spells.forbearance)', kps.heal.lowestTankInRaid },
+    {spells.layOnHands, 'heal.lowestInRaid.hp < 0.35 and not heal.lowestInRaid.hasDebuff(spells.forbearance)', kps.heal.lowestInRaid },
     -- "Bénédiction de sacrifice" dure 12 s ou player.hp < 0.20. Réduit les dégâts subis de 30%, mais vous transfère 100% des dégâts évités.
-    {spells.blessingOfSacrifice, 'heal.lowestTankInRaid.hp < 0.40 and player.hpIncoming > 0.80 and not heal.lowestTankInRaid.isUnit("player")', kps.heal.lowestTankInRaid },
-    {spells.blessingOfSacrifice, 'focus.hp < 0.40 and player.hpIncoming > 0.80 and focus.isRaidTank', "focus" },
-    {spells.intercession, 'keys.shift and mouseover.isDead' , "mouseover"  },
+    {spells.blessingOfSacrifice, 'heal.lowestTankInRaid.hp < 0.55 and player.hpIncoming > 0.80 and not heal.lowestTankInRaid.isUnit("player")', kps.heal.lowestTankInRaid },
+    {spells.blessingOfSacrifice, 'focus.hp < 0.55 and player.hpIncoming > 0.80 and focus.isRaidTank', "focus" },
+    {spells.blessingOfSacrifice, 'heal.lowestInRaid.hp < 0.55 and player.hpIncoming > 0.80 and not heal.lowestInRaid.isUnit("player")', kps.heal.lowestInRaid },
     
     -- VENTHYR
     --{{"macro"}, 'keys.ctrl and spells.ashenHallow.cooldown == 0' , "/cast [@player] "..AshenHallow },
@@ -78,8 +89,6 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {{"macro"}, 'player.useTrinket(0) and player.timeInCombat > 5' , "/use 13" },
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 10' , "/use 14" },
-
-
     
     {{"nested"}, 'player.myBuffDuration(spells.BlessingOfDawn) < 3' ,{
         {spells.arcaneTorrent, 'player.holyPower < 5' },

@@ -301,8 +301,6 @@ kps.spells.priest.wrathfulFaerie = kps.Spell.fromId(342132)
 kps.spells.priest.benevolentFaerie = kps.Spell.fromId(327710)
 -- guardianFaerie -- buff Reduces damage taken by 20%. Follows your Power Word: Shield.
 kps.spells.priest.guardianFaerie = kps.Spell.fromId(327694)
--- Mind Devourer -- buff Your next Devouring Plague costs 0 insanity. -- Dragonflight
-kps.spells.priest.mindDevourer = kps.Spell.fromId(373204)
 
 -- LEGENDAIRE
 kps.spells.priest.flashConcentration = kps.Spell.fromId(336267)
@@ -324,7 +322,7 @@ kps.spells.priest.mindFlayInsanity = kps.Spell.fromId(391401)
 kps.spells.priest.coalescingShadows = kps.Spell.fromId(391243)
 kps.spells.priest.powerWordLife = kps.Spell.fromId(373481)
 -- Lightweaver -- Flash Heal reduces the cast time of your next Heal within 20 sec by 30% and increases its healing done by 15%. Stacks up to 2 times.
-kps.spells.priest.lightweaver = kps.Spell.fromId(390993)
+kps.spells.priest.lightWeaver = kps.Spell.fromId(390993)
 -- ResonantWords -- Casting a Holy Word spell increases the healing of your next Heal or Flash Heal by 38.0%.
 kps.spells.priest.resonantWords = kps.Spell.fromId(337948)
 -- DivineWord
@@ -335,6 +333,10 @@ kps.spells.priest.harshDiscipline = kps.Spell.fromId(373180)
 kps.spells.priest.lightsWrath = kps.Spell.fromId(373178)
 -- Prayer Circle Cast time and cost of Prayer of Healing reduced by 20%.
 kps.spells.priest.prayerCircle = kps.Spell.fromId(321379)
+-- Sanctified Prayers Holy Word: Sanctify increases the healing done by Prayer of Healing by 15% for 15 sec.
+kps.spells.priest.sanctifiedPrayers = kps.Spell.fromId(196490)
+-- Mind Devourer -- Mind Blast has a 15% chance to make your next Devouring Plague or Mind Sear cost no insanity.
+kps.spells.priest.mindDevourer = kps.Spell.fromId(373202)
 
 
 

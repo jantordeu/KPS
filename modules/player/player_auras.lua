@@ -97,15 +97,6 @@ function Player.groupSize(self)
 end
 
 --[[[
-@function `player.isControlled` - Checks whether you are controlled over your character (you are feared, etc).
-]]--
-
-function kps.Player.prototype.isControlled(self)
-    if kps.timers.check("LossOfControl") > 0 then return true end
-    return false
-end
-
---[[[
 @function `player.isRoot` - Checks whether you are controlled over your character (you are feared, etc).
 ]]--
 
@@ -149,11 +140,8 @@ kps.events.register("LOSS_OF_CONTROL_UPDATE", function ()
             if string.find(locType,"STUN") ~= nil then
                 if kps.timers.check("Stun") == 0 then kps.timers.create("Stun",duration) end
             end
-            if locType == "ROOT" then
+            if string.find(locType,"ROOT") ~= nil then
                 if kps.timers.check("Root") == 0 then kps.timers.create("Root",duration) end
-            end
-            if lossOfControlType[loctype] == true then
-                if kps.timers.check("LossOfControl") == 0 then kps.timers.create("LossOfControl",duration) end
             end
         end 
     end
@@ -170,11 +158,8 @@ kps.events.register("LOSS_OF_CONTROL_ADDED", function ()
             if string.find(locType,"STUN") ~= nil then
                 if kps.timers.check("Stun") == 0 then kps.timers.create("Stun",duration) end
             end
-            if locType == "ROOT" then
+            if string.find(locType,"ROOT") ~= nil then 
                 if kps.timers.check("Root") == 0 then kps.timers.create("Root",duration) end
-            end
-            if lossOfControlType[loctype] == true then
-                if kps.timers.check("LossOfControl") == 0 then kps.timers.create("LossOfControl",duration) end
             end
         end
     end
@@ -210,14 +195,60 @@ kps.events.register("PLAYER_REGEN_ENABLED", function()
 end)
 
 --[[[
+@function `player.hasTalentSpell(<TALENT>)` - returns true if the player has the selected talent 
+]]--
+
+local talentsList = {}
+local function talentsListFill()
+    local specID = PlayerUtil.GetCurrentSpecID()
+    
+    -- last selected configID or fall back to default spec config
+    local configID = C_ClassTalents.GetLastSelectedSavedConfigID(specID) or C_ClassTalents.GetActiveConfigID()
+    
+    local configInfo = C_Traits.GetConfigInfo(configID)
+    local treeID = configInfo.treeIDs[1]
+
+    local nodes = C_Traits.GetTreeNodes(treeID)
+
+    for _, nodeID in ipairs(nodes) do
+        local nodeInfo = C_Traits.GetNodeInfo(configID, nodeID)
+        if nodeInfo.currentRank and nodeInfo.currentRank > 0 then
+            local entryID = nodeInfo.activeEntry and nodeInfo.activeEntry.entryID and nodeInfo.activeEntry.entryID
+            local entryInfo = entryID and C_Traits.GetEntryInfo(configID, entryID)
+            local definitionInfo = entryInfo and entryInfo.definitionID and C_Traits.GetDefinitionInfo(entryInfo.definitionID)
+
+            if definitionInfo ~= nil then
+                local talentName = TalentUtil.GetTalentName(definitionInfo.overrideName, definitionInfo.spellID)
+                table.insert(talentsList, talentName)
+            end
+        end
+    end
+end
+
+
+local function hasTalent(spell)
+	talentsListFill()
+	for _,talent in ipairs (talentsList) do
+		if tostring(talent) == tostring(spell) then return true end
+	end
+	return false
+end
+
+function Player.hasTalentDragon(self)
+    return hasTalent
+end
+
+
+
+--[[[
 @function `player.hasTalent(<ROW>,<TALENT>)` - returns true if the player has the selected talent (row: 1-7, talent: 1-3).
 ]]--
-local function hasTalent(row, talent)
+local function hasTalentOld(row, talent)
     local _, talentRowSelected =  GetTalentTierInfo(row,1)
     return talent == talentRowSelected
 end
 function Player.hasTalent(self)
-    return hasTalent
+    return hasTalentOld
 end
 
 --[[[

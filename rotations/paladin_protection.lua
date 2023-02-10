@@ -22,8 +22,8 @@ kps.rotations.register("PALADIN","PROTECTION",
     {{"macro"}, 'not target.exists and mouseover.isAttackable and mouseover.inCombat and mouseover.distance <= 10' , "/target mouseover" },
     {{"macro"}, 'not focus.exists and mouseover.isAttackable and mouseover.inCombat and not mouseover.isUnit("target")' , "/focus mouseover" },
 
-    {spells.blessingOfFreedom , 'player.isRoot' },
-    {spells.everyManForHimself, 'player.isStun' },
+    {spells.blessingOfFreedom , 'player.isRoot' , "player" },
+    {spells.everyManForHimself, 'player.isStun', "player" },
     
     {{"nested"},'kps.cooldowns', {
         {spells.cleanseToxins, 'mouseover.isHealable and mouseover.isDispellable("Poison")' , "mouseover" },

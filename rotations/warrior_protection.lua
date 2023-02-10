@@ -12,9 +12,6 @@ kps.runAtEnd(function()
    kps.gui.addCustomToggle("WARRIOR","PROTECTION", "taunt", "Interface\\Icons\\spell_nature_reincarnation", "taunt")
 end)
 
--- kps.defensive for charge
--- kps.interrupt for interrupts
--- kps.multiTarget for multiTarget
 kps.rotations.register("WARRIOR","PROTECTION",
 {
     

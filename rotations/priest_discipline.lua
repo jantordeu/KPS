@@ -14,8 +14,9 @@ local DoorOfShadows = spells.doorOfShadows.name
 
 
 kps.runAtEnd(function()
-   kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "rampUp", "Interface\\Icons\\spell_holy_avenginewrath", "rampUp")
+   kps.gui.addCustomToggle("PRIEST","DISCIPLINE", "damage", "Interface\\Icons\\spell_holy_avenginewrath", "damage")
 end)
+
 
 local damageRotation = {
     {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20', "target" },
@@ -131,15 +132,15 @@ kps.rotations.register("PRIEST","DISCIPLINE",{
     {spells.flashHeal, 'mouseover.isHealable and mouseover.hp < 0.80 and mouseover.myBuffDuration(spells.atonement) < 2 and not spells.flashHeal.lastCasted(2)' , "mouseover" },
     {spells.renew, 'mouseover.isHealable and mouseover.myBuffDuration(spells.atonement) < 2' , "mouseover" },
     
-    {{"nested"},'kps.multiTarget', damageRotation },
+    {{"nested"},'kps.damage', damageRotation },
     -- RAMPUP -- ATONEMENT
-    {{"nested"},'kps.rampUp', {
+    {{"nested"},'kps.multiTarget', {
         {spells.evangelism, 'spells.powerWordRadiance.charges == 0' },
         {spells.powerWordRadiance, 'not player.isMoving and heal.hasBuffCount(spells.atonement) < heal.countInRange' , kps.heal.lowestInRaid, "radiance_rampUp_count" },
         {spells.powerWordRadiance, 'not player.isMoving and heal.hasBuffCount(spells.atonement) < heal.countInRange' , "player", "radiance_rampUp_count" },
     }},    
     -- NOT RAMPUP -- DAMAGE
-    {{"nested"},'not kps.rampUp', {
+    {{"nested"},'not kps.multiTarget', {
         {spells.shadowWordDeath, 'target.isAttackable and target.hp < 0.20', "target" },
         {spells.shadowWordPain, 'target.isAttackable and target.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("target")' , "target" , "target_pain" },
         {spells.shadowWordPain, 'mouseover.isAttackable and mouseover.inCombat and mouseover.myDebuffDuration(spells.shadowWordPain) < 4 and not spells.shadowWordPain.isRecastAt("mouseover")' , "mouseover" , "mouseover_pain" },

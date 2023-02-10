@@ -99,7 +99,7 @@ kps.rotations.register("MAGE","FIRE",
     {spells.pyroblast, 'player.hasBuff(spells.hotStreak)', env.damageTarget , "pyroblast_hotStreak"},
     
     {spells.livingBomb,  'player.hasTalent(6,3) and not player.hasBuff(spells.combustion) and mouseover.isAttackable and not mouseover.hasMyDebuff(spells.livingBomb) and mouseover.hp > 0.30' , "mouseover" },
-    {spells.phoenixFlames , 'kps.multiTarget and player.hasBuff(spells.heatingUp)' ,  env.damageTarget },
+    {spells.phoenixFlames , 'player.hasBuff(spells.heatingUp)' ,  env.damageTarget },
     {spells.mirrorImage, 'target.isAttackable' , "target" },
     {spells.dragonsBreath, 'not player.hasBuff(spells.combustion) and target.isAttackable and target.distanceMax <= 10' , "target" },
 

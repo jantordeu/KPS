@@ -597,6 +597,40 @@ local function PrintTalents()
     end
 end
 
+local talentsList = {}
+local function talentsListFill()
+    local specID = PlayerUtil.GetCurrentSpecID()
+    
+    -- last selected configID or fall back to default spec config
+    local configID = C_ClassTalents.GetLastSelectedSavedConfigID(specID) or C_ClassTalents.GetActiveConfigID()
+    
+    local configInfo = C_Traits.GetConfigInfo(configID)
+    local treeID = configInfo.treeIDs[1]
+
+    local nodes = C_Traits.GetTreeNodes(treeID)
+
+    for _, nodeID in ipairs(nodes) do
+        local nodeInfo = C_Traits.GetNodeInfo(configID, nodeID)
+        if nodeInfo.currentRank and nodeInfo.currentRank > 0 then
+            local entryID = nodeInfo.activeEntry and nodeInfo.activeEntry.entryID and nodeInfo.activeEntry.entryID
+            local entryInfo = entryID and C_Traits.GetEntryInfo(configID, entryID)
+            local definitionInfo = entryInfo and entryInfo.definitionID and C_Traits.GetDefinitionInfo(entryInfo.definitionID)
+
+            if definitionInfo ~= nil then
+                local talentName = TalentUtil.GetTalentName(definitionInfo.overrideName, definitionInfo.spellID)
+                table.insert(talentsList, talentName)
+            end
+        end
+    end
+end
+
+function hasTalent()
+	talentsListFill()
+	for i,talent in ipairs (talentsList) do
+		print(i,talent)
+	end
+end
+
 
 -- name, texture, offset, numSlots, isGuild, offspecID = GetSpellTabInfo(tabIndex)
 -- spellType, id = GetSpellBookItemInfo(spellName)

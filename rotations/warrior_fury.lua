@@ -9,9 +9,6 @@ local env = kps.env.warrior
 
 local HeroicLeap = spells.heroicLeap.name
 
--- kps.defensive for charge
--- kps.interrupt for interrupts
--- kps.multiTarget for multiTarget
 kps.rotations.register("WARRIOR","FURY",
 {
 
@@ -56,7 +53,7 @@ kps.rotations.register("WARRIOR","FURY",
     {spells.execute, 'spells.execute.isUsable and player.hasTalent(3,2)' , "target" , "execute_usable" },
 
     {{"nested"}, 'kps.multiTarget and target.distanceMax  <= 10 and target.isAttackable', {
-        {spells.whirlwind, 'player.buffStacks(spells.whirlwind) < 2 ' , "target" , "whirlwind_multiTarget_stacks" },
+        {spells.whirlwind, 'player.buffStacks(spells.whirlwind) < 2 ' , "target"  },
         {spells.recklessness, 'target.isAttackable and target.distanceMax  <= 10' , "target" },
         {spells.siegebreaker, 'player.hasTalent(6,2)' },
         {spells.rampage, 'player.hasBuff(spells.whirlwind)' , "target" },
@@ -64,9 +61,9 @@ kps.rotations.register("WARRIOR","FURY",
         {spells.execute, 'spells.execute.isUsable and player.hasBuff(spells.enrage)' , "target" , "execute_usable" },
         {spells.dragonRoar, 'not player.hasTalent(7,3) and player.hasBuff(spells.enrage)' , "target" },
         {spells.dragonRoar, 'player.hasTalent(7,3) and target.hasDebuff(spells.siegebreaker)' , "target" },
-        {spells.bloodthirst, 'target.isAttackable and target.distanceMax  <= 10' , "target" , "bloodthirst_multiTarget" },
-        {spells.ragingBlow, 'target.isAttackable and target.distanceMax  <= 10' , "target" , "ragingBlow_multiTarget" },
-        {spells.whirlwind, 'true' , "target" , "whirlwind_multiTarget" },
+        {spells.bloodthirst, 'target.isAttackable and target.distanceMax  <= 10' , "target"  },
+        {spells.ragingBlow, 'target.isAttackable and target.distanceMax  <= 10' , "target"  },
+        {spells.whirlwind, 'true' , "target" },
     }},
 
     {{"nested"}, 'player.hasBuff(spells.recklessness) and target.distanceMax  <= 10 and target.isAttackable' , {
