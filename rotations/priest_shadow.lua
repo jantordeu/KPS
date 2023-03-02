@@ -42,7 +42,7 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.vampiricEmbrace, 'heal.countLossInRange(0.70) > 4 and heal.lowestInRaid.hp < 0.55' },
     {spells.vampiricEmbrace, 'kps.groupSize() == 1 and player.hp < 0.55' },
     -- "Power Word: Shield" -- "Body and Soul"
-    {spells.powerWordShield, 'player.hp < 0.70 and not player.hasBuff(spells.vampiricEmbrace) and not player.hasBuff(spells.voidForm)' , "player"  },
+    {spells.powerWordShield, 'player.hp < 0.70 and not player.hasBuff(spells.vampiricEmbrace)' , "player"  },
     -- "Guérison de l’ombre" 186263 -- debuff "Shadow Mend" 187464 10 sec
     {spells.flashHeal, 'not player.isMoving and player.hp < 0.70 and not player.hasBuff(spells.protectiveLight) and not spells.flashHeal.isRecastAt("player") and not spells.flashHeal.lastCasted(2)', "player" },
     {spells.flashHeal, 'not player.isMoving and player.hp < 0.40 and not spells.flashHeal.isRecastAt("player") and not spells.flashHeal.lastCasted(2)', "player" },
@@ -83,12 +83,12 @@ kps.rotations.register("PRIEST","SHADOW",
     {spells.divineStar, 'not player.isMoving and target.isAttackable and target.distanceMax  <= 20' },
     {spells.divineStar, 'keys.shift and not player.isMoving' },
     
-    {{"nested"}, 'kps.hekili',{
-        {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
-        {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < 6' , "target"  },
-        {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
-        {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 6' , "mouseover"   },
-    }},
+
+    {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
+    {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < 6' , "target"  },
+    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
+    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 6' , "mouseover"   },
+
     
     {kps.hekili({
         spells.leapOfFaith,
@@ -97,10 +97,6 @@ kps.rotations.register("PRIEST","SHADOW",
     }), 'kps.hekili'},
     
     -- Inescapable Torment 373427 -- Mind Blast and Shadow Word: Death cause your Mindbender to teleport behind your target,
-    {spells.vampiricTouch, 'not player.isMoving and target.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("target") and not spells.vampiricTouch.lastCasted(2)' , "target" },    
-    {spells.shadowWordPain, 'target.myDebuffDuration(spells.shadowWordPain) < 6' , "target"  },
-    {spells.vampiricTouch, 'not player.isMoving and mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.vampiricTouch) < 6 and not spells.vampiricTouch.isRecastAt("mouseover") and not spells.vampiricTouch.lastCasted(2)' , "mouseover" },
-    {spells.shadowWordPain, 'mouseover.inCombat and mouseover.isAttackable and mouseover.myDebuffDuration(spells.shadowWordPain) < 6' , "mouseover"   },
     {spells.powerInfusion, 'kps.multiTarget and player.hasBuff(spells.voidForm)' },
     {spells.powerInfusion, 'kps.multiTarget and player.hasBuff(spells.darkAscension)' },
     {spells.shadowfiend, 'true' , "target" },

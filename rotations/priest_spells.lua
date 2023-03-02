@@ -321,8 +321,6 @@ kps.spells.priest.surgeOfDarkness = kps.Spell.fromId(87160)
 kps.spells.priest.mindFlayInsanity = kps.Spell.fromId(391401)
 kps.spells.priest.coalescingShadows = kps.Spell.fromId(391243)
 kps.spells.priest.powerWordLife = kps.Spell.fromId(373481)
--- Lightweaver -- Flash Heal reduces the cast time of your next Heal within 20 sec by 30% and increases its healing done by 15%. Stacks up to 2 times.
-kps.spells.priest.lightWeaver = kps.Spell.fromId(390993)
 -- ResonantWords -- Casting a Holy Word spell increases the healing of your next Heal or Flash Heal by 38.0%.
 kps.spells.priest.resonantWords = kps.Spell.fromId(337948)
 -- DivineWord
@@ -337,6 +335,8 @@ kps.spells.priest.prayerCircle = kps.Spell.fromId(321379)
 kps.spells.priest.sanctifiedPrayers = kps.Spell.fromId(196490)
 -- Mind Devourer -- Mind Blast has a 15% chance to make your next Devouring Plague or Mind Sear cost no insanity.
 kps.spells.priest.mindDevourer = kps.Spell.fromId(373202)
+-- Lightweaver -- Flash Heal reduces the cast time of your next Heal within 20 sec by 30% and increases its healing done by 15%.
+kps.spells.priest.lightweaver = kps.Spell.fromId(390992)
 
 
 

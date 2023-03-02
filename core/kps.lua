@@ -55,7 +55,7 @@ kps.combatStep = function ()
 
     local activeRotation = kps.rotations.getActive()
     if not activeRotation then return end
-    activeRotation.checkTalents()
+    --activeRotation.checkTalents()
     local spell, target, message = activeRotation.getSpell()
     -- Castable Spell while casting
     if spell ~= nil and spell.isCastableSpell and player.isCasting then

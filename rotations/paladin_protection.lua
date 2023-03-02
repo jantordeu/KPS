@@ -52,6 +52,10 @@ kps.rotations.register("PALADIN","PROTECTION",
     -- TRINKETS -- SLOT 1 /use 14
     {{"macro"}, 'player.useTrinket(1) and player.timeInCombat > 5' , "/use 14" },
     
+	{spells.ardentDefender, 'player.hpIncoming < 0.70 and target.isCasting' },
+	{spells.ardentDefender, 'player.hpIncoming < 0.55' },    
+	{spells.guardianOfAncientKings, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender)' },
+    
     {kps.hekili({
         spells.cleanseToxins,
         spells.divineShield,
@@ -62,7 +66,7 @@ kps.rotations.register("PALADIN","PROTECTION",
 --    {spells.ardentDefender, 'player.hpIncoming < 0.70 and target.isCasting' },
 --    {spells.ardentDefender, 'player.hpIncoming < 0.50' },    
 --    {spells.guardianOfAncientKings, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender)' },
---    {spells.momentOfGlory, 'player.hpIncoming < 0.40 and not player.hasBuff(spells.ardentDefender)' },
+--    {spells.momentOfGlory, 'true' },
 --    {spells.avengingWrath, 'player.hp < 0.70' },
 --    {spells.shieldOfTheRighteous, 'player.hp < 0.90 and not player.hasBuff(spells.shieldOfTheRighteous)' , "target"},
 --    {spells.wordOfGlory, 'player.hp < 0.70'},

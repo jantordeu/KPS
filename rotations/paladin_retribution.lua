@@ -32,6 +32,7 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     -- "Divine Protection" -- Protects the caster (PLAYER) from all attacks and spells for 8 sec.
     {spells.divineProtection, 'true' , "player" },
     {spells.shieldOfVengeance , 'true' },
+    {spells.blessingOfProtection , 'target.isBoss and player.isTarget and not player.hasDebuff(spells.forbearance)' , "player" },
 
     {spells.cleanseToxins, 'target.isDispellable("Poison")' , "target" },
     {spells.cleanseToxins, 'target.isDispellable("Disease")' , "target" },
@@ -107,21 +108,22 @@ kps.rotations.register("PALADIN","RETRIBUTION",
         spells.layOnHands,
         spells.blessingOfProtection
     }), 'kps.hekili'},
-
-    {spells.divineToll, 'player.holyPower < 3 and player.hasBuff(spells.crusade)' , env.damageTarget }, -- cd 1 min
-    {spells.seraphim, 'player.hasBuff(spells.crusade) and player.buffStacks(spells.crusade) == 10 and spells.crusade.cooldown > 10' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
-    {spells.seraphim, 'spells.crusade.cooldown > 50' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
-    {spells.crusade, 'kps.multiTarget and player.holyPower > 2 and spells.seraphim.cooldown < 5' , env.damageTarget }, -- cd 2 min -- duration 25 sec
+    
+    {spells.divineToll, 'player.holyPower < 3 and not player.hasBuff(spells.crusade) and spells.seraphim.cooldown == 0' , env.damageTarget }, -- cd 1 min
+    {spells.seraphim, 'not player.hasBuff(spells.crusade) and spells.divineToll.lastCasted(5)' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
+    {spells.divineToll, 'player.holyPower < 3 and player.hasBuff(spells.crusade) and spells.crusade.cooldown > 5' , env.damageTarget }, -- cd 1 min
+    {spells.seraphim, 'player.hasBuff(spells.crusade) and player.buffStacks(spells.crusade) == 10 and spells.crusade.cooldown > 5' , env.damageTarget}, -- cd 45 sec -- The Light magnifies your power for 15 sec -- cost 3 Holy Power
+    {spells.crusade, 'kps.multiTarget and player.holyPower > 2 and spells.divineToll.cooldown < 5' , env.damageTarget }, -- cd 2 min -- duration 25 sec
     -- {spells.avengingWrath, 'kps.multiTarget and player.holyPower > 2' }, -- replaces avengingWrath
     -- Empyrean Legacy Templar's Verdict to automatically activate Divine Storm
     {spells.templarsVerdict, 'player.hasBuff(spells.empyreanLegacy)' , env.damageTarget},
     {spells.divineStorm, 'player.holyPower == 5 and player.plateCount > 2' , env.damageTarget},
-    {spells.divineStorm, 'spells.seraphim.cooldown > 5 and player.plateCount > 2' , env.damageTarget},
+    {spells.divineStorm, 'player.plateCount > 2' , env.damageTarget},
     {spells.templarsVerdict, 'player.holyPower == 5' , env.damageTarget},
     {spells.exorcism, 'not target.hasMyDebuff(spells.exorcism) and spells.consecration.lastCasted(10)' , env.damageTarget },
     {spells.divineStorm, 'player.hasBuff(spells.empyreanPower)' , env.damageTarget},
     {spells.bladeOfJustice, 'player.hasBuff(spells.bladeOfWrath)' , env.damageTarget},
-    {spells.radiantDecree, 'spells.seraphim.cooldown > 5' , env.damageTarget}, -- Replaces Wake of Ashes with Radiant Decree -- cost 3 holy power
+    {spells.radiantDecree, 'spells.crusade.cooldown > 5' , env.damageTarget}, -- Replaces Wake of Ashes with Radiant Decree -- cost 3 holy power
     -- Holy Power generating
     {spells.consecration, 'not player.isMovingSince(2) and target.isAttackable and not target.isMoving and target.distanceMax <= 10' },
     {spells.wakeOfAshes, 'player.holyPower < 3',  env.damageTarget }, -- 3 holypower
@@ -130,8 +132,8 @@ kps.rotations.register("PALADIN","RETRIBUTION",
     {spells.bladeOfJustice, 'player.holyPower < 4' , env.damageTarget }, -- 1 holypower
     {spells.crusaderStrike, 'player.holyPower < 5 and spells.crusaderStrike.charges == 2' , env.damageTarget}, -- 1 holypower
     -- Holy Power spending
-    {spells.divineStorm, 'spells.seraphim.cooldown > 5 and player.plateCount > 1' , env.damageTarget},
-    {spells.templarsVerdict, 'spells.seraphim.cooldown > 5' , env.damageTarget},
+    {spells.divineStorm, 'spells.crusade.cooldown > 5 and player.plateCount > 2' , env.damageTarget},
+    {spells.templarsVerdict, 'spells.crusade.cooldown > 5' , env.damageTarget},
     -- filler
     {spells.crusaderStrike, 'true' , env.damageTarget}, -- 1 holypower
 

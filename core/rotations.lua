@@ -75,6 +75,7 @@ function kps.rotations.register(class,spec,table,tooltip, expectedTalents)
         rotation.getSpell = kps.parser.parseSpellTable(table)
         return rotation.getSpell()
     end
+--[[
     rotation["talentsChecked"] = false
     rotation["lastTalentCheck"] = 0
     rotation["checkTalents"] = function ()
@@ -95,6 +96,7 @@ function kps.rotations.register(class,spec,table,tooltip, expectedTalents)
             rotation["talentsChecked"] = true
         end
     end
+]]
     addRotationToTable(rotations[key],rotation)
     activeRotation = #(rotations[key])
     kps.rotations.reset()
@@ -102,7 +104,7 @@ end
 -- reset talent check after fight ends
 kps.events.register("PLAYER_LEAVE_COMBAT", function ()
     local rotation = kps.rotations.getActive()
-    if rotation ~= nil then rotation["talentsChecked"] = false end
+    --if rotation ~= nil then rotation["talentsChecked"] = false end
 end)
 
 
